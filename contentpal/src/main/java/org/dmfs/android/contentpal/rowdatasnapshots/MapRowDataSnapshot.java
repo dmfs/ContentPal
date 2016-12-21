@@ -1,0 +1,71 @@
+/*
+ * Copyright 2017 dmfs GmbH
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package org.dmfs.android.contentpal.rowdatasnapshots;
+
+import android.support.annotation.NonNull;
+
+import org.dmfs.android.contentpal.RowDataSnapshot;
+import org.dmfs.iterators.decorators.Serialized;
+import org.dmfs.optional.NullSafe;
+import org.dmfs.optional.Optional;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+
+/**
+ * A {@link RowDataSnapshot} backed by {@link Map}s.
+ *
+ * @author Marten Gajda
+ */
+public final class MapRowDataSnapshot<T> implements RowDataSnapshot<T>
+{
+    private final Map<String, CharSequence> mCharData;
+    private final Map<String, byte[]> mByteData;
+
+
+    public MapRowDataSnapshot(@NonNull Map<String, CharSequence> charData, @NonNull Map<String, byte[]> byteData)
+    {
+        mCharData = new HashMap<>(charData);
+        mByteData = new HashMap<>(byteData);
+    }
+
+
+    @NonNull
+    @Override
+    public Optional<CharSequence> charData(@NonNull String key)
+    {
+        return new NullSafe<>(mCharData.get(key));
+    }
+
+
+    @NonNull
+    @Override
+    public Optional<byte[]> byteData(@NonNull String key)
+    {
+        return new NullSafe<>(mByteData.get(key));
+    }
+
+
+    @NonNull
+    @Override
+    public Iterator<String> iterator()
+    {
+        return new Serialized<>(mCharData.keySet().iterator(), mByteData.keySet().iterator());
+    }
+}
