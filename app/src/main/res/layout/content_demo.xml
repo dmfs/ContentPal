@@ -42,5 +42,31 @@
             app:layout_constraintTop_toBottomOf="@+id/button2"
             android:layout_marginLeft="16dp"
             app:layout_constraintLeft_toLeftOf="parent"/>
-    
+
+
+
+    <Button
+            android:text="Create local calendar and events"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="addLocalCalendar"
+            android:id="@+id/button4"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/button3"
+            android:layout_marginLeft="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+
+
+    <Button
+            android:text="Remove ALL local calendars"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="removeLocalCalendars"
+            android:id="@+id/button5"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/button4"
+            android:layout_marginLeft="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
 </android.support.constraint.ConstraintLayout>
