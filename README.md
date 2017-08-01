@@ -92,29 +92,20 @@ Usually this has to be done only once.
 ContentProviderClient client =
   getContentResolver().acquireContentProviderClient(ContactsContract.AUTHORITY_URI);
 OperationsQueue operationsQueue = new BasicOperationsQueue(client);
-
-// create scoped view on the RawContacts table
-Table<ContactsContract.RawContacts> rawContacts =
-   new AccountScoped<>(new RawContacts(), account);
 ```
 
 ##### Step 2 - execute
 Create an `OperationsBatch` which contains the operations to insert the RawContact and the data rows
 and enqueue them for execution.
 ```java
-RowSnapshot<ContactsContract.RawContacts> rawContact =
-  new VirtualRowSnapshot<>(rawContacts);
 operationsQueue.enqueue(
   new Yieldable( // optional, not required when inserting only one contact
-    new Joined(
-      new SingletonBatch(new Put<>(rawContact)),
-      new MultiInsertBatch<>(
-        // pass an InsertOperation "prototype" which creates data rows for the new rawContact
-        new RawContactData(rawContact),
-        // list the data to be inserted
-        new DisplayNameData(name),
-        new Typed(phoneType, new PhoneData(phone)),
-        new Typed(emailType, new EmailData(email))))));
+    new InsertRawContactBatch(
+      account,
+      // list the data to be inserted
+      new DisplayNameData(name),
+      new Typed(phoneType, new PhoneData(phone)),
+      new Typed(emailType, new EmailData(email))))));
 ```
 At this point you can enqueue more operations. All operations will be executed automatically when the
 transaction size grows too large or when `flush()` is called.
