@@ -29,6 +29,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
+import org.dmfs.android.contactspal.batches.InsertRawContactBatch;
 import org.dmfs.android.contactspal.data.Custom;
 import org.dmfs.android.contactspal.data.Primary;
 import org.dmfs.android.contactspal.data.Typed;
@@ -60,10 +61,8 @@ import org.dmfs.android.contentpal.OperationsQueue;
 import org.dmfs.android.contentpal.RowDataSnapshot;
 import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.Table;
-import org.dmfs.android.contentpal.batches.Joined;
 import org.dmfs.android.contentpal.batches.MultiInsertBatch;
 import org.dmfs.android.contentpal.batches.SingletonBatch;
-import org.dmfs.android.contentpal.operations.Put;
 import org.dmfs.android.contentpal.queues.BasicOperationsQueue;
 import org.dmfs.android.contentpal.rowsnapshots.VirtualRowSnapshot;
 import org.dmfs.iterables.ArrayIterable;
@@ -119,17 +118,12 @@ public class DemoActivity extends AppCompatActivity
         RowSnapshot<ContactsContract.RawContacts> rawContact = new VirtualRowSnapshot<>(mRawContacts);
 
         mContactsQueue.enqueue(
-                new Joined(
-                        // insert the virtual RawContact row first
-                        new SingletonBatch(
-                                new Put<>(rawContact)),
+                new InsertRawContactBatch(
+                        rawContact,
                         // insert a couple of data rows that are based on the contactData prototype
-                        new MultiInsertBatch<>(
-                                // use a prototype which creates data rows for this rawContact
-                                new RawContactData(rawContact),
-                                new DisplayNameData("John Doe"),
-                                new Primary(new Typed(ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE, new PhoneData("123"))),
-                                new Custom("personal", new EmailData("john@example.com")))));
+                        new DisplayNameData("John Doe"),
+                        new Primary(new Typed(ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE, new PhoneData("123"))),
+                        new Custom("personal", new EmailData("john@example.com"))));
 
         mContactsQueue.flush();
 
