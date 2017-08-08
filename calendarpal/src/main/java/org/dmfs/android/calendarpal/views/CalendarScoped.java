@@ -56,7 +56,7 @@ public final class CalendarScoped implements View<CalendarContract.Events>
      * @param projection
      *         The columns of the projection.
      */
-    public CalendarScoped(@NonNull ContentProviderClient client, @NonNull RowSnapshot<CalendarContract.Calendars> calendarRow, String... projection)
+    public CalendarScoped(@NonNull ContentProviderClient client, @NonNull RowSnapshot<CalendarContract.Calendars> calendarRow, @NonNull String... projection)
     {
         this(calendarRow, new Events(client, projection));
     }

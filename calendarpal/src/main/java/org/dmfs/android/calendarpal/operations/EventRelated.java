@@ -42,7 +42,7 @@ public final class EventRelated<T> implements InsertOperation<T>
 
     public EventRelated(@NonNull RowSnapshot<CalendarContract.Events> event, @NonNull InsertOperation<T> delegate)
     {
-        mDelegate = new Related<>(event, "event_id", delegate   /* all supported tables use this name as the foreign key column name */);
+        mDelegate = new Related<>(event, "event_id"/* all supported tables use this name as the foreign key column name */, delegate);
     }
 
 
