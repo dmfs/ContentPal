@@ -17,11 +17,13 @@
 package org.dmfs.contentpal.demo;
 
 import android.Manifest;
+import android.accounts.Account;
 import android.content.ContentProviderClient;
 import android.content.OperationApplicationException;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.provider.CalendarContract;
 import android.provider.ContactsContract;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -29,6 +31,23 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
+import org.dmfs.android.calendarpal.attendees.AttendeeData;
+import org.dmfs.android.calendarpal.attendees.Named;
+import org.dmfs.android.calendarpal.calendars.CalendarData;
+import org.dmfs.android.calendarpal.calendars.Colored;
+import org.dmfs.android.calendarpal.calendars.Synced;
+import org.dmfs.android.calendarpal.calendars.Visible;
+import org.dmfs.android.calendarpal.events.Described;
+import org.dmfs.android.calendarpal.events.Located;
+import org.dmfs.android.calendarpal.events.Organized;
+import org.dmfs.android.calendarpal.events.SingleEventData;
+import org.dmfs.android.calendarpal.operations.EventRelated;
+import org.dmfs.android.calendarpal.reminders.ReminderData;
+import org.dmfs.android.calendarpal.tables.Attendees;
+import org.dmfs.android.calendarpal.tables.CalendarScoped;
+import org.dmfs.android.calendarpal.tables.Calendars;
+import org.dmfs.android.calendarpal.tables.Events;
+import org.dmfs.android.calendarpal.tables.Reminders;
 import org.dmfs.android.contactspal.batches.InsertRawContactBatch;
 import org.dmfs.android.contactspal.data.Custom;
 import org.dmfs.android.contactspal.data.Primary;
@@ -61,11 +80,22 @@ import org.dmfs.android.contentpal.OperationsQueue;
 import org.dmfs.android.contentpal.RowDataSnapshot;
 import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.Table;
+import org.dmfs.android.contentpal.batches.MultiBatch;
 import org.dmfs.android.contentpal.batches.MultiInsertBatch;
 import org.dmfs.android.contentpal.batches.SingletonBatch;
+import org.dmfs.android.contentpal.operations.BulkDelete;
+import org.dmfs.android.contentpal.operations.Insert;
+import org.dmfs.android.contentpal.operations.Put;
+import org.dmfs.android.contentpal.predicates.AllOf;
 import org.dmfs.android.contentpal.queues.BasicOperationsQueue;
+import org.dmfs.android.contentpal.rowdata.Composite;
 import org.dmfs.android.contentpal.rowsnapshots.VirtualRowSnapshot;
+import org.dmfs.android.contentpal.tables.AccountScoped;
 import org.dmfs.iterables.ArrayIterable;
+import org.dmfs.rfc5545.DateTime;
+import org.dmfs.rfc5545.Duration;
+
+import java.util.concurrent.TimeUnit;
 
 
 public class DemoActivity extends AppCompatActivity
@@ -73,7 +103,13 @@ public class DemoActivity extends AppCompatActivity
 
     private ContentProviderClient mContactsClient;
     private Table<ContactsContract.RawContacts> mRawContacts;
+    private Table<ContactsContract.Data> mData;
     private OperationsQueue mContactsQueue;
+
+    private ContentProviderClient mCalendarsClient;
+    private Table<CalendarContract.Calendars> mCalendars;
+    private Table<CalendarContract.Events> mEvents;
+    private OperationsQueue mCalendarQueue;
 
 
     @Override
@@ -85,6 +121,10 @@ public class DemoActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         mRawContacts = new Local(new RawContacts());
+
+        mCalendars = new org.dmfs.android.contentpal.tables.Synced<>(
+                new AccountScoped<>(new Account("Local", CalendarContract.ACCOUNT_TYPE_LOCAL), new Calendars()));
+        mEvents = new Events();
     }
 
 
@@ -94,6 +134,11 @@ public class DemoActivity extends AppCompatActivity
         if (mContactsClient != null)
         {
             mContactsClient.release();
+        }
+
+        if (mCalendarsClient != null)
+        {
+            mCalendarsClient.release();
         }
         super.onDestroy();
     }
@@ -166,7 +211,6 @@ public class DemoActivity extends AppCompatActivity
         {
             return;
         }
-
         for (RowSnapshot<ContactsContract.RawContacts> row : new Unsynced(mRawContacts.view(mContactsClient)))
         {
             Log.v("ContentPal Demo", "---- Raw Contact ----");
@@ -186,9 +230,86 @@ public class DemoActivity extends AppCompatActivity
         {
             return;
         }
-
         mContactsQueue.enqueue(new SingletonBatch(new TransientRawContactCleanup(mRawContacts)));
         mContactsQueue.flush();
+    }
+
+
+    public void addLocalCalendar(View view) throws RemoteException, OperationApplicationException
+    {
+        if (!ensureCalendarPermissions())
+        {
+            return;
+        }
+
+        RowSnapshot<CalendarContract.Calendars> calendar = new VirtualRowSnapshot<>(mCalendars);
+        // create a table for events of this calendar only
+        Table<CalendarContract.Events> calendarEvents = new CalendarScoped(calendar, mEvents);
+
+        // create a new event rows in the scoped events table
+        RowSnapshot<CalendarContract.Events> event1 = new VirtualRowSnapshot<>(calendarEvents);
+        RowSnapshot<CalendarContract.Events> event2 = new VirtualRowSnapshot<>(calendarEvents);
+
+        mCalendarQueue.enqueue(
+                new MultiBatch(
+                        // put the calendar
+                        new Put<>(calendar, new Synced(new Visible(new Colored(0x00ff00, new CalendarData("Cal1"))))),
+
+                        // add event1 now
+                        new Put<>(event1,
+                                new Composite<>(
+                                        new Organized("example@example.com"),
+                                        new Described("Event Description"),
+                                        new Located("Some Location"),
+                                        new SingleEventData(
+                                                "Event #1",
+                                                DateTime.now(),
+                                                DateTime.now().addDuration(Duration.parse("PT1H"))))),
+
+                        // add an attendee to event1
+                        new EventRelated<>(event1, new Insert<>(new Attendees(), new AttendeeData("me@example.com"))),
+
+                        // add event2 tomorrow same time
+                        new Put<>(event2,
+                                // alternative decoration structure
+                                new Organized("example@example.com",
+                                        new Described("Event Description",
+                                                new Located("Some Location",
+                                                        new SingleEventData(
+                                                                "Event #2",
+                                                                DateTime.now().addDuration(Duration.parse("P1D")),
+                                                                DateTime.now().addDuration(Duration.parse("P1DT1H"))))))),
+                        // add an attendee to event2
+                        new EventRelated<>(event2, new Insert<>(new Attendees(), new Named("Me", new AttendeeData("me@example.com")))),
+                        // add a reminder to event2, one day in advance
+                        new EventRelated<>(event2, new Insert<>(new Reminders(), new ReminderData((int) TimeUnit.DAYS.toMinutes(1))))
+
+                        //new Put<>(new VirtualRowSnapshot<>(calendarEvents), new )
+                ));
+        mCalendarQueue.flush();
+
+        // demonstrate how to update an event which was inserted in the previous transaction
+        mCalendarQueue.enqueue(
+                new MultiBatch(
+                        // add a reminder to event1 as well
+                        new EventRelated<>(event1, new Insert<>(new Reminders(), new ReminderData((int) TimeUnit.HOURS.toMinutes(1)))),
+                        // update event2 - setting an event color and modifying description
+                        new Put<>(event2, new org.dmfs.android.calendarpal.events.Colored(0x0ff0000, new Described("updated Description")))
+                ));
+        mCalendarQueue.flush();
+    }
+
+
+    public void removeLocalCalendars(View view) throws RemoteException, OperationApplicationException
+    {
+        if (!ensureCalendarPermissions())
+        {
+            return;
+        }
+
+        mCalendarQueue.enqueue(
+                new SingletonBatch(new BulkDelete<>(mCalendars, new AllOf())));
+        mCalendarQueue.flush();
     }
 
 
@@ -208,4 +329,23 @@ public class DemoActivity extends AppCompatActivity
         }
         return true;
     }
+
+
+    private boolean ensureCalendarPermissions()
+    {
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED)
+        {
+            ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR }, 0);
+            return false;
+        }
+        if (mCalendarsClient == null)
+        {
+            mCalendarsClient = getContentResolver().acquireContentProviderClient(CalendarContract.AUTHORITY);
+            mCalendarQueue = new BasicOperationsQueue(mCalendarsClient);
+        }
+        return true;
+    }
+
 }

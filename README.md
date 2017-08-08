@@ -34,6 +34,11 @@ This library has been created with specific goals in mind.
 ContactsPal provides ContentProvider specific classes including some of the most important `Table` and `RowData` implementations
 like `RawContacts` and `PhoneData`.
 
+## CalendarPal
+
+CalendarPal provides CalendarProvider specific classes including some of the most important `Table` and `RowData` implementations
+like `Events` and `ReminderData`.
+
 ## Example
 
 ### Insert a Contact
