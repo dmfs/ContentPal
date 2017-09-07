@@ -20,8 +20,8 @@ import android.content.ContentProviderClient;
 import android.provider.CalendarContract;
 import android.support.annotation.NonNull;
 
-import org.dmfs.android.contentpal.views.AbstractDelegatedView;
 import org.dmfs.android.contentpal.views.BaseView;
+import org.dmfs.android.contentpal.views.DelegatingView;
 
 
 /**
@@ -29,7 +29,7 @@ import org.dmfs.android.contentpal.views.BaseView;
  *
  * @author Marten Gajda
  */
-public final class Attendees extends AbstractDelegatedView<CalendarContract.Attendees>
+public final class Attendees extends DelegatingView<CalendarContract.Attendees>
 {
     public Attendees(@NonNull ContentProviderClient client)
     {
