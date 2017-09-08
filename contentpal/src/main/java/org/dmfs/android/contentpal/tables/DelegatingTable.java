@@ -35,12 +35,12 @@ import org.dmfs.android.contentpal.View;
  *
  * @author Marten Gajda
  */
-public abstract class AbstractDelegatedTable<T> implements Table<T>
+public abstract class DelegatingTable<T> implements Table<T>
 {
     private final Table<T> mDelegate;
 
 
-    public AbstractDelegatedTable(@NonNull Table<T> delegate)
+    public DelegatingTable(@NonNull Table<T> delegate)
     {
         mDelegate = delegate;
     }
@@ -56,7 +56,7 @@ public abstract class AbstractDelegatedTable<T> implements Table<T>
 
     @NonNull
     @Override
-    public Operation<T> updateOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate)
+    public final Operation<T> updateOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate)
     {
         return mDelegate.updateOperation(uriParams, predicate);
     }
@@ -64,7 +64,7 @@ public abstract class AbstractDelegatedTable<T> implements Table<T>
 
     @NonNull
     @Override
-    public Operation<T> deleteOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate)
+    public final Operation<T> deleteOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate)
     {
         return mDelegate.deleteOperation(uriParams, predicate);
     }
@@ -72,7 +72,7 @@ public abstract class AbstractDelegatedTable<T> implements Table<T>
 
     @NonNull
     @Override
-    public View<T> view(@NonNull ContentProviderClient client, @NonNull String... projection)
+    public final View<T> view(@NonNull ContentProviderClient client, @NonNull String... projection)
     {
         return mDelegate.view(client, projection);
     }

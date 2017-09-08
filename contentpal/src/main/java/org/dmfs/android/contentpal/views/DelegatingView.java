@@ -35,12 +35,12 @@ import org.dmfs.optional.Optional;
  *
  * @author Marten Gajda
  */
-public abstract class AbstractDelegatedView<T> implements View<T>
+public abstract class DelegatingView<T> implements View<T>
 {
     private final View<T> mDelegate;
 
 
-    public AbstractDelegatedView(@NonNull View<T> delegate)
+    public DelegatingView(@NonNull View<T> delegate)
     {
         mDelegate = delegate;
     }
@@ -48,7 +48,7 @@ public abstract class AbstractDelegatedView<T> implements View<T>
 
     @NonNull
     @Override
-    public Cursor rows(@NonNull UriParams uriParams, @NonNull Predicate predicate, @NonNull Optional<String> sorting) throws RemoteException
+    public final Cursor rows(@NonNull UriParams uriParams, @NonNull Predicate predicate, @NonNull Optional<String> sorting) throws RemoteException
     {
         return mDelegate.rows(uriParams, predicate, sorting);
     }
@@ -56,7 +56,7 @@ public abstract class AbstractDelegatedView<T> implements View<T>
 
     @NonNull
     @Override
-    public Table<T> table()
+    public final Table<T> table()
     {
         return mDelegate.table();
     }

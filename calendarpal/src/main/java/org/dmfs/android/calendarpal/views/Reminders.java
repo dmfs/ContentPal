@@ -20,8 +20,8 @@ import android.content.ContentProviderClient;
 import android.provider.CalendarContract;
 import android.support.annotation.NonNull;
 
-import org.dmfs.android.contentpal.views.AbstractDelegatedView;
 import org.dmfs.android.contentpal.views.BaseView;
+import org.dmfs.android.contentpal.views.DelegatingView;
 
 
 /**
@@ -29,7 +29,7 @@ import org.dmfs.android.contentpal.views.BaseView;
  *
  * @author Marten Gajda
  */
-public final class Reminders extends AbstractDelegatedView<CalendarContract.Reminders>
+public final class Reminders extends DelegatingView<CalendarContract.Reminders>
 {
     public Reminders(@NonNull ContentProviderClient client)
     {

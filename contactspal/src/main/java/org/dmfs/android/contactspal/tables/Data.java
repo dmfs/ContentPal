@@ -18,8 +18,8 @@ package org.dmfs.android.contactspal.tables;
 
 import android.provider.ContactsContract;
 
-import org.dmfs.android.contentpal.tables.AbstractDelegatedTable;
 import org.dmfs.android.contentpal.tables.BaseTable;
+import org.dmfs.android.contentpal.tables.DelegatingTable;
 
 
 /**
@@ -27,7 +27,7 @@ import org.dmfs.android.contentpal.tables.BaseTable;
  *
  * @author Marten Gajda
  */
-public final class Data extends AbstractDelegatedTable<ContactsContract.Data>
+public final class Data extends DelegatingTable<ContactsContract.Data>
 {
     public final static Data INSTANCE = new Data();
 

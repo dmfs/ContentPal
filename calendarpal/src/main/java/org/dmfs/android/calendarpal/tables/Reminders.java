@@ -18,8 +18,8 @@ package org.dmfs.android.calendarpal.tables;
 
 import android.provider.CalendarContract;
 
-import org.dmfs.android.contentpal.tables.AbstractDelegatedTable;
 import org.dmfs.android.contentpal.tables.BaseTable;
+import org.dmfs.android.contentpal.tables.DelegatingTable;
 
 
 /**
@@ -27,7 +27,7 @@ import org.dmfs.android.contentpal.tables.BaseTable;
  *
  * @author Marten Gajda
  */
-public final class Reminders extends AbstractDelegatedTable<CalendarContract.Reminders>
+public final class Reminders extends DelegatingTable<CalendarContract.Reminders>
 {
     public Reminders()
     {
