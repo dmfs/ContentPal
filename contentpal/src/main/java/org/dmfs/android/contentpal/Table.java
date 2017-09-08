@@ -66,6 +66,18 @@ public interface Table<T>
     Operation<T> deleteOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate);
 
     /**
+     * Returns an {@link Operation} to assert rows of this table.
+     *
+     * @param uriParams
+     *         Additional parameters to add to the delete {@link Uri}.
+     *
+     * @param predicate
+     * @return An {@link Operation} for this table.
+     */
+    @NonNull
+    Operation<T> assertOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate);
+
+    /**
      * Returns a {@link View} on this table.
      *
      * @param client

@@ -29,6 +29,7 @@ import org.dmfs.android.contentpal.Table;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.UriParams;
 import org.dmfs.android.contentpal.View;
+import org.dmfs.android.contentpal.operations.internal.RawAssert;
 import org.dmfs.android.contentpal.operations.internal.RawDelete;
 import org.dmfs.android.contentpal.operations.internal.RawInsert;
 import org.dmfs.android.contentpal.operations.internal.RawUpdate;
@@ -79,6 +80,14 @@ public final class BaseTable<T> implements Table<T>
     public Operation<T> deleteOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate)
     {
         return new Constrained<>(new RawDelete<T>(uriParams.withParam(mTableUri.buildUpon()).build()), predicate);
+    }
+
+
+    @NonNull
+    @Override
+    public Operation<T> assertOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate)
+    {
+        return new Constrained<>(new RawAssert<T>(uriParams.withParam(mTableUri.buildUpon()).build()), predicate);
     }
 
 

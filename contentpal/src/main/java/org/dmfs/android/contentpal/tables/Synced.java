@@ -74,6 +74,14 @@ public final class Synced<T> implements Table<T>
 
     @NonNull
     @Override
+    public Operation<T> assertOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate)
+    {
+        return mDelegate.assertOperation(new SyncParams(uriParams), predicate);
+    }
+
+
+    @NonNull
+    @Override
     public View<T> view(@NonNull ContentProviderClient client, @NonNull String... projection)
     {
         return new org.dmfs.android.contentpal.views.Synced<>(mDelegate.view(client, projection));

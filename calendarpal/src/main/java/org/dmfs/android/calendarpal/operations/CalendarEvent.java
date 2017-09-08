@@ -22,6 +22,7 @@ import android.support.annotation.NonNull;
 
 import org.dmfs.android.calendarpal.tables.Events;
 import org.dmfs.android.contentpal.InsertOperation;
+import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.SoftRowReference;
 import org.dmfs.android.contentpal.Table;
@@ -39,7 +40,7 @@ import org.dmfs.optional.Optional;
  */
 public final class CalendarEvent implements InsertOperation<CalendarContract.Events>
 {
-    private final InsertOperation<CalendarContract.Events> mDelegate;
+    private final Operation<CalendarContract.Events> mDelegate;
 
 
     /**
@@ -63,7 +64,7 @@ public final class CalendarEvent implements InsertOperation<CalendarContract.Eve
 
     public CalendarEvent(@NonNull RowSnapshot<CalendarContract.Calendars> calendar, @NonNull InsertOperation<CalendarContract.Events> delegate)
     {
-        this.mDelegate = new Related<>(calendar, CalendarContract.Events.CALENDAR_ID, delegate);
+        mDelegate = new Related<>(calendar, CalendarContract.Events.CALENDAR_ID, delegate);
     }
 
 

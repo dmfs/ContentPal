@@ -44,14 +44,14 @@ import static org.mockito.Mockito.mock;
  * @author Marten Gajda
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(manifest=Config.NONE)
+@Config(manifest = Config.NONE)
 public class SyncedTest
 {
     @Test
     public void testInsertOperation() throws Exception
     {
-        final InsertOperation<Object> resultOperation = mock(InsertOperation.class, new FailAnswer());
-        final Table<Object> mockTable = mock(Table.class, new FailAnswer());
+        InsertOperation<Object> resultOperation = mock(InsertOperation.class, new FailAnswer());
+        Table<Object> mockTable = mock(Table.class, new FailAnswer());
         doReturn(resultOperation).when(mockTable).insertOperation(argThat(new UriParamsArgumentMatcher()));
 
         assertThat(new Synced<>(mockTable).insertOperation(new EmptyUriParams()), sameInstance(resultOperation));
@@ -61,9 +61,9 @@ public class SyncedTest
     @Test
     public void testUpdateOperation() throws Exception
     {
-        final Operation<Object> resultOperation = mock(Operation.class, new FailAnswer());
-        final Predicate testPredicate = mock(Predicate.class);
-        final Table<Object> mockTable = mock(Table.class, new FailAnswer());
+        Operation<Object> resultOperation = mock(Operation.class, new FailAnswer());
+        Predicate testPredicate = mock(Predicate.class);
+        Table<Object> mockTable = mock(Table.class, new FailAnswer());
         doReturn(resultOperation).when(mockTable).updateOperation(argThat(new UriParamsArgumentMatcher()), same(testPredicate));
 
         assertThat(new Synced<>(mockTable).updateOperation(new EmptyUriParams(), testPredicate), sameInstance(resultOperation));
@@ -73,12 +73,24 @@ public class SyncedTest
     @Test
     public void testDeleteOperation() throws Exception
     {
-        final Operation<Object> resultOperation = mock(Operation.class, new FailAnswer());
-        final Predicate testPredicate = mock(Predicate.class);
-        final Table<Object> mockTable = mock(Table.class, new FailAnswer());
+        Operation<Object> resultOperation = mock(Operation.class, new FailAnswer());
+        Predicate testPredicate = mock(Predicate.class);
+        Table<Object> mockTable = mock(Table.class, new FailAnswer());
         doReturn(resultOperation).when(mockTable).deleteOperation(argThat(new UriParamsArgumentMatcher()), same(testPredicate));
 
         assertThat(new Synced<>(mockTable).deleteOperation(new EmptyUriParams(), testPredicate), sameInstance(resultOperation));
+    }
+
+
+    @Test
+    public void testAssertOperation() throws Exception
+    {
+        Operation<Object> resultOperation = mock(Operation.class, new FailAnswer());
+        Predicate testPredicate = mock(Predicate.class);
+        Table<Object> mockTable = mock(Table.class, new FailAnswer());
+        doReturn(resultOperation).when(mockTable).assertOperation(argThat(new UriParamsArgumentMatcher()), same(testPredicate));
+
+        assertThat(new Synced<>(mockTable).assertOperation(new EmptyUriParams(), testPredicate), sameInstance(resultOperation));
     }
 
 
@@ -91,4 +103,5 @@ public class SyncedTest
             return uri.getBooleanQueryParameter(ContactsContract.CALLER_IS_SYNCADAPTER, false);
         }
     }
+
 }

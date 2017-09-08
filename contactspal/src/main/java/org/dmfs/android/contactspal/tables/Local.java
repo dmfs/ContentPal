@@ -63,7 +63,7 @@ public final class Local implements Table<ContactsContract.RawContacts>
     @Override
     public Operation<ContactsContract.RawContacts> updateOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate)
     {
-        return mDelegate.updateOperation(uriParams, new AllOf(predicate, new IsNull("account_name"), new IsNull("account_type")));
+        return mDelegate.updateOperation(uriParams, accountLess(predicate));
     }
 
 
@@ -71,7 +71,15 @@ public final class Local implements Table<ContactsContract.RawContacts>
     @Override
     public Operation<ContactsContract.RawContacts> deleteOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate)
     {
-        return mDelegate.deleteOperation(uriParams, new AllOf(predicate, new IsNull("account_name"), new IsNull("account_type")));
+        return mDelegate.deleteOperation(uriParams, accountLess(predicate));
+    }
+
+
+    @NonNull
+    @Override
+    public Operation<ContactsContract.RawContacts> assertOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate)
+    {
+        return mDelegate.assertOperation(uriParams, accountLess(predicate));
     }
 
 
@@ -80,5 +88,11 @@ public final class Local implements Table<ContactsContract.RawContacts>
     public View<ContactsContract.RawContacts> view(@NonNull ContentProviderClient client, @NonNull String... projection)
     {
         return new org.dmfs.android.contactspal.views.Local(mDelegate.view(client, projection));
+    }
+
+
+    private Predicate accountLess(Predicate predicate)
+    {
+        return new AllOf(predicate, new IsNull("account_name"), new IsNull("account_type"));
     }
 }
