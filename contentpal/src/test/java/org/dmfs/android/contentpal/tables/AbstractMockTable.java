@@ -25,34 +25,23 @@ import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.Table;
 import org.dmfs.android.contentpal.UriParams;
 import org.dmfs.android.contentpal.View;
-import org.dmfs.android.contentpal.tools.uriparams.SyncParams;
+
+import static org.junit.Assert.fail;
 
 
 /**
- * A {@link Table} filtered by account to be used by sync adapters. This only works for tables that support the {@code account_name}, {@code account_type} and
- * {@code caller_is_syncadapter} query parameters.
- *
- * @param <T>
- *         The contract of this table.
+ * An abstract Table which fails on every method call. Mock {@link Table}s can override methods for testing.
  *
  * @author Marten Gajda
  */
-public final class Synced<T> implements Table<T>
+public abstract class AbstractMockTable<T> implements Table<T>
 {
-    private final Table<T> mDelegate;
-
-
-    public Synced(@NonNull Table<T> delegate)
-    {
-        mDelegate = delegate;
-    }
-
-
     @NonNull
     @Override
     public InsertOperation<T> insertOperation(@NonNull UriParams uriParams)
     {
-        return mDelegate.insertOperation(new SyncParams(uriParams));
+        fail("wrong method called");
+        return null;
     }
 
 
@@ -60,7 +49,8 @@ public final class Synced<T> implements Table<T>
     @Override
     public Operation<T> updateOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate)
     {
-        return mDelegate.updateOperation(new SyncParams(uriParams), predicate);
+        fail("wrong method called");
+        return null;
     }
 
 
@@ -68,7 +58,8 @@ public final class Synced<T> implements Table<T>
     @Override
     public Operation<T> deleteOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate)
     {
-        return mDelegate.deleteOperation(new SyncParams(uriParams), predicate);
+        fail("wrong method called");
+        return null;
     }
 
 
@@ -76,7 +67,7 @@ public final class Synced<T> implements Table<T>
     @Override
     public View<T> view(@NonNull ContentProviderClient client, @NonNull String... projection)
     {
-        return new org.dmfs.android.contentpal.views.Synced<>(mDelegate.view(client, projection));
+        fail("wrong method called");
+        return null;
     }
-
 }
