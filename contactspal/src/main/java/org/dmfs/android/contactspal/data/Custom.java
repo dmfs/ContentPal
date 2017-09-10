@@ -30,6 +30,7 @@ import org.dmfs.android.contactspal.data.relation.RelationData;
 import org.dmfs.android.contactspal.data.sip.SipAddressData;
 import org.dmfs.android.contactspal.data.website.WebsiteData;
 import org.dmfs.android.contentpal.RowData;
+import org.dmfs.android.contentpal.TransactionContext;
 
 
 /**
@@ -63,9 +64,9 @@ public final class Custom implements RowData<ContactsContract.Data>
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder updatedBuilder(@NonNull ContentProviderOperation.Builder builder)
+    public ContentProviderOperation.Builder updatedBuilder(TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
-        return mDelegate.updatedBuilder(builder)
+        return mDelegate.updatedBuilder(transactionContext, builder)
                 // note this is universal, because all supported data types use the same type and label column for custom labels
                 .withValue(ContactsContract.CommonDataKinds.Phone.TYPE, ContactsContract.CommonDataKinds.BaseTypes.TYPE_CUSTOM)
                 .withValue(ContactsContract.CommonDataKinds.Phone.LABEL, mLabel.toString());

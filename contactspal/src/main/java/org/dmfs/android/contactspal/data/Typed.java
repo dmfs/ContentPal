@@ -30,6 +30,7 @@ import org.dmfs.android.contactspal.data.relation.RelationData;
 import org.dmfs.android.contactspal.data.sip.SipAddressData;
 import org.dmfs.android.contactspal.data.website.WebsiteData;
 import org.dmfs.android.contentpal.RowData;
+import org.dmfs.android.contentpal.TransactionContext;
 
 
 /**
@@ -63,9 +64,9 @@ public final class Typed implements RowData<ContactsContract.Data>
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder updatedBuilder(@NonNull ContentProviderOperation.Builder builder)
+    public ContentProviderOperation.Builder updatedBuilder(TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
         // note that all data types use the same column for TYPE
-        return mDelegate.updatedBuilder(builder).withValue(ContactsContract.CommonDataKinds.Phone.TYPE, mType);
+        return mDelegate.updatedBuilder(transactionContext, builder).withValue(ContactsContract.CommonDataKinds.Phone.TYPE, mType);
     }
 }

@@ -23,6 +23,7 @@ import android.support.annotation.NonNull;
 import org.dmfs.android.contactspal.data.Custom;
 import org.dmfs.android.contactspal.data.Typed;
 import org.dmfs.android.contentpal.RowData;
+import org.dmfs.android.contentpal.TransactionContext;
 
 
 /**
@@ -45,7 +46,7 @@ public final class NicknameData implements RowData<ContactsContract.Data>
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder updatedBuilder(@NonNull ContentProviderOperation.Builder builder)
+    public ContentProviderOperation.Builder updatedBuilder(TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
         return builder
                 .withValue(ContactsContract.CommonDataKinds.Nickname.MIMETYPE, ContactsContract.CommonDataKinds.Nickname.CONTENT_ITEM_TYPE)

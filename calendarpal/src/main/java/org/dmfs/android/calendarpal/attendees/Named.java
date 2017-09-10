@@ -22,6 +22,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import org.dmfs.android.contentpal.RowData;
+import org.dmfs.android.contentpal.TransactionContext;
 
 
 /**
@@ -44,8 +45,9 @@ public final class Named implements RowData<CalendarContract.Attendees>
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder updatedBuilder(@NonNull ContentProviderOperation.Builder builder)
+    public ContentProviderOperation.Builder updatedBuilder(TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
-        return mDelegate.updatedBuilder(builder).withValue(CalendarContract.Attendees.ATTENDEE_NAME, mName == null ? null : mName.toString());
+        return mDelegate.updatedBuilder(transactionContext, builder)
+                .withValue(CalendarContract.Attendees.ATTENDEE_NAME, mName == null ? null : mName.toString());
     }
 }

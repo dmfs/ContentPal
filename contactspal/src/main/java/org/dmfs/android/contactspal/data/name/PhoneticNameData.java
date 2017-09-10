@@ -21,6 +21,8 @@ import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import org.dmfs.android.contentpal.TransactionContext;
+
 
 /**
  * Phonetic name component of a {@link StructuredNameData}.
@@ -52,9 +54,9 @@ public final class PhoneticNameData implements StructuredNameData
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder updatedBuilder(@NonNull ContentProviderOperation.Builder builder)
+    public ContentProviderOperation.Builder updatedBuilder(TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
-        return mDelegate.updatedBuilder(builder)
+        return mDelegate.updatedBuilder(transactionContext, builder)
                 .withValue(ContactsContract.CommonDataKinds.StructuredName.PHONETIC_GIVEN_NAME, mFirstName == null ? null : mFirstName.toString())
                 .withValue(ContactsContract.CommonDataKinds.StructuredName.PHONETIC_MIDDLE_NAME, mMiddleName == null ? null : mMiddleName.toString())
                 .withValue(ContactsContract.CommonDataKinds.StructuredName.PHONETIC_FAMILY_NAME, mLastName == null ? null : mLastName.toString());

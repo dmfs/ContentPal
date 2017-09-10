@@ -56,6 +56,6 @@ public final class Populated<T> implements Operation<T>
     @Override
     public ContentProviderOperation.Builder contentOperationBuilder(@NonNull TransactionContext transactionContext)
     {
-        return mRowData.updatedBuilder(mOperation.contentOperationBuilder(transactionContext));
+        return mRowData.updatedBuilder(transactionContext, mOperation.contentOperationBuilder(transactionContext));
     }
 }

@@ -78,6 +78,6 @@ public final class Insert<T> implements InsertOperation<T>
     @Override
     public ContentProviderOperation.Builder contentOperationBuilder(@NonNull TransactionContext transactionContext) throws UnsupportedOperationException
     {
-        return mData.updatedBuilder(mTable.insertOperation(EmptyUriParams.INSTANCE).contentOperationBuilder(transactionContext));
+        return mData.updatedBuilder(transactionContext, mTable.insertOperation(EmptyUriParams.INSTANCE).contentOperationBuilder(transactionContext));
     }
 }

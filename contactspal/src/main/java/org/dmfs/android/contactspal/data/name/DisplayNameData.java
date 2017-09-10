@@ -21,6 +21,8 @@ import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import org.dmfs.android.contentpal.TransactionContext;
+
 
 /**
  * Display name of a {@link ContactsContract.CommonDataKinds.StructuredName} row.
@@ -48,9 +50,9 @@ public final class DisplayNameData implements StructuredNameData
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder updatedBuilder(@NonNull ContentProviderOperation.Builder builder)
+    public ContentProviderOperation.Builder updatedBuilder(TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
-        return mDelegate.updatedBuilder(builder)
+        return mDelegate.updatedBuilder(transactionContext, builder)
                 .withValue(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, mDisplayName == null ? null : mDisplayName.toString());
     }
 }

@@ -69,6 +69,7 @@ public final class BulkUpdate<T> implements Operation<T>
     @Override
     public ContentProviderOperation.Builder contentOperationBuilder(@NonNull TransactionContext transactionContext) throws UnsupportedOperationException
     {
-        return mData.updatedBuilder(mTable.updateOperation(EmptyUriParams.INSTANCE, mPredicate).contentOperationBuilder(transactionContext));
+        return mData.updatedBuilder(transactionContext,
+                mTable.updateOperation(EmptyUriParams.INSTANCE, mPredicate).contentOperationBuilder(transactionContext));
     }
 }

@@ -22,6 +22,7 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import org.dmfs.android.contentpal.RowData;
+import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.iterables.EmptyIterable;
 import org.dmfs.iterables.SingletonIterable;
 import org.dmfs.iterables.decorators.Mapped;
@@ -98,7 +99,7 @@ public final class RecurringEventData implements RowData<CalendarContract.Events
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder updatedBuilder(@NonNull ContentProviderOperation.Builder builder)
+    public ContentProviderOperation.Builder updatedBuilder(TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
         return builder.withValue(CalendarContract.Events.DTSTART, mStart.getTimestamp())
                 .withValue(CalendarContract.Events.EVENT_TIMEZONE, mStart.isAllDay() ? "UTC" : mStart.getTimeZone().getID())

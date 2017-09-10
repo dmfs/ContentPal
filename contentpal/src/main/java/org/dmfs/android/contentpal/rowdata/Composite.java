@@ -20,6 +20,7 @@ import android.content.ContentProviderOperation;
 import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.RowData;
+import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.iterables.ArrayIterable;
 import org.dmfs.optional.Optional;
 import org.dmfs.optional.iterable.PresentValues;
@@ -57,11 +58,11 @@ public final class Composite<T> implements RowData<T>
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder updatedBuilder(@NonNull ContentProviderOperation.Builder builder)
+    public ContentProviderOperation.Builder updatedBuilder(TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
         for (RowData<T> rowData : mDelegates)
         {
-            rowData.updatedBuilder(builder);
+            rowData.updatedBuilder(transactionContext, builder);
         }
         return builder;
     }

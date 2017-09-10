@@ -20,6 +20,8 @@ import android.content.ContentProviderOperation;
 import android.provider.CalendarContract;
 import android.support.annotation.NonNull;
 
+import org.dmfs.android.contentpal.TransactionContext;
+
 
 /**
  * {@link CalendarRowData} decorator to set a calendar color.
@@ -41,8 +43,8 @@ public final class Colored implements CalendarRowData
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder updatedBuilder(@NonNull ContentProviderOperation.Builder builder)
+    public ContentProviderOperation.Builder updatedBuilder(TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
-        return mDelegate.updatedBuilder(builder).withValue(CalendarContract.Calendars.CALENDAR_COLOR, mColor);
+        return mDelegate.updatedBuilder(transactionContext, builder).withValue(CalendarContract.Calendars.CALENDAR_COLOR, mColor);
     }
 }
