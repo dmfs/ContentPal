@@ -48,6 +48,7 @@ import org.dmfs.android.calendarpal.tables.CalendarScoped;
 import org.dmfs.android.calendarpal.tables.Calendars;
 import org.dmfs.android.calendarpal.tables.Events;
 import org.dmfs.android.calendarpal.tables.Reminders;
+import org.dmfs.android.contactspal.aggregation.Link;
 import org.dmfs.android.contactspal.batches.InsertRawContactBatch;
 import org.dmfs.android.contactspal.data.Custom;
 import org.dmfs.android.contactspal.data.Primary;
@@ -80,6 +81,7 @@ import org.dmfs.android.contentpal.OperationsQueue;
 import org.dmfs.android.contentpal.RowDataSnapshot;
 import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.Table;
+import org.dmfs.android.contentpal.batches.Joined;
 import org.dmfs.android.contentpal.batches.MultiBatch;
 import org.dmfs.android.contentpal.batches.MultiInsertBatch;
 import org.dmfs.android.contentpal.batches.SingletonBatch;
@@ -202,6 +204,22 @@ public class DemoActivity extends AppCompatActivity
                                         new CityData("Dresden"),
                                         new CountryData("Germany")))));
         mContactsQueue.flush();
+
+        // create another "virtual" row snapshot of a RawContact row
+        RowSnapshot<ContactsContract.RawContacts> rawContact2 = new VirtualRowSnapshot<>(mRawContacts);
+
+        // insert the contact and link it to the first one in the same transaction
+        mContactsQueue.enqueue(
+                new Joined(
+                        new InsertRawContactBatch(rawContact2,
+                                new DisplayNameData("Donald Duck"),
+                                new Typed(ContactsContract.CommonDataKinds.Phone.TYPE_WORK, new PhoneData("9876"))
+                        ),
+                        // Demonstrate how to link two contacts
+                        new SingletonBatch(new Link(rawContact, rawContact2)))
+        );
+        mContactsQueue.flush();
+
     }
 
 

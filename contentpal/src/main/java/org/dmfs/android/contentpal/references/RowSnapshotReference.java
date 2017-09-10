@@ -19,29 +19,25 @@ package org.dmfs.android.contentpal.references;
 import android.content.ContentProviderOperation;
 import android.support.annotation.NonNull;
 
-import org.dmfs.android.contentpal.InsertOperation;
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.RowReference;
-import org.dmfs.android.contentpal.SoftRowReference;
+import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.TransactionContext;
 
 
 /**
- * The {@link SoftRowReference} of an {@link InsertOperation}.
- * <p>
- * Note that by design {@link RowReference#putOperationBuilder(TransactionContext)} returns a {@link ContentProviderOperation.Builder} to insert a new row on
- * every call.
+ * A {@link RowReference} to a row identified by its {@link RowSnapshot}.
  *
  * @author Marten Gajda
  */
-public final class VirtualRowReference<T> implements SoftRowReference<T>
+public final class RowSnapshotReference<T> implements RowReference<T>
 {
-    private final InsertOperation<T> mInsertOperation;
+    private final RowSnapshot<T> mRowSnapshot;
 
 
-    public VirtualRowReference(@NonNull InsertOperation<T> insertOperation)
+    public RowSnapshotReference(@NonNull RowSnapshot<T> rowSnapshot)
     {
-        mInsertOperation = insertOperation;
+        mRowSnapshot = rowSnapshot;
     }
 
 
@@ -49,7 +45,7 @@ public final class VirtualRowReference<T> implements SoftRowReference<T>
     @Override
     public ContentProviderOperation.Builder putOperationBuilder(@NonNull TransactionContext transactionContext)
     {
-        return mInsertOperation.contentOperationBuilder(transactionContext);
+        return mRowSnapshot.reference().putOperationBuilder(transactionContext);
     }
 
 
@@ -57,7 +53,7 @@ public final class VirtualRowReference<T> implements SoftRowReference<T>
     @Override
     public ContentProviderOperation.Builder deleteOperationBuilder(@NonNull TransactionContext transactionContext)
     {
-        throw new UnsupportedOperationException("Can't delete a virtual row.");
+        return mRowSnapshot.reference().deleteOperationBuilder(transactionContext);
     }
 
 
@@ -65,7 +61,7 @@ public final class VirtualRowReference<T> implements SoftRowReference<T>
     @Override
     public ContentProviderOperation.Builder builderWithReferenceData(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder operationBuilder, @NonNull String foreignKeyColumn)
     {
-        return transactionContext.resolved(this).builderWithReferenceData(transactionContext, operationBuilder, foreignKeyColumn);
+        return mRowSnapshot.reference().builderWithReferenceData(transactionContext, operationBuilder, foreignKeyColumn);
     }
 
 
@@ -73,13 +69,6 @@ public final class VirtualRowReference<T> implements SoftRowReference<T>
     @Override
     public Predicate predicate(@NonNull String keyColumn)
     {
-        throw new UnsupportedOperationException("Can't create a predicate which matches a virtual row.");
-    }
-
-
-    @Override
-    public boolean isVirtual()
-    {
-        return true;
+        return mRowSnapshot.reference().predicate(keyColumn);
     }
 }
