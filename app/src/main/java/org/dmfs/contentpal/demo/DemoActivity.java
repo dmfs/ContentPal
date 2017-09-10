@@ -87,7 +87,7 @@ import org.dmfs.android.contentpal.operations.BulkDelete;
 import org.dmfs.android.contentpal.operations.Insert;
 import org.dmfs.android.contentpal.operations.Put;
 import org.dmfs.android.contentpal.predicates.AllOf;
-import org.dmfs.android.contentpal.queues.BasicOperationsQueue;
+import org.dmfs.android.contentpal.queues.LazyOperationsQueue;
 import org.dmfs.android.contentpal.rowdata.Composite;
 import org.dmfs.android.contentpal.rowsnapshots.VirtualRowSnapshot;
 import org.dmfs.android.contentpal.tables.AccountScoped;
@@ -325,7 +325,7 @@ public class DemoActivity extends AppCompatActivity
         if (mContactsClient == null)
         {
             mContactsClient = getContentResolver().acquireContentProviderClient(ContactsContract.AUTHORITY_URI);
-            mContactsQueue = new BasicOperationsQueue(mContactsClient);
+            mContactsQueue = new LazyOperationsQueue(mContactsClient);
         }
         return true;
     }
@@ -343,7 +343,7 @@ public class DemoActivity extends AppCompatActivity
         if (mCalendarsClient == null)
         {
             mCalendarsClient = getContentResolver().acquireContentProviderClient(CalendarContract.AUTHORITY);
-            mCalendarQueue = new BasicOperationsQueue(mCalendarsClient);
+            mCalendarQueue = new LazyOperationsQueue(mCalendarsClient);
         }
         return true;
     }
