@@ -51,6 +51,7 @@ import org.dmfs.android.calendarpal.tables.Reminders;
 import org.dmfs.android.contactspal.batches.InsertRawContactBatch;
 import org.dmfs.android.contactspal.data.Custom;
 import org.dmfs.android.contactspal.data.Primary;
+import org.dmfs.android.contactspal.data.SuperPrimary;
 import org.dmfs.android.contactspal.data.Typed;
 import org.dmfs.android.contactspal.data.email.EmailData;
 import org.dmfs.android.contactspal.data.event.EventData;
@@ -184,6 +185,7 @@ public class DemoActivity extends AppCompatActivity
                                 new Custom("someLabel", new ImData("abc", "custom")),
                                 new Typed(ContactsContract.CommonDataKinds.Event.TYPE_BIRTHDAY, new EventData("2017-04-02")),
                                 new Custom("weekend", new SipAddressData("12345")),
+                                new SuperPrimary(new Typed(ContactsContract.CommonDataKinds.Email.TYPE_HOME, new EmailData("john@home.com"))),
                                 new WorkOrganization(
                                         new JobData("Developer"),
                                         new CompanyData("dmfs GmbH"),
