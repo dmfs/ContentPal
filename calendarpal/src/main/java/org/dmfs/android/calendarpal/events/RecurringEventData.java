@@ -22,13 +22,13 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import org.dmfs.android.contentpal.RowData;
+import org.dmfs.iterables.EmptyIterable;
+import org.dmfs.iterables.SingletonIterable;
 import org.dmfs.iterables.decorators.Mapped;
 import org.dmfs.iterators.Function;
 import org.dmfs.rfc5545.DateTime;
 import org.dmfs.rfc5545.Duration;
 import org.dmfs.rfc5545.recur.RecurrenceRule;
-
-import java.util.Collections;
 
 
 /**
@@ -57,31 +57,31 @@ public final class RecurringEventData implements RowData<CalendarContract.Events
 
     public RecurringEventData(@NonNull CharSequence title, @NonNull DateTime start, @NonNull Duration duration, @NonNull RecurrenceRule rule)
     {
-        this(title, start, duration, Collections.singleton(rule), Collections.<DateTime>emptyList(), Collections.<DateTime>emptyList());
+        this(title, start, duration, new SingletonIterable<>(rule), EmptyIterable.<DateTime>instance(), EmptyIterable.<DateTime>instance());
     }
 
 
     public RecurringEventData(@NonNull CharSequence title, @NonNull DateTime start, @NonNull Duration duration, @NonNull RecurrenceRule rule, @NonNull Iterable<DateTime> exDates)
     {
-        this(title, start, duration, Collections.singleton(rule), exDates, Collections.<DateTime>emptyList());
+        this(title, start, duration, new SingletonIterable<>(rule), exDates, EmptyIterable.<DateTime>instance());
     }
 
 
     public RecurringEventData(@NonNull CharSequence title, @NonNull DateTime start, @NonNull Duration duration, @NonNull RecurrenceRule rule, @NonNull Iterable<DateTime> exDates, @NonNull Iterable<DateTime> rdates)
     {
-        this(title, start, duration, Collections.singleton(rule), exDates, rdates);
+        this(title, start, duration, new SingletonIterable<>(rule), exDates, rdates);
     }
 
 
     public RecurringEventData(@NonNull CharSequence title, @NonNull DateTime start, @NonNull Duration duration, @NonNull Iterable<RecurrenceRule> rules)
     {
-        this(title, start, duration, rules, Collections.<DateTime>emptyList(), Collections.<DateTime>emptyList());
+        this(title, start, duration, rules, EmptyIterable.<DateTime>instance(), EmptyIterable.<DateTime>instance());
     }
 
 
     public RecurringEventData(@NonNull CharSequence title, @NonNull DateTime start, @NonNull Duration duration, @NonNull Iterable<RecurrenceRule> rules, @NonNull Iterable<DateTime> exDates)
     {
-        this(title, start, duration, rules, exDates, Collections.<DateTime>emptyList());
+        this(title, start, duration, rules, exDates, EmptyIterable.<DateTime>instance());
     }
 
 

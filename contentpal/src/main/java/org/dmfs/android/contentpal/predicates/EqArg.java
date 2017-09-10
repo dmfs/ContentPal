@@ -19,8 +19,7 @@ package org.dmfs.android.contentpal.predicates;
 import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Predicate;
-
-import java.util.Collections;
+import org.dmfs.iterables.SingletonIterable;
 
 
 /**
@@ -53,6 +52,6 @@ public final class EqArg implements Predicate
     @Override
     public Iterable<String> arguments()
     {
-        return Collections.singleton(mArgument.toString());
+        return new SingletonIterable<>(mArgument.toString());
     }
 }
