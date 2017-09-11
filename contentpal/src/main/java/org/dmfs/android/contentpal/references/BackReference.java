@@ -69,7 +69,7 @@ public final class BackReference<T> implements RowReference<T>
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder builderWithReferenceData(@NonNull ContentProviderOperation.Builder operationBuilder, @NonNull String foreignKeyColumn)
+    public ContentProviderOperation.Builder builderWithReferenceData(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder operationBuilder, @NonNull String foreignKeyColumn)
     {
         return operationBuilder.withValueBackReference(foreignKeyColumn, mBackReference);
     }

@@ -60,12 +60,14 @@ public interface RowReference<T>
     /**
      * Select the referred item in the given {@link ContentProviderOperation.Builder}.
      *
+     * @param transactionContext
+     *         A {@link TransactionContext} of the {@link Transaction} this is being executed in.
      * @param operationBuilder
      *         The  {@link ContentProviderOperation.Builder}.
      * @param foreignKeyColumn
      */
     @NonNull
-    ContentProviderOperation.Builder builderWithReferenceData(@NonNull ContentProviderOperation.Builder operationBuilder, @NonNull String foreignKeyColumn);
+    ContentProviderOperation.Builder builderWithReferenceData(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder operationBuilder, @NonNull String foreignKeyColumn);
 
     /**
      * Returns a {@link Predicate} which matches the row on the given key column.

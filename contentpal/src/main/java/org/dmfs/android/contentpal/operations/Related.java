@@ -60,6 +60,6 @@ public final class Related<T, V> implements InsertOperation<T>
     public ContentProviderOperation.Builder contentOperationBuilder(@NonNull TransactionContext transactionContext) throws UnsupportedOperationException
     {
         return transactionContext.resolved(mRowSnapshot.reference())
-                .builderWithReferenceData(mDelegate.contentOperationBuilder(transactionContext), mForeignKeyColumn);
+                .builderWithReferenceData(transactionContext, mDelegate.contentOperationBuilder(transactionContext), mForeignKeyColumn);
     }
 }

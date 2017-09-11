@@ -38,6 +38,11 @@ public final class EmptyTransactionContext implements TransactionContext
     @Override
     public <T> RowReference<T> resolved(@NonNull SoftRowReference<T> reference)
     {
+        if (reference.isVirtual())
+        {
+            // we need to throw here, otherwise we might end up in an infinite loop
+            throw new IllegalArgumentException(String.format("Unable to resolve virtual RowReference %s", reference));
+        }
         return reference;
     }
 
