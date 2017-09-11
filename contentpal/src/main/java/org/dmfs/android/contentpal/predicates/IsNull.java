@@ -19,8 +19,7 @@ package org.dmfs.android.contentpal.predicates;
 import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Predicate;
-
-import java.util.Collections;
+import org.dmfs.iterables.EmptyIterable;
 
 
 /**
@@ -51,6 +50,6 @@ public final class IsNull implements Predicate
     @Override
     public Iterable<String> arguments()
     {
-        return Collections.emptyList();
+        return EmptyIterable.instance();
     }
 }
