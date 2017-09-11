@@ -65,6 +65,6 @@ public final class Put<T> implements Operation<T>
     @Override
     public ContentProviderOperation.Builder contentOperationBuilder(@NonNull TransactionContext transactionContext)
     {
-        return mData.updatedBuilder(transactionContext.resolved(mRowSnapshot.reference()).putOperationBuilder(transactionContext));
+        return mData.updatedBuilder(transactionContext, transactionContext.resolved(mRowSnapshot.reference()).putOperationBuilder(transactionContext));
     }
 }

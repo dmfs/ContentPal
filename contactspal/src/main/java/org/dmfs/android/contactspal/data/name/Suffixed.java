@@ -21,6 +21,8 @@ import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import org.dmfs.android.contentpal.TransactionContext;
+
 
 /**
  * Decorator to add a suffix to {@link StructuredNameData}.
@@ -48,8 +50,9 @@ public final class Suffixed implements StructuredNameData
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder updatedBuilder(@NonNull ContentProviderOperation.Builder builder)
+    public ContentProviderOperation.Builder updatedBuilder(TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
-        return mDelegate.updatedBuilder(builder).withValue(ContactsContract.CommonDataKinds.StructuredName.SUFFIX, mSuffix == null ? null : mSuffix.toString());
+        return mDelegate.updatedBuilder(transactionContext, builder)
+                .withValue(ContactsContract.CommonDataKinds.StructuredName.SUFFIX, mSuffix == null ? null : mSuffix.toString());
     }
 }

@@ -23,6 +23,7 @@ import android.support.annotation.Nullable;
 
 import org.dmfs.android.contactspal.data.Custom;
 import org.dmfs.android.contactspal.data.Typed;
+import org.dmfs.android.contentpal.TransactionContext;
 
 
 /**
@@ -53,8 +54,9 @@ public final class TitleData implements OrganizationData
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder updatedBuilder(@NonNull ContentProviderOperation.Builder builder)
+    public ContentProviderOperation.Builder updatedBuilder(TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
-        return mDelegate.updatedBuilder(builder).withValue(ContactsContract.CommonDataKinds.Organization.TITLE, mTitle == null ? null : mTitle.toString());
+        return mDelegate.updatedBuilder(transactionContext, builder)
+                .withValue(ContactsContract.CommonDataKinds.Organization.TITLE, mTitle == null ? null : mTitle.toString());
     }
 }

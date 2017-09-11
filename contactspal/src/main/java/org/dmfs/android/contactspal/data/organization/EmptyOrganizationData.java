@@ -20,6 +20,8 @@ import android.content.ContentProviderOperation;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 
+import org.dmfs.android.contentpal.TransactionContext;
+
 
 /**
  * {@link OrganizationData} which doesn't add any values. This has package scope because it's not supposed to be used by developers.
@@ -33,7 +35,7 @@ final class EmptyOrganizationData implements OrganizationData
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder updatedBuilder(@NonNull ContentProviderOperation.Builder builder)
+    public ContentProviderOperation.Builder updatedBuilder(TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
         // add content item type here, so other organization data can just delegate this part
         return builder

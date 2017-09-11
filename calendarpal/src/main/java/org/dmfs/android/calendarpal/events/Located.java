@@ -22,6 +22,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import org.dmfs.android.contentpal.RowData;
+import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.rowdata.EmptyRowData;
 
 
@@ -51,8 +52,9 @@ public final class Located implements RowData<CalendarContract.Events>
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder updatedBuilder(@NonNull ContentProviderOperation.Builder builder)
+    public ContentProviderOperation.Builder updatedBuilder(TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
-        return mDelegate.updatedBuilder(builder).withValue(CalendarContract.Events.EVENT_LOCATION, mLocation == null ? null : mLocation.toString());
+        return mDelegate.updatedBuilder(transactionContext, builder)
+                .withValue(CalendarContract.Events.EVENT_LOCATION, mLocation == null ? null : mLocation.toString());
     }
 }

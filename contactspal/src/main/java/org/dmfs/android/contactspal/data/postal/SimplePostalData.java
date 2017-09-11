@@ -24,6 +24,7 @@ import android.support.annotation.Nullable;
 import org.dmfs.android.contactspal.data.Custom;
 import org.dmfs.android.contactspal.data.Typed;
 import org.dmfs.android.contentpal.RowData;
+import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.rowdata.Composite;
 
 
@@ -55,8 +56,8 @@ public final class SimplePostalData implements StructuredPostalData
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder updatedBuilder(@NonNull ContentProviderOperation.Builder builder)
+    public ContentProviderOperation.Builder updatedBuilder(TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
-        return mDelegate.updatedBuilder(builder);
+        return mDelegate.updatedBuilder(transactionContext, builder);
     }
 }

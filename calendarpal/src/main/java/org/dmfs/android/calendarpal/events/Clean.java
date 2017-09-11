@@ -21,6 +21,7 @@ import android.provider.CalendarContract;
 import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.RowData;
+import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.rowdata.EmptyRowData;
 
 
@@ -48,8 +49,8 @@ public final class Clean implements RowData<CalendarContract.Events>
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder updatedBuilder(@NonNull ContentProviderOperation.Builder builder)
+    public ContentProviderOperation.Builder updatedBuilder(TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
-        return mDelegate.updatedBuilder(builder).withValue(CalendarContract.Events.DIRTY, 0);
+        return mDelegate.updatedBuilder(transactionContext, builder).withValue(CalendarContract.Events.DIRTY, 0);
     }
 }

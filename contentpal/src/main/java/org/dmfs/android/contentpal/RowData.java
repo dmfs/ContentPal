@@ -37,11 +37,13 @@ public interface RowData<T>
      * Note that {@link ContentProviderOperation.Builder}s are mutable an can not be cloned, so you'll receive the same instance you passed to this method. Make
      * sure you don't rely on the old state of the builder and don't use it in concurrent threads.
      *
+     * @param transactionContext
+     *         The {@link TransactionContext} of the {@link Transaction} this is being executed in.
      * @param builder
      *         A {@link ContentProviderOperation.Builder}.
      *
      * @return The same {@link ContentProviderOperation.Builder}.
      */
     @NonNull
-    ContentProviderOperation.Builder updatedBuilder(@NonNull ContentProviderOperation.Builder builder);
+    ContentProviderOperation.Builder updatedBuilder(TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder);
 }

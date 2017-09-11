@@ -23,6 +23,7 @@ import android.support.annotation.Nullable;
 
 import org.dmfs.android.contactspal.data.Custom;
 import org.dmfs.android.contactspal.data.Typed;
+import org.dmfs.android.contentpal.TransactionContext;
 
 
 /**
@@ -53,8 +54,9 @@ public final class SymbolData implements OrganizationData
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder updatedBuilder(@NonNull ContentProviderOperation.Builder builder)
+    public ContentProviderOperation.Builder updatedBuilder(TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
-        return mDelegate.updatedBuilder(builder).withValue(ContactsContract.CommonDataKinds.Organization.SYMBOL, mSymbol == null ? null : mSymbol.toString());
+        return mDelegate.updatedBuilder(transactionContext, builder)
+                .withValue(ContactsContract.CommonDataKinds.Organization.SYMBOL, mSymbol == null ? null : mSymbol.toString());
     }
 }

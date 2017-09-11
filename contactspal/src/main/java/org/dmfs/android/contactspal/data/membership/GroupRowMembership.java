@@ -22,7 +22,7 @@ import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.RowData;
 import org.dmfs.android.contentpal.RowSnapshot;
-import org.dmfs.android.contentpal.transactions.contexts.EmptyTransactionContext;
+import org.dmfs.android.contentpal.TransactionContext;
 
 
 /**
@@ -41,13 +41,10 @@ public final class GroupRowMembership implements RowData<ContactsContract.Data>
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder updatedBuilder(@NonNull ContentProviderOperation.Builder builder)
+    public ContentProviderOperation.Builder updatedBuilder(TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
         // this data row refers to the given group
-        return mGroup.reference()
-                // TODO: we don't have access to the transaction context, which means the group has to exists already.
-                // One solution could be to pass the TransactionContext to updateBuilder, so rowData objects can resolve virtual row snapshots
-                // see: https://github.com/dmfs/ContentPal/issues/27
-                .builderWithReferenceData(EmptyTransactionContext.INSTANCE, builder, ContactsContract.CommonDataKinds.GroupMembership.GROUP_ROW_ID);
+        return transactionContext.resolved(mGroup.reference())
+                .builderWithReferenceData(transactionContext, builder, ContactsContract.CommonDataKinds.GroupMembership.GROUP_ROW_ID);
     }
 }

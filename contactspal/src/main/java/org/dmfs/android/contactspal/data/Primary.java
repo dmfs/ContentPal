@@ -21,6 +21,7 @@ import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.RowData;
+import org.dmfs.android.contentpal.TransactionContext;
 
 
 /**
@@ -41,8 +42,8 @@ public final class Primary implements RowData<ContactsContract.Data>
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder updatedBuilder(@NonNull ContentProviderOperation.Builder builder)
+    public ContentProviderOperation.Builder updatedBuilder(TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
-        return mDelegate.updatedBuilder(builder).withValue(ContactsContract.Data.IS_PRIMARY, 1);
+        return mDelegate.updatedBuilder(transactionContext, builder).withValue(ContactsContract.Data.IS_PRIMARY, 1);
     }
 }
