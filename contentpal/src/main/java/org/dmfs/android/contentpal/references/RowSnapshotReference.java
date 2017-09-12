@@ -45,7 +45,7 @@ public final class RowSnapshotReference<T> implements RowReference<T>
     @Override
     public ContentProviderOperation.Builder putOperationBuilder(@NonNull TransactionContext transactionContext)
     {
-        return mRowSnapshot.reference().putOperationBuilder(transactionContext);
+        return transactionContext.resolved(mRowSnapshot.reference()).putOperationBuilder(transactionContext);
     }
 
 
@@ -53,7 +53,7 @@ public final class RowSnapshotReference<T> implements RowReference<T>
     @Override
     public ContentProviderOperation.Builder deleteOperationBuilder(@NonNull TransactionContext transactionContext)
     {
-        return mRowSnapshot.reference().deleteOperationBuilder(transactionContext);
+        return transactionContext.resolved(mRowSnapshot.reference()).deleteOperationBuilder(transactionContext);
     }
 
 
@@ -61,7 +61,7 @@ public final class RowSnapshotReference<T> implements RowReference<T>
     @Override
     public ContentProviderOperation.Builder builderWithReferenceData(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder operationBuilder, @NonNull String foreignKeyColumn)
     {
-        return mRowSnapshot.reference().builderWithReferenceData(transactionContext, operationBuilder, foreignKeyColumn);
+        return transactionContext.resolved(mRowSnapshot.reference()).builderWithReferenceData(transactionContext, operationBuilder, foreignKeyColumn);
     }
 
 
