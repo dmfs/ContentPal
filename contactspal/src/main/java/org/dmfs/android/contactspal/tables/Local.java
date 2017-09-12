@@ -63,7 +63,7 @@ public final class Local implements Table<ContactsContract.RawContacts>
     @Override
     public Operation<ContactsContract.RawContacts> updateOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate)
     {
-        return mDelegate.updateOperation(uriParams, accountLess(predicate));
+        return mDelegate.updateOperation(uriParams, localAccountPredicate(predicate));
     }
 
 
@@ -71,7 +71,7 @@ public final class Local implements Table<ContactsContract.RawContacts>
     @Override
     public Operation<ContactsContract.RawContacts> deleteOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate)
     {
-        return mDelegate.deleteOperation(uriParams, accountLess(predicate));
+        return mDelegate.deleteOperation(uriParams, localAccountPredicate(predicate));
     }
 
 
@@ -79,7 +79,7 @@ public final class Local implements Table<ContactsContract.RawContacts>
     @Override
     public Operation<ContactsContract.RawContacts> assertOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate)
     {
-        return mDelegate.assertOperation(uriParams, accountLess(predicate));
+        return mDelegate.assertOperation(uriParams, localAccountPredicate(predicate));
     }
 
 
@@ -91,7 +91,7 @@ public final class Local implements Table<ContactsContract.RawContacts>
     }
 
 
-    private Predicate accountLess(Predicate predicate)
+    private Predicate localAccountPredicate(Predicate predicate)
     {
         return new AllOf(predicate, new IsNull("account_name"), new IsNull("account_type"));
     }
