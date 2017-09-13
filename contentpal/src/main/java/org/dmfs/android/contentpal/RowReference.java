@@ -44,7 +44,7 @@ public interface RowReference<T>
     ContentProviderOperation.Builder putOperationBuilder(@NonNull TransactionContext transactionContext);
 
     /**
-     * Creates an {@link ContentProviderOperation.Builder} that will deleteOperation the referred row.
+     * Creates an {@link ContentProviderOperation.Builder} that will delete the referred row.
      *
      * @param transactionContext
      *         A {@link TransactionContext} of the {@link Transaction} this is being executed in.
@@ -56,6 +56,20 @@ public interface RowReference<T>
      */
     @NonNull
     ContentProviderOperation.Builder deleteOperationBuilder(@NonNull TransactionContext transactionContext);
+
+    /**
+     * Creates an {@link ContentProviderOperation.Builder} that will assert on the referred row.
+     *
+     * @param transactionContext
+     *         A {@link TransactionContext} of the {@link Transaction} this is being executed in.
+     *
+     * @return A {@link ContentProviderOperation.Builder}.
+     *
+     * @throws IllegalStateException
+     *         if the {@link RowReference} doesn't refer to an existing row.
+     */
+    @NonNull
+    ContentProviderOperation.Builder assertOperationBuilder(@NonNull TransactionContext transactionContext);
 
     /**
      * Select the referred item in the given {@link ContentProviderOperation.Builder}.

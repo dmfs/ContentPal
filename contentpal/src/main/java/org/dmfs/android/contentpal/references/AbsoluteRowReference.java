@@ -65,6 +65,14 @@ public final class AbsoluteRowReference<T> implements SoftRowReference<T>
 
     @NonNull
     @Override
+    public ContentProviderOperation.Builder assertOperationBuilder(@NonNull TransactionContext transactionContext)
+    {
+        return mTable.assertOperation(EmptyUriParams.INSTANCE, new EqArg(BaseColumns._ID, rowId())).contentOperationBuilder(transactionContext);
+    }
+
+
+    @NonNull
+    @Override
     public ContentProviderOperation.Builder builderWithReferenceData(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder operationBuilder, @NonNull String foreignKeyColumn)
     {
         return operationBuilder.withValue(foreignKeyColumn, rowId());
