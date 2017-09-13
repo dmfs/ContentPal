@@ -24,6 +24,7 @@ import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.SoftRowReference;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.operations.Assert;
+import org.dmfs.android.contentpal.operations.BulkAssert;
 import org.dmfs.optional.Absent;
 import org.dmfs.optional.Optional;
 
@@ -31,7 +32,7 @@ import org.dmfs.optional.Optional;
 /**
  * An {@link Operation} to assert rows of a given {@link Uri}.
  * <p>
- * This is for internal purposes and should not be instantiated directly. Use {@link Assert} instead.
+ * This is for internal purposes and should not be instantiated directly. Use {@link Assert} or {@link BulkAssert} instead.
  *
  * @author Gabor Keszthelyi
  */

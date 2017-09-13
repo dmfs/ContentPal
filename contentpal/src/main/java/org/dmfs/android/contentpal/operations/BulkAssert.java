@@ -20,29 +20,54 @@ import android.content.ContentProviderOperation;
 import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Operation;
+import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.RowData;
-import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.SoftRowReference;
+import org.dmfs.android.contentpal.Table;
 import org.dmfs.android.contentpal.TransactionContext;
+import org.dmfs.android.contentpal.predicates.AnyOf;
+import org.dmfs.android.contentpal.rowdata.EmptyRowData;
+import org.dmfs.android.contentpal.tools.uriparams.EmptyUriParams;
 import org.dmfs.optional.Absent;
 import org.dmfs.optional.Optional;
 
 
 /**
- * An {@link Operation} for an assert query which checks that the given row referred by {@link RowSnapshot} has the provided {@link RowData}.
+ * An {@link Operation} for an assert query which checks that the provided {@link RowData} is present in the given {@link Table}
+ * filtered by the given {@link Predicate}.
  *
  * @author Gabor Keszthelyi
  */
-public final class AssertRow<T> implements Operation<T>
+public final class BulkAssert<T> implements Operation<T>
 {
-    private final RowSnapshot<T> mRowSnapshot;
+    private final Table<T> mTable;
     private final RowData<T> mRowData;
+    private final Predicate mPredicate;
 
 
-    public AssertRow(RowSnapshot<T> rowSnapshot, RowData<T> rowData)
+    public BulkAssert(Table<T> table, RowData<T> rowData, Predicate predicate)
     {
-        mRowSnapshot = rowSnapshot;
+        mTable = table;
         mRowData = rowData;
+        mPredicate = predicate;
+    }
+
+
+    public BulkAssert(Table<T> table, RowData<T> rowData)
+    {
+        this(table, rowData, new AnyOf());
+    }
+
+
+    public BulkAssert(Table<T> table, Predicate predicate)
+    {
+        this(table, new EmptyRowData<T>(), predicate);
+    }
+
+
+    public BulkAssert(Table<T> table)
+    {
+        this(table, new EmptyRowData<T>(), new AnyOf());
     }
 
 
@@ -59,6 +84,6 @@ public final class AssertRow<T> implements Operation<T>
     public ContentProviderOperation.Builder contentOperationBuilder(@NonNull TransactionContext transactionContext) throws UnsupportedOperationException
     {
         return mRowData.updatedBuilder(transactionContext,
-                transactionContext.resolved(mRowSnapshot.reference()).assertOperationBuilder(transactionContext));
+                mTable.assertOperation(EmptyUriParams.INSTANCE, mPredicate).contentOperationBuilder(transactionContext));
     }
 }
