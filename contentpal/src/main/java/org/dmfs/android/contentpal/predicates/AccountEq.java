@@ -17,9 +17,6 @@
 package org.dmfs.android.contentpal.predicates;
 
 import android.accounts.Account;
-import android.support.annotation.NonNull;
-
-import org.dmfs.android.contentpal.Predicate;
 
 
 /**
@@ -27,29 +24,12 @@ import org.dmfs.android.contentpal.Predicate;
  *
  * @author Marten Gajda
  */
-public final class AccountEq implements Predicate
+public final class AccountEq extends DelegatingPredicate
 {
-    private final Predicate mDelegate;
-
 
     public AccountEq(Account account)
     {
-        mDelegate = new AllOf(new EqArg("account_name", account.name), new EqArg("account_type", account.type));
+        super(new AllOf(new EqArg("account_name", account.name), new EqArg("account_type", account.type)));
     }
 
-
-    @NonNull
-    @Override
-    public CharSequence selection()
-    {
-        return mDelegate.selection();
-    }
-
-
-    @NonNull
-    @Override
-    public Iterable<String> arguments()
-    {
-        return mDelegate.arguments();
-    }
 }
