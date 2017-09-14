@@ -16,16 +16,15 @@
 
 package org.dmfs.android.contentpal.predicates;
 
-import android.content.ContentProviderOperation;
 import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.TransactionContext;
-import org.dmfs.android.contentpal.tools.Length;
 import org.dmfs.iterables.ArrayIterable;
 import org.dmfs.iterables.decorators.Flattened;
 import org.dmfs.iterables.decorators.Mapped;
 import org.dmfs.iterators.Function;
+import org.dmfs.optional.Optional;
 
 
 /**
@@ -97,15 +96,16 @@ public final class BinaryPredicate implements Predicate
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder, int argOffset)
+    public Iterable<Optional<Integer>> backReferences(@NonNull final TransactionContext transactionContext)
     {
-        int offset = argOffset;
-        for (Predicate predicate : mPredicates)
-        {
-            predicate.updatedBuilder(transactionContext, builder, offset);
-            offset += new Length(predicate.arguments(transactionContext)).intValue();
-        }
-
-        return builder;
+        return new Flattened<>(
+                new org.dmfs.iterables.decorators.Mapped<>(new ArrayIterable<>(mPredicates), new Function<Predicate, Iterable<Optional<Integer>>>()
+                {
+                    @Override
+                    public Iterable<Optional<Integer>> apply(Predicate argument)
+                    {
+                        return argument.backReferences(transactionContext);
+                    }
+                }));
     }
 }

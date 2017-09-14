@@ -16,12 +16,13 @@
 
 package org.dmfs.android.contentpal.predicates;
 
-import android.content.ContentProviderOperation;
 import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.iterables.SingletonIterable;
+import org.dmfs.optional.Absent;
+import org.dmfs.optional.Optional;
 
 
 /**
@@ -60,8 +61,8 @@ public final class EqArg implements Predicate
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder, int argOffset)
+    public Iterable<Optional<Integer>> backReferences(@NonNull TransactionContext transactionContext)
     {
-        return builder;
+        return new SingletonIterable<>((Optional<Integer>) Absent.<Integer>absent());
     }
 }

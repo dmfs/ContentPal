@@ -16,12 +16,16 @@
 
 package org.dmfs.android.contentpal.predicates;
 
-import android.content.ContentProviderOperation;
 import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.iterables.ArrayIterable;
+import org.dmfs.iterables.SingletonIterable;
+import org.dmfs.iterables.decorators.Flattened;
+import org.dmfs.iterators.Function;
+import org.dmfs.optional.Absent;
+import org.dmfs.optional.Optional;
 
 
 /**
@@ -61,8 +65,17 @@ public final class Mocked implements Predicate
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder, int argOffset)
+    public Iterable<Optional<Integer>> backReferences(@NonNull TransactionContext transactionContext)
     {
-        return builder;
+        return new Flattened<>(
+                new org.dmfs.iterables.decorators.Mapped<>(mArguments, new Function<String, Iterable<Optional<Integer>>>()
+                {
+                    @Override
+                    public Iterable<Optional<Integer>> apply(String argument)
+                    {
+                        return new SingletonIterable<>((Optional<Integer>) Absent.<Integer>absent());
+                    }
+                }));
     }
+
 }

@@ -16,11 +16,11 @@
 
 package org.dmfs.android.contentpal.predicates;
 
-import android.content.ContentProviderOperation;
 import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.TransactionContext;
+import org.dmfs.optional.Optional;
 
 
 /**
@@ -57,8 +57,8 @@ public abstract class DelegatingPredicate implements Predicate
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder, int argOffset)
+    public Iterable<Optional<Integer>> backReferences(@NonNull TransactionContext transactionContext)
     {
-        return mDelegate.updatedBuilder(transactionContext, builder, argOffset);
+        return mDelegate.backReferences(transactionContext);
     }
 }

@@ -16,8 +16,9 @@
 
 package org.dmfs.android.contentpal;
 
-import android.content.ContentProviderOperation;
 import android.support.annotation.NonNull;
+
+import org.dmfs.optional.Optional;
 
 
 /**
@@ -48,17 +49,14 @@ public interface Predicate
     Iterable<String> arguments(@NonNull TransactionContext transactionContext);
 
     /**
-     * Updates the selection of the given {@link ContentProviderOperation.Builder} with any back references.
+     * Returns an Iterable of optional back references. Each present value returned will replace the argument at the same position with the result of the
+     * operation at the index.
      *
      * @param transactionContext
      *         The current {@link TransactionContext}
-     * @param builder
-     *         The {@link ContentProviderOperation.Builder} to update.
-     * @param argOffset
-     *         The offset of the argument of this Predicate in the arguments array.
      *
-     * @return The given {@link ContentProviderOperation.Builder}.
+     * @return An Iterable of optional back references. This must iterate exactly the same number of elements as {@link #arguments(TransactionContext)}.
      */
     @NonNull
-    ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder, int argOffset);
+    Iterable<Optional<Integer>> backReferences(@NonNull TransactionContext transactionContext);
 }

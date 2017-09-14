@@ -137,11 +137,19 @@ public final class BaseTable<T> implements Table<T>
             {
                 arguments.add(arg);
             }
-            return mPredicate.updatedBuilder(
-                    transactionContext,
-                    mDelegate.contentOperationBuilder(transactionContext)
-                            .withSelection(mPredicate.selection(transactionContext).toString(), arguments.toArray(new String[arguments.size()])),
-                    0);
+            ContentProviderOperation.Builder builder = mDelegate.contentOperationBuilder(transactionContext)
+                    .withSelection(mPredicate.selection(transactionContext).toString(), arguments.toArray(new String[arguments.size()]));
+
+            int pos = 0;
+            for (Optional<Integer> backRef : mPredicate.backReferences(transactionContext))
+            {
+                if (backRef.isPresent())
+                {
+                    builder.withSelectionBackReference(pos, backRef.value());
+                }
+                pos += 1;
+            }
+            return builder;
         }
     }
 }

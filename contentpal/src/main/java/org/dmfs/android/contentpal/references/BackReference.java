@@ -27,6 +27,8 @@ import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.Transaction;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.iterables.SingletonIterable;
+import org.dmfs.optional.Optional;
+import org.dmfs.optional.Present;
 
 
 /**
@@ -109,9 +111,9 @@ public final class BackReference<T> implements RowReference<T>
 
             @NonNull
             @Override
-            public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder, int argOffset)
+            public Iterable<Optional<Integer>> backReferences(@NonNull final TransactionContext transactionContext)
             {
-                return builder.withSelectionBackReference(argOffset, mBackReference);
+                return new SingletonIterable<>((Optional<Integer>) new Present<>(mBackReference));
             }
         };
     }

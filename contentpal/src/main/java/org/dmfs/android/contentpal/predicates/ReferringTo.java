@@ -16,7 +16,6 @@
 
 package org.dmfs.android.contentpal.predicates;
 
-import android.content.ContentProviderOperation;
 import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Predicate;
@@ -24,6 +23,7 @@ import org.dmfs.android.contentpal.RowReference;
 import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.references.RowSnapshotReference;
+import org.dmfs.optional.Optional;
 
 
 /**
@@ -62,8 +62,8 @@ public final class ReferringTo<T> implements Predicate
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder, int argOffset)
+    public Iterable<Optional<Integer>> backReferences(@NonNull TransactionContext transactionContext)
     {
-        return mRowReference.predicate(transactionContext, mColumnName).updatedBuilder(transactionContext, builder, argOffset);
+        return mRowReference.predicate(transactionContext, mColumnName).backReferences(transactionContext);
     }
 }

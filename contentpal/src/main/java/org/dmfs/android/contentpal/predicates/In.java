@@ -16,14 +16,17 @@
 
 package org.dmfs.android.contentpal.predicates;
 
-import android.content.ContentProviderOperation;
 import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.iterables.ArrayIterable;
+import org.dmfs.iterables.SingletonIterable;
+import org.dmfs.iterables.decorators.Flattened;
 import org.dmfs.iterables.decorators.Mapped;
 import org.dmfs.iterators.Function;
+import org.dmfs.optional.Absent;
+import org.dmfs.optional.Optional;
 
 
 /**
@@ -86,8 +89,17 @@ public final class In implements Predicate
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder, int argOffset)
+    public Iterable<Optional<Integer>> backReferences(@NonNull final TransactionContext transactionContext)
     {
-        return builder;
+        // this can be improved by returning ann Iterable which iterates the same element a specific number of times, i.e. `Recurring`.
+        return new Flattened<>(
+                new org.dmfs.iterables.decorators.Mapped<>(new ArrayIterable<>(mArguments), new Function<Object, Iterable<Optional<Integer>>>()
+                {
+                    @Override
+                    public Iterable<Optional<Integer>> apply(Object argument)
+                    {
+                        return new SingletonIterable<>((Optional<Integer>) Absent.<Integer>absent());
+                    }
+                }));
     }
 }
