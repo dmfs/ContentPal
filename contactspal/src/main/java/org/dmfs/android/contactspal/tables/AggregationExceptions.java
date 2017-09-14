@@ -73,6 +73,14 @@ public final class AggregationExceptions implements Table<ContactsContract.Aggre
 
     @NonNull
     @Override
+    public Operation<ContactsContract.AggregationExceptions> assertOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate)
+    {
+        return mDelegate.assertOperation(uriParams, predicate);
+    }
+
+
+    @NonNull
+    @Override
     public View<ContactsContract.AggregationExceptions> view(@NonNull ContentProviderClient client, @NonNull String... projection)
     {
         return mDelegate.view(client, projection);

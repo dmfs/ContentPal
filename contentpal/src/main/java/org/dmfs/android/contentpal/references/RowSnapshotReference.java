@@ -59,6 +59,14 @@ public final class RowSnapshotReference<T> implements RowReference<T>
 
     @NonNull
     @Override
+    public ContentProviderOperation.Builder assertOperationBuilder(@NonNull TransactionContext transactionContext)
+    {
+        return transactionContext.resolved(mRowSnapshot.reference()).assertOperationBuilder(transactionContext);
+    }
+
+
+    @NonNull
+    @Override
     public ContentProviderOperation.Builder builderWithReferenceData(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder operationBuilder, @NonNull String foreignKeyColumn)
     {
         return transactionContext.resolved(mRowSnapshot.reference()).builderWithReferenceData(transactionContext, operationBuilder, foreignKeyColumn);

@@ -72,8 +72,7 @@ public final class CalendarScoped implements Table<CalendarContract.Events>
     @Override
     public Operation<CalendarContract.Events> updateOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate)
     {
-        return mDelegate.updateOperation(uriParams, new AllOf(predicate, new EqArg(CalendarContract.Events.CALENDAR_ID, mCalendarRow.values().charData(
-                CalendarContract.Calendars._ID).value("-1"))));
+        return mDelegate.updateOperation(uriParams, calendarScoped(predicate));
     }
 
 
@@ -81,8 +80,15 @@ public final class CalendarScoped implements Table<CalendarContract.Events>
     @Override
     public Operation<CalendarContract.Events> deleteOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate)
     {
-        return mDelegate.deleteOperation(uriParams, new AllOf(predicate, new EqArg(CalendarContract.Events.CALENDAR_ID, mCalendarRow.values().charData(
-                CalendarContract.Calendars._ID).value("-1"))));
+        return mDelegate.deleteOperation(uriParams, calendarScoped(predicate));
+    }
+
+
+    @NonNull
+    @Override
+    public Operation<CalendarContract.Events> assertOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate)
+    {
+        return mDelegate.assertOperation(uriParams, calendarScoped(predicate));
     }
 
 
@@ -91,5 +97,12 @@ public final class CalendarScoped implements Table<CalendarContract.Events>
     public View<CalendarContract.Events> view(@NonNull ContentProviderClient client, @NonNull String... projection)
     {
         return new org.dmfs.android.calendarpal.views.CalendarScoped(mCalendarRow, mDelegate.view(client, projection));
+    }
+
+
+    private Predicate calendarScoped(@NonNull Predicate predicate)
+    {
+        return new AllOf(predicate, new EqArg(CalendarContract.Events.CALENDAR_ID,
+                mCalendarRow.values().charData(CalendarContract.Calendars._ID).value("-1")));
     }
 }

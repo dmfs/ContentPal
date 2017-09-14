@@ -22,6 +22,7 @@ import android.support.annotation.NonNull;
 
 import org.dmfs.android.contactspal.tables.Data;
 import org.dmfs.android.contentpal.InsertOperation;
+import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.SoftRowReference;
 import org.dmfs.android.contentpal.Table;
@@ -38,7 +39,7 @@ import org.dmfs.optional.Optional;
  */
 public final class RawContactData implements InsertOperation<ContactsContract.Data>
 {
-    private final InsertOperation<ContactsContract.Data> mDelegate;
+    private final Operation<ContactsContract.Data> mDelegate;
 
 
     public RawContactData(@NonNull RowSnapshot<ContactsContract.RawContacts> rawContact)

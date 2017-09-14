@@ -72,6 +72,14 @@ public abstract class DelegatingTable<T> implements Table<T>
 
     @NonNull
     @Override
+    public final Operation<T> assertOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate)
+    {
+        return mDelegate.assertOperation(uriParams, predicate);
+    }
+
+
+    @NonNull
+    @Override
     public final View<T> view(@NonNull ContentProviderClient client, @NonNull String... projection)
     {
         return mDelegate.view(client, projection);

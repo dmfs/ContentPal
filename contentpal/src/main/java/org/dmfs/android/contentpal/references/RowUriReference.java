@@ -61,6 +61,14 @@ public final class RowUriReference<T> implements SoftRowReference<T>
 
     @NonNull
     @Override
+    public ContentProviderOperation.Builder assertOperationBuilder(@NonNull TransactionContext transactionContext)
+    {
+        return ContentProviderOperation.newAssertQuery(mRowUri);
+    }
+
+
+    @NonNull
+    @Override
     public ContentProviderOperation.Builder builderWithReferenceData(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder operationBuilder, @NonNull String foreignKeyColumn)
     {
         return operationBuilder.withValue(foreignKeyColumn, rowId());
