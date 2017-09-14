@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.dmfs.android.contentpal.testing;
+package org.dmfs.android.contenttestpal;
 
 import android.content.ContentProvider;
 import android.content.ContentProviderClient;
