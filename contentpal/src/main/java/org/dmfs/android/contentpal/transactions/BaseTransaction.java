@@ -104,12 +104,16 @@ public final class BaseTransaction implements Transaction
         {
             ContentProviderOperation op = operation.contentOperationBuilder(new Quick(tempTransactionContext)).build();
 
-            // update the transaction context if this operation has a virtual reference
+            // update the transaction context if this operation has a virtual reference which can not be resolved
             Optional<? extends SoftRowReference<?>> optionalReference = operation.reference();
-            if (optionalReference.isPresent() && optionalReference.value().isVirtual())
+            if (optionalReference.isPresent())
             {
-                batchReferences.put(newBatch.size(), optionalReference.value());
-                tempTransactionContext = new Updated(tempTransactionContext, optionalReference.value(), op.getUri(), newBatch.size());
+                SoftRowReference<?> rowReference = optionalReference.value();
+                if (rowReference.isVirtual() && tempTransactionContext.resolved(rowReference) == rowReference)
+                {
+                    batchReferences.put(newBatch.size(), optionalReference.value());
+                    tempTransactionContext = new Updated(tempTransactionContext, optionalReference.value(), op.getUri(), newBatch.size());
+                }
             }
 
             newBatch.add(op);
