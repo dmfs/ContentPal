@@ -19,10 +19,6 @@ package org.dmfs.android.contentpal.predicates;
 import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Predicate;
-import org.dmfs.iterables.ArrayIterable;
-import org.dmfs.iterables.decorators.Flattened;
-import org.dmfs.iterables.decorators.Mapped;
-import org.dmfs.iterators.Function;
 
 
 /**
@@ -31,54 +27,10 @@ import org.dmfs.iterators.Function;
  *
  * @author Marten Gajda
  */
-public final class AnyOf implements Predicate
+public final class AnyOf extends DelegatingPredicate
 {
-    private final Predicate[] mPredicates;
-
-
     public AnyOf(@NonNull Predicate... predicates)
     {
-        mPredicates = predicates.clone();
-    }
-
-
-    @NonNull
-    @Override
-    public CharSequence selection()
-    {
-        if (mPredicates.length == 0)
-        {
-            // if no predicates are present, all predicates are satisfied
-            return "1";
-        }
-        if (mPredicates.length == 1)
-        {
-            return mPredicates[0].selection();
-        }
-        StringBuilder result = new StringBuilder(mPredicates.length * 24);
-        result.append("( ");
-        result.append(mPredicates[0].selection());
-        for (int i = 1, count = mPredicates.length; i < count; ++i)
-        {
-            result.append(" ) or ( ");
-            result.append(mPredicates[i].selection());
-        }
-        result.append(" )");
-        return result;
-    }
-
-
-    @NonNull
-    @Override
-    public Iterable<String> arguments()
-    {
-        return new Flattened<>(new Mapped<>(new ArrayIterable<>(mPredicates), new Function<Predicate, Iterable<String>>()
-        {
-            @Override
-            public Iterable<String> apply(Predicate argument)
-            {
-                return argument.arguments();
-            }
-        }));
+        super(new BinaryPredicate("or", predicates));
     }
 }

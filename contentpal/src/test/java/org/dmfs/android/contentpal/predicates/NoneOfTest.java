@@ -33,10 +33,10 @@ public class NoneOfTest
     @Test
     public void testSelection() throws Exception
     {
-        assertEquals("0", new NoneOf().selection().toString());
+        assertEquals("not ( 1 )", new NoneOf().selection().toString());
         assertEquals("not ( x )", new NoneOf(new Mocked("x", "a")).selection().toString());
-        assertEquals("not ( x ) and not ( y )", new NoneOf(new Mocked("x", "a"), new Mocked("y", "1")).selection().toString());
-        assertEquals("not ( x ) and not ( z ) and not ( y )",
+        assertEquals("not ( ( x ) or ( y ) )", new NoneOf(new Mocked("x", "a"), new Mocked("y", "1")).selection().toString());
+        assertEquals("not ( ( x ) or ( z ) or ( y ) )",
                 new NoneOf(new Mocked("x", "a"), new Mocked("z", "w", "z"), new Mocked("y", "1")).selection().toString());
     }
 
