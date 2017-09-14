@@ -25,17 +25,17 @@ import org.dmfs.android.contentpal.TransactionContext;
 
 
 /**
- * Base class for {@link RowData}s that simply add a value with a key.
+ * {@link RowData}s that simply adds the provided value with the given key.
  *
  * @author Gabor Keszthelyi
  */
-public abstract class AbstractSimpleRowData<T> implements RowData<T>
+public final class SimpleRowData<T> implements RowData<T>
 {
     private final String mKey;
     private final Object mValue;
 
 
-    public AbstractSimpleRowData(@NonNull String key, @Nullable Object value)
+    public SimpleRowData(@NonNull String key, @Nullable Object value)
     {
         mKey = key;
         mValue = value;
@@ -44,7 +44,7 @@ public abstract class AbstractSimpleRowData<T> implements RowData<T>
 
     @NonNull
     @Override
-    public final ContentProviderOperation.Builder updatedBuilder(TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
+    public ContentProviderOperation.Builder updatedBuilder(TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
         return builder.withValue(mKey, mValue);
     }
