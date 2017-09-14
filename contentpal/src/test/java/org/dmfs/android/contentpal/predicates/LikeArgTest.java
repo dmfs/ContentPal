@@ -16,6 +16,7 @@
 
 package org.dmfs.android.contentpal.predicates;
 
+import org.dmfs.android.contentpal.transactions.contexts.EmptyTransactionContext;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.contains;
@@ -32,13 +33,13 @@ public class LikeArgTest
     @Test
     public void testSelection() throws Exception
     {
-        assertEquals("x like ?", new LikeArg("x", "y").selection().toString());
+        assertEquals("x like ?", new LikeArg("x", "y").selection(EmptyTransactionContext.INSTANCE).toString());
     }
 
 
     @Test
     public void testArguments() throws Exception
     {
-        assertThat(new LikeArg("x", "y").arguments(), contains("y"));
+        assertThat(new LikeArg("x", "y").arguments(EmptyTransactionContext.INSTANCE), contains("y"));
     }
 }

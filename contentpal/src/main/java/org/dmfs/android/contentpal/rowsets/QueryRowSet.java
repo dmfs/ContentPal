@@ -30,6 +30,7 @@ import org.dmfs.android.contentpal.rowsnapshots.ValuesRowSnapshot;
 import org.dmfs.android.contentpal.tools.ClosableEmptyIterator;
 import org.dmfs.android.contentpal.tools.ClosableIterator;
 import org.dmfs.android.contentpal.tools.uriparams.EmptyUriParams;
+import org.dmfs.android.contentpal.transactions.contexts.EmptyTransactionContext;
 import org.dmfs.iterators.AbstractBaseIterator;
 import org.dmfs.optional.Absent;
 
@@ -76,7 +77,7 @@ public final class QueryRowSet<T> implements RowSet<T>
             throw new RuntimeException(
                     String.format("Unable to execute query on view \"%s\" with selection \"%s\"",
                             mView.toString(),
-                            mPredicate.selection().toString()), e);
+                            mPredicate.selection(EmptyTransactionContext.INSTANCE).toString()), e);
         }
     }
 

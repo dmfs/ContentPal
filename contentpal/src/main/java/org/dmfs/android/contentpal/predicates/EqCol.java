@@ -16,9 +16,11 @@
 
 package org.dmfs.android.contentpal.predicates;
 
+import android.content.ContentProviderOperation;
 import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Predicate;
+import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.iterables.EmptyIterable;
 
 
@@ -40,7 +42,7 @@ public final class EqCol implements Predicate
 
     @NonNull
     @Override
-    public CharSequence selection()
+    public CharSequence selection(@NonNull TransactionContext transactionContext)
     {
         return new StringBuilder(mColumn1Name.length() + 3 + mColumn2Name.length()).append(mColumn1Name).append(" = ").append(mColumn2Name);
     }
@@ -48,8 +50,16 @@ public final class EqCol implements Predicate
 
     @NonNull
     @Override
-    public Iterable<String> arguments()
+    public Iterable<String> arguments(@NonNull TransactionContext transactionContext)
     {
         return EmptyIterable.instance();
+    }
+
+
+    @NonNull
+    @Override
+    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder, int argOffset)
+    {
+        return builder;
     }
 }

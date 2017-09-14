@@ -20,30 +20,27 @@ import android.content.ContentProviderOperation;
 import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Predicate;
+import org.dmfs.android.contentpal.RowReference;
+import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.TransactionContext;
-import org.dmfs.iterables.ArrayIterable;
-import org.dmfs.iterables.decorators.Mapped;
-import org.dmfs.iterators.Function;
+import org.dmfs.android.contentpal.references.RowSnapshotReference;
 
 
 /**
- * The conditional {@code IN} operator. Validates to {@code true} if a given column has any of the given values (their string representation to be more
- * precise).
- * <p>
- * Note, {@code null} is not a supported value.
+ * Predicate which matches rows which have a foreign key to another row.
  *
  * @author Marten Gajda
  */
-public final class In implements Predicate
+public final class ReferringTo<T> implements Predicate
 {
     private final String mColumnName;
-    private final Object[] mArguments;
+    private final RowReference<T> mRowReference;
 
 
-    public In(@NonNull String columnName, @NonNull Object... arguments)
+    public ReferringTo(@NonNull String columnName, @NonNull RowSnapshot<T> row)
     {
         mColumnName = columnName;
-        mArguments = arguments.clone();
+        mRowReference = new RowSnapshotReference<>(row);
     }
 
 
@@ -51,19 +48,7 @@ public final class In implements Predicate
     @Override
     public CharSequence selection(@NonNull TransactionContext transactionContext)
     {
-        StringBuilder sb = new StringBuilder(mColumnName.length() + mArguments.length * 3 + 9);
-        sb.append(mColumnName);
-        sb.append(" in (");
-        if (mArguments.length > 0)
-        {
-            sb.append(" ?");
-        }
-        for (int i = 1, count = mArguments.length; i < count; ++i)
-        {
-            sb.append(", ?");
-        }
-        sb.append(" ) ");
-        return sb;
+        return mRowReference.predicate(transactionContext, mColumnName).selection(transactionContext);
     }
 
 
@@ -71,16 +56,7 @@ public final class In implements Predicate
     @Override
     public Iterable<String> arguments(@NonNull TransactionContext transactionContext)
     {
-        return new Mapped<>(
-                new ArrayIterable<>(mArguments),
-                new Function<Object, String>()
-                {
-                    @Override
-                    public String apply(Object argument)
-                    {
-                        return argument.toString();
-                    }
-                });
+        return mRowReference.predicate(transactionContext, mColumnName).arguments(transactionContext);
     }
 
 
@@ -88,6 +64,6 @@ public final class In implements Predicate
     @Override
     public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder, int argOffset)
     {
-        return builder;
+        return mRowReference.predicate(transactionContext, mColumnName).updatedBuilder(transactionContext, builder, argOffset);
     }
 }
