@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/calendarpal" />
             <option value="$PROJECT_DIR$/contactspal" />
             <option value="$PROJECT_DIR$/contentpal" />
+            <option value="$PROJECT_DIR$/testing" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
