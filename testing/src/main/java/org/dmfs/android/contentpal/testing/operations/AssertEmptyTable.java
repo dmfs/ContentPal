@@ -24,7 +24,7 @@ import org.dmfs.android.contentpal.operations.DelegatingOperation;
 
 
 /**
- * Assert {@link Operation} to verify that an given table is empty.
+ * Assert {@link Operation} to verify that the provided table is empty.
  *
  * @author Gabor Keszthelyi
  */
