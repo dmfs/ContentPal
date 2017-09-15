@@ -29,13 +29,13 @@ import org.dmfs.android.contentpal.TransactionContext;
  *
  * @author Gabor Keszthelyi
  */
-public final class NullableCharSequenceRowData<T> implements RowData<T>
+public final class CharSequenceRowData<T> implements RowData<T>
 {
     private final String mKey;
     private final CharSequence mValue;
 
 
-    public NullableCharSequenceRowData(@NonNull String key, @Nullable CharSequence value)
+    public CharSequenceRowData(@NonNull String key, @Nullable CharSequence value)
     {
         mKey = key;
         mValue = value;
