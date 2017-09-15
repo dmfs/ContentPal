@@ -94,14 +94,12 @@ public final class ContentMatcher extends TypeSafeMatcher<OperationsBatch>
     }
 
 
-    @SafeVarargs
     public static Matcher<OperationsBatch> resultsIn(OperationsQueue queue, Operation... assertOperations)
     {
         return new ContentMatcher(queue, new MultiBatch(assertOperations));
     }
 
 
-    @SafeVarargs
     public static Matcher<OperationsBatch> resultsIn(ContentProviderClient client, Operation... assertOperations)
     {
         return new ContentMatcher(new BasicOperationsQueue(client), new MultiBatch(assertOperations));
