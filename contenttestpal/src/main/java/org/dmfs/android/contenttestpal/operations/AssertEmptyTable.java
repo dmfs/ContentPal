@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.dmfs.android.contentpal.testing.operations;
+package org.dmfs.android.contenttestpal.operations;
 
 import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.Table;
