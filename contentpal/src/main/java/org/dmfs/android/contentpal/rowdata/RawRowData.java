@@ -25,17 +25,23 @@ import org.dmfs.android.contentpal.TransactionContext;
 
 
 /**
- * {@link RowData}s that simply adds the provided value with the given key.
+ * {@link RowData}s that simply adds the provided nullable value with the given key.
+ * <p>
+ * Note that {@link ContentProviderOperation} only supports the following types:
+ * <p>
+ * <Code>String, Byte, Short, Integer, Long, Float, Double, Boolean, byte[]</Code>
+ * <p>
+ * (check in {@link ContentProviderOperation.Builder#withValue(String, Object)}
  *
  * @author Gabor Keszthelyi
  */
-public final class SimpleRowData<T> implements RowData<T>
+public final class RawRowData<T> implements RowData<T>
 {
     private final String mKey;
     private final Object mValue;
 
 
-    public SimpleRowData(@NonNull String key, @Nullable Object value)
+    public RawRowData(@NonNull String key, @Nullable Object value)
     {
         mKey = key;
         mValue = value;
