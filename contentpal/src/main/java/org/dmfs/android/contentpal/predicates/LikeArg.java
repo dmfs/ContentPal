@@ -54,6 +54,6 @@ public final class LikeArg implements Predicate
     @Override
     public Iterable<Argument> arguments(@NonNull TransactionContext transactionContext)
     {
-        return new SingletonIterable<>((Argument) new ValueArgument(mArgument));
+        return new SingletonIterable<Argument>(new ValueArgument(mArgument));
     }
 }

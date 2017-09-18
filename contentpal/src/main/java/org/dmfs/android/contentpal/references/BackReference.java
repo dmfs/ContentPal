@@ -127,7 +127,7 @@ public final class BackReference<T> implements RowReference<T>
         @Override
         public Iterable<Argument> arguments(@NonNull TransactionContext transactionContext)
         {
-            return new SingletonIterable<>((Argument) new BackReferenceArgument(mBackReference));
+            return new SingletonIterable<Argument>(new BackReferenceArgument(mBackReference));
         }
     }
 }
