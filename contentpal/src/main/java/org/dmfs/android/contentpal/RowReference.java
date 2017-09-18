@@ -92,5 +92,5 @@ public interface RowReference<T>
      * @return A {@link Predicate}
      */
     @NonNull
-    Predicate predicate(TransactionContext transactionContext, @NonNull String keyColumn);
+    Predicate predicate(@NonNull TransactionContext transactionContext, @NonNull String keyColumn);
 }

@@ -16,7 +16,10 @@
 
 package org.dmfs.android.contentpal.predicates;
 
+import org.dmfs.android.contentpal.predicates.utils.BackReferences;
+import org.dmfs.android.contentpal.predicates.utils.Values;
 import org.dmfs.android.contentpal.transactions.contexts.EmptyTransactionContext;
+import org.dmfs.optional.iterable.PresentValues;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.contains;
@@ -44,9 +47,15 @@ public class InTest
     public void testArguments() throws Exception
     {
         assertThat(new In("x").arguments(EmptyTransactionContext.INSTANCE), emptyIterable());
-        assertThat(new In("x", "a").arguments(EmptyTransactionContext.INSTANCE), contains("a"));
-        assertThat(new In("x", "a", 1).arguments(EmptyTransactionContext.INSTANCE), contains("a", "1"));
-        assertThat(new In("x", "a", 1, 1.2).arguments(EmptyTransactionContext.INSTANCE), contains("a", "1", "1.2"));
+
+        assertThat(new Values(new In("x", "a").arguments(EmptyTransactionContext.INSTANCE)), contains("a"));
+        assertThat(new PresentValues<>(new BackReferences(new In("x", "a").arguments(EmptyTransactionContext.INSTANCE))), emptyIterable());
+
+        assertThat(new Values(new In("x", "a", 1).arguments(EmptyTransactionContext.INSTANCE)), contains("a", "1"));
+        assertThat(new PresentValues<>(new BackReferences(new In("x", "a", 1).arguments(EmptyTransactionContext.INSTANCE))), emptyIterable());
+
+        assertThat(new Values(new In("x", "a", 1, 1.2).arguments(EmptyTransactionContext.INSTANCE)), contains("a", "1", "1.2"));
+        assertThat(new PresentValues<>(new BackReferences(new In("x", "a", 1, 1.2).arguments(EmptyTransactionContext.INSTANCE))), emptyIterable());
     }
 
 }

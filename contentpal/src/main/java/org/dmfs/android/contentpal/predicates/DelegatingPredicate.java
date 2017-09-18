@@ -20,7 +20,6 @@ import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.TransactionContext;
-import org.dmfs.optional.Optional;
 
 
 /**
@@ -49,16 +48,8 @@ public abstract class DelegatingPredicate implements Predicate
 
     @NonNull
     @Override
-    public final Iterable<String> arguments(@NonNull TransactionContext transactionContext)
+    public final Iterable<Argument> arguments(@NonNull TransactionContext transactionContext)
     {
         return mDelegate.arguments(transactionContext);
-    }
-
-
-    @NonNull
-    @Override
-    public Iterable<Optional<Integer>> backReferences(@NonNull TransactionContext transactionContext)
-    {
-        return mDelegate.backReferences(transactionContext);
     }
 }

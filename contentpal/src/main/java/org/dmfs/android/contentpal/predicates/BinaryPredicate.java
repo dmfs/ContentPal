@@ -24,7 +24,6 @@ import org.dmfs.iterables.ArrayIterable;
 import org.dmfs.iterables.decorators.Flattened;
 import org.dmfs.iterables.decorators.Mapped;
 import org.dmfs.iterators.Function;
-import org.dmfs.optional.Optional;
 
 
 /**
@@ -81,31 +80,18 @@ public final class BinaryPredicate implements Predicate
 
     @NonNull
     @Override
-    public Iterable<String> arguments(@NonNull final TransactionContext transactionContext)
-    {
-        return new Flattened<>(new Mapped<>(new ArrayIterable<>(mPredicates), new Function<Predicate, Iterable<String>>()
-        {
-            @Override
-            public Iterable<String> apply(Predicate argument)
-            {
-                return argument.arguments(transactionContext);
-            }
-        }));
-    }
-
-
-    @NonNull
-    @Override
-    public Iterable<Optional<Integer>> backReferences(@NonNull final TransactionContext transactionContext)
+    public Iterable<Argument> arguments(@NonNull final TransactionContext transactionContext)
     {
         return new Flattened<>(
-                new org.dmfs.iterables.decorators.Mapped<>(new ArrayIterable<>(mPredicates), new Function<Predicate, Iterable<Optional<Integer>>>()
-                {
-                    @Override
-                    public Iterable<Optional<Integer>> apply(Predicate argument)
-                    {
-                        return argument.backReferences(transactionContext);
-                    }
-                }));
+                new Mapped<>(
+                        new ArrayIterable<>(mPredicates),
+                        new Function<Predicate, Iterable<Argument>>()
+                        {
+                            @Override
+                            public Iterable<Argument> apply(Predicate argument)
+                            {
+                                return argument.arguments(transactionContext);
+                            }
+                        }));
     }
 }

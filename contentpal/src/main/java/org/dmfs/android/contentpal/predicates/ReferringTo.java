@@ -23,7 +23,6 @@ import org.dmfs.android.contentpal.RowReference;
 import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.references.RowSnapshotReference;
-import org.dmfs.optional.Optional;
 
 
 /**
@@ -54,16 +53,8 @@ public final class ReferringTo<T> implements Predicate
 
     @NonNull
     @Override
-    public Iterable<String> arguments(@NonNull TransactionContext transactionContext)
+    public Iterable<Argument> arguments(@NonNull TransactionContext transactionContext)
     {
         return mRowReference.predicate(transactionContext, mColumnName).arguments(transactionContext);
-    }
-
-
-    @NonNull
-    @Override
-    public Iterable<Optional<Integer>> backReferences(@NonNull TransactionContext transactionContext)
-    {
-        return mRowReference.predicate(transactionContext, mColumnName).backReferences(transactionContext);
     }
 }

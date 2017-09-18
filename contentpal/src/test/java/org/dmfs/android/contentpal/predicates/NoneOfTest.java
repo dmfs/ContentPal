@@ -16,7 +16,11 @@
 
 package org.dmfs.android.contentpal.predicates;
 
+import org.dmfs.android.contentpal.predicates.utils.BackReferences;
+import org.dmfs.android.contentpal.predicates.utils.Mocked;
+import org.dmfs.android.contentpal.predicates.utils.Values;
 import org.dmfs.android.contentpal.transactions.contexts.EmptyTransactionContext;
+import org.dmfs.optional.iterable.PresentValues;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.contains;
@@ -46,9 +50,18 @@ public class NoneOfTest
     public void testArguments() throws Exception
     {
         assertThat(new NoneOf().arguments(EmptyTransactionContext.INSTANCE), emptyIterable());
-        assertThat(new NoneOf(new Mocked("x", "a")).arguments(EmptyTransactionContext.INSTANCE), contains("a"));
-        assertThat(new NoneOf(new Mocked("x", "a"), new Mocked("y", "1")).arguments(EmptyTransactionContext.INSTANCE), contains("a", "1"));
-        assertThat(new NoneOf(new Mocked("x", "a"), new Mocked("z", "w", "z"), new Mocked("y", "1")).arguments(EmptyTransactionContext.INSTANCE),
+
+        assertThat(new Values(new NoneOf(new Mocked("x", "a")).arguments(EmptyTransactionContext.INSTANCE)), contains("a"));
+        assertThat(new PresentValues<>(new BackReferences(new NoneOf(new Mocked("x", "a")).arguments(EmptyTransactionContext.INSTANCE))), emptyIterable());
+
+        assertThat(new Values(new NoneOf(new Mocked("x", "a"), new Mocked("y", "1")).arguments(EmptyTransactionContext.INSTANCE)), contains("a", "1"));
+        assertThat(new PresentValues<>(new BackReferences(new NoneOf(new Mocked("x", "a"), new Mocked("y", "1")).arguments(EmptyTransactionContext.INSTANCE))),
+                emptyIterable());
+
+        assertThat(new Values(new NoneOf(new Mocked("x", "a"), new Mocked("z", "w", "z"), new Mocked("y", "1")).arguments(EmptyTransactionContext.INSTANCE)),
                 contains("a", "w", "z", "1"));
+        assertThat(new PresentValues<>(new BackReferences(
+                        new NoneOf(new Mocked("x", "a"), new Mocked("z", "w", "z"), new Mocked("y", "1")).arguments(EmptyTransactionContext.INSTANCE))),
+                emptyIterable());
     }
 }

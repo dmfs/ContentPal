@@ -20,13 +20,10 @@ import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.TransactionContext;
+import org.dmfs.android.contentpal.predicates.arguments.ValueArgument;
 import org.dmfs.iterables.ArrayIterable;
-import org.dmfs.iterables.SingletonIterable;
-import org.dmfs.iterables.decorators.Flattened;
 import org.dmfs.iterables.decorators.Mapped;
 import org.dmfs.iterators.Function;
-import org.dmfs.optional.Absent;
-import org.dmfs.optional.Optional;
 
 
 /**
@@ -72,34 +69,17 @@ public final class In implements Predicate
 
     @NonNull
     @Override
-    public Iterable<String> arguments(@NonNull TransactionContext transactionContext)
+    public Iterable<Argument> arguments(@NonNull TransactionContext transactionContext)
     {
         return new Mapped<>(
                 new ArrayIterable<>(mArguments),
-                new Function<Object, String>()
+                new Function<Object, Argument>()
                 {
                     @Override
-                    public String apply(Object argument)
+                    public Argument apply(Object argument)
                     {
-                        return argument.toString();
+                        return new ValueArgument(argument);
                     }
                 });
-    }
-
-
-    @NonNull
-    @Override
-    public Iterable<Optional<Integer>> backReferences(@NonNull final TransactionContext transactionContext)
-    {
-        // this can be improved by returning ann Iterable which iterates the same element a specific number of times, i.e. `Recurring`.
-        return new Flattened<>(
-                new org.dmfs.iterables.decorators.Mapped<>(new ArrayIterable<>(mArguments), new Function<Object, Iterable<Optional<Integer>>>()
-                {
-                    @Override
-                    public Iterable<Optional<Integer>> apply(Object argument)
-                    {
-                        return new SingletonIterable<>((Optional<Integer>) Absent.<Integer>absent());
-                    }
-                }));
     }
 }

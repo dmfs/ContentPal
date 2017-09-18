@@ -16,10 +16,14 @@
 
 package org.dmfs.android.contentpal.predicates;
 
+import org.dmfs.android.contentpal.predicates.utils.BackReferences;
+import org.dmfs.android.contentpal.predicates.utils.Values;
 import org.dmfs.android.contentpal.transactions.contexts.EmptyTransactionContext;
+import org.dmfs.optional.iterable.PresentValues;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.emptyIterable;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
@@ -40,6 +44,7 @@ public class EqArgTest
     @Test
     public void testArguments() throws Exception
     {
-        assertThat(new EqArg("x", "y").arguments(EmptyTransactionContext.INSTANCE), contains("y"));
+        assertThat(new Values(new EqArg("x", "y").arguments(EmptyTransactionContext.INSTANCE)), contains("y"));
+        assertThat(new PresentValues<>(new BackReferences(new EqArg("x", "y").arguments(EmptyTransactionContext.INSTANCE))), emptyIterable());
     }
 }

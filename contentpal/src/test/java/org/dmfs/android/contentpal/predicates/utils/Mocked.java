@@ -14,18 +14,16 @@
  * limitations under the License.
  */
 
-package org.dmfs.android.contentpal.predicates;
+package org.dmfs.android.contentpal.predicates.utils;
 
 import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.TransactionContext;
+import org.dmfs.android.contentpal.predicates.arguments.ValueArgument;
 import org.dmfs.iterables.ArrayIterable;
-import org.dmfs.iterables.SingletonIterable;
-import org.dmfs.iterables.decorators.Flattened;
+import org.dmfs.iterables.decorators.Mapped;
 import org.dmfs.iterators.Function;
-import org.dmfs.optional.Absent;
-import org.dmfs.optional.Optional;
 
 
 /**
@@ -40,7 +38,7 @@ public final class Mocked implements Predicate
     private final Iterable<String> mArguments;
 
 
-    Mocked(CharSequence selection, String... arguments)
+    public Mocked(CharSequence selection, String... arguments)
     {
         mSelection = selection;
         mArguments = new ArrayIterable<>(arguments);
@@ -57,25 +55,15 @@ public final class Mocked implements Predicate
 
     @NonNull
     @Override
-    public Iterable<String> arguments(@NonNull TransactionContext transactionContext)
+    public Iterable<Argument> arguments(@NonNull TransactionContext transactionContext)
     {
-        return mArguments;
+        return new Mapped<>(mArguments, new Function<String, Argument>()
+        {
+            @Override
+            public Argument apply(String argument)
+            {
+                return new ValueArgument(argument);
+            }
+        });
     }
-
-
-    @NonNull
-    @Override
-    public Iterable<Optional<Integer>> backReferences(@NonNull TransactionContext transactionContext)
-    {
-        return new Flattened<>(
-                new org.dmfs.iterables.decorators.Mapped<>(mArguments, new Function<String, Iterable<Optional<Integer>>>()
-                {
-                    @Override
-                    public Iterable<Optional<Integer>> apply(String argument)
-                    {
-                        return new SingletonIterable<>((Optional<Integer>) Absent.<Integer>absent());
-                    }
-                }));
-    }
-
 }

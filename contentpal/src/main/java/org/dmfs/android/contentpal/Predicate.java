@@ -29,6 +29,28 @@ import org.dmfs.optional.Optional;
 public interface Predicate
 {
     /**
+     * A selection argument.
+     */
+    interface Argument
+    {
+        /**
+         * Returns the string representation of the argument.
+         *
+         * @return
+         */
+        @NonNull
+        String value();
+
+        /**
+         * Returns an optional back reference which will replace the argument value.
+         *
+         * @return
+         */
+        @NonNull
+        Optional<Integer> backReference();
+    }
+
+    /**
      * Returns an SQL selection CharSequence which selects elements matching this predicate.
      *
      * @param transactionContext
@@ -46,17 +68,5 @@ public interface Predicate
      *         The {@link TransactionContext} of the Transaction this is executed in.
      */
     @NonNull
-    Iterable<String> arguments(@NonNull TransactionContext transactionContext);
-
-    /**
-     * Returns an Iterable of optional back references. Each present value returned will replace the argument at the same position with the result of the
-     * operation at the index.
-     *
-     * @param transactionContext
-     *         The current {@link TransactionContext}
-     *
-     * @return An Iterable of optional back references. This must iterate exactly the same number of elements as {@link #arguments(TransactionContext)}.
-     */
-    @NonNull
-    Iterable<Optional<Integer>> backReferences(@NonNull TransactionContext transactionContext);
+    Iterable<Argument> arguments(@NonNull TransactionContext transactionContext);
 }

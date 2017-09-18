@@ -20,7 +20,6 @@ import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.TransactionContext;
-import org.dmfs.optional.Optional;
 
 
 /**
@@ -48,16 +47,8 @@ public final class Not implements Predicate
 
     @NonNull
     @Override
-    public Iterable<String> arguments(@NonNull TransactionContext transactionContext)
+    public Iterable<Argument> arguments(@NonNull TransactionContext transactionContext)
     {
         return mPredicate.arguments(transactionContext);
-    }
-
-
-    @NonNull
-    @Override
-    public Iterable<Optional<Integer>> backReferences(@NonNull TransactionContext transactionContext)
-    {
-        return mPredicate.backReferences(transactionContext);
     }
 }

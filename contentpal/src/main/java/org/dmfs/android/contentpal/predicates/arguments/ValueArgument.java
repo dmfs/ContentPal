@@ -14,43 +14,42 @@
  * limitations under the License.
  */
 
-package org.dmfs.android.contentpal.predicates;
+package org.dmfs.android.contentpal.predicates.arguments;
 
 import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Predicate;
-import org.dmfs.android.contentpal.TransactionContext;
-import org.dmfs.iterables.EmptyIterable;
+import org.dmfs.optional.Absent;
+import org.dmfs.optional.Optional;
 
 
 /**
- * A {@link Predicate} which evaluates to {@code true}, if and only if the given column contains a {@code null} value.
- *
  * @author Marten Gajda
  */
-public final class IsNull implements Predicate
+public final class ValueArgument implements Predicate.Argument
 {
-    private final String mColumnName;
+    private final Object mValue;
 
 
-    public IsNull(@NonNull String columnName)
+    public ValueArgument(@NonNull Object value)
     {
-        mColumnName = columnName;
+
+        mValue = value;
     }
 
 
     @NonNull
     @Override
-    public CharSequence selection(@NonNull TransactionContext transactionContext)
+    public String value()
     {
-        return new StringBuilder(mColumnName).append(" is null");
+        return mValue.toString();
     }
 
 
     @NonNull
     @Override
-    public Iterable<Argument> arguments(@NonNull TransactionContext transactionContext)
+    public Optional<Integer> backReference()
     {
-        return EmptyIterable.instance();
+        return Absent.absent();
     }
 }

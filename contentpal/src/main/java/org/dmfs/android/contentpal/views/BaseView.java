@@ -63,9 +63,9 @@ public final class BaseView<T> implements View<T>
     public Cursor rows(@NonNull UriParams uriParams, @NonNull final Predicate predicate, @NonNull final Optional<String> sorting) throws RemoteException
     {
         List<String> args = new LinkedList<>();
-        for (String arg : predicate.arguments(EmptyTransactionContext.INSTANCE))
+        for (Predicate.Argument arg : predicate.arguments(EmptyTransactionContext.INSTANCE))
         {
-            args.add(arg);
+            args.add(arg.value());
         }
         Cursor cursor = mClient.query(uriParams.withParam(mTableUri.buildUpon()).build(),
                 mProjection,

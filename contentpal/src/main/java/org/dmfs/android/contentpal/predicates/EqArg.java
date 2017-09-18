@@ -20,9 +20,8 @@ import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.TransactionContext;
+import org.dmfs.android.contentpal.predicates.arguments.ValueArgument;
 import org.dmfs.iterables.SingletonIterable;
-import org.dmfs.optional.Absent;
-import org.dmfs.optional.Optional;
 
 
 /**
@@ -53,16 +52,8 @@ public final class EqArg implements Predicate
 
     @NonNull
     @Override
-    public Iterable<String> arguments(@NonNull TransactionContext transactionContext)
+    public Iterable<Argument> arguments(@NonNull TransactionContext transactionContext)
     {
-        return new SingletonIterable<>(mArgument.toString());
-    }
-
-
-    @NonNull
-    @Override
-    public Iterable<Optional<Integer>> backReferences(@NonNull TransactionContext transactionContext)
-    {
-        return new SingletonIterable<>((Optional<Integer>) Absent.<Integer>absent());
+        return new SingletonIterable<>((Argument) new ValueArgument(mArgument));
     }
 }
