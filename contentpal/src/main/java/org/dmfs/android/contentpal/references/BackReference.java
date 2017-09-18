@@ -26,6 +26,7 @@ import org.dmfs.android.contentpal.RowReference;
 import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.Transaction;
 import org.dmfs.android.contentpal.TransactionContext;
+import org.dmfs.iterables.SingletonIterable;
 
 
 /**
@@ -85,9 +86,34 @@ public final class BackReference<T> implements RowReference<T>
 
     @NonNull
     @Override
-    public Predicate predicate(@NonNull String keyColumn)
+    public Predicate predicate(TransactionContext transactionContext, @NonNull final String keyColumn)
     {
-        throw new IllegalStateException("Can't create a predicate which matches a BackReference.");
+        return new Predicate()
+        {
+            @NonNull
+            @Override
+            public CharSequence selection(@NonNull TransactionContext transactionContext)
+            {
+                return String.format("%s = ?", keyColumn);
+            }
+
+
+            @NonNull
+            @Override
+            public Iterable<String> arguments(@NonNull TransactionContext transactionContext)
+            {
+                // by default we return "-1" which essentially never matches unless updated by updateBuilder later on
+                return new SingletonIterable<>("-1");
+            }
+
+
+            @NonNull
+            @Override
+            public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder, int argOffset)
+            {
+                return builder.withSelectionBackReference(argOffset, mBackReference);
+            }
+        };
     }
 
 

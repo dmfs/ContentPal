@@ -16,6 +16,7 @@
 
 package org.dmfs.android.contentpal;
 
+import android.content.ContentProviderOperation;
 import android.support.annotation.NonNull;
 
 
@@ -29,14 +30,35 @@ public interface Predicate
     /**
      * Returns an SQL selection CharSequence which selects elements matching this predicate.
      *
+     * @param transactionContext
+     *         The {@link TransactionContext} of the Transaction this is executed in.
+     *
      * @return
      */
     @NonNull
-    CharSequence selection();
+    CharSequence selection(@NonNull TransactionContext transactionContext);
 
     /**
      * An {@link Iterable} of all arguments of this predicate.
+     *
+     * @param transactionContext
+     *         The {@link TransactionContext} of the Transaction this is executed in.
      */
     @NonNull
-    Iterable<String> arguments();
+    Iterable<String> arguments(@NonNull TransactionContext transactionContext);
+
+    /**
+     * Updates the selection of the given {@link ContentProviderOperation.Builder} with any back references.
+     *
+     * @param transactionContext
+     *         The current {@link TransactionContext}
+     * @param builder
+     *         The {@link ContentProviderOperation.Builder} to update.
+     * @param argOffset
+     *         The offset of the argument of this Predicate in the arguments array.
+     *
+     * @return The given {@link ContentProviderOperation.Builder}.
+     */
+    @NonNull
+    ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder, int argOffset);
 }

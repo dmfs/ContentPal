@@ -16,9 +16,11 @@
 
 package org.dmfs.android.contentpal.predicates;
 
+import android.content.ContentProviderOperation;
 import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Predicate;
+import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.iterables.ArrayIterable;
 
 
@@ -43,7 +45,7 @@ public final class Mocked implements Predicate
 
     @NonNull
     @Override
-    public CharSequence selection()
+    public CharSequence selection(@NonNull TransactionContext transactionContext)
     {
         return mSelection;
     }
@@ -51,8 +53,16 @@ public final class Mocked implements Predicate
 
     @NonNull
     @Override
-    public Iterable<String> arguments()
+    public Iterable<String> arguments(@NonNull TransactionContext transactionContext)
     {
         return mArguments;
+    }
+
+
+    @NonNull
+    @Override
+    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder, int argOffset)
+    {
+        return builder;
     }
 }
