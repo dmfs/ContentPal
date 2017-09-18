@@ -16,14 +16,23 @@
 
 package org.dmfs.android.contentpal.operations;
 
-import android.content.ContentProviderOperation;
+import android.net.Uri;
 
 import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.SoftRowReference;
-import org.dmfs.android.contentpal.TransactionContext;
+import org.dmfs.android.contentpal.operations.internal.RawUpdate;
+import org.dmfs.android.contentpal.testing.answers.FailAnswer;
 import org.dmfs.optional.Optional;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
+import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithExpectedCount.withExpectedCount;
+import static org.dmfs.android.contentpal.testing.contentoperationbuilder.OperationType.updateOperation;
+import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withoutValues;
+import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYieldAllowed.withYieldNotAllowed;
+import static org.dmfs.android.contentpal.testing.operations.OperationMatcher.builds;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.doReturn;
@@ -33,12 +42,14 @@ import static org.mockito.Mockito.mock;
 /**
  * @author Marten Gajda
  */
+@RunWith(RobolectricTestRunner.class)
+@Config(manifest = Config.NONE)
 public class CountedTest
 {
     @Test
     public void testReference() throws Exception
     {
-        final Optional<SoftRowReference<Object>> testReference = mock(Optional.class, new FailAnswer());
+        Optional<SoftRowReference<Object>> testReference = mock(Optional.class, new FailAnswer());
         Operation<Object> mockOperation = mock(Operation.class, new FailAnswer());
         doReturn(testReference).when(mockOperation).reference();
 
@@ -49,14 +60,12 @@ public class CountedTest
     @Test
     public void testContentOperationBuilder() throws Exception
     {
-        final ContentProviderOperation.Builder testBuilder = mock(ContentProviderOperation.Builder.class, new FailAnswer());
-        doReturn(testBuilder).when(testBuilder).withExpectedCount(10);
-
-        final TransactionContext testContext = mock(TransactionContext.class);
-
-        Operation<?> mockOperation = mock(Operation.class, new FailAnswer());
-        doReturn(testBuilder).when(mockOperation).contentOperationBuilder(testContext);
-
-        assertThat(new Counted<>(10, mockOperation).contentOperationBuilder(testContext), sameInstance(testBuilder));
+        assertThat(
+                new Counted<>(10, new RawUpdate<>(mock(Uri.class))),
+                builds(
+                        updateOperation(),
+                        withYieldNotAllowed(),
+                        withExpectedCount(10),
+                        withoutValues()));
     }
 }

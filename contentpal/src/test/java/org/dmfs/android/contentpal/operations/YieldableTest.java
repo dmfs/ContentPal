@@ -16,26 +16,25 @@
 
 package org.dmfs.android.contentpal.operations;
 
-import android.content.ContentProviderOperation;
 import android.net.Uri;
 
-import org.dmfs.android.contentpal.RowSnapshot;
+import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.SoftRowReference;
-import org.dmfs.android.contentpal.TransactionContext;
+import org.dmfs.android.contentpal.operations.internal.RawInsert;
 import org.dmfs.android.contentpal.testing.answers.FailAnswer;
+import org.dmfs.optional.Optional;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithExpectedCount.withoutExpectedCount;
-import static org.dmfs.android.contentpal.testing.contentoperationbuilder.OperationType.deleteOperation;
+import static org.dmfs.android.contentpal.testing.contentoperationbuilder.OperationType.insertOperation;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withoutValues;
-import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYieldAllowed.withYieldNotAllowed;
+import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYieldAllowed.withYieldAllowed;
 import static org.dmfs.android.contentpal.testing.operations.OperationMatcher.builds;
-import static org.dmfs.optional.hamcrest.AbsentMatcher.isAbsent;
+import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.Assert.assertThat;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
@@ -45,30 +44,28 @@ import static org.mockito.Mockito.mock;
  */
 @RunWith(RobolectricTestRunner.class)
 @Config(manifest = Config.NONE)
-public class DeleteTest
+public class YieldableTest
 {
     @Test
-    public void testVirtualReference() throws Exception
+    public void testReference() throws Exception
     {
-        RowSnapshot<Object> rowSnapshot = mock(RowSnapshot.class, new FailAnswer());
+        Optional<SoftRowReference<Object>> reference = mock(Optional.class, new FailAnswer());
+        Operation<Object> operation = mock(Operation.class, new FailAnswer());
 
-        assertThat(new Delete<>(rowSnapshot).reference(), isAbsent((SoftRowReference<Object>) mock(SoftRowReference.class)));
+        doReturn(reference).when(operation).reference();
+
+        assertThat(new Yieldable<>(operation).reference(), sameInstance(reference));
     }
 
 
     @Test
     public void testContentOperationBuilder() throws Exception
     {
-        RowSnapshot<Object> rowSnapshot = mock(RowSnapshot.class, new FailAnswer());
-        SoftRowReference<Object> rowReference = mock(SoftRowReference.class, new FailAnswer());
-        doReturn(rowReference).when(rowSnapshot).reference();
-        doReturn(ContentProviderOperation.newDelete(Uri.EMPTY)).when(rowReference).deleteOperationBuilder(any(TransactionContext.class));
-
         assertThat(
-                new Delete<>(rowSnapshot),
+                new Yieldable<>(new RawInsert<>(Uri.EMPTY)),
                 builds(
-                        deleteOperation(),
-                        withYieldNotAllowed(),
+                        insertOperation(),
+                        withYieldAllowed(),
                         withoutExpectedCount(),
                         withoutValues()));
     }
