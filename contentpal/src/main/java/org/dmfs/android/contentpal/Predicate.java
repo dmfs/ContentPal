@@ -18,6 +18,8 @@ package org.dmfs.android.contentpal;
 
 import android.support.annotation.NonNull;
 
+import org.dmfs.optional.Optional;
+
 
 /**
  * A predicate.
@@ -29,14 +31,32 @@ public interface Predicate
     /**
      * Returns an SQL selection CharSequence which selects elements matching this predicate.
      *
+     * @param transactionContext
+     *         The {@link TransactionContext} of the Transaction this is executed in.
+     *
      * @return
      */
     @NonNull
-    CharSequence selection();
+    CharSequence selection(@NonNull TransactionContext transactionContext);
 
     /**
      * An {@link Iterable} of all arguments of this predicate.
+     *
+     * @param transactionContext
+     *         The {@link TransactionContext} of the Transaction this is executed in.
      */
     @NonNull
-    Iterable<String> arguments();
+    Iterable<String> arguments(@NonNull TransactionContext transactionContext);
+
+    /**
+     * Returns an Iterable of optional back references. Each present value returned will replace the argument at the same position with the result of the
+     * operation at the index.
+     *
+     * @param transactionContext
+     *         The current {@link TransactionContext}
+     *
+     * @return An Iterable of optional back references. This must iterate exactly the same number of elements as {@link #arguments(TransactionContext)}.
+     */
+    @NonNull
+    Iterable<Optional<Integer>> backReferences(@NonNull TransactionContext transactionContext);
 }

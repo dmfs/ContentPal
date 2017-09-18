@@ -70,8 +70,8 @@ public interface Table<T>
      *
      * @param uriParams
      *         Additional parameters to add to the delete {@link Uri}.
-     *
      * @param predicate
+     *
      * @return An {@link Operation} for this table.
      */
     @NonNull

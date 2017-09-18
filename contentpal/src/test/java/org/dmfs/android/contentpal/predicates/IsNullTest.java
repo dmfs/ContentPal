@@ -16,6 +16,7 @@
 
 package org.dmfs.android.contentpal.predicates;
 
+import org.dmfs.android.contentpal.transactions.contexts.EmptyTransactionContext;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.emptyIterable;
@@ -32,13 +33,13 @@ public class IsNullTest
     @Test
     public void testSelection() throws Exception
     {
-        assertEquals("x is null", new IsNull("x").selection().toString());
+        assertEquals("x is null", new IsNull("x").selection(EmptyTransactionContext.INSTANCE).toString());
     }
 
 
     @Test
     public void testArguments() throws Exception
     {
-        assertThat(new IsNull("x").arguments(), emptyIterable());
+        assertThat(new IsNull("x").arguments(EmptyTransactionContext.INSTANCE), emptyIterable());
     }
 }

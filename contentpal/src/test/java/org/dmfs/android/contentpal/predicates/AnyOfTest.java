@@ -16,6 +16,7 @@
 
 package org.dmfs.android.contentpal.predicates;
 
+import org.dmfs.android.contentpal.transactions.contexts.EmptyTransactionContext;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.contains;
@@ -33,19 +34,21 @@ public class AnyOfTest
     @Test
     public void testSelection() throws Exception
     {
-        assertEquals("1", new AnyOf().selection().toString());
-        assertEquals("x", new AnyOf(new Mocked("x", "a")).selection().toString());
-        assertEquals("( x ) or ( y )", new AnyOf(new Mocked("x", "a"), new Mocked("y", "1")).selection().toString());
-        assertEquals("( x ) or ( z ) or ( y )", new AnyOf(new Mocked("x", "a"), new Mocked("z", "w", "z"), new Mocked("y", "1")).selection().toString());
+        assertEquals("1", new AnyOf().selection(EmptyTransactionContext.INSTANCE).toString());
+        assertEquals("x", new AnyOf(new Mocked("x", "a")).selection(EmptyTransactionContext.INSTANCE).toString());
+        assertEquals("( x ) or ( y )", new AnyOf(new Mocked("x", "a"), new Mocked("y", "1")).selection(EmptyTransactionContext.INSTANCE).toString());
+        assertEquals("( x ) or ( z ) or ( y )",
+                new AnyOf(new Mocked("x", "a"), new Mocked("z", "w", "z"), new Mocked("y", "1")).selection(EmptyTransactionContext.INSTANCE).toString());
     }
 
 
     @Test
     public void testArguments() throws Exception
     {
-        assertThat(new AnyOf().arguments(), emptyIterable());
-        assertThat(new AnyOf(new Mocked("x", "a")).arguments(), contains("a"));
-        assertThat(new AnyOf(new Mocked("x", "a"), new Mocked("y", "1")).arguments(), contains("a", "1"));
-        assertThat(new AnyOf(new Mocked("x", "a"), new Mocked("z", "w", "z"), new Mocked("y", "1")).arguments(), contains("a", "w", "z", "1"));
+        assertThat(new AnyOf().arguments(EmptyTransactionContext.INSTANCE), emptyIterable());
+        assertThat(new AnyOf(new Mocked("x", "a")).arguments(EmptyTransactionContext.INSTANCE), contains("a"));
+        assertThat(new AnyOf(new Mocked("x", "a"), new Mocked("y", "1")).arguments(EmptyTransactionContext.INSTANCE), contains("a", "1"));
+        assertThat(new AnyOf(new Mocked("x", "a"), new Mocked("z", "w", "z"), new Mocked("y", "1")).arguments(EmptyTransactionContext.INSTANCE),
+                contains("a", "w", "z", "1"));
     }
 }

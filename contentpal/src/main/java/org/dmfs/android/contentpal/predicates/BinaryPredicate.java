@@ -19,10 +19,12 @@ package org.dmfs.android.contentpal.predicates;
 import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Predicate;
+import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.iterables.ArrayIterable;
 import org.dmfs.iterables.decorators.Flattened;
 import org.dmfs.iterables.decorators.Mapped;
 import org.dmfs.iterators.Function;
+import org.dmfs.optional.Optional;
 
 
 /**
@@ -50,7 +52,7 @@ public final class BinaryPredicate implements Predicate
 
     @NonNull
     @Override
-    public CharSequence selection()
+    public CharSequence selection(@NonNull TransactionContext transactionContext)
     {
         if (mPredicates.length == 0)
         {
@@ -59,17 +61,17 @@ public final class BinaryPredicate implements Predicate
         }
         if (mPredicates.length == 1)
         {
-            return mPredicates[0].selection();
+            return mPredicates[0].selection(transactionContext);
         }
         StringBuilder result = new StringBuilder(mPredicates.length * 24);
         result.append("( ");
-        result.append(mPredicates[0].selection());
+        result.append(mPredicates[0].selection(transactionContext));
         for (int i = 1, count = mPredicates.length; i < count; ++i)
         {
             result.append(" ) ");
             result.append(mOperator);
             result.append(" ( ");
-            result.append(mPredicates[i].selection());
+            result.append(mPredicates[i].selection(transactionContext));
         }
         result.append(" )");
         return result;
@@ -79,15 +81,31 @@ public final class BinaryPredicate implements Predicate
 
     @NonNull
     @Override
-    public Iterable<String> arguments()
+    public Iterable<String> arguments(@NonNull final TransactionContext transactionContext)
     {
         return new Flattened<>(new Mapped<>(new ArrayIterable<>(mPredicates), new Function<Predicate, Iterable<String>>()
         {
             @Override
             public Iterable<String> apply(Predicate argument)
             {
-                return argument.arguments();
+                return argument.arguments(transactionContext);
             }
         }));
+    }
+
+
+    @NonNull
+    @Override
+    public Iterable<Optional<Integer>> backReferences(@NonNull final TransactionContext transactionContext)
+    {
+        return new Flattened<>(
+                new org.dmfs.iterables.decorators.Mapped<>(new ArrayIterable<>(mPredicates), new Function<Predicate, Iterable<Optional<Integer>>>()
+                {
+                    @Override
+                    public Iterable<Optional<Integer>> apply(Predicate argument)
+                    {
+                        return argument.backReferences(transactionContext);
+                    }
+                }));
     }
 }

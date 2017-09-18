@@ -81,7 +81,7 @@ public final class AbsoluteRowReference<T> implements SoftRowReference<T>
 
     @NonNull
     @Override
-    public Predicate predicate(@NonNull String keyColumn)
+    public Predicate predicate(TransactionContext transactionContext, @NonNull String keyColumn)
     {
         return new EqArg(keyColumn, rowId());
     }

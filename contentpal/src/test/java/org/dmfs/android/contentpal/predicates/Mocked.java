@@ -19,7 +19,13 @@ package org.dmfs.android.contentpal.predicates;
 import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Predicate;
+import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.iterables.ArrayIterable;
+import org.dmfs.iterables.SingletonIterable;
+import org.dmfs.iterables.decorators.Flattened;
+import org.dmfs.iterators.Function;
+import org.dmfs.optional.Absent;
+import org.dmfs.optional.Optional;
 
 
 /**
@@ -43,7 +49,7 @@ public final class Mocked implements Predicate
 
     @NonNull
     @Override
-    public CharSequence selection()
+    public CharSequence selection(@NonNull TransactionContext transactionContext)
     {
         return mSelection;
     }
@@ -51,8 +57,25 @@ public final class Mocked implements Predicate
 
     @NonNull
     @Override
-    public Iterable<String> arguments()
+    public Iterable<String> arguments(@NonNull TransactionContext transactionContext)
     {
         return mArguments;
     }
+
+
+    @NonNull
+    @Override
+    public Iterable<Optional<Integer>> backReferences(@NonNull TransactionContext transactionContext)
+    {
+        return new Flattened<>(
+                new org.dmfs.iterables.decorators.Mapped<>(mArguments, new Function<String, Iterable<Optional<Integer>>>()
+                {
+                    @Override
+                    public Iterable<Optional<Integer>> apply(String argument)
+                    {
+                        return new SingletonIterable<>((Optional<Integer>) Absent.<Integer>absent());
+                    }
+                }));
+    }
+
 }

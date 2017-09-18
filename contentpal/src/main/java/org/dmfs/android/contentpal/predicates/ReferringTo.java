@@ -19,21 +19,28 @@ package org.dmfs.android.contentpal.predicates;
 import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Predicate;
+import org.dmfs.android.contentpal.RowReference;
+import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.TransactionContext;
+import org.dmfs.android.contentpal.references.RowSnapshotReference;
 import org.dmfs.optional.Optional;
 
 
 /**
+ * Predicate which matches rows which have a foreign key to another row.
+ *
  * @author Marten Gajda
  */
-public final class Not implements Predicate
+public final class ReferringTo<T> implements Predicate
 {
-    private final Predicate mPredicate;
+    private final String mColumnName;
+    private final RowReference<T> mRowReference;
 
 
-    public Not(@NonNull Predicate predicate)
+    public ReferringTo(@NonNull String columnName, @NonNull RowSnapshot<T> row)
     {
-        mPredicate = predicate;
+        mColumnName = columnName;
+        mRowReference = new RowSnapshotReference<>(row);
     }
 
 
@@ -41,8 +48,7 @@ public final class Not implements Predicate
     @Override
     public CharSequence selection(@NonNull TransactionContext transactionContext)
     {
-        CharSequence subSelection = mPredicate.selection(transactionContext);
-        return new StringBuilder(subSelection.length() + 10).append("not ( ").append(subSelection).append(" )");
+        return mRowReference.predicate(transactionContext, mColumnName).selection(transactionContext);
     }
 
 
@@ -50,7 +56,7 @@ public final class Not implements Predicate
     @Override
     public Iterable<String> arguments(@NonNull TransactionContext transactionContext)
     {
-        return mPredicate.arguments(transactionContext);
+        return mRowReference.predicate(transactionContext, mColumnName).arguments(transactionContext);
     }
 
 
@@ -58,6 +64,6 @@ public final class Not implements Predicate
     @Override
     public Iterable<Optional<Integer>> backReferences(@NonNull TransactionContext transactionContext)
     {
-        return mPredicate.backReferences(transactionContext);
+        return mRowReference.predicate(transactionContext, mColumnName).backReferences(transactionContext);
     }
 }

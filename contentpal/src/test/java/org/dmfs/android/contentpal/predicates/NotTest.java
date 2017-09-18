@@ -16,6 +16,7 @@
 
 package org.dmfs.android.contentpal.predicates;
 
+import org.dmfs.android.contentpal.transactions.contexts.EmptyTransactionContext;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.contains;
@@ -32,15 +33,15 @@ public class NotTest
     @Test
     public void testSelection() throws Exception
     {
-        assertEquals("not ( x )", new Not(new Mocked("x", "a")).selection().toString());
-        assertEquals("not ( x )", new Not(new Mocked("x", "a", "z", "w")).selection().toString());
+        assertEquals("not ( x )", new Not(new Mocked("x", "a")).selection(EmptyTransactionContext.INSTANCE).toString());
+        assertEquals("not ( x )", new Not(new Mocked("x", "a", "z", "w")).selection(EmptyTransactionContext.INSTANCE).toString());
     }
 
 
     @Test
     public void testArguments() throws Exception
     {
-        assertThat(new Not(new Mocked("x", "a")).arguments(), contains("a"));
-        assertThat(new Not(new Mocked("x", "a", "z", "w")).arguments(), contains("a", "z", "w"));
+        assertThat(new Not(new Mocked("x", "a")).arguments(EmptyTransactionContext.INSTANCE), contains("a"));
+        assertThat(new Not(new Mocked("x", "a", "z", "w")).arguments(EmptyTransactionContext.INSTANCE), contains("a", "z", "w"));
     }
 }
