@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/dmfs/ContentPal.svg?branch=master)](https://travis-ci.org/dmfs/ContentPal)
+
 # ContentPal
 
 A friend to help with Android ContentProvider operations.
