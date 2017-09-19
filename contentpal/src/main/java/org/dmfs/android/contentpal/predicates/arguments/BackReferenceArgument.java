@@ -19,11 +19,14 @@ package org.dmfs.android.contentpal.predicates.arguments;
 import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Predicate;
+import org.dmfs.android.contentpal.Transaction;
 import org.dmfs.optional.Optional;
 import org.dmfs.optional.Present;
 
 
 /**
+ * An {@link Predicate.Argument} which refers to the result of an operation creating a row earlier in the same {@link Transaction}.
+ *
  * @author Marten Gajda
  */
 public final class BackReferenceArgument implements Predicate.Argument

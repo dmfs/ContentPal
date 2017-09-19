@@ -24,6 +24,8 @@ import org.dmfs.optional.Optional;
 
 
 /**
+ * A simple constant argument with no back reference.
+ *
  * @author Marten Gajda
  */
 public final class ValueArgument implements Predicate.Argument
