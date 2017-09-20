@@ -82,21 +82,15 @@ public final class WithExpectedCount extends TypeSafeDiagnosingMatcher<ContentPr
 
             Optional<Integer> expectedCount = new NullSafe<>((Integer) valuesField.get(builder));
 
-            if (mExpectedCount.isPresent() != expectedCount.isPresent())
+            if (!mExpectedCount.isPresent() && expectedCount.isPresent()
+                    || mExpectedCount.isPresent() && expectedCount.isPresent() && !mExpectedCount.value().equals(expectedCount.value()))
             {
-                if (expectedCount.isPresent())
-                {
-                    mismatchDescription.appendText(String.format(Locale.ENGLISH, "expects %d results", expectedCount.value()));
-                }
-                else
-                {
-                    mismatchDescription.appendText("expects no specific number of results");
-                }
+                mismatchDescription.appendText(String.format(Locale.ENGLISH, "expected %d results", expectedCount.value()));
                 return false;
             }
-            if (mExpectedCount.isPresent() && !mExpectedCount.value().equals(expectedCount.value()))
+            else if (mExpectedCount.isPresent() && !expectedCount.isPresent())
             {
-                mismatchDescription.appendText(String.format(Locale.ENGLISH, "expects %d results", expectedCount.value()));
+                mismatchDescription.appendText("expected no specific number of results");
                 return false;
             }
             return true;
@@ -115,13 +109,8 @@ public final class WithExpectedCount extends TypeSafeDiagnosingMatcher<ContentPr
     @Override
     public void describeTo(Description description)
     {
-        if (mExpectedCount.isPresent())
-        {
-            description.appendText(String.format(Locale.ENGLISH, "expects %d results", mExpectedCount.value()));
-        }
-        else
-        {
-            description.appendText("expects no specific number of results");
-        }
+        description.appendText(mExpectedCount.isPresent()
+                ? String.format(Locale.ENGLISH, "expects %d results", mExpectedCount.value())
+                : "expects no specific number of results");
     }
 }

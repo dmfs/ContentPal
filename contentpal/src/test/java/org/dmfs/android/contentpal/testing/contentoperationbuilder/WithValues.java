@@ -41,7 +41,7 @@ public final class WithValues extends TypeSafeDiagnosingMatcher<ContentProviderO
 
 
     @SafeVarargs
-    public static WithValues only(Matcher<ContentValues>... valueMatchers)
+    public static WithValues withValuesOnly(Matcher<ContentValues>... valueMatchers)
     {
         return new WithValues(allOf(allOf(valueMatchers), withValueCount(valueMatchers.length)));
     }

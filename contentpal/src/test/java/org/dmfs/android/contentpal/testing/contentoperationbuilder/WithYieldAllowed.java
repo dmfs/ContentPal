@@ -68,7 +68,7 @@ public final class WithYieldAllowed extends TypeSafeDiagnosingMatcher<ContentPro
 
             if (mYieldable != yieldable)
             {
-                mismatchDescription.appendText(String.format(Locale.ENGLISH, "yieldable is %s", Boolean.toString(yieldable)));
+                mismatchDescription.appendText(String.format(Locale.ENGLISH, "yieldable was %s", Boolean.toString(yieldable)));
                 return false;
             }
             return true;

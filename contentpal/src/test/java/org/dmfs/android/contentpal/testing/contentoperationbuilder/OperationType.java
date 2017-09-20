@@ -38,7 +38,11 @@ import static org.hamcrest.Matchers.any;
  */
 public final class OperationType extends TypeSafeDiagnosingMatcher<ContentProviderOperation.Builder>
 {
-
+    /**
+     * The supported operation types.
+     * <p>
+     * Note, the order of elements is chosen to match the type values specified in ContentProviderOperation. So don't change it.
+     */
     private enum Type
     {
         INSERT,
@@ -76,10 +80,10 @@ public final class OperationType extends TypeSafeDiagnosingMatcher<ContentProvid
     }
 
 
-    private OperationType(Matcher<Uri> mUriMatcher, Type mExpectedType)
+    private OperationType(Matcher<Uri> uriMatcher, Type expectedType)
     {
-        this.mUriMatcher = mUriMatcher;
-        this.mExpectedType = mExpectedType;
+        mUriMatcher = uriMatcher;
+        mExpectedType = expectedType;
     }
 
 
@@ -96,7 +100,7 @@ public final class OperationType extends TypeSafeDiagnosingMatcher<ContentProvid
 
             if (mExpectedType.ordinal() + 1 /* 1-based */ != typeValue)
             {
-                mismatchDescription.appendText(String.format(Locale.ENGLISH, "is a(n) %s operation", Type.values()[typeValue - 1]));
+                mismatchDescription.appendText(String.format(Locale.ENGLISH, "was an %s operation", Type.values()[typeValue - 1]));
                 return false;
             }
             return true;

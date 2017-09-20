@@ -29,11 +29,11 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
-import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithExpectedCount.withoutExpectedCount;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.OperationType.insertOperation;
-import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.only;
+import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithExpectedCount.withoutExpectedCount;
+import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withValuesOnly;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYieldAllowed.withYieldNotAllowed;
-import static org.dmfs.android.contentpal.testing.contentvalues.WithValue.withValue;
+import static org.dmfs.android.contentpal.testing.contentvalues.Containing.containing;
 import static org.dmfs.android.contentpal.testing.operations.OperationMatcher.builds;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.Assert.assertThat;
@@ -69,7 +69,7 @@ public class PopulatedTest
                         insertOperation(),
                         withYieldNotAllowed(),
                         withoutExpectedCount(),
-                        only(
-                                withValue("a", "x"))));
+                        withValuesOnly(
+                                containing("a", "x"))));
     }
 }

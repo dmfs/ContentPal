@@ -52,7 +52,7 @@ public final class Size extends TypeSafeDiagnosingMatcher<ContentValues>
     {
         if (values.size() != mExpectedValueCount)
         {
-            mismatchDescription.appendText(String.format(Locale.ENGLISH, "has %d values", values.size()));
+            mismatchDescription.appendText(String.format(Locale.ENGLISH, "had %d values", values.size()));
             return false;
         }
         return true;

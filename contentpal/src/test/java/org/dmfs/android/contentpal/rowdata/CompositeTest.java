@@ -27,9 +27,9 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
-import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.only;
+import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withValuesOnly;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withoutValues;
-import static org.dmfs.android.contentpal.testing.contentvalues.WithValue.withValue;
+import static org.dmfs.android.contentpal.testing.contentvalues.Containing.containing;
 import static org.dmfs.android.contentpal.testing.rowdata.RowDataMatcher.builds;
 import static org.junit.Assert.assertThat;
 
@@ -62,17 +62,17 @@ public class CompositeTest
                         new Present<RowData<Object>>(
                                 new CharSequenceRowData<>("key", "value"))),
                 builds(
-                        only(
-                                withValue("key", "value"))));
+                        withValuesOnly(
+                                containing("key", "value"))));
         assertThat(new Composite<Object>(
                         new Present<RowData<Object>>(
                                 new CharSequenceRowData<>("key", "value")),
                         new Present<RowData<Object>>(
                                 new CharSequenceRowData<>("key2", "value2"))),
                 builds(
-                        only(
-                                withValue("key", "value"),
-                                withValue("key2", "value2"))));
+                        withValuesOnly(
+                                containing("key", "value"),
+                                containing("key2", "value2"))));
 
         // add a few absent values
         assertThat(new Composite<Object>(
@@ -82,8 +82,8 @@ public class CompositeTest
                         Absent.<RowData<Object>>absent()
                 ),
                 builds(
-                        only(
-                                withValue("key", "value"))));
+                        withValuesOnly(
+                                containing("key", "value"))));
 
         assertThat(new Composite<Object>(
                         Absent.<RowData<Object>>absent(),
@@ -94,9 +94,9 @@ public class CompositeTest
                                 new CharSequenceRowData<>("key2", "value2")),
                         Absent.<RowData<Object>>absent()),
                 builds(
-                        only(
-                                withValue("key", "value"),
-                                withValue("key2", "value2"))));
+                        withValuesOnly(
+                                containing("key", "value"),
+                                containing("key2", "value2"))));
     }
 
 
@@ -106,15 +106,15 @@ public class CompositeTest
         assertThat(new Composite<Object>(
                         new CharSequenceRowData<>("key", "value")),
                 builds(
-                        only(
-                                withValue("key", "value"))));
+                        withValuesOnly(
+                                containing("key", "value"))));
         assertThat(new Composite<Object>(
                         new CharSequenceRowData<>("key", "value"),
                         new CharSequenceRowData<>("key2", "value2")),
                 builds(
-                        only(
-                                withValue("key", "value"),
-                                withValue("key2", "value2"))));
+                        withValuesOnly(
+                                containing("key", "value"),
+                                containing("key2", "value2"))));
     }
 
 
@@ -125,16 +125,16 @@ public class CompositeTest
                         new ArrayIterable<RowData<Object>>(
                                 new CharSequenceRowData<>("key", "value"))),
                 builds(
-                        only(
-                                withValue("key", "value"))));
+                        withValuesOnly(
+                                containing("key", "value"))));
         assertThat(new Composite<Object>(
                         new ArrayIterable<RowData<Object>>(
                                 new CharSequenceRowData<>("key", "value"),
                                 new CharSequenceRowData<>("key2", "value2"))),
                 builds(
-                        only(
-                                withValue("key", "value"),
-                                withValue("key2", "value2"))));
+                        withValuesOnly(
+                                containing("key", "value"),
+                                containing("key2", "value2"))));
     }
 
 }

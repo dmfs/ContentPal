@@ -31,10 +31,10 @@ import org.robolectric.annotation.Config;
 
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.OperationType.updateOperation;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithExpectedCount.withoutExpectedCount;
-import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.only;
+import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withValuesOnly;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withoutValues;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYieldAllowed.withYieldNotAllowed;
-import static org.dmfs.android.contentpal.testing.contentvalues.WithValue.withValue;
+import static org.dmfs.android.contentpal.testing.contentvalues.Containing.containing;
 import static org.dmfs.android.contentpal.testing.operations.OperationMatcher.builds;
 import static org.dmfs.optional.hamcrest.PresentMatcher.isPresent;
 import static org.hamcrest.Matchers.sameInstance;
@@ -99,7 +99,7 @@ public class PutTest
                         updateOperation(),
                         withYieldNotAllowed(),
                         withoutExpectedCount(),
-                        only(
-                                withValue("x", "y"))));
+                        withValuesOnly(
+                                containing("x", "y"))));
     }
 }

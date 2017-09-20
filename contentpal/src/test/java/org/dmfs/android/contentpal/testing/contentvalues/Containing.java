@@ -32,25 +32,25 @@ import static org.hamcrest.Matchers.is;
  *
  * @author Marten Gajda
  */
-public final class WithValue<T> extends TypeSafeDiagnosingMatcher<ContentValues>
+public final class Containing<T> extends TypeSafeDiagnosingMatcher<ContentValues>
 {
     private final String mExpectedKey;
     private final Matcher<T> mExpectedValueMatcher;
 
 
-    public static <T> WithValue<T> withValue(String expectedKey, T expectedValue)
+    public static <T> Containing<T> containing(String expectedKey, T expectedValue)
     {
-        return new WithValue<>(expectedKey, is(expectedValue));
+        return new Containing<>(expectedKey, is(expectedValue));
     }
 
 
-    public static <T> WithValue<T> withValue(String expectedKey, Matcher<T> expectedValueMatcher)
+    public static <T> Containing<T> containing(String expectedKey, Matcher<T> expectedValueMatcher)
     {
-        return new WithValue<>(expectedKey, expectedValueMatcher);
+        return new Containing<>(expectedKey, expectedValueMatcher);
     }
 
 
-    public WithValue(String expectedKey, Matcher<T> expectedValueMatcher)
+    public Containing(String expectedKey, Matcher<T> expectedValueMatcher)
     {
         mExpectedKey = expectedKey;
         mExpectedValueMatcher = expectedValueMatcher;
@@ -62,7 +62,7 @@ public final class WithValue<T> extends TypeSafeDiagnosingMatcher<ContentValues>
     {
         if (!mExpectedValueMatcher.matches(values.get(mExpectedKey)))
         {
-            mismatchDescription.appendText(String.format(Locale.ENGLISH, "has value of key \"%s\" ", mExpectedKey));
+            mismatchDescription.appendText(String.format(Locale.ENGLISH, "had value of key \"%s\" ", mExpectedKey));
             mExpectedValueMatcher.describeMismatch(values.get(mExpectedKey), mismatchDescription);
             return false;
         }
