@@ -75,8 +75,8 @@ public final class RowSnapshotReference<T> implements RowReference<T>
 
     @NonNull
     @Override
-    public Predicate predicate(@NonNull String keyColumn)
+    public Predicate predicate(@NonNull TransactionContext transactionContext, @NonNull String keyColumn)
     {
-        return mRowSnapshot.reference().predicate(keyColumn);
+        return transactionContext.resolved(mRowSnapshot.reference()).predicate(transactionContext, keyColumn);
     }
 }

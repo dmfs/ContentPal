@@ -19,26 +19,27 @@ package org.dmfs.android.contentpal.predicates;
 import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Predicate;
+import org.dmfs.android.contentpal.RowReference;
+import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.TransactionContext;
-import org.dmfs.android.contentpal.predicates.arguments.ValueArgument;
-import org.dmfs.iterables.SingletonIterable;
+import org.dmfs.android.contentpal.references.RowSnapshotReference;
 
 
 /**
- * Predicate which matches rows which have a specific value in a specific column.
+ * Predicate which matches rows which have a foreign key to another row.
  *
  * @author Marten Gajda
  */
-public final class EqArg implements Predicate
+public final class ReferringTo<T> implements Predicate
 {
     private final String mColumnName;
-    private final Object mArgument;
+    private final RowReference<T> mRowReference;
 
 
-    public EqArg(@NonNull String columnName, @NonNull Object argument)
+    public ReferringTo(@NonNull String columnName, @NonNull RowSnapshot<T> row)
     {
         mColumnName = columnName;
-        mArgument = argument;
+        mRowReference = new RowSnapshotReference<>(row);
     }
 
 
@@ -46,7 +47,7 @@ public final class EqArg implements Predicate
     @Override
     public CharSequence selection(@NonNull TransactionContext transactionContext)
     {
-        return new StringBuilder(mColumnName).append(" = ?");
+        return mRowReference.predicate(transactionContext, mColumnName).selection(transactionContext);
     }
 
 
@@ -54,6 +55,6 @@ public final class EqArg implements Predicate
     @Override
     public Iterable<Argument> arguments(@NonNull TransactionContext transactionContext)
     {
-        return new SingletonIterable<Argument>(new ValueArgument(mArgument));
+        return mRowReference.predicate(transactionContext, mColumnName).arguments(transactionContext);
     }
 }

@@ -86,10 +86,11 @@ public interface RowReference<T>
     /**
      * Returns a {@link Predicate} which matches the row on the given key column.
      *
+     * @param transactionContext
      * @param keyColumn
      *
      * @return A {@link Predicate}
      */
     @NonNull
-    Predicate predicate(@NonNull String keyColumn);
+    Predicate predicate(@NonNull TransactionContext transactionContext, @NonNull String keyColumn);
 }

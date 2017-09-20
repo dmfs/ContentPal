@@ -79,7 +79,7 @@ public final class VirtualRowReference<T> implements SoftRowReference<T>
 
     @NonNull
     @Override
-    public Predicate predicate(@NonNull String keyColumn)
+    public Predicate predicate(@NonNull TransactionContext transactionContext, @NonNull String keyColumn)
     {
         throw new UnsupportedOperationException("Can't create a predicate which matches a virtual row.");
     }

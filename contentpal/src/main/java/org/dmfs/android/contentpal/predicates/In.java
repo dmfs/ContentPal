@@ -19,6 +19,8 @@ package org.dmfs.android.contentpal.predicates;
 import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Predicate;
+import org.dmfs.android.contentpal.TransactionContext;
+import org.dmfs.android.contentpal.predicates.arguments.ValueArgument;
 import org.dmfs.iterables.ArrayIterable;
 import org.dmfs.iterables.decorators.Mapped;
 import org.dmfs.iterators.Function;
@@ -47,7 +49,7 @@ public final class In implements Predicate
 
     @NonNull
     @Override
-    public CharSequence selection()
+    public CharSequence selection(@NonNull TransactionContext transactionContext)
     {
         StringBuilder sb = new StringBuilder(mColumnName.length() + mArguments.length * 3 + 9);
         sb.append(mColumnName);
@@ -67,16 +69,16 @@ public final class In implements Predicate
 
     @NonNull
     @Override
-    public Iterable<String> arguments()
+    public Iterable<Argument> arguments(@NonNull TransactionContext transactionContext)
     {
         return new Mapped<>(
                 new ArrayIterable<>(mArguments),
-                new Function<Object, String>()
+                new Function<Object, Argument>()
                 {
                     @Override
-                    public String apply(Object argument)
+                    public Argument apply(Object argument)
                     {
-                        return argument.toString();
+                        return new ValueArgument(argument);
                     }
                 });
     }

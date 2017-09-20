@@ -16,9 +16,15 @@
 
 package org.dmfs.android.contentpal.predicates;
 
+import org.dmfs.android.contentpal.predicates.utils.BackReferences;
+import org.dmfs.android.contentpal.predicates.utils.Mocked;
+import org.dmfs.android.contentpal.predicates.utils.Values;
+import org.dmfs.android.contentpal.transactions.contexts.EmptyTransactionContext;
+import org.dmfs.optional.iterable.PresentValues;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.emptyIterable;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
@@ -32,15 +38,19 @@ public class NotTest
     @Test
     public void testSelection() throws Exception
     {
-        assertEquals("not ( x )", new Not(new Mocked("x", "a")).selection().toString());
-        assertEquals("not ( x )", new Not(new Mocked("x", "a", "z", "w")).selection().toString());
+        assertEquals("not ( x )", new Not(new Mocked("x", "a")).selection(EmptyTransactionContext.INSTANCE).toString());
+        assertEquals("not ( x )", new Not(new Mocked("x", "a", "z", "w")).selection(EmptyTransactionContext.INSTANCE).toString());
     }
 
 
     @Test
     public void testArguments() throws Exception
     {
-        assertThat(new Not(new Mocked("x", "a")).arguments(), contains("a"));
-        assertThat(new Not(new Mocked("x", "a", "z", "w")).arguments(), contains("a", "z", "w"));
+        assertThat(new Values(new Not(new Mocked("x", "a")).arguments(EmptyTransactionContext.INSTANCE)), contains("a"));
+        assertThat(new PresentValues<>(new BackReferences(new Not(new Mocked("x", "a")).arguments(EmptyTransactionContext.INSTANCE))), emptyIterable());
+
+        assertThat(new Values(new Not(new Mocked("x", "a", "z", "w")).arguments(EmptyTransactionContext.INSTANCE)), contains("a", "z", "w"));
+        assertThat(new PresentValues<>(new BackReferences(new Not(new Mocked("x", "a", "z", "w")).arguments(EmptyTransactionContext.INSTANCE))),
+                emptyIterable());
     }
 }

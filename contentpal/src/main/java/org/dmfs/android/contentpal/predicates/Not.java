@@ -19,6 +19,7 @@ package org.dmfs.android.contentpal.predicates;
 import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Predicate;
+import org.dmfs.android.contentpal.TransactionContext;
 
 
 /**
@@ -37,17 +38,17 @@ public final class Not implements Predicate
 
     @NonNull
     @Override
-    public CharSequence selection()
+    public CharSequence selection(@NonNull TransactionContext transactionContext)
     {
-        CharSequence subSelection = mPredicate.selection();
+        CharSequence subSelection = mPredicate.selection(transactionContext);
         return new StringBuilder(subSelection.length() + 10).append("not ( ").append(subSelection).append(" )");
     }
 
 
     @NonNull
     @Override
-    public Iterable<String> arguments()
+    public Iterable<Argument> arguments(@NonNull TransactionContext transactionContext)
     {
-        return mPredicate.arguments();
+        return mPredicate.arguments(transactionContext);
     }
 }

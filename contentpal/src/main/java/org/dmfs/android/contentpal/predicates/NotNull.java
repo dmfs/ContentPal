@@ -19,6 +19,7 @@ package org.dmfs.android.contentpal.predicates;
 import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Predicate;
+import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.iterables.EmptyIterable;
 
 
@@ -38,7 +39,7 @@ public final class NotNull implements Predicate
 
     @NonNull
     @Override
-    public CharSequence selection()
+    public CharSequence selection(@NonNull TransactionContext transactionContext)
     {
         return new StringBuilder(mColumnName).append(" is not null");
     }
@@ -46,7 +47,7 @@ public final class NotNull implements Predicate
 
     @NonNull
     @Override
-    public Iterable<String> arguments()
+    public Iterable<Argument> arguments(@NonNull TransactionContext transactionContext)
     {
         return EmptyIterable.instance();
     }

@@ -14,32 +14,28 @@
  * limitations under the License.
  */
 
-package org.dmfs.android.contentpal.predicates;
+package org.dmfs.android.contentpal.predicates.utils;
 
-import org.dmfs.android.contentpal.transactions.contexts.EmptyTransactionContext;
+import org.dmfs.android.contentpal.Predicate;
+import org.dmfs.android.contentpal.predicates.arguments.ValueArgument;
+import org.dmfs.iterables.ArrayIterable;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.emptyIterable;
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.junit.Assert.assertThat;
 
 
 /**
  * @author Marten Gajda
  */
-public class IsNullTest
+public class ValuesTest
 {
-
     @Test
-    public void testSelection() throws Exception
+    public void test()
     {
-        assertEquals("x is null", new IsNull("x").selection(EmptyTransactionContext.INSTANCE).toString());
-    }
-
-
-    @Test
-    public void testArguments() throws Exception
-    {
-        assertThat(new IsNull("x").arguments(EmptyTransactionContext.INSTANCE), emptyIterable());
+        assertThat(new Values(new ArrayIterable<Predicate.Argument>()), emptyIterable());
+        assertThat(new Values(new ArrayIterable<Predicate.Argument>(new ValueArgument("a"))), contains("a"));
+        assertThat(new Values(new ArrayIterable<Predicate.Argument>(new ValueArgument("a"), new ValueArgument("b"))), contains("a", "b"));
     }
 }

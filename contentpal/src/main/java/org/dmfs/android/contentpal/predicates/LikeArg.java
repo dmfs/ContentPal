@@ -19,6 +19,8 @@ package org.dmfs.android.contentpal.predicates;
 import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Predicate;
+import org.dmfs.android.contentpal.TransactionContext;
+import org.dmfs.android.contentpal.predicates.arguments.ValueArgument;
 import org.dmfs.iterables.SingletonIterable;
 
 
@@ -42,7 +44,7 @@ public final class LikeArg implements Predicate
 
     @NonNull
     @Override
-    public CharSequence selection()
+    public CharSequence selection(@NonNull TransactionContext transactionContext)
     {
         return new StringBuilder(mColumnName).append(" like ?");
     }
@@ -50,8 +52,8 @@ public final class LikeArg implements Predicate
 
     @NonNull
     @Override
-    public Iterable<String> arguments()
+    public Iterable<Argument> arguments(@NonNull TransactionContext transactionContext)
     {
-        return new SingletonIterable<>(mArgument.toString());
+        return new SingletonIterable<Argument>(new ValueArgument(mArgument));
     }
 }

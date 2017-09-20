@@ -132,13 +132,20 @@ public final class BaseTable<T> implements Table<T>
         @Override
         public ContentProviderOperation.Builder contentOperationBuilder(@NonNull TransactionContext transactionContext) throws UnsupportedOperationException
         {
+            ContentProviderOperation.Builder builder = mDelegate.contentOperationBuilder(transactionContext);
+
             List<String> arguments = new LinkedList<>();
-            for (String arg : mPredicate.arguments())
+            for (Predicate.Argument arg : mPredicate.arguments(transactionContext))
             {
-                arguments.add(arg);
+                arguments.add(arg.value());
+                Optional<Integer> backReference = arg.backReference();
+                if (backReference.isPresent())
+                {
+                    builder.withSelectionBackReference(arguments.size() - 1, backReference.value());
+                }
             }
-            return mDelegate.contentOperationBuilder(transactionContext)
-                    .withSelection(mPredicate.selection().toString(), arguments.toArray(new String[arguments.size()]));
+
+            return builder.withSelection(mPredicate.selection(transactionContext).toString(), arguments.toArray(new String[arguments.size()]));
         }
     }
 }

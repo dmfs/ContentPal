@@ -26,6 +26,8 @@ import org.dmfs.android.contentpal.RowReference;
 import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.Transaction;
 import org.dmfs.android.contentpal.TransactionContext;
+import org.dmfs.android.contentpal.predicates.arguments.BackReferenceArgument;
+import org.dmfs.iterables.SingletonIterable;
 
 
 /**
@@ -85,9 +87,9 @@ public final class BackReference<T> implements RowReference<T>
 
     @NonNull
     @Override
-    public Predicate predicate(@NonNull String keyColumn)
+    public Predicate predicate(@NonNull TransactionContext transactionContext, @NonNull final String keyColumn)
     {
-        throw new IllegalStateException("Can't create a predicate which matches a BackReference.");
+        return new BackReferenceSelectionPredicate(keyColumn, mBackReference);
     }
 
 
@@ -97,5 +99,35 @@ public final class BackReference<T> implements RowReference<T>
         builder.withSelection(String.format(DEFAULT_SELECTION, BaseColumns._ID), DEFAULT_SELECTION_ARGS)
                 .withSelectionBackReference(0, mBackReference);
         return builder;
+    }
+
+
+    private static class BackReferenceSelectionPredicate implements Predicate
+    {
+        private final String mKeyColumn;
+        private final int mBackReference;
+
+
+        public BackReferenceSelectionPredicate(String keyColumn, int backReference)
+        {
+            mKeyColumn = keyColumn;
+            mBackReference = backReference;
+        }
+
+
+        @NonNull
+        @Override
+        public CharSequence selection(@NonNull TransactionContext transactionContext)
+        {
+            return String.format("%s = ?", mKeyColumn);
+        }
+
+
+        @NonNull
+        @Override
+        public Iterable<Argument> arguments(@NonNull TransactionContext transactionContext)
+        {
+            return new SingletonIterable<Argument>(new BackReferenceArgument(mBackReference));
+        }
     }
 }

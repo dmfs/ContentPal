@@ -77,7 +77,7 @@ public final class RowUriReference<T> implements SoftRowReference<T>
 
     @NonNull
     @Override
-    public Predicate predicate(@NonNull String keyColumn)
+    public Predicate predicate(@NonNull TransactionContext transactionContext, @NonNull String keyColumn)
     {
         return new EqArg(keyColumn, rowId());
     }
