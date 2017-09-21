@@ -37,6 +37,7 @@ public final class MultiBatch implements OperationsBatch
     private final Iterable<Operation<?>> mOperations;
 
 
+    @SafeVarargs
     public MultiBatch(@NonNull Optional<Operation<?>>... operations)
     {
         this(new PresentValues<>(new ArrayIterable<>(operations)));

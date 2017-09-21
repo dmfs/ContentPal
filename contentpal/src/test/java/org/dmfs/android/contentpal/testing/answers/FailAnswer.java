@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.dmfs.android.contentpal.operations;
+package org.dmfs.android.contentpal.testing.answers;
 
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;

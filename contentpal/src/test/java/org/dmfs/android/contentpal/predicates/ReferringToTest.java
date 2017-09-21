@@ -21,10 +21,10 @@ import android.net.Uri;
 import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.SoftRowReference;
 import org.dmfs.android.contentpal.TransactionContext;
-import org.dmfs.android.contentpal.operations.FailAnswer;
 import org.dmfs.android.contentpal.predicates.utils.BackReferences;
 import org.dmfs.android.contentpal.predicates.utils.Values;
 import org.dmfs.android.contentpal.references.BackReference;
+import org.dmfs.android.contentpal.testing.answers.FailAnswer;
 import org.dmfs.optional.iterable.PresentValues;
 import org.junit.Test;
 

@@ -14,14 +14,11 @@
  * limitations under the License.
  */
 
-package org.dmfs.android.contentpal.operations;
+package org.dmfs.android.contentpal.operations.internal;
 
-import android.content.ContentProviderOperation;
 import android.net.Uri;
 
-import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.SoftRowReference;
-import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.testing.answers.FailAnswer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,8 +32,6 @@ import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYi
 import static org.dmfs.android.contentpal.testing.operations.OperationMatcher.builds;
 import static org.dmfs.optional.hamcrest.AbsentMatcher.isAbsent;
 import static org.junit.Assert.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
 
@@ -45,27 +40,19 @@ import static org.mockito.Mockito.mock;
  */
 @RunWith(RobolectricTestRunner.class)
 @Config(manifest = Config.NONE)
-public class DeleteTest
+public class RawDeleteTest
 {
     @Test
-    public void testVirtualReference() throws Exception
+    public void testReference() throws Exception
     {
-        RowSnapshot<Object> rowSnapshot = mock(RowSnapshot.class, new FailAnswer());
-
-        assertThat(new Delete<>(rowSnapshot).reference(), isAbsent((SoftRowReference<Object>) mock(SoftRowReference.class)));
+        assertThat(new RawDelete<>(mock(Uri.class, new FailAnswer())).reference(), isAbsent((SoftRowReference<Object>) mock(SoftRowReference.class)));
     }
 
 
     @Test
     public void testContentOperationBuilder() throws Exception
     {
-        RowSnapshot<Object> rowSnapshot = mock(RowSnapshot.class, new FailAnswer());
-        SoftRowReference<Object> rowReference = mock(SoftRowReference.class, new FailAnswer());
-        doReturn(rowReference).when(rowSnapshot).reference();
-        doReturn(ContentProviderOperation.newDelete(Uri.EMPTY)).when(rowReference).deleteOperationBuilder(any(TransactionContext.class));
-
-        assertThat(
-                new Delete<>(rowSnapshot),
+        assertThat(new RawDelete<>(mock(Uri.class, new FailAnswer())),
                 builds(
                         deleteOperation(),
                         withYieldNotAllowed(),
