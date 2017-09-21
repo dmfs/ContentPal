@@ -38,8 +38,10 @@ dependencies {
     compile 'org.dmfs:optional:' + JEMS_VERSION
     compile project(':contentpal-api')
 
-    testCompile 'junit:junit:4.12'
-    testCompile 'org.robolectric:robolectric:3.1.4'
-    testCompile 'org.mockito:mockito-core:2.10.0'
+    testCompile 'junit:junit:' + JUNIT_VERSION
+    testCompile 'org.mockito:mockito-core:' + MOCKITO_VERSION
+    testCompile 'org.robolectric:robolectric:' + ROBOLECTRIC_VERSION
     testCompile 'org.dmfs:optional-testing:' + JEMS_VERSION
+    testCompile project(':contentpal-testing')
+
 }

@@ -21,7 +21,7 @@ import android.net.Uri;
 
 import org.dmfs.android.contentpal.RowData;
 import org.dmfs.android.contentpal.TransactionContext;
-import org.dmfs.android.contentpal.transactions.contexts.EmptyTransactionContext;
+import org.dmfs.android.contentpal.testing.dummies.BounceTransactionContext;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
@@ -49,7 +49,7 @@ public final class RowDataMatcher extends TypeSafeDiagnosingMatcher<RowData<?>>
     public static <T> RowDataMatcher builds(Matcher<ContentProviderOperation.Builder>... builderMatchers)
     {
         // note RowData is not allowed to change anything but values, hence we add a few more matchers here
-        return new RowDataMatcher(EmptyTransactionContext.INSTANCE,
+        return new RowDataMatcher(new BounceTransactionContext(),
                 allOf(allOf(builderMatchers), updateOperation(), withYieldNotAllowed(), withoutExpectedCount()));
     }
 
