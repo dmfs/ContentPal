@@ -27,7 +27,7 @@ import java.util.Iterator;
  *
  * @author Marten Gajda
  */
-public final class FakeClosable<T> implements Iterator<T>, ClosableIterator<T>
+public final class FakeClosable<T> implements ClosableIterator<T>
 {
     private final Iterator<T> mDelegate;
 

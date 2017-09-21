@@ -30,7 +30,7 @@ import java.util.NoSuchElementException;
  *
  * @author Marten Gajda
  */
-public final class ClosableEmptyIterator<T> extends AbstractBaseIterator<T> implements Iterator<T>, ClosableIterator<T>
+public final class ClosableEmptyIterator<T> extends AbstractBaseIterator<T> implements ClosableIterator<T>
 {
     private final static ClosableEmptyIterator<?> INSTANCE = new ClosableEmptyIterator<>();
 
