@@ -7,6 +7,7 @@
       <module fileurl="file://$PROJECT_DIR$/calendarpal/calendarpal.iml" filepath="$PROJECT_DIR$/calendarpal/calendarpal.iml" />
       <module fileurl="file://$PROJECT_DIR$/contactspal/contactspal.iml" filepath="$PROJECT_DIR$/contactspal/contactspal.iml" />
       <module fileurl="file://$PROJECT_DIR$/contentpal/contentpal.iml" filepath="$PROJECT_DIR$/contentpal/contentpal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/contentpal-api/contentpal-api.iml" filepath="$PROJECT_DIR$/contentpal-api/contentpal-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/contenttestpal/contenttestpal.iml" filepath="$PROJECT_DIR$/contenttestpal/contenttestpal.iml" />
     </modules>
   </component>

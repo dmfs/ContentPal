@@ -14,17 +14,20 @@
  * limitations under the License.
  */
 
-package org.dmfs.android.contentpal.tools;
+package org.dmfs.android.contentpal;
 
-import java.io.Closeable;
-import java.util.Iterator;
+import android.support.annotation.NonNull;
 
 
 /**
- * An {@link Iterator} which is also {@link Closeable}.
+ * The set of rows of a specific view. Iterating over this will return {@link RowSnapshot}s of all rows that exist at that time. Note, if the
+ * database has been modified between two iterations, you'll get different results.
  *
  * @author Marten Gajda
  */
-public interface ClosableIterator<T> extends Iterator<T>, Closeable
+public interface RowSet<T> extends Iterable<RowSnapshot<T>>
 {
+    @NonNull
+    @Override
+    ClosableIterator<RowSnapshot<T>> iterator();
 }

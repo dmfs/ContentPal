@@ -20,6 +20,7 @@ import android.database.Cursor;
 import android.os.RemoteException;
 import android.support.annotation.NonNull;
 
+import org.dmfs.android.contentpal.ClosableIterator;
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.RowSet;
 import org.dmfs.android.contentpal.RowSnapshot;
@@ -28,7 +29,6 @@ import org.dmfs.android.contentpal.View;
 import org.dmfs.android.contentpal.rowdatasnapshots.MapRowDataSnapshot;
 import org.dmfs.android.contentpal.rowsnapshots.ValuesRowSnapshot;
 import org.dmfs.android.contentpal.tools.ClosableEmptyIterator;
-import org.dmfs.android.contentpal.tools.ClosableIterator;
 import org.dmfs.android.contentpal.tools.uriparams.EmptyUriParams;
 import org.dmfs.android.contentpal.transactions.contexts.EmptyTransactionContext;
 import org.dmfs.iterators.AbstractBaseIterator;

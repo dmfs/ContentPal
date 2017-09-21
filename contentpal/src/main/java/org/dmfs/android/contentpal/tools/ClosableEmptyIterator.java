@@ -16,6 +16,7 @@
 
 package org.dmfs.android.contentpal.tools;
 
+import org.dmfs.android.contentpal.ClosableIterator;
 import org.dmfs.iterators.AbstractBaseIterator;
 
 import java.io.Closeable;
@@ -29,7 +30,7 @@ import java.util.NoSuchElementException;
  *
  * @author Marten Gajda
  */
-public final class ClosableEmptyIterator<T> extends AbstractBaseIterator<T> implements ClosableIterator<T>
+public final class ClosableEmptyIterator<T> extends AbstractBaseIterator<T> implements Iterator<T>, ClosableIterator<T>
 {
     private final static ClosableEmptyIterator<?> INSTANCE = new ClosableEmptyIterator<>();
 

@@ -16,6 +16,8 @@
 
 package org.dmfs.android.contentpal.tools;
 
+import org.dmfs.android.contentpal.ClosableIterator;
+
 import java.io.IOException;
 import java.util.Iterator;
 
@@ -25,7 +27,7 @@ import java.util.Iterator;
  *
  * @author Marten Gajda
  */
-public final class FakeClosable<T> implements ClosableIterator<T>
+public final class FakeClosable<T> implements Iterator<T>, ClosableIterator<T>
 {
     private final Iterator<T> mDelegate;
 

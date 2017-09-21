@@ -1,1 +1,1 @@
-include ':app', ':contentpal', ':contactspal', ':calendarpal', ':contenttestpal'
+include ':app', ':contentpal-api', ':contentpal', ':contactspal', ':calendarpal', ':contenttestpal'
