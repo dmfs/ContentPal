@@ -28,7 +28,7 @@ import org.dmfs.android.contentpal.SoftRowReference;
 import org.dmfs.android.contentpal.Table;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.operations.Insert;
-import org.dmfs.android.contentpal.operations.Related;
+import org.dmfs.android.contentpal.operations.Referring;
 import org.dmfs.optional.Optional;
 
 
@@ -56,7 +56,7 @@ public final class RawContactData implements InsertOperation<ContactsContract.Da
 
     public RawContactData(@NonNull RowSnapshot<ContactsContract.RawContacts> rawContact, @NonNull InsertOperation<ContactsContract.Data> delegate)
     {
-        mDelegate = new Related<>(rawContact, ContactsContract.Data.RAW_CONTACT_ID, delegate);
+        mDelegate = new Referring<>(rawContact, ContactsContract.Data.RAW_CONTACT_ID, delegate);
     }
 
 

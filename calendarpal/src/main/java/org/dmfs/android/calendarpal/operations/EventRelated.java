@@ -25,7 +25,7 @@ import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.SoftRowReference;
 import org.dmfs.android.contentpal.TransactionContext;
-import org.dmfs.android.contentpal.operations.Related;
+import org.dmfs.android.contentpal.operations.Referring;
 import org.dmfs.optional.Optional;
 
 
@@ -43,7 +43,7 @@ public final class EventRelated<T> implements InsertOperation<T>
 
     public EventRelated(@NonNull RowSnapshot<CalendarContract.Events> event, @NonNull InsertOperation<T> delegate)
     {
-        mDelegate = new Related<>(event, "event_id"/* all supported tables use this name as the foreign key column name */, delegate);
+        mDelegate = new Referring<>(event, "event_id"/* all supported tables use this name as the foreign key column name */, delegate);
     }
 
 

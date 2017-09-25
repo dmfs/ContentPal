@@ -28,7 +28,7 @@ import org.dmfs.android.contentpal.SoftRowReference;
 import org.dmfs.android.contentpal.Table;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.operations.Insert;
-import org.dmfs.android.contentpal.operations.Related;
+import org.dmfs.android.contentpal.operations.Referring;
 import org.dmfs.android.contentpal.tables.Synced;
 import org.dmfs.optional.Optional;
 
@@ -64,7 +64,7 @@ public final class CalendarEvent implements InsertOperation<CalendarContract.Eve
 
     public CalendarEvent(@NonNull RowSnapshot<CalendarContract.Calendars> calendar, @NonNull InsertOperation<CalendarContract.Events> delegate)
     {
-        mDelegate = new Related<>(calendar, CalendarContract.Events.CALENDAR_ID, delegate);
+        mDelegate = new Referring<>(calendar, CalendarContract.Events.CALENDAR_ID, delegate);
     }
 
 
