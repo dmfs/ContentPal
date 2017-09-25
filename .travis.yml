@@ -6,3 +6,7 @@ android:
     - build-tools-25.0.3
     - android-25
     - extra-android-m2repository
+script:
+  - ./gradlew build check jacocoTestReport
+after_success:
+  - bash <(curl -s https://codecov.io/bash)

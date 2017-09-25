@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/dmfs/ContentPal.svg?branch=master)](https://travis-ci.org/dmfs/ContentPal)
+[![codecov](https://codecov.io/gh/dmfs/ContentPal/branch/master/graph/badge.svg)](https://codecov.io/gh/dmfs/ContentPal)
 
 # ContentPal
 
