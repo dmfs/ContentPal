@@ -22,7 +22,6 @@ import android.net.Uri;
 import android.os.RemoteException;
 import android.support.annotation.NonNull;
 
-import org.dmfs.android.contentpal.rowsets.QueryRowSet;
 import org.dmfs.optional.Optional;
 
 
@@ -39,7 +38,7 @@ public interface View<T>
     /**
      * Query this view for rows matching certain {@link Predicate}s.
      * <p>
-     * Note, in most cases you don't want to call this directly, but create a {@link QueryRowSet} or any other dedicated {@link RowSet} instance.
+     * Note, in most cases you don't want to call this directly, but create dedicated {@link RowSet} instance.
      *
      * @param uriParams
      *         Additional {@link Uri} parameters to append to the query {@link Uri}.

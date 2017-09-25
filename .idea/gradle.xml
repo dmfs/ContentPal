@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/calendarpal" />
             <option value="$PROJECT_DIR$/contactspal" />
             <option value="$PROJECT_DIR$/contentpal" />
+            <option value="$PROJECT_DIR$/contentpal-api" />
             <option value="$PROJECT_DIR$/contenttestpal" />
           </set>
         </option>

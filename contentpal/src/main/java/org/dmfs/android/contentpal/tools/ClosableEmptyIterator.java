@@ -16,6 +16,7 @@
 
 package org.dmfs.android.contentpal.tools;
 
+import org.dmfs.android.contentpal.ClosableIterator;
 import org.dmfs.iterators.AbstractBaseIterator;
 
 import java.io.Closeable;

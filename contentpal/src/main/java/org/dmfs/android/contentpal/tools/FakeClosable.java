@@ -16,6 +16,8 @@
 
 package org.dmfs.android.contentpal.tools;
 
+import org.dmfs.android.contentpal.ClosableIterator;
+
 import java.io.IOException;
 import java.util.Iterator;
 

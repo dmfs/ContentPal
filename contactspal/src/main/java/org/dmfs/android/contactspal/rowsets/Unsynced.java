@@ -19,12 +19,12 @@ package org.dmfs.android.contactspal.rowsets;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 
+import org.dmfs.android.contentpal.ClosableIterator;
 import org.dmfs.android.contentpal.RowSet;
 import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.View;
 import org.dmfs.android.contentpal.predicates.IsNull;
 import org.dmfs.android.contentpal.rowsets.QueryRowSet;
-import org.dmfs.android.contentpal.tools.ClosableIterator;
 
 
 /**
