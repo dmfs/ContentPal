@@ -24,7 +24,7 @@ import org.dmfs.android.contentpal.SoftRowReference;
 import org.dmfs.android.contentpal.operations.internal.RawInsert;
 import org.dmfs.android.contentpal.references.RowUriReference;
 import org.dmfs.android.contentpal.testing.answers.FailAnswer;
-import org.dmfs.optional.hamcrest.AbsentMatcher;
+import org.dmfs.optional.Optional;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
@@ -36,6 +36,7 @@ import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithVa
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYieldAllowed.withYieldNotAllowed;
 import static org.dmfs.android.contentpal.testing.contentvalues.Containing.containing;
 import static org.dmfs.android.contentpal.testing.operations.OperationMatcher.builds;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
@@ -46,15 +47,17 @@ import static org.mockito.Mockito.mock;
  */
 @RunWith(RobolectricTestRunner.class)
 @Config(manifest = Config.NONE)
-public class RelatedTest
+public class ReferringTest
 {
     @Test
     public void testReference() throws Exception
     {
         RowSnapshot<Object> mockSnapshot = mock(RowSnapshot.class, new FailAnswer());
+        Operation<Object> mockOperation = mock(Operation.class, new FailAnswer());
+        Optional<SoftRowReference<Object>> dummyOptional = mock(Optional.class, new FailAnswer());
+        doReturn(dummyOptional).when(mockOperation).reference();
 
-        assertThat(new Related<>(mockSnapshot, "column", mock(Operation.class, new FailAnswer())).reference(),
-                AbsentMatcher.<SoftRowReference<Object>>isAbsent(mock(SoftRowReference.class)));
+        assertThat(new Referring<>(mockSnapshot, "column", mockOperation).reference(), is(dummyOptional));
     }
 
 
@@ -64,7 +67,7 @@ public class RelatedTest
         RowSnapshot<Object> mockSnapshot = mock(RowSnapshot.class, new FailAnswer());
         doReturn(new RowUriReference<>(Uri.parse("content://abc/xyz/123"))).when(mockSnapshot).reference();
 
-        assertThat(new Related<>(mockSnapshot, "column", new RawInsert<>(mock(Uri.class, new FailAnswer()))),
+        assertThat(new Referring<>(mockSnapshot, "column", new RawInsert<>(mock(Uri.class, new FailAnswer()))),
                 builds(
                         insertOperation(),
                         withoutExpectedCount(),
