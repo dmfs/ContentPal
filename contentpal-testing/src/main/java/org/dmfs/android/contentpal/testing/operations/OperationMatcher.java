@@ -19,7 +19,7 @@ package org.dmfs.android.contentpal.testing.operations;
 import android.content.ContentProviderOperation;
 
 import org.dmfs.android.contentpal.TransactionContext;
-import org.dmfs.android.contentpal.transactions.contexts.EmptyTransactionContext;
+import org.dmfs.android.contentpal.testing.dummies.BounceTransactionContext;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
@@ -43,7 +43,7 @@ public final class OperationMatcher extends TypeSafeDiagnosingMatcher<org.dmfs.a
     @SafeVarargs
     public static OperationMatcher builds(Matcher<ContentProviderOperation.Builder>... builderMatchers)
     {
-        return new OperationMatcher(EmptyTransactionContext.INSTANCE, allOf(builderMatchers));
+        return new OperationMatcher(new BounceTransactionContext(), allOf(builderMatchers));
     }
 
 

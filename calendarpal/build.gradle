@@ -38,7 +38,7 @@ dependencies {
     compile "org.dmfs:rfc5545-datetime:0.2.4"
     compile "org.dmfs:lib-recur:0.10"
 
-    testCompile 'junit:junit:4.12'
-    testCompile 'org.robolectric:robolectric:3.1.4'
-    testCompile 'org.mockito:mockito-core:1.9.0'
+    testCompile 'junit:junit:' + JUNIT_VERSION
+    testCompile 'org.mockito:mockito-core:' + MOCKITO_VERSION
+    testCompile 'org.robolectric:robolectric:' + ROBOLECTRIC_VERSION
 }
