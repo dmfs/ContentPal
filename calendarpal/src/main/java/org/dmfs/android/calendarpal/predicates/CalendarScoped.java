@@ -33,7 +33,7 @@ import org.dmfs.android.contentpal.predicates.ReferringTo;
  */
 public final class CalendarScoped extends DelegatingPredicate
 {
-    public CalendarScoped(RowSnapshot<CalendarContract.Calendars> calendarRow, @NonNull Predicate predicate)
+    public CalendarScoped(@NonNull RowSnapshot<CalendarContract.Calendars> calendarRow, @NonNull Predicate predicate)
     {
         super(new AllOf(predicate, new ReferringTo<>(CalendarContract.Events.CALENDAR_ID, calendarRow)));
     }

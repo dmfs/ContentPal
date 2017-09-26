@@ -101,6 +101,5 @@ public final class CalendarScoped implements Table<CalendarContract.Events>
     private Predicate calendarScoped(@NonNull Predicate predicate)
     {
         return new org.dmfs.android.calendarpal.predicates.CalendarScoped(mCalendarRow, predicate);
-
     }
 }
