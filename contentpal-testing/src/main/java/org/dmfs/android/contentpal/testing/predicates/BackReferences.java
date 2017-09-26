@@ -14,27 +14,28 @@
  * limitations under the License.
  */
 
-package org.dmfs.android.contentpal.predicates.utils;
+package org.dmfs.android.contentpal.testing.predicates;
 
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.iterables.decorators.DelegatingIterable;
 import org.dmfs.iterables.decorators.Mapped;
 import org.dmfs.iterators.Function;
+import org.dmfs.optional.Optional;
 
 
 /**
  * @author Marten Gajda
  */
-public final class Values extends DelegatingIterable<String>
+public final class BackReferences extends DelegatingIterable<Optional<Integer>>
 {
-    public Values(Iterable<Predicate.Argument> arguments)
+    public BackReferences(Iterable<Predicate.Argument> arguments)
     {
-        super(new Mapped<>(arguments, new Function<Predicate.Argument, String>()
+        super(new Mapped<>(arguments, new Function<Predicate.Argument, Optional<Integer>>()
         {
             @Override
-            public String apply(Predicate.Argument argument)
+            public Optional<Integer> apply(Predicate.Argument argument)
             {
-                return argument.value();
+                return argument.backReference();
             }
         }));
     }

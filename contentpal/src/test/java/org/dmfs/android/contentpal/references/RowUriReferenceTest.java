@@ -20,9 +20,9 @@ import android.content.ContentProviderOperation;
 import android.net.Uri;
 
 import org.dmfs.android.contentpal.TransactionContext;
-import org.dmfs.android.contentpal.predicates.utils.BackReferences;
-import org.dmfs.android.contentpal.predicates.utils.Values;
 import org.dmfs.android.contentpal.testing.answers.FailAnswer;
+import org.dmfs.android.contentpal.testing.predicates.BackReferences;
+import org.dmfs.android.contentpal.testing.predicates.Values;
 import org.dmfs.optional.iterable.PresentValues;
 import org.junit.Test;
 import org.junit.runner.RunWith;
