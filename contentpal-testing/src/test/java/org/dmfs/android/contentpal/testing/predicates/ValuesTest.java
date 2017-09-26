@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-package org.dmfs.android.contentpal.predicates.utils;
+package org.dmfs.android.contentpal.testing.predicates;
 
 import org.dmfs.android.contentpal.Predicate;
-import org.dmfs.android.contentpal.predicates.arguments.ValueArgument;
 import org.dmfs.iterables.ArrayIterable;
 import org.junit.Test;
 

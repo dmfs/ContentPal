@@ -16,9 +16,9 @@
 
 package org.dmfs.android.contentpal.predicates;
 
-import org.dmfs.android.contentpal.predicates.utils.BackReferences;
-import org.dmfs.android.contentpal.predicates.utils.Mocked;
-import org.dmfs.android.contentpal.predicates.utils.Values;
+import org.dmfs.android.contentpal.testing.predicates.BackReferences;
+import org.dmfs.android.contentpal.testing.predicates.Mocked;
+import org.dmfs.android.contentpal.testing.predicates.Values;
 import org.dmfs.android.contentpal.transactions.contexts.EmptyTransactionContext;
 import org.dmfs.optional.iterable.PresentValues;
 import org.hamcrest.Matchers;

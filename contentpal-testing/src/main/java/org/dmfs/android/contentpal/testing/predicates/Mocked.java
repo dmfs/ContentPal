@@ -14,13 +14,12 @@
  * limitations under the License.
  */
 
-package org.dmfs.android.contentpal.predicates.utils;
+package org.dmfs.android.contentpal.testing.predicates;
 
 import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.TransactionContext;
-import org.dmfs.android.contentpal.predicates.arguments.ValueArgument;
 import org.dmfs.iterables.ArrayIterable;
 import org.dmfs.iterables.decorators.Mapped;
 import org.dmfs.iterators.Function;
@@ -66,4 +65,5 @@ public final class Mocked implements Predicate
             }
         });
     }
+
 }
