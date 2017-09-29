@@ -26,11 +26,9 @@ import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.references.BackReference;
 import org.dmfs.android.contentpal.testing.answers.FailAnswer;
 import org.dmfs.android.contentpal.testing.predicates.ArgumentTestPredicate;
-import org.dmfs.android.contentpal.testing.predicates.BackRefArgument;
 import org.dmfs.android.contentpal.testing.predicates.BackReferences;
 import org.dmfs.android.contentpal.testing.predicates.ValueArgument;
 import org.dmfs.android.contentpal.testing.predicates.Values;
-import org.dmfs.optional.Present;
 import org.dmfs.optional.hamcrest.AbsentMatcher;
 import org.junit.Test;
 
