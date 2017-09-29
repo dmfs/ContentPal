@@ -28,8 +28,6 @@ import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.Table;
 import org.dmfs.android.contentpal.UriParams;
 import org.dmfs.android.contentpal.View;
-import org.dmfs.android.contentpal.predicates.AllOf;
-import org.dmfs.android.contentpal.predicates.EqArg;
 import org.dmfs.optional.Optional;
 
 
@@ -75,8 +73,7 @@ public final class CalendarScoped implements View<CalendarContract.Events>
     {
         return mDelegate.rows(
                 uriParams,
-                new AllOf(predicate,
-                        new EqArg(CalendarContract.Events.CALENDAR_ID, mCalendarRow.values().charData(CalendarContract.Calendars._ID).value("-1"))),
+                new org.dmfs.android.calendarpal.predicates.CalendarScoped(mCalendarRow, predicate),
                 sorting);
     }
 
