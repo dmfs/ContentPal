@@ -64,4 +64,12 @@ public final class Sorted<T> implements View<T>
     {
         return mDelegate.table();
     }
+
+
+    @NonNull
+    @Override
+    public View<T> withProjection(@NonNull String... projection)
+    {
+        return new Sorted<>(mSorting, mDelegate.withProjection(projection));
+    }
 }

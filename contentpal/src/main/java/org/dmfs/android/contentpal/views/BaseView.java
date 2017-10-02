@@ -82,4 +82,12 @@ public final class BaseView<T> implements View<T>
     {
         return new BaseTable<>(mTableUri);
     }
+
+
+    @NonNull
+    @Override
+    public View<T> withProjection(@NonNull String... projection)
+    {
+        return new BaseView<T>(mClient, mTableUri, projection);
+    }
 }

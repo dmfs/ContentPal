@@ -84,4 +84,12 @@ public final class CalendarScoped implements View<CalendarContract.Events>
     {
         return new org.dmfs.android.calendarpal.tables.CalendarScoped(mCalendarRow, mDelegate.table());
     }
+
+
+    @NonNull
+    @Override
+    public View<CalendarContract.Events> withProjection(@NonNull String... projection)
+    {
+        return new CalendarScoped(mCalendarRow, mDelegate.withProjection(projection));
+    }
 }

@@ -66,4 +66,12 @@ public final class Local implements View<ContactsContract.RawContacts>
     {
         return new org.dmfs.android.contactspal.tables.Local(mDelegate.table());
     }
+
+
+    @NonNull
+    @Override
+    public View<ContactsContract.RawContacts> withProjection(@NonNull String... projection)
+    {
+        return new Local(mDelegate.withProjection(projection));
+    }
 }

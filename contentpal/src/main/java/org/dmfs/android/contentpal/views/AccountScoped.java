@@ -45,7 +45,7 @@ public final class AccountScoped<T> implements View<T>
     private final Account mAccount;
 
 
-    public AccountScoped(@NonNull final Account account, @NonNull final View<T> delegate)
+    public AccountScoped(@NonNull Account account, @NonNull View<T> delegate)
     {
         mDelegate = delegate;
         mAccount = account;
@@ -65,5 +65,13 @@ public final class AccountScoped<T> implements View<T>
     public Table<T> table()
     {
         return new org.dmfs.android.contentpal.tables.AccountScoped<>(mAccount, mDelegate.table());
+    }
+
+
+    @NonNull
+    @Override
+    public View<T> withProjection(@NonNull String... projection)
+    {
+        return new AccountScoped<>(mAccount, mDelegate.withProjection(projection));
     }
 }
