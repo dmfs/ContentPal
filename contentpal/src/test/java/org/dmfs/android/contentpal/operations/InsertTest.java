@@ -55,11 +55,11 @@ public class InsertTest
     {
         Table<Object> mockTable = mock(Table.class, new FailAnswer());
 
-        assertThat(new Insert<>(mockTable).reference(),
-                AbsentMatcher.<SoftRowReference<Object>>isAbsent(mock(SoftRowReference.class)));
+        assertThat(new Insert<Object>(mockTable).reference(),
+                AbsentMatcher.<SoftRowReference<Object>>isAbsent());
 
-        assertThat(new Insert<>(mockTable, mock(RowData.class, new FailAnswer())).reference(),
-                AbsentMatcher.<SoftRowReference<Object>>isAbsent(mock(SoftRowReference.class)));
+        assertThat(new Insert<Object>(mockTable, mock(RowData.class, new FailAnswer())).reference(),
+                AbsentMatcher.<SoftRowReference<Object>>isAbsent());
     }
 
 
