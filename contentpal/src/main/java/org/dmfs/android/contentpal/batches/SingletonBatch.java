@@ -20,9 +20,7 @@ import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.OperationsBatch;
-import org.dmfs.iterators.SingletonIterator;
-
-import java.util.Iterator;
+import org.dmfs.iterables.SingletonIterable;
 
 
 /**
@@ -30,10 +28,8 @@ import java.util.Iterator;
  *
  * @author Marten Gajda
  */
-public final class SingletonBatch implements OperationsBatch
+public final class SingletonBatch extends DelegatingOperationsBatch
 {
-    private final Operation<?> mOperation;
-
 
     /**
      * Creates an {@link OperationsBatch} which contains the given {@link Operation} only.
@@ -43,14 +39,7 @@ public final class SingletonBatch implements OperationsBatch
      */
     public SingletonBatch(@NonNull Operation<?> operation)
     {
-        mOperation = operation;
+        super(new SingletonIterable<Operation<?>>(operation));
     }
 
-
-    @NonNull
-    @Override
-    public Iterator<Operation<?>> iterator()
-    {
-        return new SingletonIterator<Operation<?>>(mOperation);
-    }
 }

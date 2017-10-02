@@ -24,12 +24,10 @@ import org.dmfs.android.contentpal.OperationsBatch;
 import org.dmfs.android.contentpal.RowData;
 import org.dmfs.android.contentpal.operations.Populated;
 import org.dmfs.iterables.ArrayIterable;
+import org.dmfs.iterables.decorators.Mapped;
 import org.dmfs.iterators.Function;
-import org.dmfs.iterators.decorators.Mapped;
 import org.dmfs.optional.Optional;
 import org.dmfs.optional.iterable.PresentValues;
-
-import java.util.Iterator;
 
 
 /**
@@ -53,11 +51,8 @@ import java.util.Iterator;
  *
  * @author Marten Gajda
  */
-public final class MultiInsertBatch<T> implements OperationsBatch
+public final class MultiInsertBatch<T> extends DelegatingOperationsBatch
 {
-    private final InsertOperation<T> mInsertOperation;
-    private final Iterable<RowData<T>> mData;
-
 
     /**
      * Creates an {@link OperationsBatch} to insert rows with the given {@link Optional} {@link RowData}, based on the given {@link InsertOperation}.
@@ -98,24 +93,16 @@ public final class MultiInsertBatch<T> implements OperationsBatch
      * @param data
      *         An {@link Iterable} of {@link RowData} of the rows to insert (one {@link RowData} per row)
      */
-    public MultiInsertBatch(@NonNull InsertOperation<T> insertOperation, @NonNull Iterable<RowData<T>> data)
+    public MultiInsertBatch(@NonNull final InsertOperation<T> insertOperation, @NonNull Iterable<RowData<T>> data)
     {
-        mInsertOperation = insertOperation;
-        mData = data;
-    }
-
-
-    @NonNull
-    @Override
-    public Iterator<Operation<?>> iterator()
-    {
-        return new Mapped<>(mData.iterator(), new Function<RowData<T>, Operation<?>>()
+        super(new Mapped<>(data, new Function<RowData<T>, Operation<?>>()
         {
             @Override
             public Operation<?> apply(RowData<T> argument)
             {
-                return new Populated<>(argument, mInsertOperation);
+                return new Populated<>(argument, insertOperation);
             }
-        });
+        }));
     }
+
 }

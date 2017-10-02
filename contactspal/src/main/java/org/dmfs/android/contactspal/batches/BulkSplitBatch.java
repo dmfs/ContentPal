@@ -23,10 +23,9 @@ import org.dmfs.android.contactspal.aggregation.Split;
 import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.OperationsBatch;
 import org.dmfs.android.contentpal.RowReference;
+import org.dmfs.android.contentpal.batches.DelegatingOperationsBatch;
+import org.dmfs.iterables.decorators.Mapped;
 import org.dmfs.iterators.Function;
-import org.dmfs.iterators.decorators.Mapped;
-
-import java.util.Iterator;
 
 
 /**
@@ -34,30 +33,20 @@ import java.util.Iterator;
  *
  * @author Marten Gajda
  */
-public final class BulkSplitBatch implements OperationsBatch
+public final class BulkSplitBatch extends DelegatingOperationsBatch
 {
-    private final RowReference<ContactsContract.RawContacts> mRawContact;
-    private final Iterable<RowReference<ContactsContract.RawContacts>> mLinked;
 
-
-    public BulkSplitBatch(@NonNull RowReference<ContactsContract.RawContacts> rawContact, @NonNull Iterable<RowReference<ContactsContract.RawContacts>> linked)
+    public BulkSplitBatch(@NonNull final RowReference<ContactsContract.RawContacts> rawContact, @NonNull Iterable<RowReference<ContactsContract.RawContacts>> linked)
     {
-        mRawContact = rawContact;
-        mLinked = linked;
-    }
-
-
-    @Override
-    public Iterator<Operation<?>> iterator()
-    {
-        return new Mapped<>(mLinked.iterator(), new Function<RowReference<ContactsContract.RawContacts>, Operation<?>>()
+        super(new Mapped<>(linked, new Function<RowReference<ContactsContract.RawContacts>, Operation<?>>()
         {
 
             @Override
             public Operation<?> apply(RowReference<ContactsContract.RawContacts> rawContactsRowReference)
             {
-                return new Split(mRawContact, rawContactsRowReference);
+                return new Split(rawContact, rawContactsRowReference);
             }
-        });
+        }));
     }
+
 }
