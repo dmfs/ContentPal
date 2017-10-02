@@ -62,4 +62,12 @@ public final class Synced<T> implements View<T>
     {
         return new org.dmfs.android.contentpal.tables.Synced<>(mDelegate.table());
     }
+
+
+    @NonNull
+    @Override
+    public View<T> withProjection(@NonNull String... projection)
+    {
+        return new Synced<>(mDelegate.withProjection(projection));
+    }
 }

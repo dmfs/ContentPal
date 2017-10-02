@@ -59,4 +59,10 @@ public interface View<T>
      */
     @NonNull
     Table<T> table();
+
+    /**
+     * Returns a new instance for this {@link View} that uses the given projection.
+     */
+    @NonNull
+    View<T> withProjection(@NonNull String... projection);
 }

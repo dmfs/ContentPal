@@ -60,4 +60,12 @@ public abstract class DelegatingView<T> implements View<T>
     {
         return mDelegate.table();
     }
+
+
+    @NonNull
+    @Override
+    public View<T> withProjection(@NonNull String... projection)
+    {
+        return mDelegate.withProjection(projection);
+    }
 }
