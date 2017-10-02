@@ -24,18 +24,14 @@ import org.dmfs.iterables.ArrayIterable;
 import org.dmfs.optional.Optional;
 import org.dmfs.optional.iterable.PresentValues;
 
-import java.util.Iterator;
-
 
 /**
  * An {@link OperationsBatch} that contains multiple {@link Operation}s.
  *
  * @author Marten Gajda
  */
-public final class MultiBatch implements OperationsBatch
+public final class MultiBatch extends DelegatingOperationsBatch
 {
-    private final Iterable<Operation<?>> mOperations;
-
 
     @SafeVarargs
     public MultiBatch(@NonNull Optional<Operation<?>>... operations)
@@ -58,15 +54,7 @@ public final class MultiBatch implements OperationsBatch
 
     public MultiBatch(@NonNull Iterable<Operation<?>> operations)
     {
-        mOperations = operations;
-    }
-
-
-    @NonNull
-    @Override
-    public Iterator<Operation<?>> iterator()
-    {
-        return mOperations.iterator();
+        super(operations);
     }
 
 }

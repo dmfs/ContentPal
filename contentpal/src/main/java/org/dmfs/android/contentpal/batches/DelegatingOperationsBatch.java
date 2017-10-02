@@ -16,29 +16,31 @@
 
 package org.dmfs.android.contentpal.batches;
 
-import android.support.annotation.NonNull;
-
 import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.OperationsBatch;
-import org.dmfs.iterables.decorators.Flattened;
+
+import java.util.Iterator;
 
 
 /**
- * An {@link OperationsBatch} decorator which joins the {@link Operation}s of other {@link OperationsBatch}es.
+ * Base class for {@link OperationsBatch}s that delegate to an {@link Iterable} of {@link Operation}s.
  *
- * @author Marten Gajda
+ * @author Gabor Keszthelyi
  */
-public final class Joined extends DelegatingOperationsBatch
+public abstract class DelegatingOperationsBatch implements OperationsBatch
 {
-    /**
-     * Creates an {@link OperationsBatch} which contains the {@link Operation}s of the given {@link OperationsBatch}es.
-     *
-     * @param operationsBatches
-     *         The {@link OperationsBatch}es to join.
-     */
-    public Joined(@NonNull OperationsBatch... operationsBatches)
+    private final Iterable<Operation<?>> mIterableDelegate;
+
+
+    protected DelegatingOperationsBatch(Iterable<Operation<?>> iterableDelegate)
     {
-        super(new Flattened<>(operationsBatches));
+        mIterableDelegate = iterableDelegate;
     }
 
+
+    @Override
+    public final Iterator<Operation<?>> iterator()
+    {
+        return mIterableDelegate.iterator();
+    }
 }

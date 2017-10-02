@@ -21,11 +21,11 @@ import android.provider.ContactsContract;
 
 import org.dmfs.android.contactspal.operations.RawContactData;
 import org.dmfs.android.contactspal.tables.RawContacts;
-import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.OperationsBatch;
 import org.dmfs.android.contentpal.RowData;
 import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.Table;
+import org.dmfs.android.contentpal.batches.DelegatingOperationsBatch;
 import org.dmfs.android.contentpal.batches.Joined;
 import org.dmfs.android.contentpal.batches.MultiInsertBatch;
 import org.dmfs.android.contentpal.batches.SingletonBatch;
@@ -34,18 +34,14 @@ import org.dmfs.android.contentpal.rowsnapshots.VirtualRowSnapshot;
 import org.dmfs.android.contentpal.tables.AccountScoped;
 import org.dmfs.iterables.ArrayIterable;
 
-import java.util.Iterator;
-
 
 /**
  * An {@link OperationsBatch} which inserts a new contact.
  *
  * @author Marten Gajda
  */
-public final class InsertRawContactBatch implements OperationsBatch
+public final class InsertRawContactBatch extends DelegatingOperationsBatch
 {
-    private final OperationsBatch mDelegate;
-
 
     /**
      * Inserts a new contact with the given data into the given {@link Account}.
@@ -115,18 +111,12 @@ public final class InsertRawContactBatch implements OperationsBatch
      */
     public InsertRawContactBatch(RowSnapshot<ContactsContract.RawContacts> rawContact, Iterable<RowData<ContactsContract.Data>> contactData)
     {
-        mDelegate = new Joined(
+        super(new Joined(
                 new SingletonBatch(
                         new Put<>(rawContact)),
                 new MultiInsertBatch<>(
                         new RawContactData(rawContact),
-                        contactData));
+                        contactData)));
     }
 
-
-    @Override
-    public Iterator<Operation<?>> iterator()
-    {
-        return mDelegate.iterator();
-    }
 }

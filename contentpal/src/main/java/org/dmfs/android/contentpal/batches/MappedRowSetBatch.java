@@ -22,10 +22,8 @@ import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.OperationsBatch;
 import org.dmfs.android.contentpal.RowSet;
 import org.dmfs.android.contentpal.RowSnapshot;
+import org.dmfs.iterables.decorators.Mapped;
 import org.dmfs.iterators.Function;
-import org.dmfs.iterators.decorators.Mapped;
-
-import java.util.Iterator;
 
 
 /**
@@ -62,12 +60,8 @@ import java.util.Iterator;
  *
  * @author Marten Gajda
  */
-public final class MappedRowSetBatch<T> implements OperationsBatch
+public final class MappedRowSetBatch<T> extends DelegatingOperationsBatch
 {
-    private final RowSet<T> mRowSet;
-    private final Function<RowSnapshot<T>, Operation<?>> mFunction;
-
-
     /**
      * Creates an {@link OperationsBatch} based on the {@link RowSnapshot}s of the given {@link RowSet}.
      *
@@ -78,15 +72,7 @@ public final class MappedRowSetBatch<T> implements OperationsBatch
      */
     public MappedRowSetBatch(@NonNull RowSet<T> rowSet, @NonNull Function<RowSnapshot<T>, Operation<?>> function)
     {
-        mRowSet = rowSet;
-        mFunction = function;
+        super(new Mapped<>(rowSet, function));
     }
 
-
-    @NonNull
-    @Override
-    public Iterator<Operation<?>> iterator()
-    {
-        return new Mapped<>(mRowSet.iterator(), mFunction);
-    }
 }
