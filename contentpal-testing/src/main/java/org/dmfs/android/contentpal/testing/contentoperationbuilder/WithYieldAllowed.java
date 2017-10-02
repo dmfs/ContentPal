@@ -18,11 +18,11 @@ package org.dmfs.android.contentpal.testing.contentoperationbuilder;
 
 import android.content.ContentProviderOperation;
 
+import org.dmfs.android.contentpal.testing.tools.Field;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 
-import java.lang.reflect.Field;
 import java.util.Locale;
 
 
@@ -58,29 +58,13 @@ public final class WithYieldAllowed extends TypeSafeDiagnosingMatcher<ContentPro
     @Override
     protected boolean matchesSafely(ContentProviderOperation.Builder builder, Description mismatchDescription)
     {
-        // create a builder an test the ContentValues
-        try
+        boolean yieldable = new Field<Boolean>(builder, "mYieldAllowed").value();
+        if (mYieldable != yieldable)
         {
-            Field valuesField = ContentProviderOperation.Builder.class.getDeclaredField("mYieldAllowed");
-            valuesField.setAccessible(true);
-
-            boolean yieldable = valuesField.getBoolean(builder);
-
-            if (mYieldable != yieldable)
-            {
-                mismatchDescription.appendText(String.format(Locale.ENGLISH, "yieldable was %s", Boolean.toString(yieldable)));
-                return false;
-            }
-            return true;
+            mismatchDescription.appendText(String.format(Locale.ENGLISH, "yieldable was %s", Boolean.toString(yieldable)));
+            return false;
         }
-        catch (NoSuchFieldException e)
-        {
-            throw new RuntimeException("Could not read builder values", e);
-        }
-        catch (IllegalAccessException e)
-        {
-            throw new RuntimeException("Could not read builder values", e);
-        }
+        return true;
     }
 
 

@@ -19,11 +19,11 @@ package org.dmfs.android.contentpal.testing.contentoperationbuilder;
 import android.content.ContentProviderOperation;
 import android.net.Uri;
 
+import org.dmfs.android.contentpal.testing.tools.Field;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 
-import java.lang.reflect.Field;
 import java.util.Locale;
 
 import static org.hamcrest.Matchers.any;
@@ -90,29 +90,13 @@ public final class OperationType extends TypeSafeDiagnosingMatcher<ContentProvid
     @Override
     protected boolean matchesSafely(ContentProviderOperation.Builder builder, Description mismatchDescription)
     {
-        // create a builder an test the ContentValues
-        try
+        Integer typeValue = new Field<Integer>(builder, "mType").value();
+        if (mExpectedType.ordinal() + 1 /* 1-based */ != typeValue)
         {
-            Field valuesField = ContentProviderOperation.Builder.class.getDeclaredField("mType");
-            valuesField.setAccessible(true);
-
-            Integer typeValue = (Integer) valuesField.get(builder);
-
-            if (mExpectedType.ordinal() + 1 /* 1-based */ != typeValue)
-            {
-                mismatchDescription.appendText(String.format(Locale.ENGLISH, "was an %s operation", Type.values()[typeValue - 1]));
-                return false;
-            }
-            return true;
+            mismatchDescription.appendText(String.format(Locale.ENGLISH, "was an %s operation", Type.values()[typeValue - 1]));
+            return false;
         }
-        catch (NoSuchFieldException e)
-        {
-            throw new RuntimeException("Could not read builder values", e);
-        }
-        catch (IllegalAccessException e)
-        {
-            throw new RuntimeException("Could not read builder values", e);
-        }
+        return true;
     }
 
 
