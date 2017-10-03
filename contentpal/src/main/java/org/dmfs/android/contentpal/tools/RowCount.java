@@ -32,20 +32,20 @@ import org.dmfs.optional.Absent;
  *
  * @author Gabor Keszthelyi
  */
-public final class Count<T> implements Single<Integer>
+public final class RowCount<T> implements Single<Integer>
 {
     private final View<T> mView;
     private final Predicate mPredicate;
 
 
-    public Count(View<T> view, Predicate predicate)
+    public RowCount(View<T> view, Predicate predicate)
     {
         mView = view;
         mPredicate = predicate;
     }
 
 
-    public Count(View<T> view)
+    public RowCount(View<T> view)
     {
         this(view, new AnyOf());
     }
@@ -54,16 +54,22 @@ public final class Count<T> implements Single<Integer>
     @Override
     public Integer value()
     {
+        Cursor cursor = null;
         try
         {
-            Cursor cursor = mView.rows(EmptyUriParams.INSTANCE, mPredicate, Absent.<String>absent());
-            int count = cursor.getCount();
-            cursor.close();
-            return count;
+            cursor = mView.rows(EmptyUriParams.INSTANCE, mPredicate, Absent.<String>absent());
+            return cursor.getCount();
         }
         catch (RemoteException e)
         {
             throw new RuntimeException("Query failed", e);
+        }
+        finally
+        {
+            if (cursor != null)
+            {
+                cursor.close();
+            }
         }
     }
 }

@@ -16,7 +16,9 @@
 
 package org.dmfs.android.contentpal.tools;
 
+import android.annotation.TargetApi;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.RemoteException;
 
 import org.dmfs.android.contentpal.Predicate;
@@ -29,22 +31,25 @@ import org.junit.Test;
 import static org.dmfs.android.contentpal.testing.predicates.PredicateSelectionMatcher.predicateWithSelection;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.same;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 
 /**
- * Test for {@link Count}.
+ * Test for {@link RowCount}.
  *
  * @author Gabor Keszthelyi
  */
-public final class CountTest
+public final class RowCountTest
 {
 
     @Test
-    public void test_thatCursorGetCountIsReturned() throws RemoteException
+    public void test_thatCursorGetCountIsReturned() throws Exception
     {
         View<Object> mockView = mock(View.class, new FailAnswer());
         Predicate dummyPredicate = mock(Predicate.class, new FailAnswer());
@@ -54,12 +59,13 @@ public final class CountTest
         doReturn(4).when(mockCursor).getCount();
         doNothing().when(mockCursor).close();
 
-        assertThat(new Count<>(mockView, dummyPredicate).value(), is(4));
+        assertThat(new RowCount<>(mockView, dummyPredicate).value(), is(4));
+        verify(mockCursor).close();
     }
 
 
     @Test
-    public void test_ctorWithoutPredicate_predicateHasSelection1() throws RemoteException
+    public void test_ctorWithoutPredicate_predicateHasSelection1() throws Exception
     {
         View<Object> mockView = mock(View.class, new FailAnswer());
         Cursor mockCursor = mock(Cursor.class, new FailAnswer());
@@ -68,7 +74,45 @@ public final class CountTest
         doReturn(5).when(mockCursor).getCount();
         doNothing().when(mockCursor).close();
 
-        assertThat(new Count<>(mockView).value(), is(5));
+        assertThat(new RowCount<>(mockView).value(), is(5));
+        verify(mockCursor).close();
+    }
+
+
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
+    @Test(expected = RuntimeException.class)
+    public void test_whenRowsThrows_ExceptionIsThrown() throws Exception
+    {
+        View<Object> mockView = mock(View.class, new FailAnswer());
+        Predicate dummyPredicate = mock(Predicate.class, new FailAnswer());
+
+        doThrow(new RemoteException("msg")).when(mockView).rows(EmptyUriParams.INSTANCE, dummyPredicate, Absent.<String>absent());
+
+        new RowCount<>(mockView, dummyPredicate).value();
+    }
+
+
+    @Test
+    public void test_whenCursorGetCountThrows_CursorIsClosed() throws Exception
+    {
+        View<Object> mockView = mock(View.class, new FailAnswer());
+        Predicate dummyPredicate = mock(Predicate.class, new FailAnswer());
+        Cursor mockCursor = mock(Cursor.class, new FailAnswer());
+
+        doReturn(mockCursor).when(mockView).rows(EmptyUriParams.INSTANCE, dummyPredicate, Absent.<String>absent());
+        doThrow(new RuntimeException("msg")).when(mockCursor).getCount();
+        doNothing().when(mockCursor).close();
+
+        try
+        {
+            new RowCount<>(mockView, dummyPredicate).value();
+            fail();
+        }
+        catch (RuntimeException e)
+        {
+
+        }
+        verify(mockCursor).close();
     }
 
 }
