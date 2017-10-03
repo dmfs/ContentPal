@@ -18,6 +18,7 @@ package org.dmfs.android.contentpal.tools;
 
 import android.database.Cursor;
 import android.os.RemoteException;
+import android.provider.BaseColumns;
 
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.View;
@@ -57,7 +58,7 @@ public final class RowCount<T> implements Single<Integer>
         Cursor cursor = null;
         try
         {
-            cursor = mView.rows(EmptyUriParams.INSTANCE, mPredicate, Absent.<String>absent());
+            cursor = mView.withProjection(BaseColumns._ID).rows(EmptyUriParams.INSTANCE, mPredicate, Absent.<String>absent());
             return cursor.getCount();
         }
         catch (RemoteException e)
