@@ -23,9 +23,8 @@ import org.dmfs.android.contentpal.SoftRowReference;
 import org.dmfs.android.contentpal.Table;
 import org.dmfs.android.contentpal.operations.internal.RawInsert;
 import org.dmfs.android.contentpal.rowdata.CharSequenceRowData;
-import org.dmfs.android.contentpal.testing.answers.FailAnswer;
 import org.dmfs.android.contentpal.tools.uriparams.EmptyUriParams;
-import org.dmfs.optional.hamcrest.AbsentMatcher;
+import org.dmfs.jems.hamcrest.matchers.AbsentMatcher;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
@@ -38,9 +37,10 @@ import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithVa
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYieldAllowed.withYieldNotAllowed;
 import static org.dmfs.android.contentpal.testing.contentvalues.Containing.containing;
 import static org.dmfs.android.contentpal.testing.operations.OperationMatcher.builds;
+import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
+import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
 
 
 /**
@@ -53,12 +53,12 @@ public class InsertTest
     @Test
     public void testReference() throws Exception
     {
-        Table<Object> mockTable = mock(Table.class, new FailAnswer());
+        Table<Object> mockTable = failingMock(Table.class);
 
         assertThat(new Insert<Object>(mockTable).reference(),
                 AbsentMatcher.<SoftRowReference<Object>>isAbsent());
 
-        assertThat(new Insert<Object>(mockTable, mock(RowData.class, new FailAnswer())).reference(),
+        assertThat(new Insert<Object>(mockTable, dummy(RowData.class)).reference(),
                 AbsentMatcher.<SoftRowReference<Object>>isAbsent());
     }
 
@@ -66,8 +66,8 @@ public class InsertTest
     @Test
     public void testContentOperationBuilder() throws Exception
     {
-        Table<Object> mockTable = mock(Table.class, new FailAnswer());
-        doReturn(new RawInsert<>(mock(Uri.class, new FailAnswer()))).when(mockTable).insertOperation(EmptyUriParams.INSTANCE);
+        Table<Object> mockTable = failingMock(Table.class);
+        doReturn(new RawInsert<>(dummy(Uri.class))).when(mockTable).insertOperation(EmptyUriParams.INSTANCE);
 
         assertThat(new Insert<>(mockTable),
                 builds(

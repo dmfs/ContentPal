@@ -21,22 +21,22 @@ import android.net.Uri;
 import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.SoftRowReference;
 import org.dmfs.android.contentpal.operations.internal.RawInsert;
-import org.dmfs.android.contentpal.testing.answers.FailAnswer;
 import org.dmfs.optional.Optional;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
-import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithExpectedCount.withoutExpectedCount;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.OperationType.insertOperation;
+import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithExpectedCount.withoutExpectedCount;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withoutValues;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYieldAllowed.withYieldAllowed;
 import static org.dmfs.android.contentpal.testing.operations.OperationMatcher.builds;
+import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
+import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
 
 
 /**
@@ -49,12 +49,12 @@ public class YieldableTest
     @Test
     public void testReference() throws Exception
     {
-        Optional<SoftRowReference<Object>> reference = mock(Optional.class, new FailAnswer());
-        Operation<Object> operation = mock(Operation.class, new FailAnswer());
+        Optional<SoftRowReference<Object>> dummyReference = dummy(Optional.class);
+        Operation<Object> mockOperation = failingMock(Operation.class);
 
-        doReturn(reference).when(operation).reference();
+        doReturn(dummyReference).when(mockOperation).reference();
 
-        assertThat(new Yieldable<>(operation).reference(), sameInstance(reference));
+        assertThat(new Yieldable<>(mockOperation).reference(), sameInstance(dummyReference));
     }
 
 

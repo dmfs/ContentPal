@@ -19,8 +19,7 @@ package org.dmfs.android.contentpal.operations.internal;
 import android.net.Uri;
 
 import org.dmfs.android.contentpal.SoftRowReference;
-import org.dmfs.android.contentpal.testing.answers.FailAnswer;
-import org.dmfs.optional.hamcrest.AbsentMatcher;
+import org.dmfs.jems.hamcrest.matchers.AbsentMatcher;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
@@ -31,8 +30,8 @@ import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithEx
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withoutValues;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYieldAllowed.withYieldNotAllowed;
 import static org.dmfs.android.contentpal.testing.operations.OperationMatcher.builds;
+import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
 
 
 /**
@@ -45,14 +44,14 @@ public class RawUpdateTest
     @Test
     public void testReference() throws Exception
     {
-        assertThat(new RawUpdate<>(mock(Uri.class, new FailAnswer())).reference(), AbsentMatcher.<SoftRowReference<Object>>isAbsent());
+        assertThat(new RawUpdate<>(dummy(Uri.class)).reference(), AbsentMatcher.<SoftRowReference<Object>>isAbsent());
     }
 
 
     @Test
     public void testContentOperationBuilder() throws Exception
     {
-        assertThat(new RawUpdate<>(mock(Uri.class, new FailAnswer())),
+        assertThat(new RawUpdate<>(dummy(Uri.class)),
                 builds(
                         updateOperation(),
                         withYieldNotAllowed(),

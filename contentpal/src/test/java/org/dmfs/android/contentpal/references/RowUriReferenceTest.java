@@ -20,7 +20,6 @@ import android.content.ContentProviderOperation;
 import android.net.Uri;
 
 import org.dmfs.android.contentpal.TransactionContext;
-import org.dmfs.android.contentpal.testing.answers.FailAnswer;
 import org.dmfs.android.contentpal.testing.predicates.BackReferences;
 import org.dmfs.android.contentpal.testing.predicates.Values;
 import org.dmfs.optional.iterable.PresentValues;
@@ -38,12 +37,12 @@ import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithVa
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withoutValues;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYieldAllowed.withYieldNotAllowed;
 import static org.dmfs.android.contentpal.testing.contentvalues.Containing.containing;
+import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.emptyIterable;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
 
 
 /**
@@ -57,7 +56,7 @@ public class RowUriReferenceTest
     public void testPutOperationBuilder() throws Exception
     {
         assertThat(new RowUriReference<>(Uri.parse("content://authority/path/123")).putOperationBuilder(
-                mock(TransactionContext.class, new FailAnswer())),
+                dummy(TransactionContext.class)),
                 allOf(
                         updateOperation(),
                         withoutExpectedCount(),
@@ -70,7 +69,7 @@ public class RowUriReferenceTest
     public void testDeleteOperationBuilder() throws Exception
     {
         assertThat(new RowUriReference<>(Uri.parse("content://authority/path/123")).deleteOperationBuilder(
-                mock(TransactionContext.class, new FailAnswer())),
+                dummy(TransactionContext.class)),
                 allOf(
                         deleteOperation(),
                         withoutExpectedCount(),
@@ -83,7 +82,7 @@ public class RowUriReferenceTest
     public void testAssertOperationBuilder() throws Exception
     {
         assertThat(new RowUriReference<>(Uri.parse("content://authority/path/123")).assertOperationBuilder(
-                mock(TransactionContext.class, new FailAnswer())),
+                dummy(TransactionContext.class)),
                 allOf(
                         assertOperation(),
                         withoutExpectedCount(),
@@ -96,7 +95,7 @@ public class RowUriReferenceTest
     public void testBuilderWithReferenceData() throws Exception
     {
         assertThat(new RowUriReference<>(Uri.parse("content://authority/path/123")).builderWithReferenceData(
-                mock(TransactionContext.class, new FailAnswer()), ContentProviderOperation.newInsert(mock(Uri.class, new FailAnswer())), "column"),
+                dummy(TransactionContext.class), ContentProviderOperation.newInsert(dummy(Uri.class)), "column"),
                 allOf(
                         insertOperation(),
                         withoutExpectedCount(),
@@ -110,18 +109,18 @@ public class RowUriReferenceTest
     public void testPredicate() throws Exception
     {
         assertThat(new RowUriReference<>(Uri.parse("content://authority/path/123"))
-                        .predicate(mock(TransactionContext.class, new FailAnswer()), "column")
-                        .selection(mock(TransactionContext.class, new FailAnswer())).toString(),
+                        .predicate(dummy(TransactionContext.class), "column")
+                        .selection(dummy(TransactionContext.class)).toString(),
                 is("column = ?"));
 
         assertThat(new Values(new RowUriReference<>(Uri.parse("content://authority/path/123"))
-                        .predicate(mock(TransactionContext.class, new FailAnswer()), "column")
-                        .arguments(mock(TransactionContext.class, new FailAnswer()))),
+                        .predicate(dummy(TransactionContext.class), "column")
+                        .arguments(dummy(TransactionContext.class))),
                 contains("123"));
 
         assertThat(new PresentValues<>(new BackReferences(new RowUriReference<>(Uri.parse("content://authority/path/123"))
-                        .predicate(mock(TransactionContext.class, new FailAnswer()), "column")
-                        .arguments(mock(TransactionContext.class, new FailAnswer())))),
+                        .predicate(dummy(TransactionContext.class), "column")
+                        .arguments(dummy(TransactionContext.class)))),
                 emptyIterable());
     }
 

@@ -22,7 +22,6 @@ import android.net.Uri;
 import org.dmfs.android.contentpal.InsertOperation;
 import org.dmfs.android.contentpal.SoftRowReference;
 import org.dmfs.android.contentpal.operations.internal.RawInsert;
-import org.dmfs.android.contentpal.testing.answers.FailAnswer;
 import org.dmfs.optional.Optional;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,10 +34,11 @@ import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithVa
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYieldAllowed.withYieldNotAllowed;
 import static org.dmfs.android.contentpal.testing.contentvalues.Containing.containing;
 import static org.dmfs.android.contentpal.testing.operations.OperationMatcher.builds;
+import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
+import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
 
 
 /**
@@ -51,12 +51,12 @@ public class AccountScopedTest
     @Test
     public void testReference() throws Exception
     {
-        Optional<SoftRowReference<Object>> reference = mock(Optional.class, new FailAnswer());
-        InsertOperation<Object> operation = mock(InsertOperation.class, new FailAnswer());
+        Optional<SoftRowReference<Object>> dummyReference = dummy(Optional.class);
+        InsertOperation<Object> mockOperation = failingMock(InsertOperation.class);
 
-        doReturn(reference).when(operation).reference();
+        doReturn(dummyReference).when(mockOperation).reference();
 
-        assertThat(new AccountScoped<>(new Account("name", "type"), operation).reference(), sameInstance(reference));
+        assertThat(new AccountScoped<>(new Account("name", "type"), mockOperation).reference(), sameInstance(dummyReference));
     }
 
 
