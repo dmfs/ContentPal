@@ -20,17 +20,17 @@ import android.net.Uri;
 
 import org.dmfs.android.contentpal.SoftRowReference;
 import org.dmfs.android.contentpal.testing.answers.FailAnswer;
+import org.dmfs.optional.hamcrest.AbsentMatcher;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
-import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithExpectedCount.withoutExpectedCount;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.OperationType.assertOperation;
+import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithExpectedCount.withoutExpectedCount;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withoutValues;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYieldAllowed.withYieldNotAllowed;
 import static org.dmfs.android.contentpal.testing.operations.OperationMatcher.builds;
-import static org.dmfs.optional.hamcrest.AbsentMatcher.isAbsent;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 
@@ -45,7 +45,7 @@ public class RawAssertTest
     @Test
     public void testReference() throws Exception
     {
-        assertThat(new RawAssert<>(mock(Uri.class, new FailAnswer())).reference(), isAbsent((SoftRowReference<Object>) mock(SoftRowReference.class)));
+        assertThat(new RawAssert<>(mock(Uri.class, new FailAnswer())).reference(), AbsentMatcher.<SoftRowReference<Object>>isAbsent());
     }
 
 

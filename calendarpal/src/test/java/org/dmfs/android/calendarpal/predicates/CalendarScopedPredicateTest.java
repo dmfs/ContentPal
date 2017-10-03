@@ -77,7 +77,7 @@ public final class CalendarScopedPredicateTest
         Iterable<Predicate.Argument> arguments = new CalendarScoped(calendarRow,
                 new ArgumentTestPredicate(tContextDummy, new ValueArgument("5"))).arguments(tContextDummy);
         assertThat(new Values(arguments), contains("5", "-1"));
-        assertThat(new BackReferences(arguments), contains(AbsentMatcher.isAbsent(0), isPresent(12)));
+        assertThat(new BackReferences(arguments), contains(AbsentMatcher.<Integer>isAbsent(), isPresent(12)));
     }
 
 
