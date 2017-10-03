@@ -18,6 +18,7 @@ package org.dmfs.android.contentpal.testing.contentoperationbuilder;
 
 import android.content.ContentProviderOperation;
 
+import org.dmfs.android.contentpal.testing.tools.Field;
 import org.dmfs.optional.Absent;
 import org.dmfs.optional.NullSafe;
 import org.dmfs.optional.Optional;
@@ -26,7 +27,6 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 
-import java.lang.reflect.Field;
 import java.util.Locale;
 
 
@@ -74,35 +74,20 @@ public final class WithExpectedCount extends TypeSafeDiagnosingMatcher<ContentPr
     @Override
     protected boolean matchesSafely(ContentProviderOperation.Builder builder, Description mismatchDescription)
     {
-        // create a builder an test the ContentValues
-        try
-        {
-            Field valuesField = ContentProviderOperation.Builder.class.getDeclaredField("mExpectedCount");
-            valuesField.setAccessible(true);
+        Optional<Integer> expectedCount = new NullSafe<>(new Field<Integer>(builder, "mExpectedCount").value());
 
-            Optional<Integer> expectedCount = new NullSafe<>((Integer) valuesField.get(builder));
-
-            if (!mExpectedCount.isPresent() && expectedCount.isPresent()
-                    || mExpectedCount.isPresent() && expectedCount.isPresent() && !mExpectedCount.value().equals(expectedCount.value()))
-            {
-                mismatchDescription.appendText(String.format(Locale.ENGLISH, "expected %d results", expectedCount.value()));
-                return false;
-            }
-            else if (mExpectedCount.isPresent() && !expectedCount.isPresent())
-            {
-                mismatchDescription.appendText("expected no specific number of results");
-                return false;
-            }
-            return true;
-        }
-        catch (NoSuchFieldException e)
+        if (!mExpectedCount.isPresent() && expectedCount.isPresent()
+                || mExpectedCount.isPresent() && expectedCount.isPresent() && !mExpectedCount.value().equals(expectedCount.value()))
         {
-            throw new RuntimeException("Could not read builder values", e);
+            mismatchDescription.appendText(String.format(Locale.ENGLISH, "expected %d results", expectedCount.value()));
+            return false;
         }
-        catch (IllegalAccessException e)
+        else if (mExpectedCount.isPresent() && !expectedCount.isPresent())
         {
-            throw new RuntimeException("Could not read builder values", e);
+            mismatchDescription.appendText("expected no specific number of results");
+            return false;
         }
+        return true;
     }
 
 

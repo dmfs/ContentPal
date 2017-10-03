@@ -19,12 +19,11 @@ package org.dmfs.android.contentpal.testing.contentoperationbuilder;
 import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 
+import org.dmfs.android.contentpal.testing.tools.Field;
 import org.dmfs.optional.NullSafe;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
-
-import java.lang.reflect.Field;
 
 import static org.dmfs.android.contentpal.testing.contentvalues.Size.withValueCount;
 import static org.hamcrest.Matchers.allOf;
@@ -62,29 +61,14 @@ public final class WithValues extends TypeSafeDiagnosingMatcher<ContentProviderO
     @Override
     protected boolean matchesSafely(ContentProviderOperation.Builder builder, Description mismatchDescription)
     {
-        // create a builder an test the ContentValues
-        try
-        {
-            Field valuesField = ContentProviderOperation.Builder.class.getDeclaredField("mValues");
-            valuesField.setAccessible(true);
+        ContentValues values = new NullSafe<>(new Field<ContentValues>(builder, "mValues").value()).value(new ContentValues());
 
-            ContentValues values = new NullSafe<>((ContentValues) valuesField.get(builder)).value(new ContentValues());
-
-            if (!mValueMatcher.matches(values))
-            {
-                mValueMatcher.describeMismatch(values, mismatchDescription);
-                return false;
-            }
-            return true;
-        }
-        catch (NoSuchFieldException e)
+        if (!mValueMatcher.matches(values))
         {
-            throw new RuntimeException("Could not read builder values", e);
+            mValueMatcher.describeMismatch(values, mismatchDescription);
+            return false;
         }
-        catch (IllegalAccessException e)
-        {
-            throw new RuntimeException("Could not read builder values", e);
-        }
+        return true;
     }
 
 
