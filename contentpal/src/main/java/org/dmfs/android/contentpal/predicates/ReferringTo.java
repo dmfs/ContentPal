@@ -38,8 +38,14 @@ public final class ReferringTo<T> implements Predicate
 
     public ReferringTo(@NonNull String columnName, @NonNull RowSnapshot<T> row)
     {
+        this(columnName, new RowSnapshotReference<>(row));
+    }
+
+
+    public ReferringTo(@NonNull String columnName, @NonNull RowReference<T> rowReference)
+    {
         mColumnName = columnName;
-        mRowReference = new RowSnapshotReference<>(row);
+        mRowReference = rowReference;
     }
 
 
