@@ -21,7 +21,6 @@ import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 
 import org.dmfs.android.contactspal.tables.Data;
-import org.dmfs.android.contentpal.ClosableIterator;
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.RowReference;
 import org.dmfs.android.contentpal.RowSet;
@@ -32,6 +31,7 @@ import org.dmfs.android.contentpal.predicates.AnyOf;
 import org.dmfs.android.contentpal.predicates.ReferringTo;
 import org.dmfs.android.contentpal.references.RowSnapshotReference;
 import org.dmfs.android.contentpal.rowsets.Cached;
+import org.dmfs.android.contentpal.rowsets.DelegatingRowSet;
 import org.dmfs.android.contentpal.rowsets.QueryRowSet;
 
 
@@ -42,12 +42,8 @@ import org.dmfs.android.contentpal.rowsets.QueryRowSet;
  *
  * @author Marten Gajda
  */
-public final class RawContactDataRows implements RowSet<ContactsContract.Data>
+public final class RawContactDataRows extends DelegatingRowSet<ContactsContract.Data>
 {
-    private final View<ContactsContract.Data> mDataView;
-    private final Predicate mPredicate;
-
-
     /**
      * Creates a {@link RowSet} of all {@link ContactsContract.Data} rows of the given raw contact.
      *
@@ -110,15 +106,7 @@ public final class RawContactDataRows implements RowSet<ContactsContract.Data>
 
     private RawContactDataRows(@NonNull View<ContactsContract.Data> dataView, @NonNull Predicate predicate)
     {
-        mDataView = dataView;
-        mPredicate = predicate;
+        super(new QueryRowSet<>(dataView, predicate));
     }
 
-
-    @NonNull
-    @Override
-    public ClosableIterator<RowSnapshot<ContactsContract.Data>> iterator()
-    {
-        return new QueryRowSet<>(mDataView, mPredicate).iterator();
-    }
 }
