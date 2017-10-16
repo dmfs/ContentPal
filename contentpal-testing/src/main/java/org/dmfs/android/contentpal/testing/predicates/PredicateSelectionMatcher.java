@@ -18,15 +18,15 @@ package org.dmfs.android.contentpal.testing.predicates;
 
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.TransactionContext;
-import org.dmfs.android.contentpal.testing.answers.FailAnswer;
 import org.dmfs.optional.Absent;
 import org.dmfs.optional.Optional;
 import org.dmfs.optional.Present;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
-import org.mockito.Mockito;
 import org.mockito.hamcrest.MockitoHamcrest;
+
+import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
 
 
 /**
@@ -64,7 +64,7 @@ public final class PredicateSelectionMatcher extends TypeSafeDiagnosingMatcher<P
     @Override
     protected boolean matchesSafely(Predicate item, Description mismatchDescription)
     {
-        TransactionContext tContext = mOptTransactionContext.value(Mockito.mock(TransactionContext.class, new FailAnswer()));
+        TransactionContext tContext = mOptTransactionContext.value(dummy(TransactionContext.class));
         String actualSelection = item.selection(tContext).toString();
         boolean matches = actualSelection.equals(mExpectedSelection.toString());
         if (!matches)

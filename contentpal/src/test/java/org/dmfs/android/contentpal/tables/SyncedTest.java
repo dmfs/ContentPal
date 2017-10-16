@@ -25,19 +25,19 @@ import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.Table;
 import org.dmfs.android.contentpal.UriParams;
 import org.dmfs.android.contentpal.tools.uriparams.EmptyUriParams;
-import org.dmfs.android.contentpal.testing.answers.FailAnswer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatcher;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
+import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
+import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.same;
 import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
 
 
 /**
@@ -50,47 +50,47 @@ public class SyncedTest
     @Test
     public void testInsertOperation() throws Exception
     {
-        InsertOperation<Object> resultOperation = mock(InsertOperation.class, new FailAnswer());
-        Table<Object> mockTable = mock(Table.class, new FailAnswer());
-        doReturn(resultOperation).when(mockTable).insertOperation(argThat(new UriParamsArgumentMatcher()));
+        InsertOperation<Object> dummyResultOperation = dummy(InsertOperation.class);
+        Table<Object> mockTable = failingMock(Table.class);
+        doReturn(dummyResultOperation).when(mockTable).insertOperation(argThat(new UriParamsArgumentMatcher()));
 
-        assertThat(new Synced<>(mockTable).insertOperation(new EmptyUriParams()), sameInstance(resultOperation));
+        assertThat(new Synced<>(mockTable).insertOperation(new EmptyUriParams()), sameInstance(dummyResultOperation));
     }
 
 
     @Test
     public void testUpdateOperation() throws Exception
     {
-        Operation<Object> resultOperation = mock(Operation.class, new FailAnswer());
-        Predicate testPredicate = mock(Predicate.class);
-        Table<Object> mockTable = mock(Table.class, new FailAnswer());
-        doReturn(resultOperation).when(mockTable).updateOperation(argThat(new UriParamsArgumentMatcher()), same(testPredicate));
+        Operation<Object> dummyResultOperation = dummy(Operation.class);
+        Predicate dummyPredicate = dummy(Predicate.class);
+        Table<Object> mockTable = failingMock(Table.class);
+        doReturn(dummyResultOperation).when(mockTable).updateOperation(argThat(new UriParamsArgumentMatcher()), same(dummyPredicate));
 
-        assertThat(new Synced<>(mockTable).updateOperation(new EmptyUriParams(), testPredicate), sameInstance(resultOperation));
+        assertThat(new Synced<>(mockTable).updateOperation(new EmptyUriParams(), dummyPredicate), sameInstance(dummyResultOperation));
     }
 
 
     @Test
     public void testDeleteOperation() throws Exception
     {
-        Operation<Object> resultOperation = mock(Operation.class, new FailAnswer());
-        Predicate testPredicate = mock(Predicate.class);
-        Table<Object> mockTable = mock(Table.class, new FailAnswer());
-        doReturn(resultOperation).when(mockTable).deleteOperation(argThat(new UriParamsArgumentMatcher()), same(testPredicate));
+        Operation<Object> dummyResultOperation = dummy(Operation.class);
+        Predicate dummyPredicate = dummy(Predicate.class);
+        Table<Object> mockTable = failingMock(Table.class);
+        doReturn(dummyResultOperation).when(mockTable).deleteOperation(argThat(new UriParamsArgumentMatcher()), same(dummyPredicate));
 
-        assertThat(new Synced<>(mockTable).deleteOperation(new EmptyUriParams(), testPredicate), sameInstance(resultOperation));
+        assertThat(new Synced<>(mockTable).deleteOperation(new EmptyUriParams(), dummyPredicate), sameInstance(dummyResultOperation));
     }
 
 
     @Test
     public void testAssertOperation() throws Exception
     {
-        Operation<Object> resultOperation = mock(Operation.class, new FailAnswer());
-        Predicate testPredicate = mock(Predicate.class);
-        Table<Object> mockTable = mock(Table.class, new FailAnswer());
-        doReturn(resultOperation).when(mockTable).assertOperation(argThat(new UriParamsArgumentMatcher()), same(testPredicate));
+        Operation<Object> dummyResultOperation = dummy(Operation.class);
+        Predicate dummyPredicate = dummy(Predicate.class);
+        Table<Object> mockTable = failingMock(Table.class);
+        doReturn(dummyResultOperation).when(mockTable).assertOperation(argThat(new UriParamsArgumentMatcher()), same(dummyPredicate));
 
-        assertThat(new Synced<>(mockTable).assertOperation(new EmptyUriParams(), testPredicate), sameInstance(resultOperation));
+        assertThat(new Synced<>(mockTable).assertOperation(new EmptyUriParams(), dummyPredicate), sameInstance(dummyResultOperation));
     }
 
 

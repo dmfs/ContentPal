@@ -24,12 +24,14 @@ import android.provider.BaseColumns;
 
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.View;
-import org.dmfs.android.contentpal.testing.answers.FailAnswer;
 import org.dmfs.android.contentpal.tools.uriparams.EmptyUriParams;
+import org.dmfs.jems.mockito.answers.FailAnswer;
 import org.dmfs.optional.Absent;
 import org.junit.Test;
 
 import static org.dmfs.android.contentpal.testing.predicates.PredicateSelectionMatcher.predicateWithSelection;
+import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
+import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
@@ -52,10 +54,10 @@ public final class RowCountTest
     @Test
     public void test_thatCursorGetCountIsReturned() throws Exception
     {
-        View<Object> mockView = mock(View.class, new FailAnswer());
-        View<Object> mockViewProj = mock(View.class, new FailAnswer());
-        Predicate dummyPredicate = mock(Predicate.class, new FailAnswer());
-        Cursor mockCursor = mock(Cursor.class, new FailAnswer());
+        View<Object> mockView = failingMock(View.class);
+        View<Object> mockViewProj = failingMock(View.class);
+        Predicate dummyPredicate = dummy(Predicate.class);
+        Cursor mockCursor = failingMock(Cursor.class);
 
         doReturn(mockViewProj).when(mockView).withProjection(BaseColumns._ID);
         doReturn(mockCursor).when(mockViewProj).rows(EmptyUriParams.INSTANCE, dummyPredicate, Absent.<String>absent());
@@ -70,9 +72,9 @@ public final class RowCountTest
     @Test
     public void test_ctorWithoutPredicate_predicateHasSelection1() throws Exception
     {
-        View<Object> mockView = mock(View.class, new FailAnswer());
-        View<Object> mockViewProj = mock(View.class, new FailAnswer());
-        Cursor mockCursor = mock(Cursor.class, new FailAnswer());
+        View<Object> mockView = failingMock(View.class);
+        View<Object> mockViewProj = failingMock(View.class);
+        Cursor mockCursor = failingMock(Cursor.class);
 
         doReturn(mockViewProj).when(mockView).withProjection(BaseColumns._ID);
         doReturn(mockCursor).when(mockViewProj).rows(same(EmptyUriParams.INSTANCE), predicateWithSelection("1"), same(Absent.<String>absent()));
@@ -88,9 +90,9 @@ public final class RowCountTest
     @Test(expected = RuntimeException.class)
     public void test_whenRowsThrows_ExceptionIsThrown() throws Exception
     {
-        View<Object> mockView = mock(View.class, new FailAnswer());
-        View<Object> mockViewProj = mock(View.class, new FailAnswer());
-        Predicate dummyPredicate = mock(Predicate.class, new FailAnswer());
+        View<Object> mockView = failingMock(View.class);
+        View<Object> mockViewProj = failingMock(View.class);
+        Predicate dummyPredicate = dummy(Predicate.class);
 
         doReturn(mockViewProj).when(mockView).withProjection(BaseColumns._ID);
         doThrow(new RemoteException("msg")).when(mockViewProj).rows(EmptyUriParams.INSTANCE, dummyPredicate, Absent.<String>absent());

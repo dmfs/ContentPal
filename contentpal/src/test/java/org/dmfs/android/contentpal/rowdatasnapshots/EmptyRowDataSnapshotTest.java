@@ -16,7 +16,7 @@
 
 package org.dmfs.android.contentpal.rowdatasnapshots;
 
-import org.dmfs.optional.hamcrest.AbsentMatcher;
+import org.dmfs.jems.hamcrest.matchers.AbsentMatcher;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.emptyIterable;

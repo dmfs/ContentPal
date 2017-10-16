@@ -21,18 +21,19 @@ import android.net.Uri;
 import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.SoftRowReference;
 import org.dmfs.android.contentpal.operations.internal.RawUpdate;
-import org.dmfs.android.contentpal.testing.answers.FailAnswer;
 import org.dmfs.optional.Optional;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
-import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithExpectedCount.withExpectedCount;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.OperationType.updateOperation;
+import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithExpectedCount.withExpectedCount;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withoutValues;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYieldAllowed.withYieldNotAllowed;
 import static org.dmfs.android.contentpal.testing.operations.OperationMatcher.builds;
+import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
+import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.doReturn;
@@ -49,11 +50,11 @@ public class CountedTest
     @Test
     public void testReference() throws Exception
     {
-        Optional<SoftRowReference<Object>> testReference = mock(Optional.class, new FailAnswer());
-        Operation<Object> mockOperation = mock(Operation.class, new FailAnswer());
-        doReturn(testReference).when(mockOperation).reference();
+        Optional<SoftRowReference<Object>> dummyReference = dummy(Optional.class);
+        Operation<Object> mockOperation = failingMock(Operation.class);
+        doReturn(dummyReference).when(mockOperation).reference();
 
-        assertThat(new Counted<>(1, mockOperation).reference(), sameInstance(testReference));
+        assertThat(new Counted<>(1, mockOperation).reference(), sameInstance(dummyReference));
     }
 
 

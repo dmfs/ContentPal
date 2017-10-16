@@ -50,7 +50,7 @@ dependencies {
     testCompile 'junit:junit:' + JUNIT_VERSION
     testCompile 'org.mockito:mockito-core:' + MOCKITO_VERSION
     testCompile 'org.robolectric:robolectric:' + ROBOLECTRIC_VERSION
-    testCompile 'org.dmfs:optional-testing:' + JEMS_VERSION
+    testCompile 'org.dmfs:jems-testing:' + JEMS_VERSION
     testCompile project(':contentpal-testing')
 
 }

@@ -22,8 +22,7 @@ import android.net.Uri;
 import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.SoftRowReference;
 import org.dmfs.android.contentpal.TransactionContext;
-import org.dmfs.android.contentpal.testing.answers.FailAnswer;
-import org.dmfs.optional.hamcrest.AbsentMatcher;
+import org.dmfs.jems.hamcrest.matchers.AbsentMatcher;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
@@ -34,10 +33,11 @@ import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithEx
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withoutValues;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYieldAllowed.withYieldNotAllowed;
 import static org.dmfs.android.contentpal.testing.operations.OperationMatcher.builds;
+import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
+import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
 
 
 /**
@@ -50,22 +50,22 @@ public class DeleteTest
     @Test
     public void testVirtualReference() throws Exception
     {
-        RowSnapshot<Object> rowSnapshot = mock(RowSnapshot.class, new FailAnswer());
+        RowSnapshot<Object> dummyRowSnapshot = dummy(RowSnapshot.class);
 
-        assertThat(new Delete<>(rowSnapshot).reference(), AbsentMatcher.<SoftRowReference<Object>>isAbsent());
+        assertThat(new Delete<>(dummyRowSnapshot).reference(), AbsentMatcher.<SoftRowReference<Object>>isAbsent());
     }
 
 
     @Test
     public void testContentOperationBuilder() throws Exception
     {
-        RowSnapshot<Object> rowSnapshot = mock(RowSnapshot.class, new FailAnswer());
-        SoftRowReference<Object> rowReference = mock(SoftRowReference.class, new FailAnswer());
-        doReturn(rowReference).when(rowSnapshot).reference();
+        RowSnapshot<Object> mockRowSnapshot = failingMock(RowSnapshot.class);
+        SoftRowReference<Object> rowReference = failingMock(SoftRowReference.class);
+        doReturn(rowReference).when(mockRowSnapshot).reference();
         doReturn(ContentProviderOperation.newDelete(Uri.EMPTY)).when(rowReference).deleteOperationBuilder(any(TransactionContext.class));
 
         assertThat(
-                new Delete<>(rowSnapshot),
+                new Delete<>(mockRowSnapshot),
                 builds(
                         deleteOperation(),
                         withYieldNotAllowed(),

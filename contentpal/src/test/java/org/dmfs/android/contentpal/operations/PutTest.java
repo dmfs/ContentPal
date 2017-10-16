@@ -23,7 +23,6 @@ import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.SoftRowReference;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.rowdata.CharSequenceRowData;
-import org.dmfs.android.contentpal.testing.answers.FailAnswer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
@@ -36,12 +35,13 @@ import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithVa
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYieldAllowed.withYieldNotAllowed;
 import static org.dmfs.android.contentpal.testing.contentvalues.Containing.containing;
 import static org.dmfs.android.contentpal.testing.operations.OperationMatcher.builds;
-import static org.dmfs.optional.hamcrest.PresentMatcher.isPresent;
+import static org.dmfs.jems.hamcrest.matchers.PresentMatcher.isPresent;
+import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
+import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
 
 
 /**
@@ -55,26 +55,26 @@ public class PutTest
     @Test
     public void testVirtualReference() throws Exception
     {
-        SoftRowReference<Object> reference = mock(SoftRowReference.class, new FailAnswer());
-        RowSnapshot<Object> rowSnapshot = mock(RowSnapshot.class, new FailAnswer());
+        SoftRowReference<Object> dummyReference = dummy(SoftRowReference.class);
+        RowSnapshot<Object> mockRowSnapshot = failingMock(RowSnapshot.class);
 
-        doReturn(reference).when(rowSnapshot).reference();
-        doReturn(ContentProviderOperation.newUpdate(Uri.EMPTY)).when(reference).putOperationBuilder(any(TransactionContext.class));
+        doReturn(dummyReference).when(mockRowSnapshot).reference();
+        doReturn(ContentProviderOperation.newUpdate(Uri.EMPTY)).when(dummyReference).putOperationBuilder(any(TransactionContext.class));
 
-        assertThat(new Put<>(rowSnapshot).reference(), isPresent(sameInstance(reference)));
+        assertThat(new Put<>(mockRowSnapshot).reference(), isPresent(sameInstance(dummyReference)));
     }
 
 
     @Test
     public void testContentOperationBuilder() throws Exception
     {
-        RowSnapshot<Object> rowSnapshot = mock(RowSnapshot.class, new FailAnswer());
-        SoftRowReference<Object> rowReference = mock(SoftRowReference.class, new FailAnswer());
+        RowSnapshot<Object> mockRowSnapshot = failingMock(RowSnapshot.class);
+        SoftRowReference<Object> mockRowReference = failingMock(SoftRowReference.class);
 
-        doReturn(rowReference).when(rowSnapshot).reference();
-        doReturn(ContentProviderOperation.newUpdate(Uri.EMPTY)).when(rowReference).putOperationBuilder(any(TransactionContext.class));
+        doReturn(mockRowReference).when(mockRowSnapshot).reference();
+        doReturn(ContentProviderOperation.newUpdate(Uri.EMPTY)).when(mockRowReference).putOperationBuilder(any(TransactionContext.class));
 
-        assertThat(new Put<>(rowSnapshot),
+        assertThat(new Put<>(mockRowSnapshot),
                 builds(
                         updateOperation(),
                         withYieldNotAllowed(),
@@ -88,13 +88,13 @@ public class PutTest
     @Test
     public void testContentOperationBuilderWithData() throws Exception
     {
-        RowSnapshot<Object> rowSnapshot = mock(RowSnapshot.class, new FailAnswer());
-        SoftRowReference<Object> rowReference = mock(SoftRowReference.class, new FailAnswer());
+        RowSnapshot<Object> mockRowSnapshot = failingMock(RowSnapshot.class);
+        SoftRowReference<Object> mockRowReference = failingMock(SoftRowReference.class);
 
-        doReturn(rowReference).when(rowSnapshot).reference();
-        doReturn(ContentProviderOperation.newUpdate(Uri.EMPTY)).when(rowReference).putOperationBuilder(any(TransactionContext.class));
+        doReturn(mockRowReference).when(mockRowSnapshot).reference();
+        doReturn(ContentProviderOperation.newUpdate(Uri.EMPTY)).when(mockRowReference).putOperationBuilder(any(TransactionContext.class));
 
-        assertThat(new Put<>(rowSnapshot, new CharSequenceRowData<>("x", "y")),
+        assertThat(new Put<>(mockRowSnapshot, new CharSequenceRowData<>("x", "y")),
                 builds(
                         updateOperation(),
                         withYieldNotAllowed(),

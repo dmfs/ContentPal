@@ -43,4 +43,5 @@ dependencies {
     compile 'org.hamcrest:hamcrest-library:' + HAMCREST_VERSION
     compile 'junit:junit:' + JUNIT_VERSION
     compile 'org.mockito:mockito-core:' + MOCKITO_VERSION
+    compile 'org.dmfs:jems-testing:' + JEMS_VERSION
 }

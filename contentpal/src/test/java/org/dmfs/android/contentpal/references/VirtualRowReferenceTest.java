@@ -22,7 +22,6 @@ import android.net.Uri;
 import org.dmfs.android.contentpal.InsertOperation;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.operations.internal.RawInsert;
-import org.dmfs.android.contentpal.testing.answers.FailAnswer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
@@ -32,6 +31,7 @@ import static org.dmfs.android.contentpal.testing.contentoperationbuilder.Operat
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithExpectedCount.withoutExpectedCount;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withoutValues;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYieldAllowed.withYieldNotAllowed;
+import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -48,8 +48,8 @@ public class VirtualRowReferenceTest
     @Test
     public void testPutOperationBuilder() throws Exception
     {
-        assertThat(new VirtualRowReference<>(new RawInsert<>(mock(Uri.class, new FailAnswer()))).putOperationBuilder(
-                mock(TransactionContext.class, new FailAnswer())),
+        assertThat(new VirtualRowReference<>(new RawInsert<>(dummy(Uri.class))).putOperationBuilder(
+                dummy(TransactionContext.class)),
                 allOf(
                         insertOperation(),
                         withoutExpectedCount(),
@@ -61,21 +61,21 @@ public class VirtualRowReferenceTest
     @Test(expected = UnsupportedOperationException.class)
     public void testDeleteOperationBuilder() throws Exception
     {
-        new VirtualRowReference<>(mock(InsertOperation.class)).deleteOperationBuilder(mock(TransactionContext.class, new FailAnswer()));
+        new VirtualRowReference<>(dummy(InsertOperation.class)).deleteOperationBuilder(dummy(TransactionContext.class));
     }
 
 
     @Test(expected = UnsupportedOperationException.class)
     public void testAssertOperationBuilder() throws Exception
     {
-        new VirtualRowReference<>(mock(InsertOperation.class)).assertOperationBuilder(mock(TransactionContext.class, new FailAnswer()));
+        new VirtualRowReference<>(dummy(InsertOperation.class)).assertOperationBuilder(dummy(TransactionContext.class));
     }
 
 
     @Test(expected = UnsupportedOperationException.class)
     public void testBuilderWithReferenceData() throws Exception
     {
-        new VirtualRowReference<>(mock(InsertOperation.class)).builderWithReferenceData(mock(TransactionContext.class, new FailAnswer()),
+        new VirtualRowReference<>(dummy(InsertOperation.class)).builderWithReferenceData(dummy(TransactionContext.class),
                 mock(ContentProviderOperation.Builder.class), "_id");
     }
 
@@ -83,7 +83,7 @@ public class VirtualRowReferenceTest
     @Test(expected = UnsupportedOperationException.class)
     public void testPredicate() throws Exception
     {
-        new VirtualRowReference<>(mock(InsertOperation.class)).predicate(mock(TransactionContext.class, new FailAnswer()), "_id");
+        new VirtualRowReference<>(dummy(InsertOperation.class)).predicate(dummy(TransactionContext.class), "_id");
     }
 
 

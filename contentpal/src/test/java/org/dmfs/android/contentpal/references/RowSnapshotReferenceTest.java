@@ -23,16 +23,16 @@ import org.dmfs.android.contentpal.RowReference;
 import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.SoftRowReference;
 import org.dmfs.android.contentpal.TransactionContext;
-import org.dmfs.android.contentpal.testing.answers.FailAnswer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
+import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
+import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
 
 
 /**
@@ -45,34 +45,34 @@ public class RowSnapshotReferenceTest
     @Test
     public void testPutOperationBuilder() throws Exception
     {
-        ContentProviderOperation.Builder resultBuilder = mock(ContentProviderOperation.Builder.class, new FailAnswer());
-        SoftRowReference<Object> originalReference = mock(SoftRowReference.class, new FailAnswer());
-        RowReference<Object> resolvedReference = mock(RowReference.class, new FailAnswer());
-        RowSnapshot<Object> mockSnapshot = mock(RowSnapshot.class, new FailAnswer());
-        TransactionContext mockTransactionContext = mock(TransactionContext.class, new FailAnswer());
-        doReturn(originalReference).when(mockSnapshot).reference();
-        doReturn(resolvedReference).when(mockTransactionContext).resolved(originalReference);
+        ContentProviderOperation.Builder dummyResultBuilder = dummy(ContentProviderOperation.Builder.class);
+        SoftRowReference<Object> dummyOriginalReference = dummy(SoftRowReference.class);
+        RowReference<Object> mockResolvedReference = failingMock(RowReference.class);
+        RowSnapshot<Object> mockSnapshot = failingMock(RowSnapshot.class);
+        TransactionContext mockTransactionContext = failingMock(TransactionContext.class);
+        doReturn(dummyOriginalReference).when(mockSnapshot).reference();
+        doReturn(mockResolvedReference).when(mockTransactionContext).resolved(dummyOriginalReference);
 
-        doReturn(resultBuilder).when(resolvedReference).putOperationBuilder(mockTransactionContext);
+        doReturn(dummyResultBuilder).when(mockResolvedReference).putOperationBuilder(mockTransactionContext);
 
-        assertThat(new RowSnapshotReference<>(mockSnapshot).putOperationBuilder(mockTransactionContext), sameInstance(resultBuilder));
+        assertThat(new RowSnapshotReference<>(mockSnapshot).putOperationBuilder(mockTransactionContext), sameInstance(dummyResultBuilder));
     }
 
 
     @Test
     public void testDeleteOperationBuilder() throws Exception
     {
-        ContentProviderOperation.Builder resultBuilder = mock(ContentProviderOperation.Builder.class, new FailAnswer());
-        SoftRowReference<Object> originalReference = mock(SoftRowReference.class, new FailAnswer());
-        RowReference<Object> resolvedReference = mock(RowReference.class, new FailAnswer());
-        RowSnapshot<Object> mockSnapshot = mock(RowSnapshot.class, new FailAnswer());
-        TransactionContext mockTransactionContext = mock(TransactionContext.class, new FailAnswer());
-        doReturn(originalReference).when(mockSnapshot).reference();
-        doReturn(resolvedReference).when(mockTransactionContext).resolved(originalReference);
+        ContentProviderOperation.Builder dummyResultBuilder = dummy(ContentProviderOperation.Builder.class);
+        SoftRowReference<Object> dummyOriginalReference = dummy(SoftRowReference.class);
+        RowReference<Object> mockResolvedReference = failingMock(RowReference.class);
+        RowSnapshot<Object> mockSnapshot = failingMock(RowSnapshot.class);
+        TransactionContext mockTransactionContext = failingMock(TransactionContext.class);
+        doReturn(dummyOriginalReference).when(mockSnapshot).reference();
+        doReturn(mockResolvedReference).when(mockTransactionContext).resolved(dummyOriginalReference);
 
-        doReturn(resultBuilder).when(resolvedReference).deleteOperationBuilder(mockTransactionContext);
+        doReturn(dummyResultBuilder).when(mockResolvedReference).deleteOperationBuilder(mockTransactionContext);
 
-        assertThat(new RowSnapshotReference<>(mockSnapshot).deleteOperationBuilder(mockTransactionContext), sameInstance(resultBuilder));
+        assertThat(new RowSnapshotReference<>(mockSnapshot).deleteOperationBuilder(mockTransactionContext), sameInstance(dummyResultBuilder));
 
     }
 
@@ -80,17 +80,17 @@ public class RowSnapshotReferenceTest
     @Test
     public void testAssertOperationBuilder() throws Exception
     {
-        ContentProviderOperation.Builder resultBuilder = mock(ContentProviderOperation.Builder.class, new FailAnswer());
-        SoftRowReference<Object> originalReference = mock(SoftRowReference.class, new FailAnswer());
-        RowReference<Object> resolvedReference = mock(RowReference.class, new FailAnswer());
-        RowSnapshot<Object> mockSnapshot = mock(RowSnapshot.class, new FailAnswer());
-        TransactionContext mockTransactionContext = mock(TransactionContext.class, new FailAnswer());
-        doReturn(originalReference).when(mockSnapshot).reference();
-        doReturn(resolvedReference).when(mockTransactionContext).resolved(originalReference);
+        ContentProviderOperation.Builder dummyResultBuilder = dummy(ContentProviderOperation.Builder.class);
+        SoftRowReference<Object> dummyOriginalReference = dummy(SoftRowReference.class);
+        RowReference<Object> mockResolvedReference = failingMock(RowReference.class);
+        RowSnapshot<Object> mockSnapshot = failingMock(RowSnapshot.class);
+        TransactionContext mockTransactionContext = failingMock(TransactionContext.class);
+        doReturn(dummyOriginalReference).when(mockSnapshot).reference();
+        doReturn(mockResolvedReference).when(mockTransactionContext).resolved(dummyOriginalReference);
 
-        doReturn(resultBuilder).when(resolvedReference).assertOperationBuilder(mockTransactionContext);
+        doReturn(dummyResultBuilder).when(mockResolvedReference).assertOperationBuilder(mockTransactionContext);
 
-        assertThat(new RowSnapshotReference<>(mockSnapshot).assertOperationBuilder(mockTransactionContext), sameInstance(resultBuilder));
+        assertThat(new RowSnapshotReference<>(mockSnapshot).assertOperationBuilder(mockTransactionContext), sameInstance(dummyResultBuilder));
 
     }
 
@@ -98,35 +98,35 @@ public class RowSnapshotReferenceTest
     @Test
     public void testBuilderWithReferenceData() throws Exception
     {
-        ContentProviderOperation.Builder resultBuilder = mock(ContentProviderOperation.Builder.class, new FailAnswer());
-        SoftRowReference<Object> originalReference = mock(SoftRowReference.class, new FailAnswer());
-        RowReference<Object> resolvedReference = mock(RowReference.class, new FailAnswer());
-        RowSnapshot<Object> mockSnapshot = mock(RowSnapshot.class, new FailAnswer());
-        TransactionContext mockTransactionContext = mock(TransactionContext.class, new FailAnswer());
-        doReturn(originalReference).when(mockSnapshot).reference();
-        doReturn(resolvedReference).when(mockTransactionContext).resolved(originalReference);
+        ContentProviderOperation.Builder dummyResultBuilder = dummy(ContentProviderOperation.Builder.class);
+        SoftRowReference<Object> dummyOriginalReference = dummy(SoftRowReference.class);
+        RowReference<Object> mockResolvedReference = failingMock(RowReference.class);
+        RowSnapshot<Object> mockSnapshot = failingMock(RowSnapshot.class);
+        TransactionContext mockTransactionContext = failingMock(TransactionContext.class);
+        doReturn(dummyOriginalReference).when(mockSnapshot).reference();
+        doReturn(mockResolvedReference).when(mockTransactionContext).resolved(dummyOriginalReference);
 
-        doReturn(resultBuilder).when(resolvedReference).builderWithReferenceData(mockTransactionContext, resultBuilder, "column");
+        doReturn(dummyResultBuilder).when(mockResolvedReference).builderWithReferenceData(mockTransactionContext, dummyResultBuilder, "column");
 
-        assertThat(new RowSnapshotReference<>(mockSnapshot).builderWithReferenceData(mockTransactionContext, resultBuilder, "column"),
-                sameInstance(resultBuilder));
+        assertThat(new RowSnapshotReference<>(mockSnapshot).builderWithReferenceData(mockTransactionContext, dummyResultBuilder, "column"),
+                sameInstance(dummyResultBuilder));
     }
 
 
     @Test
     public void testPredicate() throws Exception
     {
-        Predicate resultPredicate = mock(Predicate.class, new FailAnswer());
-        SoftRowReference<Object> originalReference = mock(SoftRowReference.class, new FailAnswer());
-        RowReference<Object> resolvedReference = mock(RowReference.class, new FailAnswer());
-        RowSnapshot<Object> mockSnapshot = mock(RowSnapshot.class, new FailAnswer());
-        TransactionContext mockTransactionContext = mock(TransactionContext.class, new FailAnswer());
-        doReturn(originalReference).when(mockSnapshot).reference();
-        doReturn(resolvedReference).when(mockTransactionContext).resolved(originalReference);
+        Predicate dummyResultPredicate = dummy(Predicate.class);
+        SoftRowReference<Object> dummyOriginalReference = dummy(SoftRowReference.class);
+        RowReference<Object> mockResolvedReference = failingMock(RowReference.class);
+        RowSnapshot<Object> mockSnapshot = failingMock(RowSnapshot.class);
+        TransactionContext mockTransactionContext = failingMock(TransactionContext.class);
+        doReturn(dummyOriginalReference).when(mockSnapshot).reference();
+        doReturn(mockResolvedReference).when(mockTransactionContext).resolved(dummyOriginalReference);
 
-        doReturn(resultPredicate).when(resolvedReference).predicate(mockTransactionContext, "column");
+        doReturn(dummyResultPredicate).when(mockResolvedReference).predicate(mockTransactionContext, "column");
 
         assertThat(new RowSnapshotReference<>(mockSnapshot).predicate(mockTransactionContext, "column"),
-                sameInstance(resultPredicate));
+                sameInstance(dummyResultPredicate));
     }
 }
