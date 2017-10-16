@@ -49,8 +49,8 @@ public final class BulkDelete<T> implements Operation<T>
 
     public BulkDelete(@NonNull Table<T> table, @NonNull Predicate predicate)
     {
-        this.mTable = table;
-        this.mPredicate = predicate;
+        mTable = table;
+        mPredicate = predicate;
     }
 
 
