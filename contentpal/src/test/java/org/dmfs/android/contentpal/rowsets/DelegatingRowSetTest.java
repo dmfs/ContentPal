@@ -18,13 +18,13 @@ package org.dmfs.android.contentpal.rowsets;
 
 import org.dmfs.android.contentpal.ClosableIterator;
 import org.dmfs.android.contentpal.RowSet;
-import org.dmfs.android.contentpal.testing.answers.FailAnswer;
 import org.junit.Test;
 
+import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
+import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
 
 
 /**
@@ -38,9 +38,8 @@ public final class DelegatingRowSetTest
     @Test
     public void test()
     {
-        RowSet<Object> mockRowSet = mock(RowSet.class, new FailAnswer());
-        ClosableIterator dummyIterator = mock(ClosableIterator.class, new FailAnswer());
-
+        RowSet<Object> mockRowSet = failingMock(RowSet.class);
+        ClosableIterator dummyIterator = dummy(ClosableIterator.class);
         doReturn(dummyIterator).when(mockRowSet).iterator();
 
         assertThat(new TestRowSet<>(mockRowSet).iterator(), sameInstance(dummyIterator));
