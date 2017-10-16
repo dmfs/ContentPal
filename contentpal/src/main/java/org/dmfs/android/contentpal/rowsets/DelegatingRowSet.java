@@ -18,21 +18,31 @@ package org.dmfs.android.contentpal.rowsets;
 
 import android.support.annotation.NonNull;
 
+import org.dmfs.android.contentpal.ClosableIterator;
 import org.dmfs.android.contentpal.RowSet;
-import org.dmfs.android.contentpal.View;
-import org.dmfs.android.contentpal.predicates.AnyOf;
+import org.dmfs.android.contentpal.RowSnapshot;
 
 
 /**
- * A {@link RowSet} to retrieve all rows of a given {@link View}.
+ * Base class for {@link RowSet}s that simply delegate to another {@link RowSet}.
  *
- * @author Marten Gajda
+ * @author Gabor Keszthelyi
  */
-public final class AllRows<T> extends DelegatingRowSet<T>
+public abstract class DelegatingRowSet<T> implements RowSet<T>
 {
-    public AllRows(@NonNull View<T> view)
+    private final RowSet<T> mDelegate;
+
+
+    protected DelegatingRowSet(RowSet<T> delegate)
     {
-        super(new QueryRowSet<>(view, new AnyOf()));
+        mDelegate = delegate;
     }
 
+
+    @NonNull
+    @Override
+    public final ClosableIterator<RowSnapshot<T>> iterator()
+    {
+        return mDelegate.iterator();
+    }
 }

@@ -20,12 +20,11 @@ import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 
 import org.dmfs.android.contactspal.tables.RawContacts;
-import org.dmfs.android.contentpal.ClosableIterator;
 import org.dmfs.android.contentpal.RowSet;
-import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.View;
 import org.dmfs.android.contentpal.predicates.AnyOf;
 import org.dmfs.android.contentpal.predicates.EqArg;
+import org.dmfs.android.contentpal.rowsets.DelegatingRowSet;
 import org.dmfs.android.contentpal.rowsets.QueryRowSet;
 
 
@@ -34,24 +33,14 @@ import org.dmfs.android.contentpal.rowsets.QueryRowSet;
  *
  * @author Marten Gajda
  */
-public final class Dirty implements RowSet<ContactsContract.RawContacts>
+public final class Dirty extends DelegatingRowSet<ContactsContract.RawContacts>
 {
-    private final RowSet<ContactsContract.RawContacts> mDelegate;
-
-
     public Dirty(@NonNull View<ContactsContract.RawContacts> mRawContacts)
     {
-        mDelegate = new QueryRowSet<>(mRawContacts,
+        super(new QueryRowSet<>(mRawContacts,
                 new AnyOf(
                         new EqArg(ContactsContract.RawContacts.DIRTY, 1),
-                        new EqArg(ContactsContract.RawContacts.DELETED, 1)));
+                        new EqArg(ContactsContract.RawContacts.DELETED, 1))));
     }
 
-
-    @NonNull
-    @Override
-    public ClosableIterator<RowSnapshot<ContactsContract.RawContacts>> iterator()
-    {
-        return mDelegate.iterator();
-    }
 }

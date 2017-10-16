@@ -19,11 +19,10 @@ package org.dmfs.android.contactspal.rowsets;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 
-import org.dmfs.android.contentpal.ClosableIterator;
 import org.dmfs.android.contentpal.RowSet;
-import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.View;
 import org.dmfs.android.contentpal.predicates.IsNull;
+import org.dmfs.android.contentpal.rowsets.DelegatingRowSet;
 import org.dmfs.android.contentpal.rowsets.QueryRowSet;
 
 
@@ -32,21 +31,12 @@ import org.dmfs.android.contentpal.rowsets.QueryRowSet;
  *
  * @author Marten Gajda
  */
-public final class Unsynced implements RowSet<ContactsContract.RawContacts>
+public final class Unsynced extends DelegatingRowSet<ContactsContract.RawContacts>
 {
-    private final RowSet<ContactsContract.RawContacts> mDelegate;
-
 
     public Unsynced(@NonNull View<ContactsContract.RawContacts> mRawContacts)
     {
-        mDelegate = new QueryRowSet<>(mRawContacts, new IsNull(ContactsContract.RawContacts.SOURCE_ID));
+        super(new QueryRowSet<>(mRawContacts, new IsNull(ContactsContract.RawContacts.SOURCE_ID)));
     }
 
-
-    @NonNull
-    @Override
-    public ClosableIterator<RowSnapshot<ContactsContract.RawContacts>> iterator()
-    {
-        return mDelegate.iterator();
-    }
 }
