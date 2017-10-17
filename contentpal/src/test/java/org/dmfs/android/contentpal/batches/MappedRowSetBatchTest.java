@@ -21,14 +21,18 @@ import org.dmfs.android.contentpal.RowSet;
 import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.testing.rowset.TestRowSet;
 import org.dmfs.android.contentpal.testing.table.Contract;
+import org.dmfs.iterables.ArrayIterable;
+import org.dmfs.iterables.decorators.DelegatingIterable;
+import org.dmfs.iterables.decorators.Mapped;
 import org.dmfs.iterators.Function;
+import org.dmfs.jems.mocks.MockFunction;
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.Matcher;
 import org.junit.Test;
 
+import static org.dmfs.jems.hamcrest.matchers.IterableMatcher.iteratesTo;
 import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
-import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
-import static org.hamcrest.Matchers.contains;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.doReturn;
 
 
 /**
@@ -42,21 +46,28 @@ public final class MappedRowSetBatchTest
     @Test
     public void test()
     {
-        RowSnapshot<Contract> dummyRowSnapshot1 = dummy(RowSnapshot.class);
-        RowSnapshot<Contract> dummyRowSnapshot2 = dummy(RowSnapshot.class);
-        RowSnapshot<Contract> dummyRowSnapshot3 = dummy(RowSnapshot.class);
-        RowSet<Contract> rowSet = new TestRowSet<>(dummyRowSnapshot1, dummyRowSnapshot2, dummyRowSnapshot3);
+        RowSet<Contract> rowSet = new TestRowSet<Contract>(dummy(RowSnapshot.class), dummy(RowSnapshot.class), dummy(RowSnapshot.class));
+        Iterable<Operation<?>> dummyOperations = new ArrayIterable<Operation<?>>(dummy(Operation.class), dummy(Operation.class), dummy(Operation.class));
 
-        Operation<?> dummyOperation1 = dummy(Operation.class);
-        Operation<?> dummyOperation2 = dummy(Operation.class);
-        Operation<?> dummyOperation3 = dummy(Operation.class);
+        assertThat(new MappedRowSetBatch<>(rowSet, new MockFunction<>(new InstanceMatching<>(rowSet), dummyOperations)),
+                iteratesTo(new InstanceMatching<>(dummyOperations)));
+    }
 
-        Function<RowSnapshot<Contract>, Operation<?>> mockFunction = failingMock(Function.class);
-        doReturn(dummyOperation1).when(mockFunction).apply(dummyRowSnapshot1);
-        doReturn(dummyOperation2).when(mockFunction).apply(dummyRowSnapshot2);
-        doReturn(dummyOperation3).when(mockFunction).apply(dummyRowSnapshot3);
 
-        assertThat(new MappedRowSetBatch<>(rowSet, mockFunction), contains(dummyOperation1, dummyOperation2, dummyOperation3));
+    // TODO Use from jems:test-utils when available
+    private static final class InstanceMatching<T> extends DelegatingIterable<Matcher<T>>
+    {
+        InstanceMatching(Iterable<T> delegate)
+        {
+            super(new Mapped<>(delegate, new Function<T, Matcher<T>>()
+            {
+                @Override
+                public Matcher<T> apply(T argument)
+                {
+                    return CoreMatchers.sameInstance(argument);
+                }
+            }));
+        }
     }
 
 }
