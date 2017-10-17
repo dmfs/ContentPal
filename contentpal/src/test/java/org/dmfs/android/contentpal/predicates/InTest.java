@@ -16,15 +16,13 @@
 
 package org.dmfs.android.contentpal.predicates;
 
-import org.dmfs.android.contentpal.testing.predicates.BackReferences;
-import org.dmfs.android.contentpal.testing.predicates.Values;
-import org.dmfs.android.contentpal.transactions.contexts.EmptyTransactionContext;
-import org.dmfs.optional.iterable.PresentValues;
 import org.junit.Test;
 
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.emptyIterable;
-import static org.junit.Assert.assertEquals;
+import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.absentBackReferences;
+import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.argumentValues;
+import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.emptyArguments;
+import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.predicateWith;
+import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.selection;
 import static org.junit.Assert.assertThat;
 
 
@@ -34,28 +32,26 @@ import static org.junit.Assert.assertThat;
 public class InTest
 {
     @Test
-    public void testSelection() throws Exception
+    public void test()
     {
-        assertEquals("x in ( ) ", new In("x").selection(EmptyTransactionContext.INSTANCE).toString());
-        assertEquals("x in ( ? ) ", new In("x", "a").selection(EmptyTransactionContext.INSTANCE).toString());
-        assertEquals("x in ( ?, ? ) ", new In("x", "a", 1).selection(EmptyTransactionContext.INSTANCE).toString());
-        assertEquals("x in ( ?, ?, ? ) ", new In("x", "a", 1, 1.2).selection(EmptyTransactionContext.INSTANCE).toString());
-    }
+        assertThat(new In("x"), predicateWith(
+                selection("x in ( ) "),
+                emptyArguments()));
 
+        assertThat(new In("x", "a"), predicateWith(
+                selection("x in ( ? ) "),
+                argumentValues("a"),
+                absentBackReferences(1)));
 
-    @Test
-    public void testArguments() throws Exception
-    {
-        assertThat(new In("x").arguments(EmptyTransactionContext.INSTANCE), emptyIterable());
+        assertThat(new In("x", "a", 1), predicateWith(
+                selection("x in ( ?, ? ) "),
+                argumentValues("a", "1"),
+                absentBackReferences(2)));
 
-        assertThat(new Values(new In("x", "a").arguments(EmptyTransactionContext.INSTANCE)), contains("a"));
-        assertThat(new PresentValues<>(new BackReferences(new In("x", "a").arguments(EmptyTransactionContext.INSTANCE))), emptyIterable());
-
-        assertThat(new Values(new In("x", "a", 1).arguments(EmptyTransactionContext.INSTANCE)), contains("a", "1"));
-        assertThat(new PresentValues<>(new BackReferences(new In("x", "a", 1).arguments(EmptyTransactionContext.INSTANCE))), emptyIterable());
-
-        assertThat(new Values(new In("x", "a", 1, 1.2).arguments(EmptyTransactionContext.INSTANCE)), contains("a", "1", "1.2"));
-        assertThat(new PresentValues<>(new BackReferences(new In("x", "a", 1, 1.2).arguments(EmptyTransactionContext.INSTANCE))), emptyIterable());
+        assertThat(new In("x", "a", 1, 1.2), predicateWith(
+                selection("x in ( ?, ?, ? ) "),
+                argumentValues("a", "1", "1.2"),
+                absentBackReferences(3)));
     }
 
 }

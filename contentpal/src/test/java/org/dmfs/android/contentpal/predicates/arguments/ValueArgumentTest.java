@@ -14,28 +14,35 @@
  * limitations under the License.
  */
 
-package org.dmfs.android.contentpal.testing.predicates;
+package org.dmfs.android.contentpal.predicates.arguments;
 
 import org.dmfs.android.contentpal.Predicate;
-import org.dmfs.iterables.ArrayIterable;
+import org.dmfs.jems.hamcrest.matchers.AbsentMatcher;
 import org.junit.Test;
 
-import static org.hamcrest.Matchers.emptyIterable;
-import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
+import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.doReturn;
 
 
 /**
- * @author Marten Gajda
+ * Unit test for {@link ValueArgument}.
+ *
+ * @author Gabor Keszthelyi
  */
-public class ValuesTest
+public final class ValueArgumentTest
 {
+
     @Test
     public void test()
     {
-        assertThat(new PredicateMatcher.Values(new ArrayIterable<Predicate.Argument>()), emptyIterable());
-        assertThat(new PredicateMatcher.Values(new ArrayIterable<Predicate.Argument>(new Mocked.ValueArgument("a"))), contains("a"));
-        assertThat(new PredicateMatcher.Values(new ArrayIterable<Predicate.Argument>(new Mocked.ValueArgument("a"), new Mocked.ValueArgument("b"))),
-                contains("a", "b"));
+        Object mockValue = failingMock(Object.class);
+        doReturn("val").when(mockValue).toString();
+
+        Predicate.Argument underTest = new ValueArgument(mockValue);
+        assertThat(underTest.value(), is("val"));
+        assertThat(underTest.backReference(), AbsentMatcher.<Integer>isAbsent());
     }
+
 }

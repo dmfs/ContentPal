@@ -16,17 +16,14 @@
 
 package org.dmfs.android.contentpal.predicates;
 
-import org.dmfs.android.contentpal.testing.predicates.BackReferences;
 import org.dmfs.android.contentpal.testing.predicates.Mocked;
-import org.dmfs.android.contentpal.testing.predicates.Values;
-import org.dmfs.android.contentpal.transactions.contexts.EmptyTransactionContext;
-import org.dmfs.optional.iterable.PresentValues;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.emptyIterable;
-import static org.junit.Assert.assertEquals;
+import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.absentBackReferences;
+import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.argumentValues;
+import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.emptyArguments;
+import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.predicateWith;
+import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.selection;
 import static org.junit.Assert.assertThat;
 
 
@@ -37,33 +34,26 @@ public class AllOfTest
 {
 
     @Test
-    public void testSelection() throws Exception
+    public void test()
     {
-        assertEquals("1", new AllOf().selection(EmptyTransactionContext.INSTANCE).toString());
-        assertEquals("x", new AllOf(new Mocked("x", "a")).selection(EmptyTransactionContext.INSTANCE).toString());
-        assertEquals("( x ) and ( y )", new AllOf(new Mocked("x", "a"), new Mocked("y", "1")).selection(EmptyTransactionContext.INSTANCE).toString());
-        assertEquals("( x ) and ( z ) and ( y )",
-                new AllOf(new Mocked("x", "a"), new Mocked("z", "w", "z"), new Mocked("y", "1")).selection(EmptyTransactionContext.INSTANCE).toString());
+        assertThat(new AllOf(), predicateWith(
+                selection("1"),
+                emptyArguments()));
+
+        assertThat(new AllOf(new Mocked("x", "a")), predicateWith(
+                selection("x"),
+                argumentValues("a"),
+                absentBackReferences(1)));
+
+        assertThat(new AllOf(new Mocked("x", "a"), new Mocked("y", "1")), predicateWith(
+                selection("( x ) and ( y )"),
+                argumentValues("a", "1"),
+                absentBackReferences(2)));
+
+        assertThat(new AllOf(new Mocked("x", "a"), new Mocked("z", "w", "z"), new Mocked("y", "1")), predicateWith(
+                selection("( x ) and ( z ) and ( y )"),
+                argumentValues("a", "w", "z", "1"),
+                absentBackReferences(4)));
     }
 
-
-    @Test
-    public void testArguments() throws Exception
-    {
-        assertThat(new AllOf().arguments(EmptyTransactionContext.INSTANCE), emptyIterable());
-
-        assertThat(new Values(new AllOf(new Mocked("x", "a")).arguments(EmptyTransactionContext.INSTANCE)), contains("a"));
-        assertThat(new PresentValues<>(new BackReferences(new AllOf(new Mocked("x", "a")).arguments(EmptyTransactionContext.INSTANCE))),
-                emptyIterable());
-
-        assertThat(new Values(new AllOf(new Mocked("x", "a"), new Mocked("y", "1")).arguments(EmptyTransactionContext.INSTANCE)), contains("a", "1"));
-        assertThat(new PresentValues<>(new BackReferences(new AllOf(new Mocked("x", "a"), new Mocked("y", "1")).arguments(EmptyTransactionContext.INSTANCE))),
-                emptyIterable());
-
-        assertThat(new Values(new AllOf(new Mocked("x", "a"), new Mocked("z", "w", "z"), new Mocked("y", "1")).arguments(EmptyTransactionContext.INSTANCE)),
-                contains("a", "w", "z", "1"));
-        assertThat(new PresentValues<>(new BackReferences(
-                        new AllOf(new Mocked("x", "a"), new Mocked("z", "w", "z"), new Mocked("y", "1")).arguments(EmptyTransactionContext.INSTANCE))),
-                Matchers.<Integer>emptyIterable());
-    }
 }

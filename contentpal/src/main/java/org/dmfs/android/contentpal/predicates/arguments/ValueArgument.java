@@ -35,7 +35,6 @@ public final class ValueArgument implements Predicate.Argument
 
     public ValueArgument(@NonNull Object value)
     {
-
         mValue = value;
     }
 
