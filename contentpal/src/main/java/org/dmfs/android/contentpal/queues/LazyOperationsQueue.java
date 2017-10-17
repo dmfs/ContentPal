@@ -28,9 +28,14 @@ import org.dmfs.android.contentpal.transactions.BaseTransaction;
 
 
 /**
+ * An {@link OperationsQueue} which delays the execution of all transactions as long as possible. {@link OperationsBatch}es are not committed until either
+ * {@link #flush()} is called or a specific transaction size has been exceeded.
+ * <p>
+ * To use this in concurrent environments add a {@link ThreadSafe} decorator.
+ *
  * @author Marten Gajda
  */
-public final class BasicOperationsQueue implements OperationsQueue
+public final class LazyOperationsQueue implements OperationsQueue
 {
     private final static int DEFAULT_COMMIT_LIMIT = 750 * 1024;
 
@@ -39,13 +44,13 @@ public final class BasicOperationsQueue implements OperationsQueue
     private Transaction mTransaction = new BaseTransaction();
 
 
-    public BasicOperationsQueue(@NonNull ContentProviderClient client)
+    public LazyOperationsQueue(@NonNull ContentProviderClient client)
     {
         this(client, DEFAULT_COMMIT_LIMIT);
     }
 
 
-    public BasicOperationsQueue(@NonNull ContentProviderClient client, int commitLimit)
+    public LazyOperationsQueue(@NonNull ContentProviderClient client, int commitLimit)
     {
         mClient = client;
         mCommitLimit = commitLimit;
