@@ -14,44 +14,29 @@
  * limitations under the License.
  */
 
-package org.dmfs.android.contentpal.testing.predicates;
-
-import android.support.annotation.NonNull;
+package org.dmfs.android.contentpal.predicates.arguments;
 
 import org.dmfs.android.contentpal.Predicate;
-import org.dmfs.optional.Absent;
-import org.dmfs.optional.Optional;
+import org.junit.Test;
+
+import static org.dmfs.jems.hamcrest.matchers.PresentMatcher.isPresent;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 
 /**
- * A simple constant argument with no back reference.
+ * Unit test for {@link BackReferenceArgument}.
  *
- * @author Marten Gajda
+ * @author Gabor Keszthelyi
  */
-public final class ValueArgument implements Predicate.Argument
+public final class BackReferenceArgumentTest
 {
-    private final Object mValue;
 
-
-    public ValueArgument(@NonNull Object value)
+    @Test
+    public void test()
     {
-
-        mValue = value;
-    }
-
-
-    @NonNull
-    @Override
-    public String value()
-    {
-        return mValue.toString();
-    }
-
-
-    @NonNull
-    @Override
-    public Optional<Integer> backReference()
-    {
-        return Absent.absent();
+        Predicate.Argument underTest = new BackReferenceArgument(4);
+        assertThat(underTest.value(), is("-1"));
+        assertThat(underTest.backReference(), isPresent(4));
     }
 }

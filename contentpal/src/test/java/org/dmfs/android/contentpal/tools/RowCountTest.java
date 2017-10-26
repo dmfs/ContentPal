@@ -29,7 +29,7 @@ import org.dmfs.jems.mockito.answers.FailAnswer;
 import org.dmfs.optional.Absent;
 import org.junit.Test;
 
-import static org.dmfs.android.contentpal.testing.predicates.PredicateSelectionMatcher.predicateWithSelection;
+import static org.dmfs.android.contentpal.testing.predicates.PredicateArgumentMatcher.predicateWithSelection;
 import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
 import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
 import static org.hamcrest.Matchers.is;

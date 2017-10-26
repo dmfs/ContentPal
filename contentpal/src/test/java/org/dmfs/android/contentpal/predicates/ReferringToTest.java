@@ -22,15 +22,15 @@ import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.SoftRowReference;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.references.BackReference;
-import org.dmfs.android.contentpal.testing.predicates.BackReferences;
-import org.dmfs.android.contentpal.testing.predicates.Values;
-import org.dmfs.optional.iterable.PresentValues;
 import org.junit.Test;
 
+import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.argumentValues;
+import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.backReferences;
+import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.predicateWith;
+import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.selection;
+import static org.dmfs.jems.hamcrest.matchers.PresentMatcher.isPresent;
 import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
 import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.doReturn;
 
@@ -43,34 +43,22 @@ public class ReferringToTest
     @Test
     public void testSelection() throws Exception
     {
-        TransactionContext transactionContext = failingMock(TransactionContext.class);
-        SoftRowReference<Object> rowReference = dummy(SoftRowReference.class);
-        RowSnapshot<Object> rowSnapshot = failingMock(RowSnapshot.class);
+        RowSnapshot<Object> mockRowSnapshot = failingMock(RowSnapshot.class);
+        SoftRowReference<Object> dummyRowReference = dummy(SoftRowReference.class);
+        TransactionContext mockTc = failingMock(TransactionContext.class);
 
         // let the RowSnapshot return the mock RowReference
-        doReturn(rowReference).when(rowSnapshot).reference();
+        doReturn(dummyRowReference).when(mockRowSnapshot).reference();
 
         // let the TransactionContext resolve the RowReference to a BackReference with index 10
-        doReturn(new BackReference<>(dummy(Uri.class), 10)).when(transactionContext).resolved(rowReference);
+        doReturn(new BackReference<>(dummy(Uri.class), 10)).when(mockTc).resolved(dummyRowReference);
 
-        assertThat(new ReferringTo<>("x", rowSnapshot).selection(transactionContext).toString(), is("x = ?"));
+        assertThat(new ReferringTo<>("x", mockRowSnapshot),
+                predicateWith(
+                        selection(mockTc, "x = ?"),
+                        argumentValues(mockTc, "-1"),
+                        backReferences(mockTc, isPresent(10))
+                ));
     }
 
-
-    @Test
-    public void testArguments() throws Exception
-    {
-        TransactionContext transactionContext = failingMock(TransactionContext.class);
-        SoftRowReference<Object> rowReference = dummy(SoftRowReference.class);
-        RowSnapshot<Object> rowSnapshot = failingMock(RowSnapshot.class);
-
-        // let the RowSnapshot return the mock RowReference
-        doReturn(rowReference).when(rowSnapshot).reference();
-
-        // let the TransactionContext resolve the RowReference to a BackReference with index 10
-        doReturn(new BackReference<>(dummy(Uri.class), 10)).when(transactionContext).resolved(rowReference);
-
-        assertThat(new Values(new ReferringTo<>("x", rowSnapshot).arguments(transactionContext)), contains("-1"));
-        assertThat(new PresentValues<>(new BackReferences(new ReferringTo<>("x", rowSnapshot).arguments(transactionContext))), contains(10));
-    }
 }

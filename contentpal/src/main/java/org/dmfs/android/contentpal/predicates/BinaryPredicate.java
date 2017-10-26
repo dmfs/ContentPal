@@ -88,9 +88,9 @@ public final class BinaryPredicate implements Predicate
                         new Function<Predicate, Iterable<Argument>>()
                         {
                             @Override
-                            public Iterable<Argument> apply(Predicate argument)
+                            public Iterable<Argument> apply(Predicate predicate)
                             {
-                                return argument.arguments(transactionContext);
+                                return predicate.arguments(transactionContext);
                             }
                         }));
     }

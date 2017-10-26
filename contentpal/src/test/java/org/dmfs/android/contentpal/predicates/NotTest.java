@@ -16,16 +16,13 @@
 
 package org.dmfs.android.contentpal.predicates;
 
-import org.dmfs.android.contentpal.testing.predicates.BackReferences;
 import org.dmfs.android.contentpal.testing.predicates.Mocked;
-import org.dmfs.android.contentpal.testing.predicates.Values;
-import org.dmfs.android.contentpal.transactions.contexts.EmptyTransactionContext;
-import org.dmfs.optional.iterable.PresentValues;
 import org.junit.Test;
 
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.emptyIterable;
-import static org.junit.Assert.assertEquals;
+import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.absentBackReferences;
+import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.argumentValues;
+import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.predicateWith;
+import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.selection;
 import static org.junit.Assert.assertThat;
 
 
@@ -36,21 +33,17 @@ public class NotTest
 {
 
     @Test
-    public void testSelection() throws Exception
+    public void test()
     {
-        assertEquals("not ( x )", new Not(new Mocked("x", "a")).selection(EmptyTransactionContext.INSTANCE).toString());
-        assertEquals("not ( x )", new Not(new Mocked("x", "a", "z", "w")).selection(EmptyTransactionContext.INSTANCE).toString());
+        assertThat(new Not(new Mocked("x", "a")), predicateWith(
+                selection("not ( x )"),
+                argumentValues("a"),
+                absentBackReferences(1)));
+
+        assertThat(new Not(new Mocked("x", "a", "z", "w")), predicateWith(
+                selection("not ( x )"),
+                argumentValues("a", "z", "w"),
+                absentBackReferences(3)));
     }
 
-
-    @Test
-    public void testArguments() throws Exception
-    {
-        assertThat(new Values(new Not(new Mocked("x", "a")).arguments(EmptyTransactionContext.INSTANCE)), contains("a"));
-        assertThat(new PresentValues<>(new BackReferences(new Not(new Mocked("x", "a")).arguments(EmptyTransactionContext.INSTANCE))), emptyIterable());
-
-        assertThat(new Values(new Not(new Mocked("x", "a", "z", "w")).arguments(EmptyTransactionContext.INSTANCE)), contains("a", "z", "w"));
-        assertThat(new PresentValues<>(new BackReferences(new Not(new Mocked("x", "a", "z", "w")).arguments(EmptyTransactionContext.INSTANCE))),
-                emptyIterable());
-    }
 }

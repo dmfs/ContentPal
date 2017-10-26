@@ -16,27 +16,39 @@
 
 package org.dmfs.android.contentpal.predicates;
 
-import org.junit.Test;
+import android.accounts.Account;
 
-import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.emptyArguments;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
+
+import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.absentBackReferences;
+import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.argumentValues;
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.predicateWith;
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.selection;
 import static org.junit.Assert.assertThat;
 
 
 /**
- * @author Marten Gajda
+ * Unit test for {@link AccountEq}.
+ *
+ * @author Gabor Keszthelyi
  */
-public class IsNullTest
+@RunWith(RobolectricTestRunner.class)
+@Config(manifest = Config.NONE)
+public final class AccountEqTest
 {
 
     @Test
     public void test()
     {
-        assertThat(new IsNull("x"),
+        assertThat(new AccountEq(new Account("name", "type")),
                 predicateWith(
-                        selection("x is null"),
-                        emptyArguments()
+                        selection("( account_name = ? ) and ( account_type = ? )"),
+                        argumentValues("name", "type"),
+                        absentBackReferences(2)
                 ));
     }
+
 }

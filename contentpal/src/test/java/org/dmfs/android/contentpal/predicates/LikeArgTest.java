@@ -16,15 +16,12 @@
 
 package org.dmfs.android.contentpal.predicates;
 
-import org.dmfs.android.contentpal.testing.predicates.BackReferences;
-import org.dmfs.android.contentpal.testing.predicates.Values;
-import org.dmfs.android.contentpal.transactions.contexts.EmptyTransactionContext;
-import org.dmfs.optional.iterable.PresentValues;
 import org.junit.Test;
 
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.emptyIterable;
-import static org.junit.Assert.assertEquals;
+import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.absentBackReferences;
+import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.argumentValues;
+import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.predicateWith;
+import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.selection;
 import static org.junit.Assert.assertThat;
 
 
@@ -35,16 +32,14 @@ public class LikeArgTest
 {
 
     @Test
-    public void testSelection() throws Exception
+    public void test()
     {
-        assertEquals("x like ?", new LikeArg("x", "y").selection(EmptyTransactionContext.INSTANCE).toString());
+        assertThat(new LikeArg("x", "y"),
+                predicateWith(
+                        selection("x like ?"),
+                        argumentValues("y"),
+                        absentBackReferences(1)
+                ));
     }
 
-
-    @Test
-    public void testArguments() throws Exception
-    {
-        assertThat(new Values(new LikeArg("x", "y").arguments(EmptyTransactionContext.INSTANCE)), contains("y"));
-        assertThat(new PresentValues<>(new BackReferences(new LikeArg("x", "y").arguments(EmptyTransactionContext.INSTANCE))), emptyIterable());
-    }
 }

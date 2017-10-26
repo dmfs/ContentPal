@@ -20,9 +20,6 @@ import android.content.ContentProviderOperation;
 import android.net.Uri;
 
 import org.dmfs.android.contentpal.TransactionContext;
-import org.dmfs.android.contentpal.testing.predicates.BackReferences;
-import org.dmfs.android.contentpal.testing.predicates.Values;
-import org.dmfs.optional.iterable.PresentValues;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
@@ -37,10 +34,12 @@ import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithVa
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withoutValues;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYieldAllowed.withYieldNotAllowed;
 import static org.dmfs.android.contentpal.testing.contentvalues.Containing.containing;
+import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.absentBackReferences;
+import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.argumentValues;
+import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.predicateWith;
+import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.selection;
 import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
 import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.emptyIterable;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -108,20 +107,14 @@ public class RowUriReferenceTest
     @Test
     public void testPredicate() throws Exception
     {
-        assertThat(new RowUriReference<>(Uri.parse("content://authority/path/123"))
-                        .predicate(dummy(TransactionContext.class), "column")
-                        .selection(dummy(TransactionContext.class)).toString(),
-                is("column = ?"));
+        TransactionContext dummyTc = dummy(TransactionContext.class);
 
-        assertThat(new Values(new RowUriReference<>(Uri.parse("content://authority/path/123"))
-                        .predicate(dummy(TransactionContext.class), "column")
-                        .arguments(dummy(TransactionContext.class))),
-                contains("123"));
-
-        assertThat(new PresentValues<>(new BackReferences(new RowUriReference<>(Uri.parse("content://authority/path/123"))
-                        .predicate(dummy(TransactionContext.class), "column")
-                        .arguments(dummy(TransactionContext.class)))),
-                emptyIterable());
+        assertThat(new RowUriReference<>(Uri.parse("content://authority/path/123")).predicate(dummyTc, "column"),
+                predicateWith(
+                        selection(dummyTc, "column = ?"),
+                        argumentValues(dummyTc, "123"),
+                        absentBackReferences(dummyTc, 1)
+                ));
     }
 
 

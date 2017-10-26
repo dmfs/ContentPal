@@ -23,6 +23,8 @@ import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.iterables.ArrayIterable;
 import org.dmfs.iterables.decorators.Mapped;
 import org.dmfs.iterators.Function;
+import org.dmfs.optional.Absent;
+import org.dmfs.optional.Optional;
 
 
 /**
@@ -66,4 +68,37 @@ public final class Mocked implements Predicate
         });
     }
 
+
+    /**
+     * A simple constant argument with no back reference.
+     * <p>
+     * Note: This class is 'copied' here from 'contentpal' module (that one is not available here on the classpath)
+     */
+    static final class ValueArgument implements Argument
+    {
+        private final Object mValue;
+
+
+        public ValueArgument(@NonNull Object value)
+        {
+
+            mValue = value;
+        }
+
+
+        @NonNull
+        @Override
+        public String value()
+        {
+            return mValue.toString();
+        }
+
+
+        @NonNull
+        @Override
+        public Optional<Integer> backReference()
+        {
+            return Absent.absent();
+        }
+    }
 }
