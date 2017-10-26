@@ -18,18 +18,15 @@ package org.dmfs.android.contentpal.testing.predicates;
 
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.TransactionContext;
-import org.dmfs.iterables.ArrayIterable;
-import org.dmfs.iterables.decorators.DelegatingIterable;
 import org.dmfs.iterables.decorators.Mapped;
 import org.dmfs.iterators.Function;
 import org.dmfs.optional.Absent;
 import org.dmfs.optional.Optional;
 import org.dmfs.optional.Present;
 import org.hamcrest.CoreMatchers;
-import org.hamcrest.Description;
 import org.hamcrest.Factory;
+import org.hamcrest.FeatureMatcher;
 import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeDiagnosingMatcher;
 
 import java.util.Arrays;
 
@@ -37,6 +34,7 @@ import static org.dmfs.jems.hamcrest.matchers.AbsentMatcher.isAbsent;
 import static org.dmfs.jems.hamcrest.matchers.IterableMatcher.iteratesTo;
 import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
 import static org.hamcrest.collection.IsEmptyIterable.emptyIterable;
+import static org.hamcrest.object.HasToString.hasToString;
 
 
 /**
@@ -56,51 +54,44 @@ public final class PredicateMatcher
 
 
     @Factory
-    public static Matcher<Predicate> selection(TransactionContext tc, CharSequence selection)
+    public static Matcher<Predicate> selection(CharSequence selection)
     {
-        return new SelectionMatcher(selection, tc);
+        return new Selection(Absent.<TransactionContext>absent(), selection);
     }
 
 
     @Factory
-    public static Matcher<Predicate> selection(CharSequence selection)
+    public static Matcher<Predicate> selection(TransactionContext tc, CharSequence selection)
     {
-        return new SelectionMatcher(selection);
+        return new Selection(new Present<>(tc), selection);
     }
 
 
     @Factory
     public static Matcher<Predicate> emptyArguments()
     {
-        return new EmptyArgumentMatcher();
+        return new EmptyArgument(Absent.<TransactionContext>absent());
     }
 
 
     @Factory
-    public static Matcher<Predicate> argumentValues(TransactionContext tc, String... values)
+    public static Matcher<Predicate> emptyArguments(TransactionContext tc)
     {
-        return new ArgumentValuesMatcher(new ArrayIterable<>(values), tc);
+        return new EmptyArgument(new Present<>(tc));
     }
 
 
     @Factory
     public static Matcher<Predicate> argumentValues(String... values)
     {
-        return new ArgumentValuesMatcher(new ArrayIterable<>(values));
+        return new ArgumentValues(Absent.<TransactionContext>absent(), values);
     }
 
 
     @Factory
-    public static Matcher<Predicate> argumentValues(TransactionContext tc, Iterable<String> values)
+    public static Matcher<Predicate> argumentValues(TransactionContext tc, String... values)
     {
-        return new ArgumentValuesMatcher(values, tc);
-    }
-
-
-    @Factory
-    public static Matcher<Predicate> argumentValues(Iterable<String> values)
-    {
-        return new ArgumentValuesMatcher(values);
+        return new ArgumentValues(new Present<>(tc), values);
     }
 
 
@@ -108,7 +99,7 @@ public final class PredicateMatcher
     @SafeVarargs
     public static Matcher<Predicate> backReferences(Matcher<Optional<Integer>>... backReferences)
     {
-        return new ArgumentBackReferencesMatcher(new ArrayIterable<>(backReferences));
+        return new ArgumentBackReferences(Absent.<TransactionContext>absent(), backReferences);
     }
 
 
@@ -116,21 +107,7 @@ public final class PredicateMatcher
     @SafeVarargs
     public static Matcher<Predicate> backReferences(TransactionContext tc, Matcher<Optional<Integer>>... backReferences)
     {
-        return new ArgumentBackReferencesMatcher(new ArrayIterable<>(backReferences), tc);
-    }
-
-
-    @Factory
-    public static Matcher<Predicate> backReferences(TransactionContext tc, Iterable<Matcher<Optional<Integer>>> backReferences)
-    {
-        return new ArgumentBackReferencesMatcher(backReferences, tc);
-    }
-
-
-    @Factory
-    public static Matcher<Predicate> backReferences(Iterable<Matcher<Optional<Integer>>> backReferences)
-    {
-        return new ArgumentBackReferencesMatcher(backReferences);
+        return new ArgumentBackReferences(new Present<>(tc), backReferences);
     }
 
 
@@ -139,7 +116,16 @@ public final class PredicateMatcher
     {
         Matcher[] matchers = new Matcher[noOfPredicateArguments];
         Arrays.fill(matchers, isAbsent());
-        return new ArgumentBackReferencesMatcher(new ArrayIterable<Matcher<Optional<Integer>>>(matchers));
+        return new ArgumentBackReferences(Absent.<TransactionContext>absent(), matchers);
+    }
+
+
+    @Factory
+    public static Matcher<Predicate> absentBackReferences(TransactionContext tc, int noOfPredicateArguments)
+    {
+        Matcher[] matchers = new Matcher[noOfPredicateArguments];
+        Arrays.fill(matchers, isAbsent());
+        return new ArgumentBackReferences(new Present<>(tc), matchers);
     }
 
 
@@ -149,278 +135,101 @@ public final class PredicateMatcher
     }
 
 
-    /**
-     * {@link Matcher} that matches a {@link Predicate}s {@link Predicate.Argument#arguments(TransactionContext)} values.
-     *
-     * @author Gabor Keszthelyi
-     */
-    private static final class ArgumentValuesMatcher extends TypeSafeDiagnosingMatcher<Predicate>
+    static final class Selection extends FeatureMatcher<Predicate, CharSequence>
     {
-        private final Iterable<String> mExpectedArgumentValues;
-
-        // Note: The mock cannot be created in ctor time, Mockito throws in that case, that's why Optional is used
-        private final Optional<TransactionContext> mOptTransactionContext;
+        private final Optional<TransactionContext> mTc;
 
 
-        private ArgumentValuesMatcher(Iterable<String> expectedArgumentValues, Optional<TransactionContext> optTransactionContext)
+        Selection(Optional<TransactionContext> tc, CharSequence selection)
         {
-            mExpectedArgumentValues = expectedArgumentValues;
-            mOptTransactionContext = optTransactionContext;
-        }
-
-
-        private ArgumentValuesMatcher(Iterable<String> expectedArgumentValues, TransactionContext transactionContext)
-        {
-            this(expectedArgumentValues, new Present<>(transactionContext));
-        }
-
-
-        private ArgumentValuesMatcher(Iterable<String> expectedArgumentValues)
-        {
-            this(expectedArgumentValues, Absent.<TransactionContext>absent());
+            super(hasToString(selection.toString()), "Predicate.selection(tc)", "selection");
+            mTc = tc;
         }
 
 
         @Override
-        protected boolean matchesSafely(Predicate predicate, Description mismatchDescription)
+        protected CharSequence featureValueOf(Predicate actual)
         {
-            TransactionContext tContext = mOptTransactionContext.value(dummy(TransactionContext.class));
-
-            Iterable<String> actualValues = new Values(predicate.arguments(tContext));
-
-            Matcher<Iterable<? extends String>> expectedValuesMatcher = iteratesTo(
-                    // TODO Use Function from jems:test-utils when available
-                    new Mapped<>(mExpectedArgumentValues, new Function<String, Matcher<String>>()
-                    {
-                        @Override
-                        public Matcher<String> apply(String argument)
-                        {
-                            return CoreMatchers.equalTo(argument);
-                        }
-                    }));
-
-            if (!expectedValuesMatcher.matches(actualValues))
-            {
-                mismatchDescription.appendText("Predicate Argument values mismatch: ");
-                expectedValuesMatcher.describeMismatch(actualValues, mismatchDescription);
-                return false;
-            }
-            return true;
-        }
-
-
-        @Override
-        public void describeTo(Description description)
-        {
-            description.appendText("Predicate has Argument values: ");
-            description.appendValueList("[", ", ", "]", mExpectedArgumentValues);
-        }
-
-    }
-
-
-    /**
-     * {@link Matcher} that checks that a {@link Predicate}s {@link Predicate#arguments(TransactionContext)} value is empty.
-     *
-     * @author Gabor Keszthelyi
-     */
-    private static final class EmptyArgumentMatcher extends TypeSafeDiagnosingMatcher<Predicate>
-    {
-        // Note: The mock cannot be created in ctor time, Mockito throws in that case, that's why Optional is used
-        private final Optional<TransactionContext> mOptTransactionContext;
-
-
-        private EmptyArgumentMatcher(Optional<TransactionContext> optTransactionContext)
-        {
-            mOptTransactionContext = optTransactionContext;
-        }
-
-
-        private EmptyArgumentMatcher(TransactionContext transactionContext)
-        {
-            this(new Present<>(transactionContext));
-        }
-
-
-        private EmptyArgumentMatcher()
-        {
-            this(Absent.<TransactionContext>absent());
-        }
-
-
-        @Override
-        protected boolean matchesSafely(Predicate predicate, Description mismatchDescription)
-        {
-            TransactionContext tContext = mOptTransactionContext.value(dummy(TransactionContext.class));
-            Iterable<Predicate.Argument> arguments = predicate.arguments(tContext);
-
-            if (!emptyIterable().matches(arguments))
-            {
-                mismatchDescription.appendText("Predicate Arguments was not empty");
-                return false;
-            }
-            return true;
-        }
-
-
-        @Override
-        public void describeTo(Description description)
-        {
-            description.appendText("Predicate with empty Arguments");
-        }
-
-    }
-
-
-    /**
-     * {@link Matcher} that matches a {@link Predicate}s {@link Predicate.Argument#backReference()} values.
-     *
-     * @author Gabor Keszthelyi
-     */
-    private static final class ArgumentBackReferencesMatcher extends TypeSafeDiagnosingMatcher<Predicate>
-    {
-        private final Iterable<Matcher<Optional<Integer>>> mExpectedBackReferences;
-
-        // Note: The mock cannot be created in ctor time, Mockito throws in that case, that's why Optional is used
-        private final Optional<TransactionContext> mOptTransactionContext;
-
-
-        private ArgumentBackReferencesMatcher(Iterable<Matcher<Optional<Integer>>> expectedBackReferences, Optional<TransactionContext> optTransactionContext)
-        {
-            mExpectedBackReferences = expectedBackReferences;
-            mOptTransactionContext = optTransactionContext;
-        }
-
-
-        private ArgumentBackReferencesMatcher(Iterable<Matcher<Optional<Integer>>> expectedBackReferences, TransactionContext transactionContext)
-        {
-            this(expectedBackReferences, new Present<>(transactionContext));
-        }
-
-
-        private ArgumentBackReferencesMatcher(Iterable<Matcher<Optional<Integer>>> expectedBackReferences)
-        {
-            this(expectedBackReferences, Absent.<TransactionContext>absent());
-        }
-
-
-        @Override
-        protected boolean matchesSafely(Predicate predicate, Description mismatchDescription)
-        {
-            TransactionContext tContext = mOptTransactionContext.value(dummy(TransactionContext.class));
-
-            Iterable<Optional<Integer>> actualBackReferences = new BackReferences(predicate.arguments(tContext));
-
-            Matcher<Iterable<? extends Optional<Integer>>> expectedMatcher = iteratesTo(mExpectedBackReferences);
-
-            if (!expectedMatcher.matches(actualBackReferences))
-            {
-                mismatchDescription.appendText("Predicate Argument backreferences mismatch: ");
-                expectedMatcher.describeMismatch(actualBackReferences, mismatchDescription);
-                return false;
-            }
-            return true;
-        }
-
-
-        @Override
-        public void describeTo(Description description)
-        {
-            description.appendText("Predicate has Argument backreferences: ");
-            description.appendValueList("[", ", ", "]", mExpectedBackReferences);
-        }
-
-    }
-
-
-    /**
-     * {@link Matcher} that matches a {@link Predicate}s {@link Predicate#selection(TransactionContext)} value.
-     *
-     * @author Gabor Keszthelyi
-     */
-    static final class SelectionMatcher extends TypeSafeDiagnosingMatcher<Predicate>
-    {
-        private final CharSequence mExpectedSelection;
-
-        // Note: The mock cannot be created in ctor time, Mockito throws in that case, that's why Optional is used
-        private final Optional<TransactionContext> mOptTransactionContext;
-
-
-        private SelectionMatcher(CharSequence expectedSelection, Optional<TransactionContext> optTransactionContext)
-        {
-            mExpectedSelection = expectedSelection;
-            mOptTransactionContext = optTransactionContext;
-        }
-
-
-        SelectionMatcher(CharSequence expectedSelection, TransactionContext transactionContext)
-        {
-            this(expectedSelection, new Present<>(transactionContext));
-        }
-
-
-        SelectionMatcher(CharSequence expectedSelection)
-        {
-            this(expectedSelection, Absent.<TransactionContext>absent());
-        }
-
-
-        @Override
-        protected boolean matchesSafely(Predicate item, Description mismatchDescription)
-        {
-            TransactionContext tContext = mOptTransactionContext.value(dummy(TransactionContext.class));
-            String actualSelection = item.selection(tContext).toString();
-            boolean matches = actualSelection.equals(mExpectedSelection.toString());
-            if (!matches)
-            {
-                mismatchDescription.appendText(String.format("had selection '%s'", actualSelection));
-            }
-            return matches;
-        }
-
-
-        @Override
-        public void describeTo(Description description)
-        {
-            description.appendText(String.format("has selection '%s'", mExpectedSelection));
+            return actual.selection(mTc.value(dummy(TransactionContext.class)));
         }
     }
 
 
-    /**
-     * @author Marten Gajda
-     */
-    static final class Values extends DelegatingIterable<String>
+    private static final class ArgumentValues extends FeatureMatcher<Predicate, Iterable<String>>
     {
-        Values(Iterable<Predicate.Argument> arguments)
+
+        private final Optional<TransactionContext> mTc;
+
+
+        private ArgumentValues(Optional<TransactionContext> tc, String... argumentValues)
         {
-            super(new Mapped<>(arguments, new Function<Predicate.Argument, String>()
+            super(iteratesTo(argumentValues), "Predicate.arguments(tc).value()", "argument value");
+            mTc = tc;
+        }
+
+
+        @Override
+        protected Iterable<String> featureValueOf(Predicate predicate)
+        {
+            return new Mapped<>(predicate.arguments(mTc.value(dummy(TransactionContext.class))), new Function<Predicate.Argument, String>()
             {
                 @Override
                 public String apply(Predicate.Argument argument)
                 {
                     return argument.value();
                 }
-            }));
+            });
         }
     }
 
 
-    /**
-     * @author Marten Gajda
-     */
-    private static final class BackReferences extends DelegatingIterable<Optional<Integer>>
+    private static final class EmptyArgument extends FeatureMatcher<Predicate, Iterable<Predicate.Argument>>
     {
-        BackReferences(Iterable<Predicate.Argument> arguments)
+
+        private final Optional<TransactionContext> mTc;
+
+
+        private EmptyArgument(Optional<TransactionContext> tc)
         {
-            super(new Mapped<>(arguments, new Function<Predicate.Argument, Optional<Integer>>()
+            super(emptyIterable(), "Predicate.arguments(tc)", "arguments");
+            mTc = tc;
+        }
+
+
+        @Override
+        protected Iterable<Predicate.Argument> featureValueOf(Predicate predicate)
+        {
+            return predicate.arguments(mTc.value(dummy(TransactionContext.class)));
+        }
+    }
+
+
+    private static final class ArgumentBackReferences extends FeatureMatcher<Predicate, Iterable<Optional<Integer>>>
+    {
+
+        private final Optional<TransactionContext> mTc;
+
+
+        @SafeVarargs
+        private ArgumentBackReferences(Optional<TransactionContext> tc, Matcher<Optional<Integer>>... backReferences)
+        {
+            super(iteratesTo(backReferences), "Predicate.arguments(tc).backreference()s", "backreferences");
+            mTc = tc;
+        }
+
+
+        @Override
+        protected Iterable<Optional<Integer>> featureValueOf(Predicate predicate)
+        {
+            return new Mapped<>(predicate.arguments(mTc.value(dummy(TransactionContext.class))), new Function<Predicate.Argument, Optional<Integer>>()
             {
                 @Override
                 public Optional<Integer> apply(Predicate.Argument argument)
                 {
                     return argument.backReference();
                 }
-            }));
+            });
         }
     }
+
 }

@@ -113,7 +113,7 @@ public class RowUriReferenceTest
                 predicateWith(
                         selection(dummyTc, "column = ?"),
                         argumentValues(dummyTc, "123"),
-                        absentBackReferences(1)
+                        absentBackReferences(dummyTc, 1)
                 ));
     }
 

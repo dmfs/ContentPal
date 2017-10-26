@@ -18,6 +18,8 @@ package org.dmfs.android.contentpal.testing.predicates;
 
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.TransactionContext;
+import org.dmfs.optional.Absent;
+import org.dmfs.optional.Present;
 import org.mockito.ArgumentMatcher;
 import org.mockito.hamcrest.MockitoHamcrest;
 
@@ -32,13 +34,13 @@ public final class PredicateArgumentMatcher
 
     public static Predicate predicateWithSelection(CharSequence expectedSelection)
     {
-        return MockitoHamcrest.argThat(new PredicateMatcher.SelectionMatcher(expectedSelection));
+        return MockitoHamcrest.argThat(new PredicateMatcher.Selection(Absent.<TransactionContext>absent(), expectedSelection));
     }
 
 
-    public static Predicate predicateWithSelection(CharSequence expectedSelection, TransactionContext tContext)
+    public static Predicate predicateWithSelection(TransactionContext tc, CharSequence expectedSelection)
     {
-        return MockitoHamcrest.argThat(new PredicateMatcher.SelectionMatcher(expectedSelection, tContext));
+        return MockitoHamcrest.argThat(new PredicateMatcher.Selection(new Present<>(tc), expectedSelection));
     }
 
 
