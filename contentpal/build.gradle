@@ -42,9 +42,7 @@ android {
 
 dependencies {
     compile 'com.android.support:support-annotations:' + SUPPORT_LIBRARY_VERSION
-    compile 'org.dmfs:iterators:' + JEMS_VERSION
-    compile 'org.dmfs:optional:' + JEMS_VERSION
-    compile 'org.dmfs:essentials:' + JEMS_VERSION
+    compile 'org.dmfs:jems:' + JEMS_VERSION
     compile project(':contentpal-api')
 
     testCompile 'junit:junit:' + JUNIT_VERSION
