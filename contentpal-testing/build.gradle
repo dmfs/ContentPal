@@ -3,7 +3,6 @@ apply plugin: 'jacoco-android'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion BUILD_TOOLS_VERSION
 
     defaultConfig {
         minSdkVersion 11
@@ -39,9 +38,10 @@ android {
 }
 
 dependencies {
-    compile project(':contentpal-api');
-    compile 'org.hamcrest:hamcrest-library:' + HAMCREST_VERSION
-    compile 'junit:junit:' + JUNIT_VERSION
-    compile 'org.mockito:mockito-core:' + MOCKITO_VERSION
-    compile 'org.dmfs:jems-testing:' + JEMS_VERSION
+    implementation project(':contentpal-api')
+    implementation 'org.hamcrest:hamcrest-library:' + HAMCREST_VERSION
+    implementation 'junit:junit:' + JUNIT_VERSION
+    implementation 'org.mockito:mockito-core:' + MOCKITO_VERSION
+    implementation 'org.dmfs:jems-testing:' + JEMS_VERSION
+    implementation 'com.android.support:support-annotations:' + SUPPORT_LIBRARY_VERSION
 }
