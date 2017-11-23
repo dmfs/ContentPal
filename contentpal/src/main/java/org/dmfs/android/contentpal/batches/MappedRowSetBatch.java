@@ -19,15 +19,15 @@ package org.dmfs.android.contentpal.batches;
 import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Operation;
-import org.dmfs.android.contentpal.OperationsBatch;
 import org.dmfs.android.contentpal.RowSet;
 import org.dmfs.android.contentpal.RowSnapshot;
+import org.dmfs.iterables.decorators.DelegatingIterable;
 import org.dmfs.iterables.decorators.Mapped;
 import org.dmfs.iterators.Function;
 
 
 /**
- * An {@link OperationsBatch} which contains {@link Operation}s derived from the {@link RowSnapshot}s of a given {@link RowSet}.
+ * An {@link Iterable} of {@link Operation}s which contains {@link Operation}s derived from the {@link RowSnapshot}s of a given {@link RowSet}.
  * <p>
  * Example use case:
  * <p>
@@ -60,10 +60,10 @@ import org.dmfs.iterators.Function;
  *
  * @author Marten Gajda
  */
-public final class MappedRowSetBatch<T> extends DelegatingOperationsBatch
+public final class MappedRowSetBatch<T> extends DelegatingIterable<Operation<?>>
 {
     /**
-     * Creates an {@link OperationsBatch} based on the {@link RowSnapshot}s of the given {@link RowSet}.
+     * Creates an {@link Iterable} of {@link Operation}s based on the {@link RowSnapshot}s of the given {@link RowSet}.
      *
      * @param rowSet
      *         The {@link RowSet} which contains the {@link RowSnapshot}s to operate on.

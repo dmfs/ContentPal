@@ -35,6 +35,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:' + SUPPORT_LIBRARY_VERSION
     compile 'com.android.support:design:' + SUPPORT_LIBRARY_VERSION
+    compile 'org.dmfs:jems:' + JEMS_VERSION
 
     compile project(':contactspal');
     compile project(':calendarpal');

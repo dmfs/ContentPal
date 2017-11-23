@@ -78,14 +78,12 @@ import org.dmfs.android.contactspal.operations.TransientRawContactCleanup;
 import org.dmfs.android.contactspal.rowsets.Unsynced;
 import org.dmfs.android.contactspal.tables.Local;
 import org.dmfs.android.contactspal.tables.RawContacts;
+import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.OperationsQueue;
 import org.dmfs.android.contentpal.RowDataSnapshot;
 import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.Table;
-import org.dmfs.android.contentpal.batches.Joined;
-import org.dmfs.android.contentpal.batches.MultiBatch;
 import org.dmfs.android.contentpal.batches.MultiInsertBatch;
-import org.dmfs.android.contentpal.batches.SingletonBatch;
 import org.dmfs.android.contentpal.operations.BulkDelete;
 import org.dmfs.android.contentpal.operations.Insert;
 import org.dmfs.android.contentpal.operations.Put;
@@ -94,7 +92,9 @@ import org.dmfs.android.contentpal.queues.BasicOperationsQueue;
 import org.dmfs.android.contentpal.rowdata.Composite;
 import org.dmfs.android.contentpal.rowsnapshots.VirtualRowSnapshot;
 import org.dmfs.android.contentpal.tables.AccountScoped;
-import org.dmfs.iterables.ArrayIterable;
+import org.dmfs.iterables.SingletonIterable;
+import org.dmfs.iterables.decorators.Flattened;
+import org.dmfs.iterables.elementary.Seq;
 import org.dmfs.rfc5545.DateTime;
 import org.dmfs.rfc5545.Duration;
 
@@ -180,7 +180,7 @@ public class DemoActivity extends AppCompatActivity
                 new MultiInsertBatch<>(
                         // use a prototype which creates data rows for this rawContact, we could even use the same prototype as above
                         new RawContactData(rawContact),
-                        new ArrayIterable<>(
+                        new Seq<>(
                                 new NoteData("A note"),
                                 new RelationData(ContactsContract.CommonDataKinds.Relation.TYPE_SISTER, "Jane Doe"),
                                 new NicknameData("Johnny"),
@@ -212,13 +212,13 @@ public class DemoActivity extends AppCompatActivity
 
         // insert the contact and link it to the first one in the same transaction
         mContactsQueue.enqueue(
-                new Joined(
+                new Flattened<>(
                         new InsertRawContactBatch(rawContact2,
                                 new DisplayNameData("Donald Duck"),
                                 new Typed(ContactsContract.CommonDataKinds.Phone.TYPE_WORK, new PhoneData("9876"))
                         ),
                         // Demonstrate how to link two contacts
-                        new SingletonBatch(new Link(rawContact, rawContact2)))
+                        new SingletonIterable<Operation<?>>(new Link(rawContact, rawContact2)))
         );
         mContactsQueue.flush();
 
@@ -250,7 +250,7 @@ public class DemoActivity extends AppCompatActivity
         {
             return;
         }
-        mContactsQueue.enqueue(new SingletonBatch(new TransientRawContactCleanup(mRawContacts)));
+        mContactsQueue.enqueue(new SingletonIterable<>(new TransientRawContactCleanup(mRawContacts)));
         mContactsQueue.flush();
     }
 
@@ -271,7 +271,7 @@ public class DemoActivity extends AppCompatActivity
         RowSnapshot<CalendarContract.Events> event2 = new VirtualRowSnapshot<>(calendarEvents);
 
         mCalendarQueue.enqueue(
-                new MultiBatch(
+                new Seq<>(
                         // put the calendar
                         new Put<>(calendar, new Synced(new Visible(new Colored(0x00ff00, new CalendarData("Cal1"))))),
 
@@ -310,7 +310,7 @@ public class DemoActivity extends AppCompatActivity
 
         // demonstrate how to update an event which was inserted in the previous transaction
         mCalendarQueue.enqueue(
-                new MultiBatch(
+                new Seq<>(
                         // add a reminder to event1 as well
                         new EventRelated<>(event1, new Insert<>(new Reminders(), new ReminderData((int) TimeUnit.HOURS.toMinutes(1)))),
                         // update event2 - setting an event color and modifying description
@@ -328,7 +328,7 @@ public class DemoActivity extends AppCompatActivity
         }
 
         mCalendarQueue.enqueue(
-                new SingletonBatch(new BulkDelete<>(mCalendars, new AllOf())));
+                new SingletonIterable<>(new BulkDelete<>(mCalendars, new AllOf())));
         mCalendarQueue.flush();
     }
 

@@ -19,32 +19,33 @@ package org.dmfs.android.contentpal.batches;
 import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Operation;
-import org.dmfs.android.contentpal.OperationsBatch;
 import org.dmfs.iterators.AbstractBaseIterator;
 
 import java.util.Iterator;
 
 
 /**
- * An {@link OperationsBatch} decorator that allows yielding the database to other transactions after this {@link OperationsBatch} has been executed.
+ * An {@link Iterable} of {@link Operation}s decorator that allows yielding the database to other transactions after the given {@link Operation}s have been
+ * executed.
  * <p>
- * This doesn't affect any other yield point set by any operation in this batch.
+ * This doesn't affect any other yield point no any of the {@link Operation}s.
  *
  * @author Marten Gajda
  * @see <a href="https://developer.android.com/guide/topics/providers/contacts-provider.html#Transactions">ContactsProvider - Batch modification</a>
  */
-public final class Yieldable implements OperationsBatch
+public final class Yieldable implements Iterable<Operation<?>>
 {
-    private final OperationsBatch mDelegate;
+    private final Iterable<Operation<?>> mDelegate;
 
 
     /**
-     * Creates an {@link OperationsBatch} which allows yielding the database to other transactions after the given {@link OperationsBatch} has been executed.
+     * Creates an {@link Iterable} of {@link Operation}s which allows yielding the database to other transactions after the given {@link Operation}s have
+     * been executed.
      *
      * @param delegate
-     *         The {@link OperationsBatch}.
+     *         The {@link Iterable} of {@link Operation}s.
      */
-    public Yieldable(@NonNull OperationsBatch delegate)
+    public Yieldable(@NonNull Iterable<Operation<?>> delegate)
     {
         mDelegate = delegate;
     }
@@ -55,7 +56,7 @@ public final class Yieldable implements OperationsBatch
     public Iterator<Operation<?>> iterator()
     {
         final Iterator<Operation<?>> delegate = mDelegate.iterator();
-        // return an iterator that decorates the last Operation with Yieldable.
+        // return an iterator which decorates the last Operation with Yieldable.
         return new AbstractBaseIterator<Operation<?>>()
         {
             @Override

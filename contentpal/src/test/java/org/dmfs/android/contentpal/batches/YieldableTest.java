@@ -21,6 +21,9 @@ import android.net.Uri;
 
 import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.TransactionContext;
+import org.dmfs.iterables.EmptyIterable;
+import org.dmfs.iterables.SingletonIterable;
+import org.dmfs.iterables.elementary.Seq;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,8 +31,8 @@ import org.mockito.ArgumentMatchers;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
-import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithExpectedCount.withoutExpectedCount;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.OperationType.updateOperation;
+import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithExpectedCount.withoutExpectedCount;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withoutValues;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYieldAllowed.withYieldAllowed;
 import static org.dmfs.android.contentpal.testing.operations.OperationMatcher.builds;
@@ -50,7 +53,7 @@ public class YieldableTest
     @Test
     public void testEmpty() throws Exception
     {
-        assertThat(new Yieldable(new EmptyBatch()),
+        assertThat(new Yieldable(EmptyIterable.<Operation<?>>instance()),
                 emptyIterable());
     }
 
@@ -66,7 +69,7 @@ public class YieldableTest
 
         // every last operation of each batch should allow yielding
 
-        assertThat(new Yieldable(new MultiBatch(mockOp1)),
+        assertThat(new Yieldable(new SingletonIterable<Operation<?>>(mockOp1)),
                 Matchers.contains(
                         builds(
                                 updateOperation(),
@@ -74,7 +77,7 @@ public class YieldableTest
                                 withoutExpectedCount(),
                                 withYieldAllowed())));
 
-        assertThat(new Yieldable(new MultiBatch(mockOp2, mockOp1)),
+        assertThat(new Yieldable(new Seq<>(mockOp2, mockOp1)),
                 Matchers.contains(
                         Matchers.<Operation>is(mockOp2),
                         builds(
@@ -83,7 +86,7 @@ public class YieldableTest
                                 withoutExpectedCount(),
                                 withYieldAllowed())));
 
-        assertThat(new Yieldable(new MultiBatch(mockOp3, mockOp2, mockOp1)),
+        assertThat(new Yieldable(new Seq<>(mockOp3, mockOp2, mockOp1)),
                 Matchers.contains(
                         Matchers.<Operation>is(mockOp3),
                         Matchers.<Operation>is(mockOp2),

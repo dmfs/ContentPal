@@ -20,7 +20,7 @@ import android.content.OperationApplicationException;
 import android.os.RemoteException;
 import android.support.annotation.NonNull;
 
-import org.dmfs.android.contentpal.OperationsBatch;
+import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.OperationsQueue;
 
 
@@ -41,7 +41,7 @@ public final class ThreadSafe implements OperationsQueue
 
 
     @Override
-    public void enqueue(@NonNull OperationsBatch operationsBatch) throws RemoteException, OperationApplicationException
+    public void enqueue(@NonNull Iterable<? extends Operation<?>> operationsBatch) throws RemoteException, OperationApplicationException
     {
         synchronized (mDelegate)
         {

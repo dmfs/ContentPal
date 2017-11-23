@@ -51,17 +51,17 @@ public interface Transaction
     TransactionContext commit(@NonNull ContentProviderClient client) throws RemoteException, OperationApplicationException;
 
     /**
-     * Appends the given {@link OperationsBatch} to this {@link Transaction}. The Result is a new {@link Transaction} that contains all operations of this
-     * {@link Transaction} and the operations in the given {@link OperationsBatch}. This means you should commit only one of both (usually the new one) {@link
+     * Appends the given {@link Operation}s to this {@link Transaction}. The Result is a new {@link Transaction} that contains all operations of this
+     * {@link Transaction} and the operations in the given {@link Operation}s. This means you should commit only one of both (usually the new one) {@link
      * Transaction}s.
      *
      * @param batch
-     *         An {@link OperationsBatch} to include into this transaction.
+     *         An {@link Iterable} of {@link Operation}s to include into this transaction.
      *
-     * @return A new {@link Transaction} that also includes the given {@link OperationsBatch}.
+     * @return A new {@link Transaction} that also includes the given {@link Operation}s.
      */
     @NonNull
-    Transaction with(@NonNull OperationsBatch batch);
+    Transaction with(@NonNull Iterable<? extends Operation<?>> batch);
 
     /**
      * Returns the total size of all {@link Operation}s in this {@link Transaction}, which is considered a close estimate of the total transaction size.
