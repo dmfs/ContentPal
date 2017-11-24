@@ -22,26 +22,26 @@ import android.support.annotation.NonNull;
 
 
 /**
- * The interface of a queue that takes {@link OperationsBatch}es for execution.
+ * The interface of a queue that takes {@link Operation}s for execution.
  *
  * @author Marten Gajda
  */
 public interface OperationsQueue
 {
     /**
-     * Adds another {@link OperationsBatch} for execution. The {@link OperationsBatch} is added to a {@link Transaction} unless the transaction would exceed the
-     * size limit, in which case the transaction is committed before adding the new {@link OperationsBatch} to a new transaction.
+     * Adds more {@link Operation}s for execution. The {@link Operation}s are added to a {@link Transaction} unless the transaction would exceed the
+     * size limit, in which case the transaction is committed before adding the new {@link Operation}s to a new transaction.
      *
      * @param operationsBatch
-     *         The {@link OperationsBatch} to enqueue for execution.
+     *         The {@link Iterable} of {@link Operation}s to enqueue for execution.
      *
      * @throws RemoteException
      * @throws OperationApplicationException
      */
-    void enqueue(@NonNull OperationsBatch operationsBatch) throws RemoteException, OperationApplicationException;
+    void enqueue(@NonNull Iterable<? extends Operation<?>> operationsBatch) throws RemoteException, OperationApplicationException;
 
     /**
-     * Commit all {@link OperationsBatch}es that have not been committed yet.
+     * Commit all {@link Operation}s that have not been committed yet.
      *
      * @throws RemoteException
      * @throws OperationApplicationException

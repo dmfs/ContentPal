@@ -26,7 +26,6 @@ import android.support.annotation.NonNull;
 import android.util.SparseArray;
 
 import org.dmfs.android.contentpal.Operation;
-import org.dmfs.android.contentpal.OperationsBatch;
 import org.dmfs.android.contentpal.RowReference;
 import org.dmfs.android.contentpal.SoftRowReference;
 import org.dmfs.android.contentpal.Transaction;
@@ -90,7 +89,7 @@ public final class BaseTransaction implements Transaction
 
     @NonNull
     @Override
-    public Transaction with(@NonNull OperationsBatch batch)
+    public Transaction with(@NonNull Iterable<? extends Operation<?>> batch)
     {
         ArrayList<ContentProviderOperation> newBatch = new ArrayList<>(mOperations.size() + 100);
         newBatch.addAll(mOperations);

@@ -21,19 +21,18 @@ import android.support.annotation.NonNull;
 
 import org.dmfs.android.contactspal.aggregation.Split;
 import org.dmfs.android.contentpal.Operation;
-import org.dmfs.android.contentpal.OperationsBatch;
 import org.dmfs.android.contentpal.RowReference;
-import org.dmfs.android.contentpal.batches.DelegatingOperationsBatch;
+import org.dmfs.iterables.decorators.DelegatingIterable;
 import org.dmfs.iterables.decorators.Mapped;
 import org.dmfs.iterators.Function;
 
 
 /**
- * An {@link OperationsBatch} which splits a given RawContact from a number of other {@link ContactsContract.RawContacts}.
+ * An {@link Iterable} of {@link Operation}s which split a given RawContact from a number of other {@link ContactsContract.RawContacts}.
  *
  * @author Marten Gajda
  */
-public final class BulkSplitBatch extends DelegatingOperationsBatch
+public final class BulkSplitBatch extends DelegatingIterable<Operation<?>>
 {
 
     public BulkSplitBatch(@NonNull final RowReference<ContactsContract.RawContacts> rawContact, @NonNull Iterable<RowReference<ContactsContract.RawContacts>> linked)

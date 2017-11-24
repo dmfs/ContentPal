@@ -21,30 +21,29 @@ import android.content.ContentProviderClient;
 import android.content.OperationApplicationException;
 
 import org.dmfs.android.contentpal.Operation;
-import org.dmfs.android.contentpal.OperationsBatch;
 import org.dmfs.android.contentpal.OperationsQueue;
-import org.dmfs.android.contentpal.batches.MultiBatch;
 import org.dmfs.android.contentpal.queues.BasicOperationsQueue;
+import org.dmfs.iterables.elementary.Seq;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
 
 /**
- * {@link Matcher} that checks whether executing the target {@link OperationsBatch} results in a state of the {@link ContentProvider}
- * that corresponds to the given assert {@link OperationsBatch}s, i.e. they can be executed successfully.
+ * {@link Matcher} that checks whether executing the target {@link Operation}s results in a state of the {@link ContentProvider}
+ * that corresponds to the given assert {@link Operation}s, i.e. they can be executed successfully.
  * <p>
  * If there is mismatch, this {@link Matcher} throws an {@link AssertionError} rather than returning <code>false</code>.
  *
  * @author Gabor Keszthelyi
  */
-public final class ContentMatcher extends TypeSafeMatcher<OperationsBatch>
+public final class ContentMatcher extends TypeSafeMatcher<Iterable<? extends Operation<?>>>
 {
     private final OperationsQueue mOperationsQueue;
-    private final OperationsBatch mAssertOperationBatch;
+    private final Iterable<? extends Operation<?>> mAssertOperationBatch;
 
 
-    public ContentMatcher(OperationsQueue operationsQueue, OperationsBatch assertOperationBatch)
+    public ContentMatcher(OperationsQueue operationsQueue, Iterable<? extends Operation<?>> assertOperationBatch)
     {
         mOperationsQueue = operationsQueue;
         mAssertOperationBatch = assertOperationBatch;
@@ -52,7 +51,7 @@ public final class ContentMatcher extends TypeSafeMatcher<OperationsBatch>
 
 
     @Override
-    protected boolean matchesSafely(OperationsBatch targetBatch)
+    protected boolean matchesSafely(Iterable<? extends Operation<?>> targetBatch)
     {
         try
         {
@@ -88,20 +87,20 @@ public final class ContentMatcher extends TypeSafeMatcher<OperationsBatch>
     }
 
 
-    public static Matcher<OperationsBatch> resultsIn(OperationsQueue queue, OperationsBatch assertingBatch)
+    public static Matcher<Iterable<? extends Operation<?>>> resultsIn(OperationsQueue queue, Iterable<? extends Operation<?>> assertingBatch)
     {
         return new ContentMatcher(queue, assertingBatch);
     }
 
 
-    public static Matcher<OperationsBatch> resultsIn(OperationsQueue queue, Operation... assertOperations)
+    public static Matcher<Iterable<? extends Operation<?>>> resultsIn(OperationsQueue queue, Operation... assertOperations)
     {
-        return new ContentMatcher(queue, new MultiBatch(assertOperations));
+        return new ContentMatcher(queue, new Seq<Operation<?>>(assertOperations));
     }
 
 
-    public static Matcher<OperationsBatch> resultsIn(ContentProviderClient client, Operation... assertOperations)
+    public static Matcher<Iterable<? extends Operation<?>>> resultsIn(ContentProviderClient client, Operation... assertOperations)
     {
-        return new ContentMatcher(new BasicOperationsQueue(client), new MultiBatch(assertOperations));
+        return new ContentMatcher(new BasicOperationsQueue(client), new Seq<Operation<?>>(assertOperations));
     }
 }

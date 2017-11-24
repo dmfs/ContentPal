@@ -21,19 +21,18 @@ import android.support.annotation.NonNull;
 
 import org.dmfs.android.contactspal.aggregation.Link;
 import org.dmfs.android.contentpal.Operation;
-import org.dmfs.android.contentpal.OperationsBatch;
 import org.dmfs.android.contentpal.RowReference;
-import org.dmfs.android.contentpal.batches.DelegatingOperationsBatch;
+import org.dmfs.iterables.decorators.DelegatingIterable;
 import org.dmfs.iterables.decorators.Mapped;
 import org.dmfs.iterators.Function;
 
 
 /**
- * An {@link OperationsBatch} which links a given RawContact to number of other {@link ContactsContract.RawContacts}.
+ * An {@link Iterable} of {@link Operation}s which link a given RawContact to a number of other {@link ContactsContract.RawContacts}.
  *
  * @author Marten Gajda
  */
-public final class BulkLinkBatch extends DelegatingOperationsBatch
+public final class BulkLinkBatch extends DelegatingIterable<Operation<?>>
 {
 
     public BulkLinkBatch(@NonNull final RowReference<ContactsContract.RawContacts> rawContact, @NonNull Iterable<RowReference<ContactsContract.RawContacts>> linked)

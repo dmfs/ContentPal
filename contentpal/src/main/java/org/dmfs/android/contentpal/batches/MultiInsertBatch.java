@@ -20,18 +20,18 @@ import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.InsertOperation;
 import org.dmfs.android.contentpal.Operation;
-import org.dmfs.android.contentpal.OperationsBatch;
 import org.dmfs.android.contentpal.RowData;
 import org.dmfs.android.contentpal.operations.Populated;
-import org.dmfs.iterables.ArrayIterable;
+import org.dmfs.iterables.decorators.DelegatingIterable;
 import org.dmfs.iterables.decorators.Mapped;
+import org.dmfs.iterables.elementary.Seq;
 import org.dmfs.iterators.Function;
 import org.dmfs.optional.Optional;
 import org.dmfs.optional.iterable.PresentValues;
 
 
 /**
- * An {@link OperationsBatch} to insert multiple rows of a specific {@link InsertOperation}, populated with given {@link RowData}.
+ * An {@link Iterable} of {@link Operation}s to insert multiple rows of a specific {@link InsertOperation}, populated with given {@link RowData}.
  * <p>
  * Example use case:
  * <pre>{@code
@@ -51,12 +51,12 @@ import org.dmfs.optional.iterable.PresentValues;
  *
  * @author Marten Gajda
  */
-public final class MultiInsertBatch<T> extends DelegatingOperationsBatch
+public final class MultiInsertBatch<T> extends DelegatingIterable<Operation<?>>
 {
 
     /**
-     * Creates an {@link OperationsBatch} to insert rows with the given {@link Optional} {@link RowData}, based on the given {@link InsertOperation}.
-     * Only present {@link RowData} will generate a new row.
+     * Creates an {@link Iterable} of {@link Operation}s to insert rows with the given {@link Optional} {@link RowData}, based on the given {@link
+     * InsertOperation}. Only present {@link RowData} will generate a new row.
      *
      * @param insertOperation
      *         The {@link InsertOperation} to use for each row.
@@ -66,12 +66,12 @@ public final class MultiInsertBatch<T> extends DelegatingOperationsBatch
     @SafeVarargs
     public MultiInsertBatch(@NonNull InsertOperation<T> insertOperation, @NonNull Optional<RowData<T>>... data)
     {
-        this(insertOperation, new PresentValues<RowData<T>>(new ArrayIterable<>(data)));
+        this(insertOperation, new PresentValues<>(new Seq<>(data)));
     }
 
 
     /**
-     * Creates an {@link OperationsBatch} to insert rows with the given {@link RowData}, based on the given {@link InsertOperation}.
+     * Creates an {@link Iterable} of {@link Operation}s to insert rows with the given {@link RowData}, based on the given {@link InsertOperation}.
      *
      * @param insertOperation
      *         The {@link InsertOperation} to use for each row.
@@ -81,12 +81,12 @@ public final class MultiInsertBatch<T> extends DelegatingOperationsBatch
     @SafeVarargs
     public MultiInsertBatch(@NonNull InsertOperation<T> insertOperation, @NonNull RowData<T>... data)
     {
-        this(insertOperation, new ArrayIterable<>(data));
+        this(insertOperation, new Seq<>(data));
     }
 
 
     /**
-     * Creates an {@link OperationsBatch} to insert rows with the given {@link RowData}, based on the given {@link InsertOperation}.
+     * Creates an {@link Iterable} of {@link Operation}s to insert rows with the given {@link RowData}, based on the given {@link InsertOperation}.
      *
      * @param insertOperation
      *         The {@link InsertOperation} to use for each row.
