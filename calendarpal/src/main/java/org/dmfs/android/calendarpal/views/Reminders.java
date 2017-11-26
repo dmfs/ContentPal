@@ -33,15 +33,6 @@ public final class Reminders extends DelegatingView<CalendarContract.Reminders>
 {
     public Reminders(@NonNull ContentProviderClient client)
     {
-        this(client, CalendarContract.Reminders._ID,
-                CalendarContract.Reminders.MINUTES,
-                CalendarContract.Reminders.METHOD,
-                CalendarContract.Reminders.EVENT_ID);
-    }
-
-
-    public Reminders(@NonNull ContentProviderClient client, @NonNull String... projection)
-    {
-        super(new BaseView<CalendarContract.Reminders>(client, CalendarContract.Reminders.CONTENT_URI, projection));
+        super(new BaseView<CalendarContract.Reminders>(client, CalendarContract.Reminders.CONTENT_URI));
     }
 }

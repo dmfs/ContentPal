@@ -31,8 +31,8 @@ import org.dmfs.android.contentpal.views.DelegatingView;
  */
 public final class Calendars extends DelegatingView<CalendarContract.Calendars>
 {
-    public Calendars(@NonNull ContentProviderClient client, @NonNull String... projection)
+    public Calendars(@NonNull ContentProviderClient client)
     {
-        super(new BaseView<CalendarContract.Calendars>(client, CalendarContract.Calendars.CONTENT_URI, projection));
+        super(new BaseView<CalendarContract.Calendars>(client, CalendarContract.Calendars.CONTENT_URI));
     }
 }

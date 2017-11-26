@@ -82,11 +82,8 @@ public interface Table<T>
      *
      * @param client
      *         A {@link ContentProviderClient}.
-     * @param projection
-     *         The projection to use.
-     *
      * @return A {@link View} on this table.
      */
     @NonNull
-    View<T> view(@NonNull ContentProviderClient client, @NonNull String... projection);
+    View<T> view(@NonNull ContentProviderClient client);
 }

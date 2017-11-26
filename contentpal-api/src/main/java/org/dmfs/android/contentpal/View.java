@@ -42,6 +42,8 @@ public interface View<T>
      *
      * @param uriParams
      *         Additional {@link Uri} parameters to append to the query {@link Uri}.
+     * @param projection
+     *         The projection to request from the cursor.
      * @param predicate
      *         The {@link Predicate} to use as the selection.
      * @param sorting
@@ -50,7 +52,7 @@ public interface View<T>
      * @return A {@link Cursor} as returned by the {@link ContentProvider}.
      */
     @NonNull
-    Cursor rows(@NonNull UriParams uriParams, @NonNull Predicate predicate, @NonNull Optional<String> sorting) throws RemoteException;
+    Cursor rows(@NonNull UriParams uriParams, @NonNull Projection<T> projection, @NonNull Predicate predicate, @NonNull Optional<String> sorting) throws RemoteException;
 
     /**
      * Returns a {@link Table} to write to.
@@ -59,10 +61,4 @@ public interface View<T>
      */
     @NonNull
     Table<T> table();
-
-    /**
-     * Returns a new instance for this {@link View} that uses the given projection.
-     */
-    @NonNull
-    View<T> withProjection(@NonNull String... projection);
 }

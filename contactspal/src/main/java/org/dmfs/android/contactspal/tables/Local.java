@@ -85,9 +85,9 @@ public final class Local implements Table<ContactsContract.RawContacts>
 
     @NonNull
     @Override
-    public View<ContactsContract.RawContacts> view(@NonNull ContentProviderClient client, @NonNull String... projection)
+    public View<ContactsContract.RawContacts> view(@NonNull ContentProviderClient client)
     {
-        return new org.dmfs.android.contactspal.views.Local(mDelegate.view(client, projection));
+        return new org.dmfs.android.contactspal.views.Local(mDelegate.view(client));
     }
 
 

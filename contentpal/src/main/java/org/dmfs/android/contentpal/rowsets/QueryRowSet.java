@@ -22,6 +22,7 @@ import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.ClosableIterator;
 import org.dmfs.android.contentpal.Predicate;
+import org.dmfs.android.contentpal.Projection;
 import org.dmfs.android.contentpal.RowSet;
 import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.Table;
@@ -48,12 +49,14 @@ import java.util.NoSuchElementException;
 public final class QueryRowSet<T> implements RowSet<T>
 {
     private final View<T> mView;
+    private final Projection mProjection;
     private final Predicate mPredicate;
 
 
-    public QueryRowSet(@NonNull View<T> view, @NonNull Predicate predicate)
+    public QueryRowSet(@NonNull View<T> view, @NonNull Projection projection, @NonNull Predicate predicate)
     {
         mView = view;
+        mProjection = projection;
         mPredicate = predicate;
     }
 
@@ -64,7 +67,7 @@ public final class QueryRowSet<T> implements RowSet<T>
     {
         try
         {
-            Cursor cursor = mView.rows(EmptyUriParams.INSTANCE, mPredicate, Absent.<String>absent() /* no specific sorting */);
+            Cursor cursor = mView.rows(EmptyUriParams.INSTANCE, mProjection, mPredicate,  /* no specific sorting */Absent.<String>absent());
             if (!cursor.moveToFirst())
             {
                 cursor.close();

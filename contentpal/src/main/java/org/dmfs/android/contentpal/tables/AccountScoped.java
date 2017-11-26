@@ -86,9 +86,9 @@ public final class AccountScoped<T> implements Table<T>
 
     @NonNull
     @Override
-    public View<T> view(@NonNull ContentProviderClient client, @NonNull String... projection)
+    public View<T> view(@NonNull ContentProviderClient client)
     {
-        return new org.dmfs.android.contentpal.views.AccountScoped<>(mAccount, mDelegate.view(client, projection));
+        return new org.dmfs.android.contentpal.views.AccountScoped<>(mAccount, mDelegate.view(client));
     }
 
 

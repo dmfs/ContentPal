@@ -20,6 +20,7 @@ import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 
 import org.dmfs.android.contactspal.tables.RawContacts;
+import org.dmfs.android.contentpal.Projection;
 import org.dmfs.android.contentpal.RowSet;
 import org.dmfs.android.contentpal.View;
 import org.dmfs.android.contentpal.predicates.AnyOf;
@@ -35,9 +36,10 @@ import org.dmfs.android.contentpal.rowsets.QueryRowSet;
  */
 public final class Dirty extends DelegatingRowSet<ContactsContract.RawContacts>
 {
-    public Dirty(@NonNull View<ContactsContract.RawContacts> mRawContacts)
+    public Dirty(@NonNull View<ContactsContract.RawContacts> mRawContacts, @NonNull Projection<ContactsContract.RawContacts> projection)
     {
         super(new QueryRowSet<>(mRawContacts,
+                projection,
                 new AnyOf(
                         new EqArg(ContactsContract.RawContacts.DIRTY, 1),
                         new EqArg(ContactsContract.RawContacts.DELETED, 1))));

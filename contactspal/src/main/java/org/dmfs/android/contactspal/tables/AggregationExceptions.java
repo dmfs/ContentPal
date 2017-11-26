@@ -81,8 +81,8 @@ public final class AggregationExceptions implements Table<ContactsContract.Aggre
 
     @NonNull
     @Override
-    public View<ContactsContract.AggregationExceptions> view(@NonNull ContentProviderClient client, @NonNull String... projection)
+    public View<ContactsContract.AggregationExceptions> view(@NonNull ContentProviderClient client)
     {
-        return mDelegate.view(client, projection);
+        return mDelegate.view(client);
     }
 }

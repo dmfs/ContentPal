@@ -31,8 +31,8 @@ import org.dmfs.android.contentpal.views.DelegatingView;
  */
 public final class Data extends DelegatingView<ContactsContract.Data>
 {
-    public Data(@NonNull ContentProviderClient client, @NonNull String... projection)
+    public Data(@NonNull ContentProviderClient client)
     {
-        super(new BaseView<ContactsContract.Data>(client, ContactsContract.Data.CONTENT_URI, projection));
+        super(new BaseView<ContactsContract.Data>(client, ContactsContract.Data.CONTENT_URI));
     }
 }

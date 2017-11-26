@@ -24,6 +24,7 @@ import android.os.RemoteException;
 import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Predicate;
+import org.dmfs.android.contentpal.Projection;
 import org.dmfs.android.contentpal.Table;
 import org.dmfs.android.contentpal.UriParams;
 import org.dmfs.android.contentpal.View;
@@ -47,32 +48,31 @@ public final class BaseView<T> implements View<T>
 {
     private final ContentProviderClient mClient;
     private final Uri mTableUri;
-    private final String[] mProjection;
 
 
-    public BaseView(@NonNull ContentProviderClient client, @NonNull Uri tableUri, @NonNull String... projection)
+    public BaseView(@NonNull ContentProviderClient client, @NonNull Uri tableUri)
     {
         mClient = client;
         mTableUri = tableUri;
-        mProjection = projection.clone();
     }
 
 
     @NonNull
     @Override
-    public Cursor rows(@NonNull UriParams uriParams, @NonNull final Predicate predicate, @NonNull final Optional<String> sorting) throws RemoteException
+    public Cursor rows(@NonNull UriParams uriParams, @NonNull Projection<T> projection, @NonNull final Predicate predicate, @NonNull final Optional<String> sorting) throws RemoteException
     {
         List<String> args = new LinkedList<>();
         for (Predicate.Argument arg : predicate.arguments(EmptyTransactionContext.INSTANCE))
         {
             args.add(arg.value());
         }
+        String[] projectionArray = projection.toArray();
         Cursor cursor = mClient.query(uriParams.withParam(mTableUri.buildUpon()).build(),
-                mProjection,
+                projectionArray,
                 predicate.selection(EmptyTransactionContext.INSTANCE).toString(),
                 args.toArray(new String[args.size()]),
                 sorting.value(null /* fallback: null */));
-        return cursor == null ? new MatrixCursor(mProjection) : cursor;
+        return cursor == null ? new MatrixCursor(projectionArray) : cursor;
     }
 
 
@@ -81,13 +81,5 @@ public final class BaseView<T> implements View<T>
     public Table<T> table()
     {
         return new BaseTable<>(mTableUri);
-    }
-
-
-    @NonNull
-    @Override
-    public View<T> withProjection(@NonNull String... projection)
-    {
-        return new BaseView<T>(mClient, mTableUri, projection);
     }
 }

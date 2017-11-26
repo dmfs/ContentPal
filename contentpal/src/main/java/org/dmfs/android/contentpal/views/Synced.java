@@ -21,6 +21,7 @@ import android.os.RemoteException;
 import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Predicate;
+import org.dmfs.android.contentpal.Projection;
 import org.dmfs.android.contentpal.Table;
 import org.dmfs.android.contentpal.UriParams;
 import org.dmfs.android.contentpal.View;
@@ -50,9 +51,9 @@ public final class Synced<T> implements View<T>
 
     @NonNull
     @Override
-    public Cursor rows(@NonNull UriParams uriParams, @NonNull Predicate predicate, @NonNull Optional<String> sorting) throws RemoteException
+    public Cursor rows(@NonNull UriParams uriParams, @NonNull Projection<T> projection, @NonNull Predicate predicate, @NonNull Optional<String> sorting) throws RemoteException
     {
-        return mDelegate.rows(new SyncParams(uriParams), predicate, sorting);
+        return mDelegate.rows(new SyncParams(uriParams), projection, predicate, sorting);
     }
 
 
@@ -61,13 +62,5 @@ public final class Synced<T> implements View<T>
     public Table<T> table()
     {
         return new org.dmfs.android.contentpal.tables.Synced<>(mDelegate.table());
-    }
-
-
-    @NonNull
-    @Override
-    public View<T> withProjection(@NonNull String... projection)
-    {
-        return new Synced<>(mDelegate.withProjection(projection));
     }
 }
