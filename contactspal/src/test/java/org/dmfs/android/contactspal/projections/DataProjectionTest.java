@@ -18,7 +18,6 @@ package org.dmfs.android.contactspal.projections;
 
 import android.provider.ContactsContract;
 
-import org.dmfs.iterables.elementary.Seq;
 import org.junit.Test;
 
 import static org.dmfs.android.contentpal.testing.projection.ProjectionMatcher.projects;
@@ -33,33 +32,34 @@ public class DataProjectionTest
     @Test
     public void test() throws Exception
     {
-        assertThat(new DataProjection(), projects(new Seq<>(
-                ContactsContract.Data._ID,
-                ContactsContract.Data.MIMETYPE,
-                ContactsContract.Data.RAW_CONTACT_ID,
-                ContactsContract.Data.IS_PRIMARY,
-                ContactsContract.Data.IS_SUPER_PRIMARY,
-                ContactsContract.Data.DATA_VERSION,
-                ContactsContract.Data.IS_READ_ONLY,
-                ContactsContract.Data.DATA1,
-                ContactsContract.Data.DATA2,
-                ContactsContract.Data.DATA3,
-                ContactsContract.Data.DATA4,
-                ContactsContract.Data.DATA5,
-                ContactsContract.Data.DATA6,
-                ContactsContract.Data.DATA7,
-                ContactsContract.Data.DATA8,
-                ContactsContract.Data.DATA9,
-                ContactsContract.Data.DATA10,
-                ContactsContract.Data.DATA11,
-                ContactsContract.Data.DATA12,
-                ContactsContract.Data.DATA13,
-                ContactsContract.Data.DATA14,
-                ContactsContract.Data.DATA15,
-                ContactsContract.Data.SYNC1,
-                ContactsContract.Data.SYNC2,
-                ContactsContract.Data.SYNC3,
-                ContactsContract.Data.SYNC4)));
+        assertThat(new DataProjection(),
+                projects(
+                        ContactsContract.Data._ID,
+                        ContactsContract.Data.MIMETYPE,
+                        ContactsContract.Data.RAW_CONTACT_ID,
+                        ContactsContract.Data.IS_PRIMARY,
+                        ContactsContract.Data.IS_SUPER_PRIMARY,
+                        ContactsContract.Data.DATA_VERSION,
+                        ContactsContract.Data.IS_READ_ONLY,
+                        ContactsContract.Data.DATA1,
+                        ContactsContract.Data.DATA2,
+                        ContactsContract.Data.DATA3,
+                        ContactsContract.Data.DATA4,
+                        ContactsContract.Data.DATA5,
+                        ContactsContract.Data.DATA6,
+                        ContactsContract.Data.DATA7,
+                        ContactsContract.Data.DATA8,
+                        ContactsContract.Data.DATA9,
+                        ContactsContract.Data.DATA10,
+                        ContactsContract.Data.DATA11,
+                        ContactsContract.Data.DATA12,
+                        ContactsContract.Data.DATA13,
+                        ContactsContract.Data.DATA14,
+                        ContactsContract.Data.DATA15,
+                        ContactsContract.Data.SYNC1,
+                        ContactsContract.Data.SYNC2,
+                        ContactsContract.Data.SYNC3,
+                        ContactsContract.Data.SYNC4));
     }
 
 }

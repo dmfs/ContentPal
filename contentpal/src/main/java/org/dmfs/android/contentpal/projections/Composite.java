@@ -29,6 +29,8 @@ import java.util.List;
 
 
 /**
+ * A {@link Projection} which combines other Projections by concatenating the column names into a single array.
+ *
  * @author Marten Gajda
  */
 public final class Composite<T> implements Projection<T>
@@ -36,6 +38,7 @@ public final class Composite<T> implements Projection<T>
     private final Iterable<Projection<T>> mDelegates;
 
 
+    @SafeVarargs
     public Composite(Projection<T>... delegates)
     {
         this(new Seq<>(delegates));

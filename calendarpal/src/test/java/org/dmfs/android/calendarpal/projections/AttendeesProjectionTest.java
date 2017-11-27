@@ -18,8 +18,6 @@ package org.dmfs.android.calendarpal.projections;
 
 import android.provider.CalendarContract;
 
-import org.dmfs.android.calendarpal.projections.AttendeesProjection;
-import org.dmfs.iterables.elementary.Seq;
 import org.junit.Test;
 
 import static org.dmfs.android.contentpal.testing.projection.ProjectionMatcher.projects;
@@ -37,11 +35,11 @@ public class AttendeesProjectionTest
     {
         assertThat(new AttendeesProjection(),
                 projects(
-                        new Seq<>(CalendarContract.Attendees._ID,
-                                CalendarContract.Attendees.ATTENDEE_EMAIL,
-                                CalendarContract.Attendees.ATTENDEE_NAME,
-                                CalendarContract.Attendees.ATTENDEE_RELATIONSHIP,
-                                CalendarContract.Attendees.ATTENDEE_STATUS,
-                                CalendarContract.Attendees.ATTENDEE_TYPE)));
+                        CalendarContract.Attendees._ID,
+                        CalendarContract.Attendees.ATTENDEE_EMAIL,
+                        CalendarContract.Attendees.ATTENDEE_NAME,
+                        CalendarContract.Attendees.ATTENDEE_RELATIONSHIP,
+                        CalendarContract.Attendees.ATTENDEE_STATUS,
+                        CalendarContract.Attendees.ATTENDEE_TYPE));
     }
 }
