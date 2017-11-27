@@ -22,6 +22,7 @@ import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Predicate;
+import org.dmfs.android.contentpal.Projection;
 import org.dmfs.android.contentpal.Table;
 import org.dmfs.android.contentpal.UriParams;
 import org.dmfs.android.contentpal.View;
@@ -52,11 +53,11 @@ public final class Local implements View<ContactsContract.RawContacts>
 
     @NonNull
     @Override
-    public Cursor rows(@NonNull UriParams uriParams, @NonNull Predicate predicate, @NonNull Optional<String> sorting) throws RemoteException
+    public Cursor rows(@NonNull UriParams uriParams, @NonNull Projection<ContactsContract.RawContacts> projection, @NonNull Predicate predicate, @NonNull Optional<String> sorting) throws RemoteException
     {
         return mDelegate.rows(uriParams,
-                new AllOf(predicate, new IsNull(ContactsContract.RawContacts.ACCOUNT_NAME), new IsNull(ContactsContract.RawContacts.ACCOUNT_TYPE)),
-                sorting);
+                projection,
+                new AllOf(predicate, new IsNull(ContactsContract.RawContacts.ACCOUNT_NAME), new IsNull(ContactsContract.RawContacts.ACCOUNT_TYPE)), sorting);
     }
 
 
@@ -65,13 +66,5 @@ public final class Local implements View<ContactsContract.RawContacts>
     public Table<ContactsContract.RawContacts> table()
     {
         return new org.dmfs.android.contactspal.tables.Local(mDelegate.table());
-    }
-
-
-    @NonNull
-    @Override
-    public View<ContactsContract.RawContacts> withProjection(@NonNull String... projection)
-    {
-        return new Local(mDelegate.withProjection(projection));
     }
 }

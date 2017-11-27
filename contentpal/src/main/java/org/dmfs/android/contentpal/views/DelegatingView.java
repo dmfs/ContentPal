@@ -21,6 +21,7 @@ import android.os.RemoteException;
 import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Predicate;
+import org.dmfs.android.contentpal.Projection;
 import org.dmfs.android.contentpal.Table;
 import org.dmfs.android.contentpal.UriParams;
 import org.dmfs.android.contentpal.View;
@@ -48,9 +49,9 @@ public abstract class DelegatingView<T> implements View<T>
 
     @NonNull
     @Override
-    public final Cursor rows(@NonNull UriParams uriParams, @NonNull Predicate predicate, @NonNull Optional<String> sorting) throws RemoteException
+    public final Cursor rows(@NonNull UriParams uriParams, @NonNull Projection<T> projection, @NonNull Predicate predicate, @NonNull Optional<String> sorting) throws RemoteException
     {
-        return mDelegate.rows(uriParams, predicate, sorting);
+        return mDelegate.rows(uriParams, projection, predicate, sorting);
     }
 
 
@@ -59,13 +60,5 @@ public abstract class DelegatingView<T> implements View<T>
     public final Table<T> table()
     {
         return mDelegate.table();
-    }
-
-
-    @NonNull
-    @Override
-    public View<T> withProjection(@NonNull String... projection)
-    {
-        return mDelegate.withProjection(projection);
     }
 }

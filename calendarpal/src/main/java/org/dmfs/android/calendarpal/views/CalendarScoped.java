@@ -24,6 +24,7 @@ import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.InsertOperation;
 import org.dmfs.android.contentpal.Predicate;
+import org.dmfs.android.contentpal.Projection;
 import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.Table;
 import org.dmfs.android.contentpal.UriParams;
@@ -51,12 +52,10 @@ public final class CalendarScoped implements View<CalendarContract.Events>
      *         A {@link ContentProviderClient}
      * @param calendarRow
      *         The {@link RowSnapshot} of the calendar.
-     * @param projection
-     *         The columns of the projection.
      */
-    public CalendarScoped(@NonNull ContentProviderClient client, @NonNull RowSnapshot<CalendarContract.Calendars> calendarRow, @NonNull String... projection)
+    public CalendarScoped(@NonNull ContentProviderClient client, @NonNull RowSnapshot<CalendarContract.Calendars> calendarRow)
     {
-        this(calendarRow, new Events(client, projection));
+        this(calendarRow, new Events(client));
     }
 
 
@@ -69,12 +68,12 @@ public final class CalendarScoped implements View<CalendarContract.Events>
 
     @NonNull
     @Override
-    public Cursor rows(@NonNull UriParams uriParams, @NonNull Predicate predicate, @NonNull Optional<String> sorting) throws RemoteException
+    public Cursor rows(@NonNull UriParams uriParams, @NonNull Projection<CalendarContract.Events> projection, @NonNull Predicate predicate, @NonNull Optional<String> sorting) throws RemoteException
     {
         return mDelegate.rows(
                 uriParams,
-                new org.dmfs.android.calendarpal.predicates.CalendarScoped(mCalendarRow, predicate),
-                sorting);
+                projection,
+                new org.dmfs.android.calendarpal.predicates.CalendarScoped(mCalendarRow, predicate), sorting);
     }
 
 
@@ -83,13 +82,5 @@ public final class CalendarScoped implements View<CalendarContract.Events>
     public Table<CalendarContract.Events> table()
     {
         return new org.dmfs.android.calendarpal.tables.CalendarScoped(mCalendarRow, mDelegate.table());
-    }
-
-
-    @NonNull
-    @Override
-    public View<CalendarContract.Events> withProjection(@NonNull String... projection)
-    {
-        return new CalendarScoped(mCalendarRow, mDelegate.withProjection(projection));
     }
 }

@@ -80,8 +80,8 @@ public abstract class DelegatingTable<T> implements Table<T>
 
     @NonNull
     @Override
-    public final View<T> view(@NonNull ContentProviderClient client, @NonNull String... projection)
+    public final View<T> view(@NonNull ContentProviderClient client)
     {
-        return mDelegate.view(client, projection);
+        return mDelegate.view(client);
     }
 }

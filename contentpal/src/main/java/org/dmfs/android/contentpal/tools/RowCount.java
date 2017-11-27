@@ -23,6 +23,7 @@ import android.provider.BaseColumns;
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.View;
 import org.dmfs.android.contentpal.predicates.AnyOf;
+import org.dmfs.android.contentpal.projections.SingleColProjection;
 import org.dmfs.android.contentpal.tools.uriparams.EmptyUriParams;
 import org.dmfs.jems.single.Single;
 import org.dmfs.optional.Absent;
@@ -58,7 +59,7 @@ public final class RowCount<T> implements Single<Integer>
         Cursor cursor = null;
         try
         {
-            cursor = mView.withProjection(BaseColumns._ID).rows(EmptyUriParams.INSTANCE, mPredicate, Absent.<String>absent());
+            cursor = mView.rows(EmptyUriParams.INSTANCE, new SingleColProjection(BaseColumns._ID), mPredicate, Absent.<String>absent());
             return cursor.getCount();
         }
         catch (RemoteException e)

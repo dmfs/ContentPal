@@ -75,6 +75,7 @@ import org.dmfs.android.contactspal.data.relation.RelationData;
 import org.dmfs.android.contactspal.data.sip.SipAddressData;
 import org.dmfs.android.contactspal.operations.RawContactData;
 import org.dmfs.android.contactspal.operations.TransientRawContactCleanup;
+import org.dmfs.android.contactspal.projections.RawContactsProjection;
 import org.dmfs.android.contactspal.rowsets.Unsynced;
 import org.dmfs.android.contactspal.tables.Local;
 import org.dmfs.android.contactspal.tables.RawContacts;
@@ -231,7 +232,7 @@ public class DemoActivity extends AppCompatActivity
         {
             return;
         }
-        for (RowSnapshot<ContactsContract.RawContacts> row : new Unsynced(mRawContacts.view(mContactsClient)))
+        for (RowSnapshot<ContactsContract.RawContacts> row : new Unsynced(mRawContacts.view(mContactsClient), new RawContactsProjection()))
         {
             Log.v("ContentPal Demo", "---- Raw Contact ----");
             RowDataSnapshot<?> values = row.values();

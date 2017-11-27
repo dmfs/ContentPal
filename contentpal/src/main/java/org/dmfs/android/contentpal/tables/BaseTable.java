@@ -93,9 +93,9 @@ public final class BaseTable<T> implements Table<T>
 
     @NonNull
     @Override
-    public View<T> view(@NonNull ContentProviderClient client, @NonNull String... projection)
+    public View<T> view(@NonNull ContentProviderClient client)
     {
-        return new BaseView<T>(client, mTableUri, projection);
+        return new BaseView<T>(client, mTableUri);
     }
 
 

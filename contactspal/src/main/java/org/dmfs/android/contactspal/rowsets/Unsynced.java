@@ -19,6 +19,7 @@ package org.dmfs.android.contactspal.rowsets;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 
+import org.dmfs.android.contentpal.Projection;
 import org.dmfs.android.contentpal.RowSet;
 import org.dmfs.android.contentpal.View;
 import org.dmfs.android.contentpal.predicates.IsNull;
@@ -34,9 +35,9 @@ import org.dmfs.android.contentpal.rowsets.QueryRowSet;
 public final class Unsynced extends DelegatingRowSet<ContactsContract.RawContacts>
 {
 
-    public Unsynced(@NonNull View<ContactsContract.RawContacts> mRawContacts)
+    public Unsynced(@NonNull View<ContactsContract.RawContacts> mRawContacts, @NonNull Projection<ContactsContract.RawContacts> projection)
     {
-        super(new QueryRowSet<>(mRawContacts, new IsNull(ContactsContract.RawContacts.SOURCE_ID)));
+        super(new QueryRowSet<>(mRawContacts, projection, new IsNull(ContactsContract.RawContacts.SOURCE_ID)));
     }
 
 }

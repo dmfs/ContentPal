@@ -31,8 +31,8 @@ import org.dmfs.android.contentpal.views.DelegatingView;
  */
 public final class RawContacts extends DelegatingView<ContactsContract.RawContacts>
 {
-    public RawContacts(@NonNull ContentProviderClient client, @NonNull String... projection)
+    public RawContacts(@NonNull ContentProviderClient client)
     {
-        super(new BaseView<ContactsContract.RawContacts>(client, ContactsContract.RawContacts.CONTENT_URI, projection));
+        super(new BaseView<ContactsContract.RawContacts>(client, ContactsContract.RawContacts.CONTENT_URI));
     }
 }

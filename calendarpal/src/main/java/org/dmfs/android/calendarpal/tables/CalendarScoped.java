@@ -34,7 +34,7 @@ import org.dmfs.android.contentpal.View;
  * A view onto the {@link CalendarContract.Events} table which contains only events of a specific calendar. Events created with {@link
  * #insertOperation(UriParams)} will automatically be added to this calendar.
  * <p>
- * Note, if you create a {@link View} (using {@link #view(ContentProviderClient, String...)}) with a virtual {@link RowSnapshot}, the {@link View} will always
+ * Note, if you create a {@link View} (using {@link Table#view(ContentProviderClient)}) with a virtual {@link RowSnapshot}, the {@link View} will always
  * be empty, even after adding and committing rows.
  *
  * @author Marten Gajda
@@ -92,9 +92,9 @@ public final class CalendarScoped implements Table<CalendarContract.Events>
 
     @NonNull
     @Override
-    public View<CalendarContract.Events> view(@NonNull ContentProviderClient client, @NonNull String... projection)
+    public View<CalendarContract.Events> view(@NonNull ContentProviderClient client)
     {
-        return new org.dmfs.android.calendarpal.views.CalendarScoped(mCalendarRow, mDelegate.view(client, projection));
+        return new org.dmfs.android.calendarpal.views.CalendarScoped(mCalendarRow, mDelegate.view(client));
     }
 
 

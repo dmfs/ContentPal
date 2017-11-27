@@ -22,6 +22,7 @@ import android.os.RemoteException;
 import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Predicate;
+import org.dmfs.android.contentpal.Projection;
 import org.dmfs.android.contentpal.Table;
 import org.dmfs.android.contentpal.UriParams;
 import org.dmfs.android.contentpal.View;
@@ -54,9 +55,9 @@ public final class AccountScoped<T> implements View<T>
 
     @NonNull
     @Override
-    public Cursor rows(@NonNull UriParams uriParams, @NonNull Predicate predicate, @NonNull Optional<String> sorting) throws RemoteException
+    public Cursor rows(@NonNull UriParams uriParams, @NonNull Projection<T> projection, @NonNull Predicate predicate, @NonNull Optional<String> sorting) throws RemoteException
     {
-        return mDelegate.rows(new AccountScopedParams(mAccount, uriParams), new AllOf(predicate, new AccountEq(mAccount)), sorting);
+        return mDelegate.rows(new AccountScopedParams(mAccount, uriParams), projection, new AllOf(predicate, new AccountEq(mAccount)), sorting);
     }
 
 
@@ -67,11 +68,4 @@ public final class AccountScoped<T> implements View<T>
         return new org.dmfs.android.contentpal.tables.AccountScoped<>(mAccount, mDelegate.table());
     }
 
-
-    @NonNull
-    @Override
-    public View<T> withProjection(@NonNull String... projection)
-    {
-        return new AccountScoped<>(mAccount, mDelegate.withProjection(projection));
-    }
 }

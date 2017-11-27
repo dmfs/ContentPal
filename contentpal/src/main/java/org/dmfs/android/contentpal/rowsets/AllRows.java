@@ -18,6 +18,7 @@ package org.dmfs.android.contentpal.rowsets;
 
 import android.support.annotation.NonNull;
 
+import org.dmfs.android.contentpal.Projection;
 import org.dmfs.android.contentpal.RowSet;
 import org.dmfs.android.contentpal.View;
 import org.dmfs.android.contentpal.predicates.AnyOf;
@@ -30,9 +31,9 @@ import org.dmfs.android.contentpal.predicates.AnyOf;
  */
 public final class AllRows<T> extends DelegatingRowSet<T>
 {
-    public AllRows(@NonNull View<T> view)
+    public AllRows(@NonNull View<T> view, @NonNull Projection projection)
     {
-        super(new QueryRowSet<>(view, new AnyOf()));
+        super(new QueryRowSet<>(view, projection, new AnyOf()));
     }
 
 }

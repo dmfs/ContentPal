@@ -33,17 +33,6 @@ public final class Attendees extends DelegatingView<CalendarContract.Attendees>
 {
     public Attendees(@NonNull ContentProviderClient client)
     {
-        this(client, CalendarContract.Attendees._ID,
-                CalendarContract.Attendees.ATTENDEE_EMAIL,
-                CalendarContract.Attendees.ATTENDEE_NAME,
-                CalendarContract.Attendees.ATTENDEE_RELATIONSHIP,
-                CalendarContract.Attendees.ATTENDEE_STATUS,
-                CalendarContract.Attendees.ATTENDEE_TYPE);
-    }
-
-
-    public Attendees(@NonNull ContentProviderClient client, @NonNull String... projection)
-    {
-        super(new BaseView<CalendarContract.Attendees>(client, CalendarContract.Attendees.CONTENT_URI, projection));
+        super(new BaseView<CalendarContract.Attendees>(client, CalendarContract.Attendees.CONTENT_URI));
     }
 }
