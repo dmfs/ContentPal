@@ -41,9 +41,7 @@ public class JoinedProjectionTest
         Iterator<String> dummyIterator = failingMock(Iterator.class);
         Projection<Contract> mockProjection = failingMock(Projection.class);
         doReturn(dummyArray).when(mockProjection).toArray();
-        doReturn(dummyIterator).when(mockProjection).iterator();
 
-        assertThat(new Joined<Contract, Object>(mockProjection).iterator(), sameInstance(dummyIterator));
-        assertThat(new Joined<Contract, Object>(mockProjection).toArray(), sameInstance(dummyArray));
+        assertThat(new Joined<>(mockProjection).toArray(), sameInstance(dummyArray));
     }
 }

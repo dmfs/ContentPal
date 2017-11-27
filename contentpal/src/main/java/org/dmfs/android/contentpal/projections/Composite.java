@@ -19,15 +19,13 @@ package org.dmfs.android.contentpal.projections;
 import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Projection;
-import org.dmfs.iterables.decorators.Mapped;
 import org.dmfs.iterables.elementary.Seq;
-import org.dmfs.iterators.Function;
-import org.dmfs.iterators.decorators.Filtered;
-import org.dmfs.iterators.decorators.Serialized;
-import org.dmfs.iterators.filters.Distinct;
+import org.dmfs.jems.function.BiFunction;
+import org.dmfs.jems.single.elementary.Reduced;
 
-import java.util.Iterator;
-import java.util.TreeSet;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 /**
@@ -54,26 +52,19 @@ public final class Composite<T> implements Projection<T>
     @Override
     public String[] toArray()
     {
-        TreeSet<String> set = new TreeSet<>();
-        for (String s : this)
-        {
-            set.add(s);
-        }
-        return set.toArray(new String[set.size()]);
-    }
-
-
-    @NonNull
-    @Override
-    public Iterator<String> iterator()
-    {
-        return new Filtered<>(new Serialized<>(new Mapped<>(mDelegates, new Function<Projection<T>, Iterator<String>>()
-        {
-            @Override
-            public Iterator<String> apply(Projection<T> argument)
-            {
-                return argument.iterator();
-            }
-        }).iterator()), new Distinct<String>());
+        List<String> projection = new Reduced<>(
+                new ArrayList<String>(32),
+                new BiFunction<ArrayList<String>, Projection<T>, ArrayList<String>>()
+                {
+                    @Override
+                    public ArrayList<String> value(ArrayList<String> strings, Projection<T> projection)
+                    {
+                        // add the strings of all projections
+                        strings.addAll(Arrays.asList(projection.toArray()));
+                        return strings;
+                    }
+                },
+                mDelegates).value();
+        return projection.toArray(new String[projection.size()]);
     }
 }

@@ -17,11 +17,10 @@
 package org.dmfs.android.contentpal.projections;
 
 import org.dmfs.android.contentpal.testing.table.Contract;
-import org.dmfs.iterables.EmptyIterable;
-import org.dmfs.iterables.elementary.Seq;
 import org.junit.Test;
 
 import static org.dmfs.android.contentpal.testing.projection.ProjectionMatcher.projects;
+import static org.dmfs.android.contentpal.testing.projection.ProjectionMatcher.projectsEmpty;
 import static org.junit.Assert.assertThat;
 
 
@@ -33,10 +32,10 @@ public class MultiProjectionTest
     @Test
     public void test() throws Exception
     {
-        assertThat(new MultiProjection<Contract>(), projects(EmptyIterable.<String>instance()));
-        assertThat(new MultiProjection<Contract>("abc"), projects(new Seq<>("abc")));
-        assertThat(new MultiProjection<Contract>("abc", "xyz"), projects(new Seq<>("abc", "xyz")));
-        assertThat(new MultiProjection<Contract>("abc", "xyz", "qrs"), projects(new Seq<>("abc", "xyz", "qrs")));
+        assertThat(new MultiProjection<Contract>(), projectsEmpty());
+        assertThat(new MultiProjection<Contract>("abc"), projects("abc"));
+        assertThat(new MultiProjection<Contract>("abc", "xyz"), projects("abc", "xyz"));
+        assertThat(new MultiProjection<Contract>("abc", "xyz", "qrs"), projects("abc", "xyz", "qrs"));
     }
 
 }

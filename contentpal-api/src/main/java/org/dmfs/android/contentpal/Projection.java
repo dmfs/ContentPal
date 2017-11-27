@@ -27,7 +27,7 @@ import android.support.annotation.NonNull;
  *
  * @author Marten Gajda
  */
-public interface Projection<T> extends Iterable<String>
+public interface Projection<T>
 {
     @NonNull
     String[] toArray();

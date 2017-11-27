@@ -22,8 +22,8 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withValuesOnly;
-import static org.dmfs.android.contentpal.testing.contentvalues.NullValue.withNullValue;
 import static org.dmfs.android.contentpal.testing.contentvalues.Containing.containing;
+import static org.dmfs.android.contentpal.testing.contentvalues.NullValue.withNullValue;
 import static org.dmfs.android.contentpal.testing.rowdata.RowDataMatcher.builds;
 import static org.junit.Assert.assertThat;
 

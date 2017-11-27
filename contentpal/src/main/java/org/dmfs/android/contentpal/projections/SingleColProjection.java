@@ -19,9 +19,6 @@ package org.dmfs.android.contentpal.projections;
 import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Projection;
-import org.dmfs.iterators.SingletonIterator;
-
-import java.util.Iterator;
 
 
 /**
@@ -45,13 +42,5 @@ public final class SingleColProjection<T> implements Projection<T>
     public String[] toArray()
     {
         return new String[] { mColumnName };
-    }
-
-
-    @NonNull
-    @Override
-    public Iterator<String> iterator()
-    {
-        return new SingletonIterator<>(mColumnName);
     }
 }

@@ -19,9 +19,6 @@ package org.dmfs.android.contentpal.projections;
 import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Projection;
-import org.dmfs.iterators.EmptyIterator;
-
-import java.util.Iterator;
 
 
 /**
@@ -36,13 +33,5 @@ public final class EmptyProjection<T> implements Projection<T>
     public String[] toArray()
     {
         return new String[0];
-    }
-
-
-    @NonNull
-    @Override
-    public Iterator<String> iterator()
-    {
-        return EmptyIterator.instance();
     }
 }

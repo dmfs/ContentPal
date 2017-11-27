@@ -17,10 +17,9 @@
 package org.dmfs.android.contentpal.projections;
 
 import org.dmfs.android.contentpal.testing.table.Contract;
-import org.dmfs.iterables.EmptyIterable;
 import org.junit.Test;
 
-import static org.dmfs.android.contentpal.testing.projection.ProjectionMatcher.projects;
+import static org.dmfs.android.contentpal.testing.projection.ProjectionMatcher.projectsEmpty;
 import static org.junit.Assert.assertThat;
 
 
@@ -32,7 +31,7 @@ public class EmptyProjectionTest
     @Test
     public void test() throws Exception
     {
-        assertThat(new EmptyProjection<Contract>(), projects(EmptyIterable.<String>instance()));
+        assertThat(new EmptyProjection<Contract>(), projectsEmpty());
     }
 
 }

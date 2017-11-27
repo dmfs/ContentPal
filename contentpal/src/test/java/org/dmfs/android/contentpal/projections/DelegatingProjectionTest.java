@@ -41,10 +41,8 @@ public class DelegatingProjectionTest
         Iterator<String> dummyIterator = failingMock(Iterator.class);
         Projection<Contract> mockProjection = failingMock(Projection.class);
         doReturn(dummyArray).when(mockProjection).toArray();
-        doReturn(dummyIterator).when(mockProjection).iterator();
 
-        assertThat(new TestProjection<Contract>(mockProjection).iterator(), sameInstance(dummyIterator));
-        assertThat(new TestProjection<Contract>(mockProjection).toArray(), sameInstance(dummyArray));
+        assertThat(new TestProjection<>(mockProjection).toArray(), sameInstance(dummyArray));
     }
 
 

@@ -20,8 +20,6 @@ import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Projection;
 
-import java.util.Iterator;
-
 
 /**
  * A {@link Projection} which delegates all method calls to another {@link Projection}.
@@ -44,13 +42,5 @@ public abstract class DelegatingProjection<T> implements Projection<T>
     public final String[] toArray()
     {
         return mDelegate.toArray();
-    }
-
-
-    @NonNull
-    @Override
-    public final Iterator<String> iterator()
-    {
-        return mDelegate.iterator();
     }
 }

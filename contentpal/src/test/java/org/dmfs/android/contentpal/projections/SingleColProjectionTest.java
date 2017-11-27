@@ -17,7 +17,6 @@
 package org.dmfs.android.contentpal.projections;
 
 import org.dmfs.android.contentpal.testing.table.Contract;
-import org.dmfs.iterables.elementary.Seq;
 import org.junit.Test;
 
 import static org.dmfs.android.contentpal.testing.projection.ProjectionMatcher.projects;
@@ -32,6 +31,6 @@ public class SingleColProjectionTest
     @Test
     public void test() throws Exception
     {
-        assertThat(new SingleColProjection<Contract>("abc"), projects(new Seq<>("abc")));
+        assertThat(new SingleColProjection<Contract>("abc"), projects("abc"));
     }
 }

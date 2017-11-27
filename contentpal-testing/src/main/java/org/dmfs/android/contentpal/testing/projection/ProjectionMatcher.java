@@ -19,12 +19,12 @@ package org.dmfs.android.contentpal.testing.projection;
 import org.dmfs.android.contentpal.Projection;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Set;
+
+import static org.hamcrest.Matchers.contains;
 
 
 /**
@@ -32,56 +32,49 @@ import java.util.Set;
  */
 public final class ProjectionMatcher extends TypeSafeDiagnosingMatcher<Projection<?>>
 {
-    private final Iterable<String> mExpectedColumns;
+    private final Matcher<Iterable<? extends String>> mDelegate;
 
 
-    public static Matcher<Projection<?>> projects(Iterable<String> expectedColumns)
+    public static Matcher<Projection<?>> projectsEmpty()
     {
-        return new ProjectionMatcher(expectedColumns);
+        return new ProjectionMatcher(Matchers.<String>emptyIterable());
     }
 
 
-    public ProjectionMatcher(Iterable<String> expectedColumns)
+    public static Matcher<Projection<?>> projects(String... expectedColumns)
     {
-        mExpectedColumns = expectedColumns;
+        return new ProjectionMatcher(contains(expectedColumns));
+    }
+
+
+    public ProjectionMatcher(Matcher<Iterable<? extends String>> delegate)
+    {
+        mDelegate = delegate;
     }
 
 
     @Override
     protected boolean matchesSafely(Projection<?> item, Description mismatchDescription)
     {
-        Set<String> columns = new HashSet<>(Arrays.asList(item.toArray()));
-        Set<String> expectedCols = new HashSet<>(columns.size());
-        for (String col : mExpectedColumns)
+        if (!mDelegate.matches(Arrays.asList(item.toArray())))
         {
-            if (!columns.contains(col))
-            {
-                mismatchDescription.appendText("Array didn't contain column '").appendText(col).appendText("'");
-                return false;
-            }
-            expectedCols.add(col);
-        }
-        if (expectedCols.size() != item.toArray().length)
-        {
-            mismatchDescription.appendText(String.format(Locale.ENGLISH, "Column count didn't equal %d", expectedCols.size()));
+            // check that we get the correct elements
+            mDelegate.describeMismatch(Arrays.asList(item.toArray()), mismatchDescription);
             return false;
         }
-        int count = 0;
-        for (String col : item)
+        // also check if the projection is immutable, i.e. if me modify the result the next result should not be affected
+        String[] projection = item.toArray();
+        if (projection.length > 0)
         {
-            if (!expectedCols.contains(col))
+            String testString = new String("bogus");
+            String[] copy = projection.clone();
+            projection[0] = testString;
+            if (item.toArray()[0] == testString)
             {
-                mismatchDescription.appendText("Iteration didn't contain column '").appendText(col).appendText("'");
+                mismatchDescription.appendText("projection is not immutable");
                 return false;
             }
-            count += 1;
         }
-        if (expectedCols.size() != count)
-        {
-            mismatchDescription.appendText(String.format(Locale.ENGLISH, "Iterated column count didn't equal %d", expectedCols.size()));
-            return false;
-        }
-
         return true;
     }
 
@@ -89,22 +82,6 @@ public final class ProjectionMatcher extends TypeSafeDiagnosingMatcher<Projectio
     @Override
     public void describeTo(Description description)
     {
-        description.appendText("A projection of the columns [");
-        boolean first = true;
-        for (String s : mExpectedColumns)
-        {
-            if (first)
-            {
-                first = false;
-            }
-            else
-            {
-                description.appendText(", ");
-            }
-            description.appendText("\"");
-            description.appendText(s);
-            description.appendText("\"");
-        }
-        description.appendText("]");
+        mDelegate.describeTo(description);
     }
 }

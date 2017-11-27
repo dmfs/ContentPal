@@ -19,10 +19,8 @@ package org.dmfs.android.contentpal.projections;
 import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Projection;
-import org.dmfs.iterators.elementary.Seq;
 
 import java.util.Arrays;
-import java.util.Iterator;
 
 
 /**
@@ -46,13 +44,5 @@ public final class MultiProjection<T> implements Projection<T>
     public String[] toArray()
     {
         return Arrays.copyOf(mColumnNames, mColumnNames.length);
-    }
-
-
-    @NonNull
-    @Override
-    public Iterator<String> iterator()
-    {
-        return new Seq<>(mColumnNames);
     }
 }

@@ -17,18 +17,14 @@
 package org.dmfs.android.contentpal.testing.projection;
 
 import org.dmfs.android.contentpal.Projection;
-import org.dmfs.iterables.EmptyIterable;
-import org.dmfs.iterables.elementary.Seq;
-import org.dmfs.iterators.EmptyIterator;
 import org.hamcrest.Description;
 import org.hamcrest.StringDescription;
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
-import java.util.Iterator;
-
 import static org.dmfs.android.contentpal.testing.projection.ProjectionMatcher.projects;
+import static org.dmfs.android.contentpal.testing.projection.ProjectionMatcher.projectsEmpty;
 import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -46,10 +42,9 @@ public class ProjectionMatcherTest
     {
         Projection emptyMockProjection = failingMock(Projection.class);
         doReturn(new String[0]).when(emptyMockProjection).toArray();
-        doReturn(new EmptyIterator<>()).when(emptyMockProjection).iterator();
 
-        assertThat(projects(EmptyIterable.<String>instance()).matches(emptyMockProjection), is(true));
-        assertThat(projects(new Seq<>("123")).matches(emptyMockProjection), is(false));
+        assertThat(projectsEmpty().matches(emptyMockProjection), is(true));
+        assertThat(projects("123").matches(emptyMockProjection), is(false));
     }
 
 
@@ -57,18 +52,15 @@ public class ProjectionMatcherTest
     public void testMatchesSafelyNonEmpty() throws Exception
     {
         Projection mockProjection = failingMock(Projection.class);
-        doReturn(new String[] { "1", "2", "3" }).when(mockProjection).toArray();
-        doAnswer(new Answer<Iterator<String>>()
+        doAnswer(new Answer()
         {
             @Override
-            public Iterator<String> answer(InvocationOnMock invocation) throws Throwable
+            public Object answer(InvocationOnMock invocation) throws Throwable
             {
-                return new org.dmfs.iterators.elementary.Seq<>("1", "2", "3");
+                return new String[] { "1", "2", "3" };
             }
-        }).when(mockProjection).iterator();
-
-        assertThat(projects(new Seq<>("1", "2", "3")).matches(mockProjection), is(true));
-        assertThat(projects(new Seq<>("3", "2", "1")).matches(mockProjection), is(true));
+        }).when(mockProjection).toArray();
+        assertThat(projects("1", "2", "3").matches(mockProjection), is(true));
     }
 
 
@@ -76,113 +68,29 @@ public class ProjectionMatcherTest
     public void testMismatchesSafely1() throws Exception
     {
         Projection mockProjection = failingMock(Projection.class);
+        doAnswer(new Answer()
+        {
+            @Override
+            public Object answer(InvocationOnMock invocation) throws Throwable
+            {
+                return new String[] { "1", "2", "3" };
+            }
+        }).when(mockProjection).toArray();
+        assertThat(projectsEmpty().matches(mockProjection), is(false));
+        assertThat(projects("1").matches(mockProjection), is(false));
+        assertThat(projects("1", "2").matches(mockProjection), is(false));
+        assertThat(projects("1", "2", "4").matches(mockProjection), is(false));
+        assertThat(projects("1", "2", "3", "4").matches(mockProjection), is(false));
+    }
+
+
+    @Test
+    public void testNonImmutable() throws Exception
+    {
+        Projection mockProjection = failingMock(Projection.class);
+        // return the same array on every call, so modifications are "permanent"
         doReturn(new String[] { "1", "2", "3" }).when(mockProjection).toArray();
-        doAnswer(new Answer<Iterator<String>>()
-        {
-            @Override
-            public Iterator<String> answer(InvocationOnMock invocation) throws Throwable
-            {
-                return new org.dmfs.iterators.elementary.Seq<>("1", "2", "3", "4");
-            }
-        }).when(mockProjection).iterator();
-
-        assertThat(projects(new Seq<>("1", "2", "3")).matches(mockProjection), is(false));
-        assertThat(projects(new Seq<>("3", "2", "1")).matches(mockProjection), is(false));
-    }
-
-
-    @Test
-    public void testMismatchesSafely2() throws Exception
-    {
-        Projection mockProjection = failingMock(Projection.class);
-        doReturn(new String[] { "1", "2", "3", "4" }).when(mockProjection).toArray();
-        doAnswer(new Answer<Iterator<String>>()
-        {
-            @Override
-            public Iterator<String> answer(InvocationOnMock invocation) throws Throwable
-            {
-                return new org.dmfs.iterators.elementary.Seq<>("1", "2", "3");
-            }
-        }).when(mockProjection).iterator();
-
-        assertThat(projects(new Seq<>("1", "2", "3")).matches(mockProjection), is(false));
-        assertThat(projects(new Seq<>("3", "2", "1")).matches(mockProjection), is(false));
-    }
-
-
-    @Test
-    public void testMismatchesSafely3() throws Exception
-    {
-        Projection mockProjection = failingMock(Projection.class);
-        doReturn(new String[] { "1", "2" }).when(mockProjection).toArray();
-        doAnswer(new Answer<Iterator<String>>()
-        {
-            @Override
-            public Iterator<String> answer(InvocationOnMock invocation) throws Throwable
-            {
-                return new org.dmfs.iterators.elementary.Seq<>("1", "2", "3");
-            }
-        }).when(mockProjection).iterator();
-
-        assertThat(projects(new Seq<>("1", "2", "3")).matches(mockProjection), is(false));
-        assertThat(projects(new Seq<>("3", "2", "1")).matches(mockProjection), is(false));
-    }
-
-
-    @Test
-    public void testMismatchesSafely4() throws Exception
-    {
-        Projection mockProjection = failingMock(Projection.class);
-        doReturn(new String[] { "1", "2", "3" }).when(mockProjection).toArray();
-        doAnswer(new Answer<Iterator<String>>()
-        {
-            @Override
-            public Iterator<String> answer(InvocationOnMock invocation) throws Throwable
-            {
-                return new org.dmfs.iterators.elementary.Seq<>("1", "2");
-            }
-        }).when(mockProjection).iterator();
-
-        assertThat(projects(new Seq<>("1", "2", "3")).matches(mockProjection), is(false));
-        assertThat(projects(new Seq<>("3", "2", "1")).matches(mockProjection), is(false));
-    }
-
-
-    @Test
-    public void testMismatchesSafely5() throws Exception
-    {
-        Projection mockProjection = failingMock(Projection.class);
-        doReturn(new String[] { "1", "2", "4" }).when(mockProjection).toArray();
-        doAnswer(new Answer<Iterator<String>>()
-        {
-            @Override
-            public Iterator<String> answer(InvocationOnMock invocation) throws Throwable
-            {
-                return new org.dmfs.iterators.elementary.Seq<>("1", "2", "3");
-            }
-        }).when(mockProjection).iterator();
-
-        assertThat(projects(new Seq<>("1", "2", "3")).matches(mockProjection), is(false));
-        assertThat(projects(new Seq<>("3", "2", "1")).matches(mockProjection), is(false));
-    }
-
-
-    @Test
-    public void testMismatchesSafely6() throws Exception
-    {
-        Projection mockProjection = failingMock(Projection.class);
-        doReturn(new String[] { "1", "2", "3" }).when(mockProjection).toArray();
-        doAnswer(new Answer<Iterator<String>>()
-        {
-            @Override
-            public Iterator<String> answer(InvocationOnMock invocation) throws Throwable
-            {
-                return new org.dmfs.iterators.elementary.Seq<>("1", "2", "4");
-            }
-        }).when(mockProjection).iterator();
-
-        assertThat(projects(new Seq<>("1", "2", "3")).matches(mockProjection), is(false));
-        assertThat(projects(new Seq<>("3", "2", "1")).matches(mockProjection), is(false));
+        assertThat(projects("1", "2", "3").matches(mockProjection), is(false));
     }
 
 
@@ -190,8 +98,8 @@ public class ProjectionMatcherTest
     public void testDescribeTo() throws Exception
     {
         Description description = new StringDescription();
-        projects(new Seq<>("123", "456")).describeTo(description);
-        assertThat(description.toString(), is("A projection of the columns [\"123\", \"456\"]"));
+        projects("123", "456").describeTo(description);
+        assertThat(description.toString(), is("iterable containing [\"123\", \"456\"]"));
     }
 
 
@@ -199,8 +107,8 @@ public class ProjectionMatcherTest
     public void testDescribeToEmpty() throws Exception
     {
         Description description = new StringDescription();
-        projects(new EmptyIterable<String>()).describeTo(description);
-        assertThat(description.toString(), is("A projection of the columns []"));
+        projectsEmpty().describeTo(description);
+        assertThat(description.toString(), is("an empty iterable"));
     }
 
 }
