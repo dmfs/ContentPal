@@ -18,7 +18,6 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion BUILD_TOOLS_VERSION
 
     defaultConfig {
         minSdkVersion 11
@@ -42,6 +41,7 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-annotations:' + SUPPORT_LIBRARY_VERSION
-    compile 'org.dmfs:jems:' + JEMS_VERSION
+    api 'org.dmfs:jems:' + JEMS_VERSION
+
+    implementation 'com.android.support:support-annotations:' + SUPPORT_LIBRARY_VERSION
 }

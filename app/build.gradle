@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion BUILD_TOOLS_VERSION
 
     defaultConfig {
         applicationId "org.dmfs.android.contentpal.demo"
@@ -32,12 +31,12 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:' + SUPPORT_LIBRARY_VERSION
-    compile 'com.android.support:design:' + SUPPORT_LIBRARY_VERSION
-    compile 'org.dmfs:jems:' + JEMS_VERSION
+    implementation project(':contactspal')
+    implementation project(':calendarpal')
+    implementation 'com.android.support:appcompat-v7:' + SUPPORT_LIBRARY_VERSION
+    implementation 'com.android.support:design:' + SUPPORT_LIBRARY_VERSION
+    implementation 'org.dmfs:jems:' + JEMS_VERSION
+    implementation 'org.dmfs:rfc5545-datetime:' + RFC5545_DATETIME_VERSION
 
-    compile project(':contactspal');
-    compile project(':calendarpal');
-    testCompile 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.12'
 }
