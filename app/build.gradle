@@ -33,10 +33,10 @@ android {
 dependencies {
     implementation project(':contactspal')
     implementation project(':calendarpal')
-    implementation 'com.android.support:appcompat-v7:' + SUPPORT_LIBRARY_VERSION
-    implementation 'com.android.support:design:' + SUPPORT_LIBRARY_VERSION
-    implementation 'org.dmfs:jems:' + JEMS_VERSION
-    implementation 'org.dmfs:rfc5545-datetime:' + RFC5545_DATETIME_VERSION
+    implementation deps.support_appcompat
+    implementation deps.support_design
+    implementation deps.dmfs_jems
+    implementation deps.dmfs_datetime
 
-    testImplementation 'junit:junit:4.12'
+    testImplementation deps.junit
 }
