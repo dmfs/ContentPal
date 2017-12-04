@@ -77,24 +77,24 @@ public class YieldableTest
                                 withoutExpectedCount(),
                                 withYieldAllowed())));
 
-        assertThat(new Yieldable(new Seq<>(mockOp2, mockOp1)),
+        assertThat(new Yieldable(new Seq<>(mockOp1, mockOp2)),
                 Matchers.contains(
-                        Matchers.<Operation>is(mockOp2),
                         builds(
                                 updateOperation(),
                                 withoutValues(),
                                 withoutExpectedCount(),
-                                withYieldAllowed())));
+                                withYieldAllowed()),
+                        Matchers.<Operation>is(mockOp2)));
 
-        assertThat(new Yieldable(new Seq<>(mockOp3, mockOp2, mockOp1)),
+        assertThat(new Yieldable(new Seq<>(mockOp1, mockOp2, mockOp3)),
                 Matchers.contains(
-                        Matchers.<Operation>is(mockOp3),
-                        Matchers.<Operation>is(mockOp2),
                         builds(
                                 updateOperation(),
                                 withoutValues(),
                                 withoutExpectedCount(),
-                                withYieldAllowed())));
+                                withYieldAllowed()),
+                        Matchers.<Operation>is(mockOp2),
+                        Matchers.<Operation>is(mockOp3)));
     }
 
 }

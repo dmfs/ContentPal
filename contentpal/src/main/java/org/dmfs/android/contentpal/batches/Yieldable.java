@@ -59,6 +59,9 @@ public final class Yieldable implements Iterable<Operation<?>>
         // return an iterator which decorates the last Operation with Yieldable.
         return new AbstractBaseIterator<Operation<?>>()
         {
+            private boolean mFirst = true;
+
+
             @Override
             public boolean hasNext()
             {
@@ -70,8 +73,9 @@ public final class Yieldable implements Iterable<Operation<?>>
             @Override
             public Operation<?> next()
             {
-                Operation<?> next = delegate.next();
-                return !delegate.hasNext() ? new org.dmfs.android.contentpal.operations.Yieldable<>(next) : next;
+                Operation<?> next = mFirst ? new org.dmfs.android.contentpal.operations.Yieldable<>(delegate.next()) : delegate.next();
+                mFirst = false;
+                return next;
             }
         };
     }
