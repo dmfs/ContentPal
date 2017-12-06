@@ -32,6 +32,6 @@ android {
 }
 
 dependencies {
-    implementation project(':contentpal');
-    implementation 'org.hamcrest:hamcrest-library:' + HAMCREST_VERSION
+    implementation project(':contentpal')
+    implementation deps.hamcrest
 }
