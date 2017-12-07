@@ -16,46 +16,49 @@
 
 package org.dmfs.android.contentpal.rowdatasnapshots;
 
-import android.support.annotation.NonNull;
-
-import org.dmfs.android.contentpal.RowDataSnapshot;
-import org.dmfs.iterators.EmptyIterator;
 import org.dmfs.jems.function.Function;
-import org.dmfs.optional.Absent;
 import org.dmfs.optional.Optional;
 
-import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 
 /**
- * {@link RowDataSnapshot} without any values;
+ * {@link Optional} that maps an {@link Optional} if it's present using the given {@link Function}.
  *
- * @author Marten Gajda
+ * @author Gabor Keszthelyi
+ * @deprecated use it from jems when available
  */
-public final class EmptyRowDataSnapshot<Contract> implements RowDataSnapshot<Contract>
+@Deprecated
+public final class Mapped<From, To> implements Optional<To>
 {
-    public final static RowDataSnapshot INSTANCE = new EmptyRowDataSnapshot();
+    private final Optional<From> mFromValue;
+    private final Function<From, To> mConversion;
 
 
-    @NonNull
-    @Override
-    public <ValueType> Optional<ValueType> data(@NonNull String key, @NonNull Function<String, ValueType> mapFunction)
+    public Mapped(Function<From, To> conversion, Optional<From> fromValue)
     {
-        return Absent.absent();
-    }
-
-
-    @NonNull
-    @Override
-    public Optional<byte[]> byteData(@NonNull String key)
-    {
-        return Absent.absent();
+        mConversion = conversion;
+        mFromValue = fromValue;
     }
 
 
     @Override
-    public Iterator<String> iterator()
+    public boolean isPresent()
     {
-        return EmptyIterator.instance();
+        return mFromValue.isPresent();
+    }
+
+
+    @Override
+    public To value(To defaultValue)
+    {
+        return mFromValue.isPresent() ? value() : defaultValue;
+    }
+
+
+    @Override
+    public To value() throws NoSuchElementException
+    {
+        return mConversion.value(mFromValue.value());
     }
 }

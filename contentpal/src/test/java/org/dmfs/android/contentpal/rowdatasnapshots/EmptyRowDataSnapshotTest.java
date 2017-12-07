@@ -31,7 +31,7 @@ public class EmptyRowDataSnapshotTest
     @Test
     public void testCharData() throws Exception
     {
-        assertThat(new EmptyRowDataSnapshot<>().charData("key"), AbsentMatcher.<CharSequence>isAbsent());
+        assertThat(new EmptyRowDataSnapshot<>().data("key", new IdentityFunction<String>()), AbsentMatcher.<String>isAbsent());
     }
 
 

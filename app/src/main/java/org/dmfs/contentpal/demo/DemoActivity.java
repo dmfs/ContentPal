@@ -91,6 +91,7 @@ import org.dmfs.android.contentpal.operations.Put;
 import org.dmfs.android.contentpal.predicates.AllOf;
 import org.dmfs.android.contentpal.queues.BasicOperationsQueue;
 import org.dmfs.android.contentpal.rowdata.Composite;
+import org.dmfs.android.contentpal.rowdatasnapshots.IdentityFunction;
 import org.dmfs.android.contentpal.rowsnapshots.VirtualRowSnapshot;
 import org.dmfs.android.contentpal.tables.AccountScoped;
 import org.dmfs.iterables.SingletonIterable;
@@ -107,7 +108,6 @@ public class DemoActivity extends AppCompatActivity
 
     private ContentProviderClient mContactsClient;
     private Table<ContactsContract.RawContacts> mRawContacts;
-    private Table<ContactsContract.Data> mData;
     private OperationsQueue mContactsQueue;
 
     private ContentProviderClient mCalendarsClient;
@@ -238,7 +238,7 @@ public class DemoActivity extends AppCompatActivity
             RowDataSnapshot<?> values = row.values();
             for (String key : values)
             {
-                Log.v("ContentPal Demo", String.format("%s: %s", key, values.charData(key).value("")));
+                Log.v("ContentPal Demo", String.format("%s: %s", key, values.data(key, new IdentityFunction<String>()).value("")));
             }
         }
 
