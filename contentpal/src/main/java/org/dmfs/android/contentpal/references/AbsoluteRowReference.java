@@ -26,8 +26,8 @@ import org.dmfs.android.contentpal.SoftRowReference;
 import org.dmfs.android.contentpal.Table;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.predicates.EqArg;
-import org.dmfs.android.contentpal.rowdatasnapshots.IdentityFunction;
 import org.dmfs.android.contentpal.tools.uriparams.EmptyUriParams;
+import org.dmfs.jems.function.elementary.IdentityFunction;
 
 
 /**

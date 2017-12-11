@@ -91,12 +91,12 @@ import org.dmfs.android.contentpal.operations.Put;
 import org.dmfs.android.contentpal.predicates.AllOf;
 import org.dmfs.android.contentpal.queues.BasicOperationsQueue;
 import org.dmfs.android.contentpal.rowdata.Composite;
-import org.dmfs.android.contentpal.rowdatasnapshots.IdentityFunction;
 import org.dmfs.android.contentpal.rowsnapshots.VirtualRowSnapshot;
 import org.dmfs.android.contentpal.tables.AccountScoped;
 import org.dmfs.iterables.SingletonIterable;
 import org.dmfs.iterables.decorators.Flattened;
 import org.dmfs.iterables.elementary.Seq;
+import org.dmfs.jems.function.elementary.IdentityFunction;
 import org.dmfs.rfc5545.DateTime;
 import org.dmfs.rfc5545.Duration;
 

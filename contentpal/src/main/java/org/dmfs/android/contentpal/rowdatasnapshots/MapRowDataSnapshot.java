@@ -21,6 +21,7 @@ import android.support.annotation.NonNull;
 import org.dmfs.android.contentpal.RowDataSnapshot;
 import org.dmfs.iterators.decorators.Serialized;
 import org.dmfs.jems.function.Function;
+import org.dmfs.jems.optional.decorators.Mapped;
 import org.dmfs.optional.NullSafe;
 import org.dmfs.optional.Optional;
 
