@@ -49,11 +49,11 @@ import java.util.NoSuchElementException;
 public final class QueryRowSet<T> implements RowSet<T>
 {
     private final View<T> mView;
-    private final Projection mProjection;
+    private final Projection<T> mProjection;
     private final Predicate mPredicate;
 
 
-    public QueryRowSet(@NonNull View<T> view, @NonNull Projection projection, @NonNull Predicate predicate)
+    public QueryRowSet(@NonNull View<T> view, @NonNull Projection<T> projection, @NonNull Predicate predicate)
     {
         mView = view;
         mProjection = projection;
