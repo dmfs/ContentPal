@@ -20,6 +20,8 @@ import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.RowDataSnapshot;
 import org.dmfs.iterators.decorators.Serialized;
+import org.dmfs.jems.function.Function;
+import org.dmfs.jems.optional.decorators.Mapped;
 import org.dmfs.optional.NullSafe;
 import org.dmfs.optional.Optional;
 
@@ -33,13 +35,13 @@ import java.util.Map;
  *
  * @author Marten Gajda
  */
-public final class MapRowDataSnapshot<T> implements RowDataSnapshot<T>
+public final class MapRowDataSnapshot<Contract> implements RowDataSnapshot<Contract>
 {
-    private final Map<String, CharSequence> mCharData;
+    private final Map<String, String> mCharData;
     private final Map<String, byte[]> mByteData;
 
 
-    public MapRowDataSnapshot(@NonNull Map<String, CharSequence> charData, @NonNull Map<String, byte[]> byteData)
+    public MapRowDataSnapshot(@NonNull Map<String, String> charData, @NonNull Map<String, byte[]> byteData)
     {
         mCharData = new HashMap<>(charData);
         mByteData = new HashMap<>(byteData);
@@ -48,9 +50,9 @@ public final class MapRowDataSnapshot<T> implements RowDataSnapshot<T>
 
     @NonNull
     @Override
-    public Optional<CharSequence> charData(@NonNull String key)
+    public <ValueType> Optional<ValueType> data(@NonNull String key, @NonNull Function<String, ValueType> mapFunction)
     {
-        return new NullSafe<>(mCharData.get(key));
+        return new Mapped<>(mapFunction, new NullSafe<>(mCharData.get(key)));
     }
 
 

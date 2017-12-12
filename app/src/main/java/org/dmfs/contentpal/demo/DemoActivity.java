@@ -96,6 +96,7 @@ import org.dmfs.android.contentpal.tables.AccountScoped;
 import org.dmfs.iterables.SingletonIterable;
 import org.dmfs.iterables.decorators.Flattened;
 import org.dmfs.iterables.elementary.Seq;
+import org.dmfs.jems.function.elementary.IdentityFunction;
 import org.dmfs.rfc5545.DateTime;
 import org.dmfs.rfc5545.Duration;
 
@@ -107,7 +108,6 @@ public class DemoActivity extends AppCompatActivity
 
     private ContentProviderClient mContactsClient;
     private Table<ContactsContract.RawContacts> mRawContacts;
-    private Table<ContactsContract.Data> mData;
     private OperationsQueue mContactsQueue;
 
     private ContentProviderClient mCalendarsClient;
@@ -238,7 +238,7 @@ public class DemoActivity extends AppCompatActivity
             RowDataSnapshot<?> values = row.values();
             for (String key : values)
             {
-                Log.v("ContentPal Demo", String.format("%s: %s", key, values.charData(key).value("")));
+                Log.v("ContentPal Demo", String.format("%s: %s", key, values.data(key, new IdentityFunction<String>()).value("")));
             }
         }
 

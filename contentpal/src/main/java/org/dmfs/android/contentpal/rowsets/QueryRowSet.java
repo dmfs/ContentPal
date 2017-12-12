@@ -134,7 +134,7 @@ public final class QueryRowSet<T> implements RowSet<T>
                 {
                     throw new NoSuchElementException("No more rows to iterate");
                 }
-                Map<String, CharSequence> charData = new HashMap<>();
+                Map<String, String> charData = new HashMap<>();
                 Map<String, byte[]> byteData = new HashMap<>();
                 String[] columnNames = mCursor.getColumnNames();
                 for (int i = 0, count = mCursor.getColumnCount(); i < count; ++i)

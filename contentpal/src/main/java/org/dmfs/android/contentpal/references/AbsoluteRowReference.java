@@ -27,6 +27,7 @@ import org.dmfs.android.contentpal.Table;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.predicates.EqArg;
 import org.dmfs.android.contentpal.tools.uriparams.EmptyUriParams;
+import org.dmfs.jems.function.elementary.IdentityFunction;
 
 
 /**
@@ -89,7 +90,7 @@ public final class AbsoluteRowReference<T> implements SoftRowReference<T>
 
     private String rowId()
     {
-        return mRowDataSnapshot.charData(BaseColumns._ID).value().toString();
+        return mRowDataSnapshot.data(BaseColumns._ID, new IdentityFunction<String>()).value();
     }
 
 
