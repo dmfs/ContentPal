@@ -39,17 +39,4 @@ android {
     }
 }
 
-dependencies {
-    api project(':contentpal')
-
-    implementation deps.support_annotations
-    implementation deps.dmfs_datetime
-    implementation deps.dmfs_lib_recur
-    implementation deps.dmfs_jems
-
-    testImplementation project(':contentpal-testing')
-    testImplementation deps.junit
-    testImplementation deps.mockito
-    testImplementation deps.roboelectric
-    testImplementation deps.dmfs_jems_testing
-}
+dependencies CalendarPal

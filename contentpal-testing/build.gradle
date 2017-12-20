@@ -37,11 +37,4 @@ android {
     }
 }
 
-dependencies {
-    implementation project(':contentpal-api')
-    implementation deps.support_annotations
-    implementation deps.junit
-    implementation deps.hamcrest
-    implementation deps.mockito
-    implementation deps.dmfs_jems_testing
-}
+dependencies ContentPal_Testing

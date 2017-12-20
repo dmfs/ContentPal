@@ -39,16 +39,4 @@ android {
     }
 }
 
-dependencies {
-    api project(':contentpal-api')
-    api deps.dmfs_jems
-
-    implementation deps.support_annotations
-
-    testImplementation project(':contentpal-testing')
-    testImplementation deps.junit
-    testImplementation deps.mockito
-    testImplementation deps.roboelectric
-    testImplementation deps.dmfs_jems_testing
-
-}
+dependencies ContentPal

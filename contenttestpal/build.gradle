@@ -31,7 +31,4 @@ android {
     }
 }
 
-dependencies {
-    implementation project(':contentpal')
-    implementation deps.hamcrest
-}
+dependencies ContentTestPal
