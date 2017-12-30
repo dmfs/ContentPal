@@ -34,13 +34,4 @@ android {
     }
 }
 
-dependencies {
-    implementation project(':contactspal')
-    implementation project(':calendarpal')
-    implementation deps.support_appcompat
-    implementation deps.support_design
-    implementation deps.dmfs_jems
-    implementation deps.dmfs_datetime
-
-    testImplementation deps.junit
-}
+dependencies Demo_App

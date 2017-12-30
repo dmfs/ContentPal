@@ -44,8 +44,4 @@ android {
     }
 }
 
-dependencies {
-    api deps.dmfs_jems
-
-    implementation deps.support_annotations
-}
+dependencies ContentPal_Api

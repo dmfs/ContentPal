@@ -1,15 +1,16 @@
+apply plugin: 'java'
+
 def support_lib_version = '25.3.1'
 def jems_version = '1.15'
-
-ext.deps = [
+def d = [
         support_appcompat  : "com.android.support:appcompat-v7:$support_lib_version",
         support_annotations: "com.android.support:support-annotations:$support_lib_version",
         support_design     : "com.android.support:design:$support_lib_version",
 
-        dmfs_jems          : "org.dmfs:jems:$jems_version",
-        dmfs_jems_testing  : "org.dmfs:jems-testing:$jems_version",
-        dmfs_datetime      : 'org.dmfs:rfc5545-datetime:0.2.4',
-        dmfs_lib_recur     : 'org.dmfs:lib-recur:0.10',
+        jems               : "org.dmfs:jems:$jems_version",
+        jems_testing       : "org.dmfs:jems-testing:$jems_version",
+        datetime           : 'org.dmfs:rfc5545-datetime:0.2.4',
+        librecur           : 'org.dmfs:lib-recur:0.10',
 
         junit              : 'junit:junit:4.12',
         hamcrest           : 'org.hamcrest:hamcrest-library:1.3',
@@ -17,3 +18,64 @@ ext.deps = [
         roboelectric       : 'org.robolectric:robolectric:3.1.4'
 ]
 
+ext.ContentPal_Api = {
+    api d.jems
+    implementation d.support_annotations
+}
+
+ext.ContentPal = {
+    api project(':contentpal-api')
+    api d.jems
+    implementation d.support_annotations
+    testImplementation project(':contentpal-testing')
+    testImplementation d.jems_testing
+    testImplementation d.junit
+    testImplementation d.mockito
+    testImplementation d.roboelectric
+}
+
+ext.ContactsPal = {
+    api project(':contentpal')
+    implementation d.support_annotations
+    implementation d.jems
+    testImplementation project(':contentpal-testing')
+    testImplementation d.junit
+    testImplementation d.mockito
+    testImplementation d.roboelectric
+}
+
+ext.CalendarPal = {
+    api project(':contentpal')
+    implementation d.support_annotations
+    implementation d.datetime
+    implementation d.librecur
+    implementation d.jems
+    testImplementation project(':contentpal-testing')
+    testImplementation d.jems_testing
+    testImplementation d.junit
+    testImplementation d.mockito
+    testImplementation d.roboelectric
+}
+
+ext.ContentPal_Testing = {
+    implementation project(':contentpal-api')
+    implementation d.jems_testing
+    implementation d.support_annotations
+    implementation d.junit
+    implementation d.hamcrest
+    implementation d.mockito
+}
+
+ext.ContentTestPal = {
+    implementation project(':contentpal')
+    implementation d.hamcrest
+}
+
+ext.Demo_App = {
+    implementation project(':contactspal')
+    implementation project(':calendarpal')
+    implementation d.support_appcompat
+    implementation d.support_design
+    implementation d.jems
+    implementation d.datetime
+}
