@@ -28,6 +28,7 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.OperationType.updateOperation;
+import static org.dmfs.android.contentpal.testing.contentoperationbuilder.TargetMatcher.targets;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithExpectedCount.withExpectedCount;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withoutValues;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYieldAllowed.withYieldNotAllowed;
@@ -37,7 +38,6 @@ import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
 
 
 /**
@@ -61,9 +61,11 @@ public class CountedTest
     @Test
     public void testContentOperationBuilder() throws Exception
     {
+        Uri dummyUri = dummy(Uri.class);
         assertThat(
-                new Counted<>(10, new RawUpdate<>(mock(Uri.class))),
+                new Counted<>(10, new RawUpdate<>(dummyUri)),
                 builds(
+                        targets(sameInstance(dummyUri)),
                         updateOperation(),
                         withYieldNotAllowed(),
                         withExpectedCount(10),

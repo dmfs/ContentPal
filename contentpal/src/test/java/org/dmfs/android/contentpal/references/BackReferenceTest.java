@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 dmfs GmbH
+ * Copyright 2018 dmfs GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,35 +31,36 @@ import static org.dmfs.android.contentpal.testing.contentoperationbuilder.Operat
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.OperationType.updateOperation;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.TargetMatcher.targets;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithExpectedCount.withoutExpectedCount;
-import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withValuesOnly;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withoutValues;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYieldAllowed.withYieldNotAllowed;
-import static org.dmfs.android.contentpal.testing.contentvalues.Containing.containing;
-import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.absentBackReferences;
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.argumentValues;
+import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.backReferences;
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.predicateWith;
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.selection;
+import static org.dmfs.jems.hamcrest.matchers.PresentMatcher.isPresent;
 import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
+import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
 import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.Assert.assertThat;
 
 
 /**
+ * TODO: test actual back reference selection
+ *
  * @author Marten Gajda
  */
 @RunWith(RobolectricTestRunner.class)
 @Config(manifest = Config.NONE)
-public class RowUriReferenceTest
+public class BackReferenceTest
 {
     @Test
     public void testPutOperationBuilder() throws Exception
     {
-        assertThat(new RowUriReference<>(Uri.parse("content://authority/path/123")).putOperationBuilder(
+        assertThat(new BackReference<>(Uri.parse("content://authority/path/"), 123).putOperationBuilder(
                 dummy(TransactionContext.class)),
                 allOf(
-                        targets("content://authority/path/123"),
+                        targets("content://authority/path/"),
                         updateOperation(),
                         withoutExpectedCount(),
                         withYieldNotAllowed(),
@@ -70,10 +71,10 @@ public class RowUriReferenceTest
     @Test
     public void testDeleteOperationBuilder() throws Exception
     {
-        assertThat(new RowUriReference<>(Uri.parse("content://authority/path/123")).deleteOperationBuilder(
+        assertThat(new BackReference<>(Uri.parse("content://authority/path/"), 123).deleteOperationBuilder(
                 dummy(TransactionContext.class)),
                 allOf(
-                        targets("content://authority/path/123"),
+                        targets("content://authority/path/"),
                         deleteOperation(),
                         withoutExpectedCount(),
                         withYieldNotAllowed(),
@@ -84,10 +85,10 @@ public class RowUriReferenceTest
     @Test
     public void testAssertOperationBuilder() throws Exception
     {
-        assertThat(new RowUriReference<>(Uri.parse("content://authority/path/123")).assertOperationBuilder(
+        assertThat(new BackReference<>(Uri.parse("content://authority/path/"), 123).assertOperationBuilder(
                 dummy(TransactionContext.class)),
                 allOf(
-                        targets("content://authority/path/123"),
+                        targets("content://authority/path/"),
                         assertOperation(),
                         withoutExpectedCount(),
                         withYieldNotAllowed(),
@@ -99,37 +100,28 @@ public class RowUriReferenceTest
     public void testBuilderWithReferenceData() throws Exception
     {
         Uri dummyUri = dummy(Uri.class);
-        assertThat(new RowUriReference<>(Uri.parse("content://authority/path/123")).builderWithReferenceData(
+        assertThat(new BackReference<>(Uri.parse("content://authority/path/"), 123).builderWithReferenceData(
                 dummy(TransactionContext.class), ContentProviderOperation.newInsert(dummyUri), "column"),
                 allOf(
                         targets(sameInstance(dummyUri)),
                         insertOperation(),
                         withoutExpectedCount(),
                         withYieldNotAllowed(),
-                        withValuesOnly(
-                                containing("column", 123L))));
+                        withoutValues()));
     }
 
 
     @Test
     public void testPredicate() throws Exception
     {
-        TransactionContext dummyTc = dummy(TransactionContext.class);
+        TransactionContext mockTc = failingMock(TransactionContext.class);
 
-        assertThat(new RowUriReference<>(Uri.parse("content://authority/path/123")).predicate(dummyTc, "column"),
+        assertThat(new BackReference<>(Uri.parse("content://authority/path/"), 123).predicate(mockTc, "testcol"),
                 predicateWith(
-                        selection(dummyTc, "column = ?"),
-                        argumentValues(dummyTc, "123"),
-                        absentBackReferences(dummyTc, 1)
+                        selection(mockTc, "testcol = ?"),
+                        argumentValues(mockTc, "-1"),
+                        backReferences(mockTc, isPresent(123))
                 ));
-    }
-
-
-    @Test
-    public void testIsVirtual() throws Exception
-    {
-        assertThat(new RowUriReference<>(Uri.parse("content://authority/path/123")).isVirtual(),
-                is(false));
     }
 
 }

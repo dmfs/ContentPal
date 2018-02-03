@@ -29,6 +29,7 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.OperationType.updateOperation;
+import static org.dmfs.android.contentpal.testing.contentoperationbuilder.TargetMatcher.targets;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithExpectedCount.withoutExpectedCount;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withValuesOnly;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withoutValues;
@@ -71,11 +72,13 @@ public class PutTest
         RowSnapshot<Object> mockRowSnapshot = failingMock(RowSnapshot.class);
         SoftRowReference<Object> mockRowReference = failingMock(SoftRowReference.class);
 
+        Uri dummyUri = dummy(Uri.class);
         doReturn(mockRowReference).when(mockRowSnapshot).reference();
-        doReturn(ContentProviderOperation.newUpdate(Uri.EMPTY)).when(mockRowReference).putOperationBuilder(any(TransactionContext.class));
+        doReturn(ContentProviderOperation.newUpdate(dummyUri)).when(mockRowReference).putOperationBuilder(any(TransactionContext.class));
 
         assertThat(new Put<>(mockRowSnapshot),
                 builds(
+                        targets(sameInstance(dummyUri)),
                         updateOperation(),
                         withYieldNotAllowed(),
                         withoutExpectedCount(),
@@ -91,11 +94,13 @@ public class PutTest
         RowSnapshot<Object> mockRowSnapshot = failingMock(RowSnapshot.class);
         SoftRowReference<Object> mockRowReference = failingMock(SoftRowReference.class);
 
+        Uri dummyUri = dummy(Uri.class);
         doReturn(mockRowReference).when(mockRowSnapshot).reference();
-        doReturn(ContentProviderOperation.newUpdate(Uri.EMPTY)).when(mockRowReference).putOperationBuilder(any(TransactionContext.class));
+        doReturn(ContentProviderOperation.newUpdate(dummyUri)).when(mockRowReference).putOperationBuilder(any(TransactionContext.class));
 
         assertThat(new Put<>(mockRowSnapshot, new CharSequenceRowData<>("x", "y")),
                 builds(
+                        targets(sameInstance(dummyUri)),
                         updateOperation(),
                         withYieldNotAllowed(),
                         withoutExpectedCount(),

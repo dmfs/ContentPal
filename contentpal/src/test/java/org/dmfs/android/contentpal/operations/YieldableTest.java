@@ -28,6 +28,7 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.OperationType.insertOperation;
+import static org.dmfs.android.contentpal.testing.contentoperationbuilder.TargetMatcher.targets;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithExpectedCount.withoutExpectedCount;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withoutValues;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYieldAllowed.withYieldAllowed;
@@ -61,9 +62,11 @@ public class YieldableTest
     @Test
     public void testContentOperationBuilder() throws Exception
     {
+        Uri dummyUri = dummy(Uri.class);
         assertThat(
-                new Yieldable<>(new RawInsert<>(Uri.EMPTY)),
+                new Yieldable<>(new RawInsert<>(dummyUri)),
                 builds(
+                        targets(sameInstance(dummyUri)),
                         insertOperation(),
                         withYieldAllowed(),
                         withoutExpectedCount(),

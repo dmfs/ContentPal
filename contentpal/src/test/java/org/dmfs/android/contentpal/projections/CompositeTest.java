@@ -44,6 +44,15 @@ public class CompositeTest
     @Test
     public void testNonEmpty() throws Exception
     {
+        // test vararg ctor
+        assertThat(new Composite<>(new MultiProjection<Contract>("abc")), projects("abc"));
+        assertThat(new Composite<>(new MultiProjection<Contract>("abc", "xyz", "qrs")), projects("abc", "xyz", "qrs"));
+        assertThat(new Composite<>(new MultiProjection<Contract>("abc"), new MultiProjection<Contract>("xyz")), projects("abc", "xyz"));
+        assertThat(new Composite<>(new MultiProjection<Contract>("abc", "xyz", "qrs")), projects("abc", "xyz", "qrs"));
+        assertThat(new Composite<>(new MultiProjection<Contract>("abc", "xyz", "qrs"), new MultiProjection<Contract>("123", "456", "789")),
+                projects("abc", "xyz", "qrs", "123", "456", "789"));
+
+        // test iterable ctor
         assertThat(new Composite<>(new Seq<Projection<Contract>>(new MultiProjection<Contract>("abc"))), projects("abc"));
         assertThat(new Composite<>(new Seq<Projection<Contract>>(new MultiProjection<Contract>("abc", "xyz", "qrs"))), projects("abc", "xyz", "qrs"));
         assertThat(new Composite<>(new Seq<Projection<Contract>>(new MultiProjection<Contract>("abc"), new MultiProjection<Contract>("xyz"))),

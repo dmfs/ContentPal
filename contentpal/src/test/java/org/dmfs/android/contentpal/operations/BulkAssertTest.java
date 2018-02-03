@@ -34,6 +34,7 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.OperationType.assertOperation;
+import static org.dmfs.android.contentpal.testing.contentoperationbuilder.TargetMatcher.targets;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithExpectedCount.withoutExpectedCount;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withValuesOnly;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withoutValues;
@@ -43,6 +44,7 @@ import static org.dmfs.android.contentpal.testing.operations.OperationMatcher.bu
 import static org.dmfs.android.contentpal.testing.predicates.PredicateArgumentMatcher.predicateWithSelection;
 import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
 import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
+import static org.hamcrest.core.IsSame.sameInstance;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.same;
@@ -83,11 +85,12 @@ public final class BulkAssertTest
         Operation<Object> mockAssertOperation = failingMock(Operation.class);
 
         doReturn(mockAssertOperation).when(mockTable).assertOperation(same(EmptyUriParams.INSTANCE), predicateWithSelection("1"));
-
-        doReturn(ContentProviderOperation.newAssertQuery(Uri.EMPTY)).when(mockAssertOperation).contentOperationBuilder(any(TransactionContext.class));
+        Uri dummyUri = dummy(Uri.class);
+        doReturn(ContentProviderOperation.newAssertQuery(dummyUri)).when(mockAssertOperation).contentOperationBuilder(any(TransactionContext.class));
 
         assertThat(new BulkAssert<>(mockTable),
                 builds(
+                        targets(sameInstance(dummyUri)),
                         assertOperation(),
                         withoutExpectedCount(),
                         withYieldNotAllowed(),
@@ -103,11 +106,12 @@ public final class BulkAssertTest
         Operation<Object> mockAssertOperation = failingMock(Operation.class);
 
         doReturn(mockAssertOperation).when(mockTable).assertOperation(EmptyUriParams.INSTANCE, dummyPredicate);
-
-        doReturn(ContentProviderOperation.newAssertQuery(Uri.EMPTY)).when(mockAssertOperation).contentOperationBuilder(any(TransactionContext.class));
+        Uri dummyUri = dummy(Uri.class);
+        doReturn(ContentProviderOperation.newAssertQuery(dummyUri)).when(mockAssertOperation).contentOperationBuilder(any(TransactionContext.class));
 
         assertThat(new BulkAssert<>(mockTable, dummyPredicate),
                 builds(
+                        targets(sameInstance(dummyUri)),
                         assertOperation(),
                         withoutExpectedCount(),
                         withYieldNotAllowed(),
@@ -122,11 +126,12 @@ public final class BulkAssertTest
         Operation<Object> mockAssertOperation = failingMock(Operation.class);
 
         doReturn(mockAssertOperation).when(mockTable).assertOperation(same(EmptyUriParams.INSTANCE), predicateWithSelection("1"));
-
-        doReturn(ContentProviderOperation.newAssertQuery(Uri.EMPTY)).when(mockAssertOperation).contentOperationBuilder(any(TransactionContext.class));
+        Uri dummyUri = dummy(Uri.class);
+        doReturn(ContentProviderOperation.newAssertQuery(dummyUri)).when(mockAssertOperation).contentOperationBuilder(any(TransactionContext.class));
 
         assertThat(new BulkAssert<>(mockTable, new CharSequenceRowData<>("key", "value")),
                 builds(
+                        targets(sameInstance(dummyUri)),
                         assertOperation(),
                         withoutExpectedCount(),
                         withYieldNotAllowed(),
@@ -143,11 +148,12 @@ public final class BulkAssertTest
         Operation<Object> mockAssertOperation = failingMock(Operation.class);
 
         doReturn(mockAssertOperation).when(mockTable).assertOperation(EmptyUriParams.INSTANCE, dummyPredicate);
-
-        doReturn(ContentProviderOperation.newAssertQuery(Uri.EMPTY)).when(mockAssertOperation).contentOperationBuilder(any(TransactionContext.class));
+        Uri dummyUri = dummy(Uri.class);
+        doReturn(ContentProviderOperation.newAssertQuery(dummyUri)).when(mockAssertOperation).contentOperationBuilder(any(TransactionContext.class));
 
         assertThat(new BulkAssert<>(mockTable, new CharSequenceRowData<>("key", "value"), dummyPredicate),
                 builds(
+                        targets(sameInstance(dummyUri)),
                         assertOperation(),
                         withoutExpectedCount(),
                         withYieldNotAllowed(),

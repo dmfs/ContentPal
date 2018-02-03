@@ -31,6 +31,7 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.OperationType.assertOperation;
+import static org.dmfs.android.contentpal.testing.contentoperationbuilder.TargetMatcher.targets;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithExpectedCount.withoutExpectedCount;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withValuesOnly;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYieldAllowed.withYieldNotAllowed;
@@ -38,6 +39,7 @@ import static org.dmfs.android.contentpal.testing.contentvalues.Containing.conta
 import static org.dmfs.android.contentpal.testing.operations.OperationMatcher.builds;
 import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
 import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
+import static org.hamcrest.core.IsSame.sameInstance;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
@@ -67,10 +69,12 @@ public final class AssertTest
         RowSnapshot<Object> mockRowSnapshot = failingMock(RowSnapshot.class);
         SoftRowReference<Object> dummyRowReference = dummy(SoftRowReference.class);
         doReturn(dummyRowReference).when(mockRowSnapshot).reference();
-        doReturn(ContentProviderOperation.newAssertQuery(Uri.EMPTY)).when(dummyRowReference).assertOperationBuilder(any(TransactionContext.class));
+        Uri dummyUri = dummy(Uri.class);
+        doReturn(ContentProviderOperation.newAssertQuery(dummyUri)).when(dummyRowReference).assertOperationBuilder(any(TransactionContext.class));
 
         assertThat(new Assert<>(mockRowSnapshot, new CharSequenceRowData<>("key", "value")),
                 builds(
+                        targets(sameInstance(dummyUri)),
                         assertOperation(),
                         withoutExpectedCount(),
                         withYieldNotAllowed(),

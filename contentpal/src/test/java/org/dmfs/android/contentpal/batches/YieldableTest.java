@@ -32,11 +32,15 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.OperationType.updateOperation;
+import static org.dmfs.android.contentpal.testing.contentoperationbuilder.TargetMatcher.targets;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithExpectedCount.withoutExpectedCount;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withoutValues;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYieldAllowed.withYieldAllowed;
 import static org.dmfs.android.contentpal.testing.operations.OperationMatcher.builds;
+import static org.dmfs.jems.hamcrest.matchers.IterableMatcher.iteratesTo;
+import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
 import static org.hamcrest.Matchers.emptyIterable;
+import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
@@ -64,22 +68,25 @@ public class YieldableTest
         Operation<?> mockOp1 = mock(Operation.class);
         Operation<?> mockOp2 = mock(Operation.class);
         Operation<?> mockOp3 = mock(Operation.class);
+        Uri dummyUri = dummy(Uri.class);
 
-        doReturn(ContentProviderOperation.newUpdate(Uri.EMPTY)).when(mockOp1).contentOperationBuilder(ArgumentMatchers.any(TransactionContext.class));
+        doReturn(ContentProviderOperation.newUpdate(dummyUri)).when(mockOp1).contentOperationBuilder(ArgumentMatchers.any(TransactionContext.class));
 
         // every last operation of each batch should allow yielding
 
         assertThat(new Yieldable(new SingletonIterable<Operation<?>>(mockOp1)),
-                Matchers.contains(
+                iteratesTo(
                         builds(
+                                targets(sameInstance(dummyUri)),
                                 updateOperation(),
                                 withoutValues(),
                                 withoutExpectedCount(),
                                 withYieldAllowed())));
 
         assertThat(new Yieldable(new Seq<>(mockOp1, mockOp2)),
-                Matchers.contains(
+                iteratesTo(
                         builds(
+                                targets(sameInstance(dummyUri)),
                                 updateOperation(),
                                 withoutValues(),
                                 withoutExpectedCount(),
@@ -87,8 +94,9 @@ public class YieldableTest
                         Matchers.<Operation>is(mockOp2)));
 
         assertThat(new Yieldable(new Seq<>(mockOp1, mockOp2, mockOp3)),
-                Matchers.contains(
+                iteratesTo(
                         builds(
+                                targets(sameInstance(dummyUri)),
                                 updateOperation(),
                                 withoutValues(),
                                 withoutExpectedCount(),
