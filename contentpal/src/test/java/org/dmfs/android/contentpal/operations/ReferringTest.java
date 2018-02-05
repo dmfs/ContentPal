@@ -30,6 +30,7 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.OperationType.insertOperation;
+import static org.dmfs.android.contentpal.testing.contentoperationbuilder.TargetMatcher.targets;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithExpectedCount.withoutExpectedCount;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withValuesOnly;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYieldAllowed.withYieldNotAllowed;
@@ -38,6 +39,7 @@ import static org.dmfs.android.contentpal.testing.operations.OperationMatcher.bu
 import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
 import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.doReturn;
 
@@ -67,8 +69,10 @@ public class ReferringTest
         RowSnapshot<Object> mockSnapshot = failingMock(RowSnapshot.class);
         doReturn(new RowUriReference<>(Uri.parse("content://abc/xyz/123"))).when(mockSnapshot).reference();
 
-        assertThat(new Referring<>(mockSnapshot, "column", new RawInsert<>(dummy(Uri.class))),
+        Uri dummyUri = dummy(Uri.class);
+        assertThat(new Referring<>(mockSnapshot, "column", new RawInsert<>(dummyUri)),
                 builds(
+                        targets(sameInstance(dummyUri)),
                         insertOperation(),
                         withoutExpectedCount(),
                         withYieldNotAllowed(),

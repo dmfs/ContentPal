@@ -29,12 +29,14 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.OperationType.deleteOperation;
+import static org.dmfs.android.contentpal.testing.contentoperationbuilder.TargetMatcher.targets;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithExpectedCount.withoutExpectedCount;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withoutValues;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYieldAllowed.withYieldNotAllowed;
 import static org.dmfs.android.contentpal.testing.operations.OperationMatcher.builds;
 import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
 import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
+import static org.hamcrest.core.IsSame.sameInstance;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
@@ -62,11 +64,13 @@ public class DeleteTest
         RowSnapshot<Object> mockRowSnapshot = failingMock(RowSnapshot.class);
         SoftRowReference<Object> rowReference = failingMock(SoftRowReference.class);
         doReturn(rowReference).when(mockRowSnapshot).reference();
-        doReturn(ContentProviderOperation.newDelete(Uri.EMPTY)).when(rowReference).deleteOperationBuilder(any(TransactionContext.class));
+        Uri dummyUri = dummy(Uri.class);
+        doReturn(ContentProviderOperation.newDelete(dummyUri)).when(rowReference).deleteOperationBuilder(any(TransactionContext.class));
 
         assertThat(
                 new Delete<>(mockRowSnapshot),
                 builds(
+                        targets(sameInstance(dummyUri)),
                         deleteOperation(),
                         withYieldNotAllowed(),
                         withoutExpectedCount(),

@@ -35,12 +35,15 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.OperationType.insertOperation;
+import static org.dmfs.android.contentpal.testing.contentoperationbuilder.TargetMatcher.targets;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithExpectedCount.withoutExpectedCount;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withValuesOnly;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYieldAllowed.withYieldNotAllowed;
 import static org.dmfs.android.contentpal.testing.contentvalues.Containing.containing;
 import static org.dmfs.android.contentpal.testing.operations.OperationMatcher.builds;
+import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
 import static org.hamcrest.Matchers.emptyIterable;
+import static org.hamcrest.core.IsSame.sameInstance;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -77,18 +80,20 @@ public class MultiInsertBatchTest
     public void testSingle()
     {
         InsertOperation<Object> mockOp = mock(InsertOperation.class);
+        final Uri dummyUri = dummy(Uri.class);
         when(mockOp.contentOperationBuilder(any(TransactionContext.class))).then(new Answer<ContentProviderOperation.Builder>()
         {
             @Override
             public ContentProviderOperation.Builder answer(InvocationOnMock invocation) throws Throwable
             {
-                return ContentProviderOperation.newInsert(Uri.EMPTY);
+                return ContentProviderOperation.newInsert(dummyUri);
             }
         });
 
         assertThat(new MultiInsertBatch<>(mockOp, new CharSequenceRowData<>("key", "value")),
                 Matchers.contains(
                         builds(
+                                targets(sameInstance(dummyUri)),
                                 insertOperation(),
                                 withValuesOnly(containing("key", "value")),
                                 withoutExpectedCount(),
@@ -100,12 +105,14 @@ public class MultiInsertBatchTest
     public void testSingleComposite()
     {
         InsertOperation<Object> mockOp = mock(InsertOperation.class);
+        final Uri dummyUri = dummy(Uri.class);
+
         when(mockOp.contentOperationBuilder(any(TransactionContext.class))).then(new Answer<ContentProviderOperation.Builder>()
         {
             @Override
             public ContentProviderOperation.Builder answer(InvocationOnMock invocation) throws Throwable
             {
-                return ContentProviderOperation.newInsert(Uri.EMPTY);
+                return ContentProviderOperation.newInsert(dummyUri);
             }
         });
 
@@ -116,6 +123,7 @@ public class MultiInsertBatchTest
                                 new CharSequenceRowData<>("key3", "value3"))),
                 Matchers.contains(
                         builds(
+                                targets(sameInstance(dummyUri)),
                                 insertOperation(),
                                 withValuesOnly(
                                         containing("key", "value"),
@@ -130,12 +138,13 @@ public class MultiInsertBatchTest
     public void testMulti()
     {
         InsertOperation<Object> mockOp = mock(InsertOperation.class);
+        final Uri dummyUri = dummy(Uri.class);
         when(mockOp.contentOperationBuilder(any(TransactionContext.class))).then(new Answer<ContentProviderOperation.Builder>()
         {
             @Override
             public ContentProviderOperation.Builder answer(InvocationOnMock invocation) throws Throwable
             {
-                return ContentProviderOperation.newInsert(Uri.EMPTY);
+                return ContentProviderOperation.newInsert(dummyUri);
             }
         });
 
@@ -145,16 +154,19 @@ public class MultiInsertBatchTest
                         new CharSequenceRowData<>("key", "value3")),
                 Matchers.contains(
                         builds(
+                                targets(sameInstance(dummyUri)),
                                 insertOperation(),
                                 withValuesOnly(containing("key", "value")),
                                 withoutExpectedCount(),
                                 withYieldNotAllowed()),
                         builds(
+                                targets(sameInstance(dummyUri)),
                                 insertOperation(),
                                 withValuesOnly(containing("key", "value2")),
                                 withoutExpectedCount(),
                                 withYieldNotAllowed()),
                         builds(
+                                targets(sameInstance(dummyUri)),
                                 insertOperation(),
                                 withValuesOnly(containing("key", "value3")),
                                 withoutExpectedCount(),
@@ -166,12 +178,13 @@ public class MultiInsertBatchTest
     public void testMultiComposite()
     {
         InsertOperation<Object> mockOp = mock(InsertOperation.class);
+        final Uri dummyUri = dummy(Uri.class);
         when(mockOp.contentOperationBuilder(any(TransactionContext.class))).then(new Answer<ContentProviderOperation.Builder>()
         {
             @Override
             public ContentProviderOperation.Builder answer(InvocationOnMock invocation) throws Throwable
             {
-                return ContentProviderOperation.newInsert(Uri.EMPTY);
+                return ContentProviderOperation.newInsert(dummyUri);
             }
         });
 
@@ -190,6 +203,7 @@ public class MultiInsertBatchTest
                                 new CharSequenceRowData<>("key3c", "value3c"))),
                 Matchers.contains(
                         builds(
+                                targets(sameInstance(dummyUri)),
                                 insertOperation(),
                                 withValuesOnly(
                                         containing("key1a", "value1a"),
@@ -198,6 +212,7 @@ public class MultiInsertBatchTest
                                 withoutExpectedCount(),
                                 withYieldNotAllowed()),
                         builds(
+                                targets(sameInstance(dummyUri)),
                                 insertOperation(),
                                 withValuesOnly(
                                         containing("key2a", "value2a"),
@@ -206,6 +221,7 @@ public class MultiInsertBatchTest
                                 withoutExpectedCount(),
                                 withYieldNotAllowed()),
                         builds(
+                                targets(sameInstance(dummyUri)),
                                 insertOperation(),
                                 withValuesOnly(
                                         containing("key3a", "value3a"),

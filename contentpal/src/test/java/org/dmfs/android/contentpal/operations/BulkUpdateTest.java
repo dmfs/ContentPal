@@ -34,6 +34,7 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.OperationType.updateOperation;
+import static org.dmfs.android.contentpal.testing.contentoperationbuilder.TargetMatcher.targets;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithExpectedCount.withoutExpectedCount;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withValuesOnly;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYieldAllowed.withYieldNotAllowed;
@@ -42,6 +43,7 @@ import static org.dmfs.android.contentpal.testing.operations.OperationMatcher.bu
 import static org.dmfs.android.contentpal.testing.predicates.PredicateArgumentMatcher.predicateWithSelection;
 import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
 import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
+import static org.hamcrest.core.IsSame.sameInstance;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.same;
@@ -77,10 +79,12 @@ public final class BulkUpdateTest
 
         doReturn(mockOperation).when(mockTable).updateOperation(same(EmptyUriParams.INSTANCE), predicateWithSelection("1"));
 
-        doReturn(ContentProviderOperation.newUpdate(Uri.EMPTY)).when(mockOperation).contentOperationBuilder(any(TransactionContext.class));
+        Uri dummyUri = dummy(Uri.class);
+        doReturn(ContentProviderOperation.newUpdate(dummyUri)).when(mockOperation).contentOperationBuilder(any(TransactionContext.class));
 
         assertThat(new BulkUpdate<>(mockTable, new CharSequenceRowData<>("key", "value")),
                 builds(
+                        targets(sameInstance(dummyUri)),
                         updateOperation(),
                         withoutExpectedCount(),
                         withYieldNotAllowed(),
@@ -98,10 +102,12 @@ public final class BulkUpdateTest
 
         doReturn(mockOperation).when(mockTable).updateOperation(EmptyUriParams.INSTANCE, dummyPredicate);
 
-        doReturn(ContentProviderOperation.newUpdate(Uri.EMPTY)).when(mockOperation).contentOperationBuilder(any(TransactionContext.class));
+        Uri dummyUri = dummy(Uri.class);
+        doReturn(ContentProviderOperation.newUpdate(dummyUri)).when(mockOperation).contentOperationBuilder(any(TransactionContext.class));
 
         assertThat(new BulkUpdate<>(mockTable, new CharSequenceRowData<>("key", "value"), dummyPredicate),
                 builds(
+                        targets(sameInstance(dummyUri)),
                         updateOperation(),
                         withoutExpectedCount(),
                         withYieldNotAllowed(),

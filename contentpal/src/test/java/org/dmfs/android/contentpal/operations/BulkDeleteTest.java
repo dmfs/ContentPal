@@ -32,6 +32,7 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.OperationType.deleteOperation;
+import static org.dmfs.android.contentpal.testing.contentoperationbuilder.TargetMatcher.targets;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithExpectedCount.withoutExpectedCount;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withoutValues;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYieldAllowed.withYieldNotAllowed;
@@ -39,6 +40,7 @@ import static org.dmfs.android.contentpal.testing.operations.OperationMatcher.bu
 import static org.dmfs.android.contentpal.testing.predicates.PredicateArgumentMatcher.predicateWithSelection;
 import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
 import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
+import static org.hamcrest.core.IsSame.sameInstance;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.same;
@@ -74,11 +76,12 @@ public final class BulkDeleteTest
         Operation<Object> mockOperation = failingMock(Operation.class);
 
         doReturn(mockOperation).when(mockTable).deleteOperation(same(EmptyUriParams.INSTANCE), predicateWithSelection("1"));
-
-        doReturn(ContentProviderOperation.newDelete(Uri.EMPTY)).when(mockOperation).contentOperationBuilder(any(TransactionContext.class));
+        Uri dummyUri = dummy(Uri.class);
+        doReturn(ContentProviderOperation.newDelete(dummyUri)).when(mockOperation).contentOperationBuilder(any(TransactionContext.class));
 
         assertThat(new BulkDelete<>(mockTable),
                 builds(
+                        targets(sameInstance(dummyUri)),
                         deleteOperation(),
                         withoutExpectedCount(),
                         withYieldNotAllowed(),
@@ -94,11 +97,12 @@ public final class BulkDeleteTest
         Predicate dummyPredicate = mock(Predicate.class);
 
         doReturn(mockOperation).when(mockTable).deleteOperation(EmptyUriParams.INSTANCE, dummyPredicate);
-
-        doReturn(ContentProviderOperation.newDelete(Uri.EMPTY)).when(mockOperation).contentOperationBuilder(any(TransactionContext.class));
+        Uri dummyUri = dummy(Uri.class);
+        doReturn(ContentProviderOperation.newDelete(dummyUri)).when(mockOperation).contentOperationBuilder(any(TransactionContext.class));
 
         assertThat(new BulkDelete<>(mockTable, dummyPredicate),
                 builds(
+                        targets(sameInstance(dummyUri)),
                         deleteOperation(),
                         withoutExpectedCount(),
                         withYieldNotAllowed(),

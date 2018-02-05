@@ -31,6 +31,7 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.OperationType.insertOperation;
+import static org.dmfs.android.contentpal.testing.contentoperationbuilder.TargetMatcher.targets;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithExpectedCount.withoutExpectedCount;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withValuesOnly;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withoutValues;
@@ -39,6 +40,7 @@ import static org.dmfs.android.contentpal.testing.contentvalues.Containing.conta
 import static org.dmfs.android.contentpal.testing.operations.OperationMatcher.builds;
 import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
 import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
+import static org.hamcrest.core.IsSame.sameInstance;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.doReturn;
 
@@ -67,10 +69,12 @@ public class InsertTest
     public void testContentOperationBuilder() throws Exception
     {
         Table<Object> mockTable = failingMock(Table.class);
-        doReturn(new RawInsert<>(dummy(Uri.class))).when(mockTable).insertOperation(EmptyUriParams.INSTANCE);
+        Uri dummyUri = dummy(Uri.class);
+        doReturn(new RawInsert<>(dummyUri)).when(mockTable).insertOperation(EmptyUriParams.INSTANCE);
 
         assertThat(new Insert<>(mockTable),
                 builds(
+                        targets(sameInstance(dummyUri)),
                         insertOperation(),
                         withoutExpectedCount(),
                         withYieldNotAllowed(),
@@ -78,6 +82,7 @@ public class InsertTest
 
         assertThat(new Insert<>(mockTable, new CharSequenceRowData<>("key", "value")),
                 builds(
+                        targets(sameInstance(dummyUri)),
                         insertOperation(),
                         withoutExpectedCount(),
                         withYieldNotAllowed(),

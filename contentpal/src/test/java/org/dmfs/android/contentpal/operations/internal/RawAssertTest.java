@@ -26,11 +26,13 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.OperationType.assertOperation;
+import static org.dmfs.android.contentpal.testing.contentoperationbuilder.TargetMatcher.targets;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithExpectedCount.withoutExpectedCount;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withoutValues;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYieldAllowed.withYieldNotAllowed;
 import static org.dmfs.android.contentpal.testing.operations.OperationMatcher.builds;
 import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
+import static org.hamcrest.core.IsSame.sameInstance;
 import static org.junit.Assert.assertThat;
 
 
@@ -51,8 +53,10 @@ public class RawAssertTest
     @Test
     public void testContentOperationBuilder() throws Exception
     {
-        assertThat(new RawAssert<>(dummy(Uri.class)),
+        Uri dummyUri = dummy(Uri.class);
+        assertThat(new RawAssert<>(dummyUri),
                 builds(
+                        targets(sameInstance(dummyUri)),
                         assertOperation(),
                         withYieldNotAllowed(),
                         withoutExpectedCount(),

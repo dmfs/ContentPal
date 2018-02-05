@@ -48,4 +48,5 @@ dependencies {
     implementation deps.hamcrest
     implementation deps.mockito
     implementation deps.dmfs_jems_testing
+    testImplementation deps.roboelectric
 }

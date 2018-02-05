@@ -29,6 +29,7 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.OperationType.insertOperation;
+import static org.dmfs.android.contentpal.testing.contentoperationbuilder.TargetMatcher.targets;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithExpectedCount.withoutExpectedCount;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withValuesOnly;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYieldAllowed.withYieldNotAllowed;
@@ -63,9 +64,11 @@ public class PopulatedTest
     @Test
     public void testContentOperationBuilder() throws Exception
     {
+        Uri dummyUri = dummy(Uri.class);
         assertThat(
-                new Populated<>(new CharSequenceRowData<>("a", "x"), new RawInsert<>(Uri.EMPTY)),
+                new Populated<>(new CharSequenceRowData<>("a", "x"), new RawInsert<>(dummyUri)),
                 builds(
+                        targets(sameInstance(dummyUri)),
                         insertOperation(),
                         withYieldNotAllowed(),
                         withoutExpectedCount(),
