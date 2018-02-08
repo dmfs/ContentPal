@@ -19,6 +19,7 @@ package org.dmfs.android.calendarpal.calendars;
 import android.content.ContentProviderOperation;
 import android.provider.CalendarContract;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import org.dmfs.android.contentpal.TransactionContext;
 
@@ -34,7 +35,7 @@ public final class Owned implements CalendarRowData
     private final CharSequence mOwner;
 
 
-    public Owned(CharSequence owner, @NonNull CalendarRowData delegate)
+    public Owned(@Nullable CharSequence owner, @NonNull CalendarRowData delegate)
     {
         mDelegate = delegate;
         mOwner = owner;
