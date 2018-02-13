@@ -32,9 +32,8 @@ import android.util.Log;
 import android.view.View;
 
 import org.dmfs.android.calendarpal.attendees.AttendeeData;
-import org.dmfs.android.calendarpal.attendees.Named;
-import org.dmfs.android.calendarpal.calendars.CalendarData;
 import org.dmfs.android.calendarpal.calendars.Colored;
+import org.dmfs.android.calendarpal.calendars.Named;
 import org.dmfs.android.calendarpal.calendars.Synced;
 import org.dmfs.android.calendarpal.calendars.Visible;
 import org.dmfs.android.calendarpal.events.Described;
@@ -274,7 +273,11 @@ public class DemoActivity extends AppCompatActivity
         mCalendarQueue.enqueue(
                 new Seq<>(
                         // put the calendar
-                        new Put<>(calendar, new Synced(new Visible(new Colored(0x00ff00, new CalendarData("Cal1"))))),
+                        new Put<>(calendar, new Composite<>(
+                                new Synced(),
+                                new Visible(),
+                                new Colored(0x00ff00),
+                                new Named("Cal1"))),
 
                         // add event1 now
                         new Put<>(event1,
@@ -301,7 +304,9 @@ public class DemoActivity extends AppCompatActivity
                                                                 DateTime.now().addDuration(Duration.parse("P1D")),
                                                                 DateTime.now().addDuration(Duration.parse("P1DT1H"))))))),
                         // add an attendee to event2
-                        new EventRelated<>(event2, new Insert<>(new Attendees(), new Named("Me", new AttendeeData("me@example.com")))),
+                        new EventRelated<>(event2,
+                                new Insert<>(new Attendees(),
+                                        new org.dmfs.android.calendarpal.attendees.Named("Me", new AttendeeData("me@example.com")))),
                         // add a reminder to event2, one day in advance
                         new EventRelated<>(event2, new Insert<>(new Reminders(), new ReminderData((int) TimeUnit.DAYS.toMinutes(1))))
 

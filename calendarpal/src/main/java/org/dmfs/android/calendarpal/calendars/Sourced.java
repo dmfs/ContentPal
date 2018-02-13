@@ -20,34 +20,33 @@ import android.content.ContentProviderOperation;
 import android.provider.CalendarContract;
 import android.support.annotation.NonNull;
 
+import org.dmfs.android.contentpal.RowData;
 import org.dmfs.android.contentpal.TransactionContext;
 
 
 /**
- * {@link CalendarRowData} decorator to set the {@code _SYNC_ID} of a calendar.
+ * {@link CalendarContract.Calendars} {@link RowData} decorator to set the {@code _SYNC_ID} of a calendar.
  * <p>
  * Note, this class is called {@code Sourced} rather than {@code Synced}
  * (reflecting the name {@code _SYNC_ID}) because it is assumed that this field identifies the source of this calendar (either directly or indirectly).
  *
  * @author Marten Gajda
  */
-public final class Sourced implements CalendarRowData
+public final class Sourced implements RowData<CalendarContract.Calendars>
 {
-    private final CalendarRowData mDelegate;
     private final CharSequence mSource;
 
 
-    public Sourced(@NonNull CharSequence source, @NonNull CalendarRowData delegate)
+    public Sourced(@NonNull CharSequence source)
     {
-        mDelegate = delegate;
         mSource = source;
     }
 
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder updatedBuilder(TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
+    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
-        return mDelegate.updatedBuilder(transactionContext, builder).withValue(CalendarContract.Calendars._SYNC_ID, mSource.toString());
+        return builder.withValue(CalendarContract.Calendars._SYNC_ID, mSource.toString());
     }
 }

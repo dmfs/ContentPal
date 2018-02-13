@@ -39,7 +39,7 @@ public class AccessibleTest
     @Test
     public void testUpdatedBuilder() throws Exception
     {
-        assertThat(new Accessible(123, (transactionContext, builder) -> builder), builds(
+        assertThat(new Accessible(123), builds(
                 withValuesOnly(
                         containing(CalendarContract.Calendars.CALENDAR_ACCESS_LEVEL, 123))));
     }

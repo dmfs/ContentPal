@@ -21,32 +21,30 @@ import android.provider.CalendarContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import org.dmfs.android.contentpal.RowData;
 import org.dmfs.android.contentpal.TransactionContext;
 
 
 /**
- * {@link CalendarRowData} decorator to set a calendar owner.
+ * {@link CalendarContract.Calendars} {@link RowData} decorator to set a calendar owner.
  *
  * @author Marten Gajda
  */
-public final class Owned implements CalendarRowData
+public final class Owned implements RowData<CalendarContract.Calendars>
 {
-    private final CalendarRowData mDelegate;
     private final CharSequence mOwner;
 
 
-    public Owned(@Nullable CharSequence owner, @NonNull CalendarRowData delegate)
+    public Owned(@Nullable CharSequence owner)
     {
-        mDelegate = delegate;
         mOwner = owner;
     }
 
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder updatedBuilder(TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
+    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
-        return mDelegate.updatedBuilder(transactionContext, builder)
-                .withValue(CalendarContract.Calendars.OWNER_ACCOUNT, mOwner == null ? null : mOwner.toString());
+        return builder.withValue(CalendarContract.Calendars.OWNER_ACCOUNT, mOwner == null ? null : mOwner.toString());
     }
 }

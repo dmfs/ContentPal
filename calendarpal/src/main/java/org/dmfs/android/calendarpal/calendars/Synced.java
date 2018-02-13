@@ -20,37 +20,36 @@ import android.content.ContentProviderOperation;
 import android.provider.CalendarContract;
 import android.support.annotation.NonNull;
 
+import org.dmfs.android.contentpal.RowData;
 import org.dmfs.android.contentpal.TransactionContext;
 
 
 /**
- * {@link CalendarRowData} decorator to set a calendar to be synced.
+ * {@link CalendarContract.Calendars} {@link RowData} decorator to set a calendar to be synced.
  *
  * @author Marten Gajda
  */
-public final class Synced implements CalendarRowData
+public final class Synced implements RowData<CalendarContract.Calendars>
 {
-    private final CalendarRowData mDelegate;
     private final boolean mSynced;
 
 
-    public Synced(@NonNull CalendarRowData delegate)
+    public Synced()
     {
-        this(true, delegate);
+        this(true);
     }
 
 
-    public Synced(boolean synced, @NonNull CalendarRowData delegate)
+    public Synced(boolean synced)
     {
-        mDelegate = delegate;
         mSynced = synced;
     }
 
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder updatedBuilder(TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
+    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
-        return mDelegate.updatedBuilder(transactionContext, builder).withValue(CalendarContract.Calendars.SYNC_EVENTS, mSynced ? 1 : 0);
+        return builder.withValue(CalendarContract.Calendars.SYNC_EVENTS, mSynced ? 1 : 0);
     }
 }

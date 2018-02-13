@@ -25,16 +25,18 @@ import org.dmfs.android.contentpal.TransactionContext;
 
 
 /**
- * {@link RowData} of a Calendar row.
+ * {@link CalendarContract.Calendars} {@link RowData} to set the name of a calendar.
+ * <p>
+ * Note: at present this sets {@link CalendarContract.Calendars#CALENDAR_DISPLAY_NAME} and {@link CalendarContract.Calendars#NAME} to the same value.
  *
  * @author Marten Gajda
  */
-public final class CalendarData implements CalendarRowData
+public final class Named implements RowData<CalendarContract.Calendars>
 {
     private final CharSequence mName;
 
 
-    public CalendarData(@NonNull CharSequence name)
+    public Named(@NonNull CharSequence name)
     {
         mName = name;
     }
@@ -42,7 +44,7 @@ public final class CalendarData implements CalendarRowData
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder updatedBuilder(TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
+    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
         return builder.withValue(CalendarContract.Calendars.CALENDAR_DISPLAY_NAME, mName.toString())
                 .withValue(CalendarContract.Calendars.NAME, mName.toString());
