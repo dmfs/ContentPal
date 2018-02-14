@@ -20,31 +20,30 @@ import android.content.ContentProviderOperation;
 import android.provider.CalendarContract;
 import android.support.annotation.NonNull;
 
+import org.dmfs.android.contentpal.RowData;
 import org.dmfs.android.contentpal.TransactionContext;
 
 
 /**
- * {@link CalendarRowData} decorator to set the access level of a calendar.
+ * {@link CalendarContract.Calendars} {@link RowData} to set the access level of a calendar.
  *
  * @author Marten Gajda
  */
-public final class Accessible implements CalendarRowData
+public final class Accessible implements RowData<CalendarContract.Calendars>
 {
-    private final CalendarRowData mDelegate;
     private final int mAccessLevel;
 
 
-    public Accessible(int accessLevel, @NonNull CalendarRowData delegate)
+    public Accessible(int accessLevel)
     {
-        mDelegate = delegate;
         mAccessLevel = accessLevel;
     }
 
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder updatedBuilder(TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
+    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
-        return mDelegate.updatedBuilder(transactionContext, builder).withValue(CalendarContract.Calendars.CALENDAR_ACCESS_LEVEL, mAccessLevel);
+        return builder.withValue(CalendarContract.Calendars.CALENDAR_ACCESS_LEVEL, mAccessLevel);
     }
 }

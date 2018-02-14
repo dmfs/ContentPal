@@ -34,14 +34,22 @@ import static org.junit.Assert.assertThat;
  */
 @RunWith(RobolectricTestRunner.class)
 @Config(manifest = Config.NONE)
-public class SourcedTest
+public class VisibleTest
 {
     @Test
     public void testUpdatedBuilder() throws Exception
     {
-        assertThat(new Sourced("xyz"), builds(
+        assertThat(new Visible(), builds(
                 withValuesOnly(
-                        containing(CalendarContract.Calendars._SYNC_ID, "xyz"))));
+                        containing(CalendarContract.Calendars.VISIBLE, 1))));
+
+        assertThat(new Visible(true), builds(
+                withValuesOnly(
+                        containing(CalendarContract.Calendars.VISIBLE, 1))));
+
+        assertThat(new Visible(false), builds(
+                withValuesOnly(
+                        containing(CalendarContract.Calendars.VISIBLE, 0))));
     }
 
 }

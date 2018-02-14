@@ -20,37 +20,36 @@ import android.content.ContentProviderOperation;
 import android.provider.CalendarContract;
 import android.support.annotation.NonNull;
 
+import org.dmfs.android.contentpal.RowData;
 import org.dmfs.android.contentpal.TransactionContext;
 
 
 /**
- * {@link CalendarRowData} decorator to set a calendar to be visible.
+ * {@link CalendarContract.Calendars} {@link RowData} to set a calendar to be visible.
  *
  * @author Marten Gajda
  */
-public final class Visible implements CalendarRowData
+public final class Visible implements RowData<CalendarContract.Calendars>
 {
-    private final CalendarRowData mDelegate;
     private final boolean mVisible;
 
 
-    public Visible(@NonNull CalendarRowData delegate)
+    public Visible()
     {
-        this(true, delegate);
+        this(true);
     }
 
 
-    public Visible(boolean visible, @NonNull CalendarRowData delegate)
+    public Visible(boolean visible)
     {
-        mDelegate = delegate;
         mVisible = visible;
     }
 
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder updatedBuilder(TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
+    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
-        return mDelegate.updatedBuilder(transactionContext, builder).withValue(CalendarContract.Calendars.VISIBLE, mVisible ? 1 : 0);
+        return builder.withValue(CalendarContract.Calendars.VISIBLE, mVisible ? 1 : 0);
     }
 }

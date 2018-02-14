@@ -16,11 +16,8 @@
 
 package org.dmfs.android.calendarpal.calendars;
 
-import android.content.ContentProviderOperation;
 import android.provider.CalendarContract;
-import android.support.annotation.NonNull;
 
-import org.dmfs.android.contentpal.TransactionContext;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
@@ -42,15 +39,7 @@ public class OwnedTest
     @Test
     public void testUpdatedBuilder() throws Exception
     {
-        assertThat(new Owned("xyz", new CalendarRowData()
-        {
-            @NonNull
-            @Override
-            public ContentProviderOperation.Builder updatedBuilder(TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
-            {
-                return builder;
-            }
-        }), builds(
+        assertThat(new Owned("xyz"), builds(
                 withValuesOnly(
                         containing(CalendarContract.Calendars.OWNER_ACCOUNT, "xyz"))));
     }

@@ -34,14 +34,14 @@ import static org.junit.Assert.assertThat;
  */
 @RunWith(RobolectricTestRunner.class)
 @Config(manifest = Config.NONE)
-public class SourcedTest
+public class ColoredTest
 {
     @Test
     public void testUpdatedBuilder() throws Exception
     {
-        assertThat(new Sourced("xyz"), builds(
+        assertThat(new Colored(123), builds(
                 withValuesOnly(
-                        containing(CalendarContract.Calendars._SYNC_ID, "xyz"))));
+                        containing(CalendarContract.Calendars.CALENDAR_COLOR, 123))));
     }
 
 }
