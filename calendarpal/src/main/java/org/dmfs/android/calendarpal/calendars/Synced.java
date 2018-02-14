@@ -25,7 +25,7 @@ import org.dmfs.android.contentpal.TransactionContext;
 
 
 /**
- * {@link CalendarContract.Calendars} {@link RowData} decorator to set a calendar to be synced.
+ * {@link CalendarContract.Calendars} {@link RowData} to set a calendar to be synced.
  *
  * @author Marten Gajda
  */

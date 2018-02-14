@@ -25,7 +25,7 @@ import org.dmfs.android.contentpal.TransactionContext;
 
 
 /**
- * {@link CalendarContract.Calendars} {@link RowData} decorator to set the access level of a calendar.
+ * {@link CalendarContract.Calendars} {@link RowData} to set the access level of a calendar.
  *
  * @author Marten Gajda
  */

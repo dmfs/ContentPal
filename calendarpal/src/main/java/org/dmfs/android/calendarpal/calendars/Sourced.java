@@ -25,7 +25,7 @@ import org.dmfs.android.contentpal.TransactionContext;
 
 
 /**
- * {@link CalendarContract.Calendars} {@link RowData} decorator to set the {@code _SYNC_ID} of a calendar.
+ * {@link CalendarContract.Calendars} {@link RowData} to set the {@code _SYNC_ID} of a calendar.
  * <p>
  * Note, this class is called {@code Sourced} rather than {@code Synced}
  * (reflecting the name {@code _SYNC_ID}) because it is assumed that this field identifies the source of this calendar (either directly or indirectly).

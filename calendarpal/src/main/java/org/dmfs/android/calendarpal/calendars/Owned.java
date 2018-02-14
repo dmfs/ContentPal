@@ -26,7 +26,7 @@ import org.dmfs.android.contentpal.TransactionContext;
 
 
 /**
- * {@link CalendarContract.Calendars} {@link RowData} decorator to set a calendar owner.
+ * {@link CalendarContract.Calendars} {@link RowData} to set a calendar owner.
  *
  * @author Marten Gajda
  */

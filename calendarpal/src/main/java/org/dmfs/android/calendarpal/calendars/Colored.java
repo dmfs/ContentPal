@@ -25,7 +25,7 @@ import org.dmfs.android.contentpal.TransactionContext;
 
 
 /**
- * {@link CalendarContract.Calendars} {@link RowData} decorator to set a calendar color.
+ * {@link CalendarContract.Calendars} {@link RowData} to set a calendar color.
  *
  * @author Marten Gajda
  */
