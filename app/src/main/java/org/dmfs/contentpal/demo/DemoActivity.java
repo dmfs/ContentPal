@@ -32,6 +32,9 @@ import android.util.Log;
 import android.view.View;
 
 import org.dmfs.android.calendarpal.attendees.AttendeeData;
+import org.dmfs.android.calendarpal.attendees.NameData;
+import org.dmfs.android.calendarpal.attendees.StateData;
+import org.dmfs.android.calendarpal.attendees.TypeData;
 import org.dmfs.android.calendarpal.calendars.Colored;
 import org.dmfs.android.calendarpal.calendars.Named;
 import org.dmfs.android.calendarpal.calendars.Synced;
@@ -306,9 +309,17 @@ public class DemoActivity extends AppCompatActivity
                         // add an attendee to event2
                         new EventRelated<>(event2,
                                 new Insert<>(new Attendees(),
-                                        new org.dmfs.android.calendarpal.attendees.Named("Me", new AttendeeData("me@example.com")))),
+                                        new AttendeeData("me@example.com", new NameData("me")))),
                         // add a reminder to event2, one day in advance
-                        new EventRelated<>(event2, new Insert<>(new Reminders(), new ReminderData((int) TimeUnit.DAYS.toMinutes(1))))
+                        new EventRelated<>(event2, new Insert<>(new Reminders(), new ReminderData((int) TimeUnit.DAYS.toMinutes(1)))),
+                        new EventRelated<>(event2, new Insert<>(new Attendees(),
+                                new AttendeeData("metoo@example.com",
+                                        new Composite<>(
+                                                new NameData("Me Too"),
+                                                new TypeData(CalendarContract.Attendees.TYPE_REQUIRED),
+                                                new org.dmfs.android.calendarpal.attendees.RelationData(CalendarContract.Attendees.RELATIONSHIP_ORGANIZER),
+                                                new StateData(CalendarContract.Attendees.STATUS_CONFIRMED)
+                                        ))))
 
                         //new Put<>(new VirtualRowSnapshot<>(calendarEvents), new )
                 ));

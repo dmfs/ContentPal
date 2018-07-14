@@ -26,28 +26,25 @@ import org.dmfs.android.contentpal.TransactionContext;
 
 
 /**
- * {@link CalendarContract.Attendees} {@link RowData} decorator which adds a name to an attendee.
+ * {@link CalendarContract.Attendees} {@link RowData} which sets the {@link CalendarContract.Attendees#ATTENDEE_NAME} of an attendee.
  *
  * @author Marten Gajda
  */
-public final class Named implements RowData<CalendarContract.Attendees>
+public final class NameData implements RowData<CalendarContract.Attendees>
 {
-    private final RowData<CalendarContract.Attendees> mDelegate;
     private final CharSequence mName;
 
 
-    public Named(@Nullable CharSequence name, @NonNull RowData<CalendarContract.Attendees> delegate)
+    public NameData(@Nullable CharSequence name)
     {
-        mDelegate = delegate;
         mName = name;
     }
 
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder updatedBuilder(TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
+    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
-        return mDelegate.updatedBuilder(transactionContext, builder)
-                .withValue(CalendarContract.Attendees.ATTENDEE_NAME, mName == null ? null : mName.toString());
+        return builder.withValue(CalendarContract.Attendees.ATTENDEE_NAME, mName == null ? null : mName.toString());
     }
 }
