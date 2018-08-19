@@ -19,12 +19,10 @@ package org.dmfs.android.contentpal.operations;
 import android.net.Uri;
 
 import org.dmfs.android.contentpal.RowData;
-import org.dmfs.android.contentpal.SoftRowReference;
 import org.dmfs.android.contentpal.Table;
 import org.dmfs.android.contentpal.operations.internal.RawInsert;
 import org.dmfs.android.contentpal.rowdata.CharSequenceRowData;
 import org.dmfs.android.contentpal.tools.uriparams.EmptyUriParams;
-import org.dmfs.jems.hamcrest.matchers.AbsentMatcher;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
@@ -38,8 +36,10 @@ import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithVa
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYieldAllowed.withYieldNotAllowed;
 import static org.dmfs.android.contentpal.testing.contentvalues.Containing.containing;
 import static org.dmfs.android.contentpal.testing.operations.OperationMatcher.builds;
+import static org.dmfs.jems.hamcrest.matchers.optional.AbsentMatcher.absent;
 import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
 import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
+import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsSame.sameInstance;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.doReturn;
@@ -57,11 +57,11 @@ public class InsertTest
     {
         Table<Object> mockTable = failingMock(Table.class);
 
-        assertThat(new Insert<Object>(mockTable).reference(),
-                AbsentMatcher.<SoftRowReference<Object>>isAbsent());
+        assertThat(new Insert<>(mockTable).reference(),
+                is(absent()));
 
         assertThat(new Insert<Object>(mockTable, dummy(RowData.class)).reference(),
-                AbsentMatcher.<SoftRowReference<Object>>isAbsent());
+                is(absent()));
     }
 
 

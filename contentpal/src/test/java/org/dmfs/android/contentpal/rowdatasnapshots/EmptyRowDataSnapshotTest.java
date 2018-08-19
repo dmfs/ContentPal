@@ -16,11 +16,11 @@
 
 package org.dmfs.android.contentpal.rowdatasnapshots;
 
-import org.dmfs.jems.function.elementary.IdentityFunction;
-import org.dmfs.jems.hamcrest.matchers.AbsentMatcher;
 import org.junit.Test;
 
+import static org.dmfs.jems.hamcrest.matchers.optional.AbsentMatcher.absent;
 import static org.hamcrest.Matchers.emptyIterable;
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 
@@ -32,14 +32,14 @@ public class EmptyRowDataSnapshotTest
     @Test
     public void testCharData() throws Exception
     {
-        assertThat(new EmptyRowDataSnapshot<>().data("key", new IdentityFunction<String>()), AbsentMatcher.<String>isAbsent());
+        assertThat(new EmptyRowDataSnapshot<>().data("key", x -> x), is(absent()));
     }
 
 
     @Test
     public void testByteData() throws Exception
     {
-        assertThat(new EmptyRowDataSnapshot<>().byteData("key"), AbsentMatcher.<byte[]>isAbsent());
+        assertThat(new EmptyRowDataSnapshot<>().byteData("key"), is(absent()));
     }
 
 

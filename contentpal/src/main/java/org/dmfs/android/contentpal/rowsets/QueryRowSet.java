@@ -33,12 +33,13 @@ import org.dmfs.android.contentpal.tools.ClosableEmptyIterator;
 import org.dmfs.android.contentpal.tools.uriparams.EmptyUriParams;
 import org.dmfs.android.contentpal.transactions.contexts.EmptyTransactionContext;
 import org.dmfs.iterators.AbstractBaseIterator;
-import org.dmfs.optional.Absent;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
+
+import static org.dmfs.jems.optional.elementary.Absent.absent;
 
 
 /**
@@ -67,7 +68,7 @@ public final class QueryRowSet<T> implements RowSet<T>
     {
         try
         {
-            Cursor cursor = mView.rows(EmptyUriParams.INSTANCE, mProjection, mPredicate,  /* no specific sorting */Absent.<String>absent());
+            Cursor cursor = mView.rows(EmptyUriParams.INSTANCE, mProjection, mPredicate,  /* no specific sorting */absent());
             if (!cursor.moveToFirst())
             {
                 cursor.close();

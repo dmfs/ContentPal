@@ -25,8 +25,8 @@ import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.SoftRowReference;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.rowdata.EmptyRowData;
-import org.dmfs.optional.Optional;
-import org.dmfs.optional.Present;
+import org.dmfs.jems.optional.Optional;
+import org.dmfs.jems.optional.elementary.Present;
 
 
 /**
@@ -42,7 +42,7 @@ public final class Put<T> implements Operation<T>
 
     public Put(@NonNull RowSnapshot<T> rowSnapshot)
     {
-        this(rowSnapshot, EmptyRowData.<T>instance());
+        this(rowSnapshot, EmptyRowData.instance());
     }
 
 

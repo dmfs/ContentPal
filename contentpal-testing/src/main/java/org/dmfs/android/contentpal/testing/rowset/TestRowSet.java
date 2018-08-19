@@ -22,7 +22,7 @@ import org.dmfs.android.contentpal.ClosableIterator;
 import org.dmfs.android.contentpal.RowSet;
 import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.testing.tools.FakeClosable;
-import org.dmfs.iterables.ArrayIterable;
+import org.dmfs.iterables.elementary.Seq;
 
 
 /**
@@ -44,7 +44,7 @@ public final class TestRowSet<T> implements RowSet<T>
     @SafeVarargs
     public TestRowSet(RowSnapshot<T>... rowSnapshots)
     {
-        this(new ArrayIterable<>(rowSnapshots));
+        this(new Seq<>(rowSnapshots));
     }
 
 

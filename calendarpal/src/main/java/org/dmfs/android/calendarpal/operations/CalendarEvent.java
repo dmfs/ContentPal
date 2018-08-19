@@ -30,7 +30,7 @@ import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.operations.Insert;
 import org.dmfs.android.contentpal.operations.Referring;
 import org.dmfs.android.contentpal.tables.Synced;
-import org.dmfs.optional.Optional;
+import org.dmfs.jems.optional.Optional;
 
 
 /**

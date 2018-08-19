@@ -22,8 +22,8 @@ import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.RowSet;
 import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.iterables.decorators.DelegatingIterable;
-import org.dmfs.iterables.decorators.Mapped;
-import org.dmfs.iterators.Function;
+import org.dmfs.jems.function.Function;
+import org.dmfs.jems.iterable.decorators.Mapped;
 
 
 /**
@@ -72,7 +72,7 @@ public final class MappedRowSetBatch<T> extends DelegatingIterable<Operation<?>>
      */
     public MappedRowSetBatch(@NonNull RowSet<T> rowSet, @NonNull Function<RowSnapshot<T>, Operation<?>> function)
     {
-        super(new Mapped<>(rowSet, function));
+        super(new Mapped<>(function, rowSet));
     }
 
 }

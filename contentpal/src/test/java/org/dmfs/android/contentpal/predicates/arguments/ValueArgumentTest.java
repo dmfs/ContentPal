@@ -17,9 +17,9 @@
 package org.dmfs.android.contentpal.predicates.arguments;
 
 import org.dmfs.android.contentpal.Predicate;
-import org.dmfs.jems.hamcrest.matchers.AbsentMatcher;
 import org.junit.Test;
 
+import static org.dmfs.jems.hamcrest.matchers.optional.AbsentMatcher.absent;
 import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -42,7 +42,7 @@ public final class ValueArgumentTest
 
         Predicate.Argument underTest = new ValueArgument(mockValue);
         assertThat(underTest.value(), is("val"));
-        assertThat(underTest.backReference(), AbsentMatcher.<Integer>isAbsent());
+        assertThat(underTest.backReference(), is(absent()));
     }
 
 }

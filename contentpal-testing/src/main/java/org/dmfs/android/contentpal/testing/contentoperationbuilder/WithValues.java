@@ -20,7 +20,8 @@ import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 
 import org.dmfs.android.contentpal.testing.tools.Field;
-import org.dmfs.optional.NullSafe;
+import org.dmfs.jems.optional.elementary.NullSafe;
+import org.dmfs.jems.single.combined.Backed;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
@@ -61,7 +62,7 @@ public final class WithValues extends TypeSafeDiagnosingMatcher<ContentProviderO
     @Override
     protected boolean matchesSafely(ContentProviderOperation.Builder builder, Description mismatchDescription)
     {
-        ContentValues values = new NullSafe<>(new Field<ContentValues>(builder, "mValues").value()).value(new ContentValues());
+        ContentValues values = new Backed<>(new NullSafe<>(new Field<ContentValues>(builder, "mValues").value()), new ContentValues()).value();
 
         if (!mValueMatcher.matches(values))
         {

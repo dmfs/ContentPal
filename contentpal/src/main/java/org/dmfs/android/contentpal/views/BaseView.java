@@ -30,7 +30,8 @@ import org.dmfs.android.contentpal.UriParams;
 import org.dmfs.android.contentpal.View;
 import org.dmfs.android.contentpal.tables.BaseTable;
 import org.dmfs.android.contentpal.transactions.contexts.EmptyTransactionContext;
-import org.dmfs.optional.Optional;
+import org.dmfs.jems.optional.Optional;
+import org.dmfs.jems.single.combined.Backed;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -71,7 +72,7 @@ public final class BaseView<T> implements View<T>
                 projectionArray,
                 predicate.selection(EmptyTransactionContext.INSTANCE).toString(),
                 args.toArray(new String[args.size()]),
-                sorting.value(null /* fallback: null */));
+                new Backed<>(sorting, (String) null).value());
         return cursor == null ? new MatrixCursor(projectionArray) : cursor;
     }
 

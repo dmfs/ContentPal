@@ -22,7 +22,7 @@ import android.net.Uri;
 import org.dmfs.android.contentpal.InsertOperation;
 import org.dmfs.android.contentpal.SoftRowReference;
 import org.dmfs.android.contentpal.operations.internal.RawInsert;
-import org.dmfs.optional.Optional;
+import org.dmfs.jems.optional.Optional;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;

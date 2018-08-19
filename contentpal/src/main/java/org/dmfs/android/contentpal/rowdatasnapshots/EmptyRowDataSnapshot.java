@@ -21,10 +21,11 @@ import android.support.annotation.NonNull;
 import org.dmfs.android.contentpal.RowDataSnapshot;
 import org.dmfs.iterators.EmptyIterator;
 import org.dmfs.jems.function.Function;
-import org.dmfs.optional.Absent;
-import org.dmfs.optional.Optional;
+import org.dmfs.jems.optional.Optional;
 
 import java.util.Iterator;
+
+import static org.dmfs.jems.optional.elementary.Absent.absent;
 
 
 /**
@@ -41,7 +42,7 @@ public final class EmptyRowDataSnapshot<Contract> implements RowDataSnapshot<Con
     @Override
     public <ValueType> Optional<ValueType> data(@NonNull String key, @NonNull Function<String, ValueType> mapFunction)
     {
-        return Absent.absent();
+        return absent();
     }
 
 
@@ -49,7 +50,7 @@ public final class EmptyRowDataSnapshot<Contract> implements RowDataSnapshot<Con
     @Override
     public Optional<byte[]> byteData(@NonNull String key)
     {
-        return Absent.absent();
+        return absent();
     }
 
 

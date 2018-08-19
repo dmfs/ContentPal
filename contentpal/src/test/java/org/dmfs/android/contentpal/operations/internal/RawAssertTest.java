@@ -18,8 +18,6 @@ package org.dmfs.android.contentpal.operations.internal;
 
 import android.net.Uri;
 
-import org.dmfs.android.contentpal.SoftRowReference;
-import org.dmfs.jems.hamcrest.matchers.AbsentMatcher;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
@@ -31,7 +29,9 @@ import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithEx
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withoutValues;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYieldAllowed.withYieldNotAllowed;
 import static org.dmfs.android.contentpal.testing.operations.OperationMatcher.builds;
+import static org.dmfs.jems.hamcrest.matchers.optional.AbsentMatcher.absent;
 import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
+import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsSame.sameInstance;
 import static org.junit.Assert.assertThat;
 
@@ -46,7 +46,7 @@ public class RawAssertTest
     @Test
     public void testReference() throws Exception
     {
-        assertThat(new RawAssert<>(dummy(Uri.class)).reference(), AbsentMatcher.<SoftRowReference<Object>>isAbsent());
+        assertThat(new RawAssert<>(dummy(Uri.class)).reference(), is(absent()));
     }
 
 

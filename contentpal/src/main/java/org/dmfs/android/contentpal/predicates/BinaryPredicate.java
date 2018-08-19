@@ -20,10 +20,9 @@ import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.TransactionContext;
-import org.dmfs.iterables.ArrayIterable;
-import org.dmfs.iterables.decorators.Flattened;
-import org.dmfs.iterables.decorators.Mapped;
-import org.dmfs.iterators.Function;
+import org.dmfs.iterables.elementary.Seq;
+import org.dmfs.jems.iterable.composite.Joined;
+import org.dmfs.jems.iterable.decorators.Mapped;
 
 
 /**
@@ -82,16 +81,9 @@ public final class BinaryPredicate implements Predicate
     @Override
     public Iterable<Argument> arguments(@NonNull final TransactionContext transactionContext)
     {
-        return new Flattened<>(
+        return new Joined<>(
                 new Mapped<>(
-                        new ArrayIterable<>(mPredicates),
-                        new Function<Predicate, Iterable<Argument>>()
-                        {
-                            @Override
-                            public Iterable<Argument> apply(Predicate predicate)
-                            {
-                                return predicate.arguments(transactionContext);
-                            }
-                        }));
+                        predicate -> predicate.arguments(transactionContext),
+                        new Seq<>(mPredicates)));
     }
 }

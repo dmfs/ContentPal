@@ -22,12 +22,10 @@ import android.net.Uri;
 import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.RowData;
-import org.dmfs.android.contentpal.SoftRowReference;
 import org.dmfs.android.contentpal.Table;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.rowdata.CharSequenceRowData;
 import org.dmfs.android.contentpal.tools.uriparams.EmptyUriParams;
-import org.dmfs.jems.hamcrest.matchers.AbsentMatcher;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
@@ -42,6 +40,7 @@ import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYi
 import static org.dmfs.android.contentpal.testing.contentvalues.Containing.containing;
 import static org.dmfs.android.contentpal.testing.operations.OperationMatcher.builds;
 import static org.dmfs.android.contentpal.testing.predicates.PredicateArgumentMatcher.predicateWithSelection;
+import static org.dmfs.jems.hamcrest.matchers.optional.AbsentMatcher.absent;
 import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
 import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
 import static org.hamcrest.core.IsSame.sameInstance;
@@ -64,17 +63,13 @@ public final class BulkAssertTest
     @Test
     public void testReference()
     {
-        assertThat(new BulkAssert<Object>(dummy(Table.class)).reference(),
-                AbsentMatcher.<SoftRowReference<Object>>isAbsent());
+        assertThat(new BulkAssert<Object>(dummy(Table.class)).reference(), absent());
 
-        assertThat(new BulkAssert<Object>(dummy(Table.class), dummy(Predicate.class)).reference(),
-                AbsentMatcher.<SoftRowReference<Object>>isAbsent());
+        assertThat(new BulkAssert<Object>(dummy(Table.class), dummy(Predicate.class)).reference(), absent());
 
-        assertThat(new BulkAssert<Object>(dummy(Table.class), dummy(RowData.class)).reference(),
-                AbsentMatcher.<SoftRowReference<Object>>isAbsent());
+        assertThat(new BulkAssert<Object>(dummy(Table.class), dummy(RowData.class)).reference(), absent());
 
-        assertThat(new BulkAssert<Object>(dummy(Table.class), dummy(RowData.class), dummy(Predicate.class)).reference(),
-                AbsentMatcher.<SoftRowReference<Object>>isAbsent());
+        assertThat(new BulkAssert<Object>(dummy(Table.class), dummy(RowData.class), dummy(Predicate.class)).reference(), absent());
     }
 
 

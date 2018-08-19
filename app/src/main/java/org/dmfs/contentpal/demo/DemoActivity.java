@@ -96,9 +96,9 @@ import org.dmfs.android.contentpal.rowdata.Composite;
 import org.dmfs.android.contentpal.rowsnapshots.VirtualRowSnapshot;
 import org.dmfs.android.contentpal.tables.AccountScoped;
 import org.dmfs.iterables.SingletonIterable;
-import org.dmfs.iterables.decorators.Flattened;
 import org.dmfs.iterables.elementary.Seq;
-import org.dmfs.jems.function.elementary.IdentityFunction;
+import org.dmfs.jems.iterable.composite.Joined;
+import org.dmfs.jems.single.combined.Backed;
 import org.dmfs.rfc5545.DateTime;
 import org.dmfs.rfc5545.Duration;
 
@@ -215,7 +215,7 @@ public class DemoActivity extends AppCompatActivity
 
         // insert the contact and link it to the first one in the same transaction
         mContactsQueue.enqueue(
-                new Flattened<>(
+                new Joined<>(
                         new InsertRawContactBatch(rawContact2,
                                 new DisplayNameData("Donald Duck"),
                                 new Typed(ContactsContract.CommonDataKinds.Phone.TYPE_WORK, new PhoneData("9876"))
@@ -240,7 +240,7 @@ public class DemoActivity extends AppCompatActivity
             RowDataSnapshot<?> values = row.values();
             for (String key : values)
             {
-                Log.v("ContentPal Demo", String.format("%s: %s", key, values.data(key, new IdentityFunction<String>()).value("")));
+                Log.v("ContentPal Demo", String.format("%s: %s", key, new Backed<>(values.data(key, x -> x), "").value()));
             }
         }
 

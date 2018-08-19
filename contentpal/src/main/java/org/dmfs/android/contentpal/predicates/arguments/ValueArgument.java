@@ -19,8 +19,9 @@ package org.dmfs.android.contentpal.predicates.arguments;
 import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Predicate;
-import org.dmfs.optional.Absent;
-import org.dmfs.optional.Optional;
+import org.dmfs.jems.optional.Optional;
+
+import static org.dmfs.jems.optional.elementary.Absent.absent;
 
 
 /**
@@ -51,6 +52,6 @@ public final class ValueArgument implements Predicate.Argument
     @Override
     public Optional<Integer> backReference()
     {
-        return Absent.absent();
+        return absent();
     }
 }

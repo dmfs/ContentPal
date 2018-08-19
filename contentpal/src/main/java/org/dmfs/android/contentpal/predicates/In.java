@@ -21,9 +21,8 @@ import android.support.annotation.NonNull;
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.predicates.arguments.ValueArgument;
-import org.dmfs.iterables.ArrayIterable;
-import org.dmfs.iterables.decorators.Mapped;
-import org.dmfs.iterators.Function;
+import org.dmfs.iterables.elementary.Seq;
+import org.dmfs.jems.iterable.decorators.Mapped;
 
 
 /**
@@ -71,15 +70,6 @@ public final class In implements Predicate
     @Override
     public Iterable<Argument> arguments(@NonNull TransactionContext transactionContext)
     {
-        return new Mapped<>(
-                new ArrayIterable<>(mArguments),
-                new Function<Object, Argument>()
-                {
-                    @Override
-                    public Argument apply(Object argument)
-                    {
-                        return new ValueArgument(argument);
-                    }
-                });
+        return new Mapped<>(ValueArgument::new, new Seq<>(mArguments));
     }
 }

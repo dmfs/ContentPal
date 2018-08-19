@@ -25,8 +25,9 @@ import org.dmfs.android.contentpal.SoftRowReference;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.operations.Assert;
 import org.dmfs.android.contentpal.operations.BulkAssert;
-import org.dmfs.optional.Absent;
-import org.dmfs.optional.Optional;
+import org.dmfs.jems.optional.Optional;
+
+import static org.dmfs.jems.optional.elementary.Absent.absent;
 
 
 /**
@@ -52,7 +53,7 @@ public final class RawAssert<T> implements Operation<T>
     @Override
     public Optional<SoftRowReference<T>> reference()
     {
-        return Absent.absent();
+        return absent();
     }
 
 

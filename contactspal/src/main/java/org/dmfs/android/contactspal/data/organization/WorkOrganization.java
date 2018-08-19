@@ -24,7 +24,7 @@ import org.dmfs.android.contactspal.data.Typed;
 import org.dmfs.android.contentpal.RowData;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.rowdata.Composite;
-import org.dmfs.iterables.ArrayIterable;
+import org.dmfs.iterables.elementary.Seq;
 
 
 /**
@@ -45,7 +45,7 @@ public final class WorkOrganization implements OrganizationData
 
     public WorkOrganization(@NonNull OrganizationData... data)
     {
-        this(new ArrayIterable<>(data));
+        this(new Seq<>(data));
     }
 
 

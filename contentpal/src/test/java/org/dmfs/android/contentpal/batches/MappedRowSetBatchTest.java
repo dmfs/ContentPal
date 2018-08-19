@@ -21,10 +21,9 @@ import org.dmfs.android.contentpal.RowSet;
 import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.testing.rowset.TestRowSet;
 import org.dmfs.android.contentpal.testing.table.Contract;
-import org.dmfs.iterables.ArrayIterable;
 import org.dmfs.iterables.decorators.DelegatingIterable;
-import org.dmfs.iterables.decorators.Mapped;
-import org.dmfs.iterators.Function;
+import org.dmfs.iterables.elementary.Seq;
+import org.dmfs.jems.iterable.decorators.Mapped;
 import org.dmfs.jems.mocks.MockFunction;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matcher;
@@ -47,9 +46,10 @@ public final class MappedRowSetBatchTest
     public void test()
     {
         RowSet<Contract> rowSet = new TestRowSet<Contract>(dummy(RowSnapshot.class), dummy(RowSnapshot.class), dummy(RowSnapshot.class));
-        Iterable<Operation<?>> dummyOperations = new ArrayIterable<Operation<?>>(dummy(Operation.class), dummy(Operation.class), dummy(Operation.class));
+        Iterable<Operation<?>> dummyOperations = new Seq<Operation<?>>(dummy(Operation.class), dummy(Operation.class), dummy(Operation.class));
 
-        assertThat(new MappedRowSetBatch<>(rowSet, new MockFunction<>(new InstanceMatching<>(rowSet), dummyOperations)),
+        // TODO: method reference when we have a MockFunction implementing the new Function interface
+        assertThat(new MappedRowSetBatch<>(rowSet, new MockFunction<>(new InstanceMatching<>(rowSet), dummyOperations)::apply),
                 iteratesTo(new InstanceMatching<>(dummyOperations)));
     }
 
@@ -59,14 +59,7 @@ public final class MappedRowSetBatchTest
     {
         InstanceMatching(Iterable<T> delegate)
         {
-            super(new Mapped<>(delegate, new Function<T, Matcher<T>>()
-            {
-                @Override
-                public Matcher<T> apply(T argument)
-                {
-                    return CoreMatchers.sameInstance(argument);
-                }
-            }));
+            super(new Mapped<>(CoreMatchers::sameInstance, delegate));
         }
     }
 

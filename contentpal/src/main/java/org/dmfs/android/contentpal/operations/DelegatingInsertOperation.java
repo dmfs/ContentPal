@@ -22,7 +22,7 @@ import android.support.annotation.NonNull;
 import org.dmfs.android.contentpal.InsertOperation;
 import org.dmfs.android.contentpal.SoftRowReference;
 import org.dmfs.android.contentpal.TransactionContext;
-import org.dmfs.optional.Optional;
+import org.dmfs.jems.optional.Optional;
 
 
 /**

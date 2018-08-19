@@ -26,8 +26,9 @@ import org.dmfs.android.contentpal.RowSet;
 import org.dmfs.android.contentpal.Table;
 import org.dmfs.android.contentpal.UriParams;
 import org.dmfs.android.contentpal.View;
-import org.dmfs.optional.Optional;
-import org.dmfs.optional.Present;
+import org.dmfs.jems.optional.Optional;
+import org.dmfs.jems.optional.adapters.SinglePresent;
+import org.dmfs.jems.single.combined.Backed;
 
 
 /**
@@ -55,7 +56,7 @@ public final class Sorted<T> implements View<T>
     @Override
     public Cursor rows(@NonNull UriParams uriParams, @NonNull Projection<T> projection, @NonNull Predicate predicate, @NonNull Optional<String> sorting) throws RemoteException
     {
-        return mDelegate.rows(uriParams, projection, predicate, new Present<>(sorting.value(mSorting)));
+        return mDelegate.rows(uriParams, projection, predicate, new SinglePresent<>(new Backed<>(sorting, mSorting)));
     }
 
 

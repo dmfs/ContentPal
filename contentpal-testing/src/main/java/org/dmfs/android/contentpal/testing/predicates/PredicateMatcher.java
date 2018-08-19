@@ -18,11 +18,11 @@ package org.dmfs.android.contentpal.testing.predicates;
 
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.TransactionContext;
-import org.dmfs.iterables.decorators.Mapped;
-import org.dmfs.iterators.Function;
-import org.dmfs.optional.Absent;
-import org.dmfs.optional.Optional;
-import org.dmfs.optional.Present;
+import org.dmfs.jems.hamcrest.matchers.optional.AbsentMatcher;
+import org.dmfs.jems.iterable.decorators.Mapped;
+import org.dmfs.jems.optional.Optional;
+import org.dmfs.jems.optional.elementary.Present;
+import org.dmfs.jems.single.combined.Backed;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.Factory;
 import org.hamcrest.FeatureMatcher;
@@ -30,9 +30,9 @@ import org.hamcrest.Matcher;
 
 import java.util.Arrays;
 
-import static org.dmfs.jems.hamcrest.matchers.AbsentMatcher.isAbsent;
 import static org.dmfs.jems.hamcrest.matchers.IterableMatcher.iteratesTo;
 import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
+import static org.dmfs.jems.optional.elementary.Absent.absent;
 import static org.hamcrest.collection.IsEmptyIterable.emptyIterable;
 import static org.hamcrest.object.HasToString.hasToString;
 
@@ -56,7 +56,7 @@ public final class PredicateMatcher
     @Factory
     public static Matcher<Predicate> selection(CharSequence selection)
     {
-        return new Selection(Absent.<TransactionContext>absent(), selection);
+        return new Selection(absent(), selection);
     }
 
 
@@ -70,7 +70,7 @@ public final class PredicateMatcher
     @Factory
     public static Matcher<Predicate> emptyArguments()
     {
-        return new EmptyArgument(Absent.<TransactionContext>absent());
+        return new EmptyArgument(absent());
     }
 
 
@@ -84,7 +84,7 @@ public final class PredicateMatcher
     @Factory
     public static Matcher<Predicate> argumentValues(String... values)
     {
-        return new ArgumentValues(Absent.<TransactionContext>absent(), values);
+        return new ArgumentValues(absent(), values);
     }
 
 
@@ -99,7 +99,7 @@ public final class PredicateMatcher
     @SafeVarargs
     public static Matcher<Predicate> backReferences(Matcher<Optional<Integer>>... backReferences)
     {
-        return new ArgumentBackReferences(Absent.<TransactionContext>absent(), backReferences);
+        return new ArgumentBackReferences(absent(), backReferences);
     }
 
 
@@ -115,8 +115,8 @@ public final class PredicateMatcher
     public static Matcher<Predicate> absentBackReferences(int noOfPredicateArguments)
     {
         Matcher[] matchers = new Matcher[noOfPredicateArguments];
-        Arrays.fill(matchers, isAbsent());
-        return new ArgumentBackReferences(Absent.<TransactionContext>absent(), matchers);
+        Arrays.fill(matchers, AbsentMatcher.absent());
+        return new ArgumentBackReferences(absent(), matchers);
     }
 
 
@@ -124,7 +124,7 @@ public final class PredicateMatcher
     public static Matcher<Predicate> absentBackReferences(TransactionContext tc, int noOfPredicateArguments)
     {
         Matcher[] matchers = new Matcher[noOfPredicateArguments];
-        Arrays.fill(matchers, isAbsent());
+        Arrays.fill(matchers, AbsentMatcher.absent());
         return new ArgumentBackReferences(new Present<>(tc), matchers);
     }
 
@@ -150,7 +150,7 @@ public final class PredicateMatcher
         @Override
         protected CharSequence featureValueOf(Predicate actual)
         {
-            return actual.selection(mTc.value(dummy(TransactionContext.class)));
+            return actual.selection(new Backed<>(mTc, dummy(TransactionContext.class)).value());
         }
     }
 
@@ -171,14 +171,7 @@ public final class PredicateMatcher
         @Override
         protected Iterable<String> featureValueOf(Predicate predicate)
         {
-            return new Mapped<>(predicate.arguments(mTc.value(dummy(TransactionContext.class))), new Function<Predicate.Argument, String>()
-            {
-                @Override
-                public String apply(Predicate.Argument argument)
-                {
-                    return argument.value();
-                }
-            });
+            return new Mapped<>(Predicate.Argument::value, predicate.arguments(new Backed<>(mTc, dummy(TransactionContext.class)).value()));
         }
     }
 
@@ -199,7 +192,7 @@ public final class PredicateMatcher
         @Override
         protected Iterable<Predicate.Argument> featureValueOf(Predicate predicate)
         {
-            return predicate.arguments(mTc.value(dummy(TransactionContext.class)));
+            return predicate.arguments(new Backed<>(mTc, dummy(TransactionContext.class)).value());
         }
     }
 
@@ -221,14 +214,7 @@ public final class PredicateMatcher
         @Override
         protected Iterable<Optional<Integer>> featureValueOf(Predicate predicate)
         {
-            return new Mapped<>(predicate.arguments(mTc.value(dummy(TransactionContext.class))), new Function<Predicate.Argument, Optional<Integer>>()
-            {
-                @Override
-                public Optional<Integer> apply(Predicate.Argument argument)
-                {
-                    return argument.backReference();
-                }
-            });
+            return new Mapped<>(Predicate.Argument::backReference, predicate.arguments(new Backed<>(mTc, dummy(TransactionContext.class)).value()));
         }
     }
 

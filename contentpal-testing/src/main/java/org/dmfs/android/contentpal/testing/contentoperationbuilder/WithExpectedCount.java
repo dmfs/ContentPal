@@ -19,15 +19,16 @@ package org.dmfs.android.contentpal.testing.contentoperationbuilder;
 import android.content.ContentProviderOperation;
 
 import org.dmfs.android.contentpal.testing.tools.Field;
-import org.dmfs.optional.Absent;
-import org.dmfs.optional.NullSafe;
-import org.dmfs.optional.Optional;
-import org.dmfs.optional.Present;
+import org.dmfs.jems.optional.Optional;
+import org.dmfs.jems.optional.elementary.NullSafe;
+import org.dmfs.jems.optional.elementary.Present;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 
 import java.util.Locale;
+
+import static org.dmfs.jems.optional.elementary.Absent.absent;
 
 
 /**
@@ -55,13 +56,13 @@ public final class WithExpectedCount extends TypeSafeDiagnosingMatcher<ContentPr
 
     public WithExpectedCount()
     {
-        this(Absent.<Integer>absent());
+        this(absent());
     }
 
 
     public WithExpectedCount(int expectedCount)
     {
-        this(new Present<Integer>(expectedCount));
+        this(new Present<>(expectedCount));
     }
 
 

@@ -36,10 +36,11 @@ import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithVa
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYieldAllowed.withYieldNotAllowed;
 import static org.dmfs.android.contentpal.testing.contentvalues.Containing.containing;
 import static org.dmfs.android.contentpal.testing.operations.OperationMatcher.builds;
-import static org.dmfs.jems.hamcrest.matchers.PresentMatcher.isPresent;
+import static org.dmfs.jems.hamcrest.matchers.optional.PresentMatcher.present;
 import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
 import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
 import static org.hamcrest.Matchers.sameInstance;
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
@@ -62,7 +63,7 @@ public class PutTest
         doReturn(dummyReference).when(mockRowSnapshot).reference();
         doReturn(ContentProviderOperation.newUpdate(Uri.EMPTY)).when(dummyReference).putOperationBuilder(any(TransactionContext.class));
 
-        assertThat(new Put<>(mockRowSnapshot).reference(), isPresent(sameInstance(dummyReference)));
+        assertThat(new Put<>(mockRowSnapshot).reference(), is(present(sameInstance(dummyReference))));
     }
 
 
