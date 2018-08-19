@@ -18,11 +18,10 @@ package org.dmfs.android.contentpal.testing.predicates;
 
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.TransactionContext;
-import org.dmfs.iterables.ArrayIterable;
 import org.dmfs.iterables.EmptyIterable;
-import org.dmfs.jems.hamcrest.matchers.AbsentMatcher;
-import org.dmfs.optional.Absent;
-import org.dmfs.optional.Present;
+import org.dmfs.iterables.elementary.Seq;
+import org.dmfs.jems.hamcrest.matchers.optional.AbsentMatcher;
+import org.dmfs.jems.optional.elementary.Present;
 import org.junit.Test;
 
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.argumentValues;
@@ -30,9 +29,11 @@ import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.ba
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.emptyArguments;
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.predicateWith;
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.selection;
-import static org.dmfs.jems.hamcrest.matchers.PresentMatcher.isPresent;
+import static org.dmfs.jems.hamcrest.matchers.optional.PresentMatcher.present;
 import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
 import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
+import static org.dmfs.jems.optional.elementary.Absent.absent;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
@@ -76,23 +77,23 @@ public final class PredicateMatcherTest
         // Single matching
         Predicate.Argument argumentA = when(mock(Predicate.Argument.class).value()).thenReturn("a").getMock();
         assertTrue(argumentValues("a").matches(
-                when(mock(Predicate.class).arguments(any(TransactionContext.class))).thenReturn(new ArrayIterable<>(argumentA)).getMock()));
+                when(mock(Predicate.class).arguments(any(TransactionContext.class))).thenReturn(new Seq<>(argumentA)).getMock()));
         // Single non-matching
         assertFalse(argumentValues("b").matches(
-                when(mock(Predicate.class).arguments(any(TransactionContext.class))).thenReturn(new ArrayIterable<>(argumentA)).getMock()));
+                when(mock(Predicate.class).arguments(any(TransactionContext.class))).thenReturn(new Seq<>(argumentA)).getMock()));
 
         // Multiple
         Predicate.Argument aB = when(mock(Predicate.Argument.class).value()).thenReturn("b").getMock();
         Predicate.Argument aC = when(mock(Predicate.Argument.class).value()).thenReturn("c").getMock();
         Predicate.Argument aD = when(mock(Predicate.Argument.class).value()).thenReturn("d").getMock();
         assertTrue(argumentValues("b", "c", "d").matches(
-                when(mock(Predicate.class).arguments(any(TransactionContext.class))).thenReturn(new ArrayIterable<>(aB, aC, aD)).getMock()));
+                when(mock(Predicate.class).arguments(any(TransactionContext.class))).thenReturn(new Seq<>(aB, aC, aD)).getMock()));
 
         // Single with TC
         TransactionContext dummyTc = dummy(TransactionContext.class);
         Predicate.Argument argumentE = when(mock(Predicate.Argument.class).value()).thenReturn("e").getMock();
         assertTrue(argumentValues(dummyTc, "e").matches(
-                when(mock(Predicate.class).arguments(dummyTc)).thenReturn(new ArrayIterable<>(argumentE)).getMock()));
+                when(mock(Predicate.class).arguments(dummyTc)).thenReturn(new Seq<>(argumentE)).getMock()));
     }
 
 
@@ -101,24 +102,24 @@ public final class PredicateMatcherTest
     {
         // Single matching
         Predicate.Argument argumentA = when(mock(Predicate.Argument.class).backReference()).thenReturn(new Present<>(1)).getMock();
-        assertTrue(backReferences(isPresent(1)).matches(
-                when(mock(Predicate.class).arguments(any(TransactionContext.class))).thenReturn(new ArrayIterable<>(argumentA)).getMock()));
+        assertTrue(backReferences(is(present(1))).matches(
+                when(mock(Predicate.class).arguments(any(TransactionContext.class))).thenReturn(new Seq<>(argumentA)).getMock()));
         // Single non-matching
-        assertFalse(backReferences(isPresent(2)).matches(
-                when(mock(Predicate.class).arguments(any(TransactionContext.class))).thenReturn(new ArrayIterable<>(argumentA)).getMock()));
+        assertFalse(backReferences(is(present(2))).matches(
+                when(mock(Predicate.class).arguments(any(TransactionContext.class))).thenReturn(new Seq<>(argumentA)).getMock()));
 
         // Multiple
         Predicate.Argument aB = when(mock(Predicate.Argument.class).backReference()).thenReturn(new Present<>(1)).getMock();
-        Predicate.Argument aC = when(mock(Predicate.Argument.class).backReference()).thenReturn(Absent.<Integer>absent()).getMock();
+        Predicate.Argument aC = when(mock(Predicate.Argument.class).backReference()).thenReturn(absent()).getMock();
         Predicate.Argument aD = when(mock(Predicate.Argument.class).backReference()).thenReturn(new Present<>(3)).getMock();
-        assertTrue(backReferences(isPresent(1), AbsentMatcher.<Integer>isAbsent(), isPresent(3)).matches(
-                when(mock(Predicate.class).arguments(any(TransactionContext.class))).thenReturn(new ArrayIterable<>(aB, aC, aD)).getMock()));
+        assertTrue(backReferences(is(present(1)), is(AbsentMatcher.absent()), is(present(3))).matches(
+                when(mock(Predicate.class).arguments(any(TransactionContext.class))).thenReturn(new Seq<>(aB, aC, aD)).getMock()));
 
         // Single with TC
         TransactionContext dummyTc = dummy(TransactionContext.class);
         Predicate.Argument argumentE = when(mock(Predicate.Argument.class).backReference()).thenReturn(new Present<>(1)).getMock();
-        assertTrue(backReferences(dummyTc, isPresent(1)).matches(
-                when(mock(Predicate.class).arguments(dummyTc)).thenReturn(new ArrayIterable<>(argumentE)).getMock()));
+        assertTrue(backReferences(dummyTc, is(present(1))).matches(
+                when(mock(Predicate.class).arguments(dummyTc)).thenReturn(new Seq<>(argumentE)).getMock()));
     }
 
 
@@ -126,15 +127,15 @@ public final class PredicateMatcherTest
     public void testEmptyArguments()
     {
         assertTrue(emptyArguments().matches(
-                when(mock(Predicate.class).arguments(any(TransactionContext.class))).thenReturn(EmptyIterable.<Predicate.Argument>instance()).getMock()));
+                when(mock(Predicate.class).arguments(any(TransactionContext.class))).thenReturn(EmptyIterable.instance()).getMock()));
 
         assertFalse(emptyArguments().matches(
-                when(mock(Predicate.class).arguments(any(TransactionContext.class))).thenReturn(new ArrayIterable<>(dummy(Predicate.Argument.class)))
+                when(mock(Predicate.class).arguments(any(TransactionContext.class))).thenReturn(new Seq<>(dummy(Predicate.Argument.class)))
                         .getMock()));
 
         TransactionContext dummyTc = dummy(TransactionContext.class);
         assertTrue(emptyArguments(dummyTc).matches(
-                when(mock(Predicate.class).arguments(dummyTc)).thenReturn(EmptyIterable.<Predicate.Argument>instance()).getMock()));
+                when(mock(Predicate.class).arguments(dummyTc)).thenReturn(EmptyIterable.instance()).getMock()));
 
     }
 
@@ -147,10 +148,9 @@ public final class PredicateMatcherTest
 
         doReturn("sel").when(predicateMock).selection(any(TransactionContext.class));
         doReturn("arg").when(argumentMock).value();
-        doReturn(new ArrayIterable<>(argumentMock)).when(predicateMock).arguments(any(TransactionContext.class));
+        doReturn(new Seq<>(argumentMock)).when(predicateMock).arguments(any(TransactionContext.class));
 
-        assertTrue(predicateWith(selection("sel"), argumentValues("arg"))
-                .matches(predicateMock));
+        assertTrue(predicateWith(selection("sel"), argumentValues("arg")).matches(predicateMock));
     }
 
 }

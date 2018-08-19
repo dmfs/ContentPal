@@ -24,7 +24,6 @@ import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.SoftRowReference;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.rowdata.CharSequenceRowData;
-import org.dmfs.jems.hamcrest.matchers.AbsentMatcher;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
@@ -37,6 +36,7 @@ import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithVa
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYieldAllowed.withYieldNotAllowed;
 import static org.dmfs.android.contentpal.testing.contentvalues.Containing.containing;
 import static org.dmfs.android.contentpal.testing.operations.OperationMatcher.builds;
+import static org.dmfs.jems.hamcrest.matchers.optional.AbsentMatcher.absent;
 import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
 import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
 import static org.hamcrest.core.IsSame.sameInstance;
@@ -58,8 +58,7 @@ public final class AssertTest
     @Test
     public void testReference() throws Exception
     {
-        assertThat(new Assert<Object>(dummy(RowSnapshot.class), dummy(RowData.class)).reference(),
-                AbsentMatcher.<SoftRowReference<Object>>isAbsent());
+        assertThat(new Assert<Object>(dummy(RowSnapshot.class), dummy(RowData.class)).reference(), absent());
     }
 
 

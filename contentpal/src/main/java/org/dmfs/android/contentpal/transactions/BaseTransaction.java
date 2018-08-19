@@ -35,7 +35,7 @@ import org.dmfs.android.contentpal.references.RowUriReference;
 import org.dmfs.android.contentpal.tools.OperationSize;
 import org.dmfs.android.contentpal.transactions.contexts.EmptyTransactionContext;
 import org.dmfs.android.contentpal.transactions.contexts.Quick;
-import org.dmfs.optional.Optional;
+import org.dmfs.jems.optional.Optional;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;

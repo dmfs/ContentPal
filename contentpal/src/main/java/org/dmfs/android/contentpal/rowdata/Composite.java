@@ -21,9 +21,9 @@ import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.RowData;
 import org.dmfs.android.contentpal.TransactionContext;
-import org.dmfs.iterables.ArrayIterable;
-import org.dmfs.optional.Optional;
-import org.dmfs.optional.iterable.PresentValues;
+import org.dmfs.iterables.elementary.PresentValues;
+import org.dmfs.iterables.elementary.Seq;
+import org.dmfs.jems.optional.Optional;
 
 
 /**
@@ -39,14 +39,14 @@ public final class Composite<T> implements RowData<T>
     @SafeVarargs
     public Composite(Optional<RowData<T>>... optionalDelegates)
     {
-        this(new PresentValues<>(new ArrayIterable<>(optionalDelegates)));
+        this(new PresentValues<>(new Seq<>(optionalDelegates)));
     }
 
 
     @SafeVarargs
     public Composite(RowData<T>... delegates)
     {
-        this(new ArrayIterable<>(delegates));
+        this(new Seq<>(delegates));
     }
 
 

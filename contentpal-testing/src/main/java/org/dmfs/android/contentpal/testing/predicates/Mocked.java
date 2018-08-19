@@ -20,11 +20,10 @@ import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.TransactionContext;
-import org.dmfs.iterables.ArrayIterable;
-import org.dmfs.iterables.decorators.Mapped;
-import org.dmfs.iterators.Function;
-import org.dmfs.optional.Absent;
-import org.dmfs.optional.Optional;
+import org.dmfs.iterables.elementary.Seq;
+import org.dmfs.jems.iterable.decorators.Mapped;
+import org.dmfs.jems.optional.Optional;
+import org.dmfs.jems.optional.elementary.Absent;
 
 
 /**
@@ -42,7 +41,7 @@ public final class Mocked implements Predicate
     public Mocked(CharSequence selection, String... arguments)
     {
         mSelection = selection;
-        mArguments = new ArrayIterable<>(arguments);
+        mArguments = new Seq<>(arguments);
     }
 
 
@@ -58,14 +57,7 @@ public final class Mocked implements Predicate
     @Override
     public Iterable<Argument> arguments(@NonNull TransactionContext transactionContext)
     {
-        return new Mapped<>(mArguments, new Function<String, Argument>()
-        {
-            @Override
-            public Argument apply(String argument)
-            {
-                return new ValueArgument(argument);
-            }
-        });
+        return new Mapped<>(ValueArgument::new, mArguments);
     }
 
 

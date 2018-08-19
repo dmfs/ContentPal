@@ -29,10 +29,10 @@ import org.dmfs.android.contentpal.batches.MultiInsertBatch;
 import org.dmfs.android.contentpal.operations.Put;
 import org.dmfs.android.contentpal.rowsnapshots.VirtualRowSnapshot;
 import org.dmfs.android.contentpal.tables.AccountScoped;
-import org.dmfs.iterables.ArrayIterable;
 import org.dmfs.iterables.SingletonIterable;
 import org.dmfs.iterables.decorators.DelegatingIterable;
-import org.dmfs.iterables.decorators.Flattened;
+import org.dmfs.iterables.elementary.Seq;
+import org.dmfs.jems.iterable.composite.Joined;
 
 
 /**
@@ -51,7 +51,7 @@ public final class InsertRawContactBatch extends DelegatingIterable<Operation<?>
      */
     public InsertRawContactBatch(Account account, RowData<ContactsContract.Data>... contactData)
     {
-        this(account, new ArrayIterable<>(contactData));
+        this(account, new Seq<>(contactData));
     }
 
 
@@ -75,7 +75,7 @@ public final class InsertRawContactBatch extends DelegatingIterable<Operation<?>
      */
     public InsertRawContactBatch(Table<ContactsContract.RawContacts> rawContacts, RowData<ContactsContract.Data>... contactData)
     {
-        this(rawContacts, new ArrayIterable<>(contactData));
+        this(rawContacts, new Seq<>(contactData));
     }
 
 
@@ -99,7 +99,7 @@ public final class InsertRawContactBatch extends DelegatingIterable<Operation<?>
      */
     public InsertRawContactBatch(RowSnapshot<ContactsContract.RawContacts> rawContact, RowData<ContactsContract.Data>... contactData)
     {
-        this(rawContact, new ArrayIterable<>(contactData));
+        this(rawContact, new Seq<>(contactData));
     }
 
 
@@ -111,7 +111,7 @@ public final class InsertRawContactBatch extends DelegatingIterable<Operation<?>
      */
     public InsertRawContactBatch(RowSnapshot<ContactsContract.RawContacts> rawContact, Iterable<RowData<ContactsContract.Data>> contactData)
     {
-        super(new Flattened<>(
+        super(new Joined<>(
                 new SingletonIterable<Operation<?>>(
                         new Put<>(rawContact)),
                 new MultiInsertBatch<>(

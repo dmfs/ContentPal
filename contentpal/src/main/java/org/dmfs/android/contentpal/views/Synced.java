@@ -26,7 +26,7 @@ import org.dmfs.android.contentpal.Table;
 import org.dmfs.android.contentpal.UriParams;
 import org.dmfs.android.contentpal.View;
 import org.dmfs.android.contentpal.tools.uriparams.SyncParams;
-import org.dmfs.optional.Optional;
+import org.dmfs.jems.optional.Optional;
 
 
 /**

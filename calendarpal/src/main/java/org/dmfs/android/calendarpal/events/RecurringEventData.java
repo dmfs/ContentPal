@@ -25,8 +25,8 @@ import org.dmfs.android.contentpal.RowData;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.iterables.EmptyIterable;
 import org.dmfs.iterables.SingletonIterable;
-import org.dmfs.iterables.decorators.Mapped;
-import org.dmfs.iterators.Function;
+import org.dmfs.jems.function.Function;
+import org.dmfs.jems.iterable.decorators.Mapped;
 import org.dmfs.rfc5545.DateTime;
 import org.dmfs.rfc5545.Duration;
 import org.dmfs.rfc5545.recur.RecurrenceRule;
@@ -46,14 +46,7 @@ public final class RecurringEventData implements RowData<CalendarContract.Events
     private final Iterable<DateTime> mExDates;
     private final Iterable<DateTime> mRDates;
 
-    private Function<DateTime, DateTime> mUtcDate = new Function<DateTime, DateTime>()
-    {
-        @Override
-        public DateTime apply(DateTime argument)
-        {
-            return argument.shiftTimeZone(DateTime.UTC);
-        }
-    };
+    private final Function<DateTime, DateTime> mUtcDate = argument -> argument.shiftTimeZone(DateTime.UTC);
 
 
     public RecurringEventData(@NonNull CharSequence title, @NonNull DateTime start, @NonNull Duration duration, @NonNull RecurrenceRule rule)
@@ -107,8 +100,8 @@ public final class RecurringEventData implements RowData<CalendarContract.Events
                 .withValue(CalendarContract.Events.DURATION, mDuration.toString())
                 .withValue(CalendarContract.Events.TITLE, mTitle.toString())
                 .withValue(CalendarContract.Events.RRULE, TextUtils.join("\n", mRules))
-                .withValue(CalendarContract.Events.RDATE, TextUtils.join(",", new Mapped<>(mRDates, mUtcDate)))
-                .withValue(CalendarContract.Events.EXDATE, TextUtils.join(",", new Mapped<>(mExDates, mUtcDate)))
+                .withValue(CalendarContract.Events.RDATE, TextUtils.join(",", new Mapped<>(mUtcDate, mRDates)))
+                .withValue(CalendarContract.Events.EXDATE, TextUtils.join(",", new Mapped<>(mUtcDate, mExDates)))
                 // explicitly (re-)set DTEND to null
                 .withValue(CalendarContract.Events.DTEND, null)
                 .withValue(CalendarContract.Events.EVENT_END_TIMEZONE, null);

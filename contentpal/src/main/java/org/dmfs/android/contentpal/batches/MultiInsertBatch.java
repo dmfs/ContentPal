@@ -23,11 +23,10 @@ import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.RowData;
 import org.dmfs.android.contentpal.operations.Populated;
 import org.dmfs.iterables.decorators.DelegatingIterable;
-import org.dmfs.iterables.decorators.Mapped;
+import org.dmfs.iterables.elementary.PresentValues;
 import org.dmfs.iterables.elementary.Seq;
-import org.dmfs.iterators.Function;
-import org.dmfs.optional.Optional;
-import org.dmfs.optional.iterable.PresentValues;
+import org.dmfs.jems.iterable.decorators.Mapped;
+import org.dmfs.jems.optional.Optional;
 
 
 /**
@@ -95,14 +94,7 @@ public final class MultiInsertBatch<T> extends DelegatingIterable<Operation<?>>
      */
     public MultiInsertBatch(@NonNull final InsertOperation<T> insertOperation, @NonNull Iterable<RowData<T>> data)
     {
-        super(new Mapped<>(data, new Function<RowData<T>, Operation<?>>()
-        {
-            @Override
-            public Operation<?> apply(RowData<T> argument)
-            {
-                return new Populated<>(argument, insertOperation);
-            }
-        }));
+        super(new Mapped<>(argument -> new Populated<>(argument, insertOperation), data));
     }
 
 }

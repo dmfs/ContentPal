@@ -21,7 +21,7 @@ import android.content.ContentProviderOperation;
 import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.SoftRowReference;
 import org.dmfs.android.contentpal.TransactionContext;
-import org.dmfs.optional.Optional;
+import org.dmfs.jems.optional.Optional;
 import org.junit.Test;
 
 import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;

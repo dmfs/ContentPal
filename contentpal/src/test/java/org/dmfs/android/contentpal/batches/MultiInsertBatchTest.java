@@ -25,7 +25,7 @@ import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.rowdata.CharSequenceRowData;
 import org.dmfs.android.contentpal.rowdata.Composite;
 import org.dmfs.iterables.elementary.Seq;
-import org.dmfs.optional.Absent;
+import org.dmfs.jems.optional.elementary.Absent;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -71,8 +71,8 @@ public class MultiInsertBatchTest
         });
 
         assertThat(new MultiInsertBatch<>(mockOp, new Seq<RowData<Object>>()), emptyIterable());
-        assertThat(new MultiInsertBatch<>(mockOp, Absent.<RowData<Object>>absent()), emptyIterable());
-        assertThat(new MultiInsertBatch<>(mockOp, Absent.<RowData<Object>>absent(), Absent.<RowData<Object>>absent()), emptyIterable());
+        assertThat(new MultiInsertBatch<>(mockOp, Absent.absent()), emptyIterable());
+        assertThat(new MultiInsertBatch<>(mockOp, Absent.absent(), Absent.absent()), emptyIterable());
     }
 
 

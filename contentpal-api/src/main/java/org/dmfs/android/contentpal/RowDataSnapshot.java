@@ -19,7 +19,7 @@ package org.dmfs.android.contentpal;
 import android.support.annotation.NonNull;
 
 import org.dmfs.jems.function.Function;
-import org.dmfs.optional.Optional;
+import org.dmfs.jems.optional.Optional;
 
 
 /**
@@ -38,7 +38,8 @@ public interface RowDataSnapshot<Contract> extends Iterable<String>
     /**
      * Returns any value assigned to the given key.
      * <p>
-     * If there is no value, it returns absent, otherwise it uses the given <code>mapFunction</code> to map from the stored String value to <code>ValueType</code>.
+     * If there is no value, it returns absent, otherwise it uses the given <code>mapFunction</code> to map from the stored String value to
+     * <code>ValueType</code>.
      */
     @NonNull
     <ValueType> Optional<ValueType> data(@NonNull String key, @NonNull Function<String, ValueType> mapFunction);

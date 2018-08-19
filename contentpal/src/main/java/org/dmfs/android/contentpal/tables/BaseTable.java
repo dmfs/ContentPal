@@ -34,7 +34,7 @@ import org.dmfs.android.contentpal.operations.internal.RawDelete;
 import org.dmfs.android.contentpal.operations.internal.RawInsert;
 import org.dmfs.android.contentpal.operations.internal.RawUpdate;
 import org.dmfs.android.contentpal.views.BaseView;
-import org.dmfs.optional.Optional;
+import org.dmfs.jems.optional.Optional;
 
 import java.util.LinkedList;
 import java.util.List;

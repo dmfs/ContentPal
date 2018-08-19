@@ -26,8 +26,9 @@ import org.dmfs.android.contentpal.Table;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.rowdata.EmptyRowData;
 import org.dmfs.android.contentpal.tools.uriparams.EmptyUriParams;
-import org.dmfs.optional.Absent;
-import org.dmfs.optional.Optional;
+import org.dmfs.jems.optional.Optional;
+
+import static org.dmfs.jems.optional.elementary.Absent.absent;
 
 
 /**
@@ -70,7 +71,7 @@ public final class Insert<T> implements InsertOperation<T>
     @Override
     public Optional<SoftRowReference<T>> reference()
     {
-        return Absent.absent();
+        return absent();
     }
 
 

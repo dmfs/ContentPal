@@ -37,9 +37,10 @@ import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.ar
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.backReferences;
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.predicateWith;
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.selection;
-import static org.dmfs.jems.hamcrest.matchers.PresentMatcher.isPresent;
+import static org.dmfs.jems.hamcrest.matchers.optional.PresentMatcher.present;
 import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
 import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.Assert.assertThat;
@@ -120,7 +121,7 @@ public class BackReferenceTest
                 predicateWith(
                         selection(mockTc, "testcol = ?"),
                         argumentValues(mockTc, "-1"),
-                        backReferences(mockTc, isPresent(123))
+                        backReferences(mockTc, is(present(123)))
                 ));
     }
 

@@ -19,7 +19,7 @@ package org.dmfs.android.contentpal.predicates.arguments;
 import org.dmfs.android.contentpal.Predicate;
 import org.junit.Test;
 
-import static org.dmfs.jems.hamcrest.matchers.PresentMatcher.isPresent;
+import static org.dmfs.jems.hamcrest.matchers.optional.PresentMatcher.present;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -37,6 +37,6 @@ public final class BackReferenceArgumentTest
     {
         Predicate.Argument underTest = new BackReferenceArgument(4);
         assertThat(underTest.value(), is("-1"));
-        assertThat(underTest.backReference(), isPresent(4));
+        assertThat(underTest.backReference(), is(present(4)));
     }
 }

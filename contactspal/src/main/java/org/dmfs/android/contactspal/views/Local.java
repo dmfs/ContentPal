@@ -29,7 +29,7 @@ import org.dmfs.android.contentpal.View;
 import org.dmfs.android.contentpal.predicates.AllOf;
 import org.dmfs.android.contentpal.predicates.IsNull;
 import org.dmfs.android.contentpal.tables.AccountScoped;
-import org.dmfs.optional.Optional;
+import org.dmfs.jems.optional.Optional;
 
 
 /**

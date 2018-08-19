@@ -29,7 +29,7 @@ import org.dmfs.android.contentpal.View;
 import org.dmfs.android.contentpal.predicates.AccountEq;
 import org.dmfs.android.contentpal.predicates.AllOf;
 import org.dmfs.android.contentpal.tools.uriparams.AccountScopedParams;
-import org.dmfs.optional.Optional;
+import org.dmfs.jems.optional.Optional;
 
 
 /**

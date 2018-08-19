@@ -17,11 +17,11 @@
 package org.dmfs.android.contentpal.rowdata;
 
 import org.dmfs.android.contentpal.RowData;
-import org.dmfs.iterables.ArrayIterable;
 import org.dmfs.iterables.EmptyIterable;
-import org.dmfs.optional.Absent;
-import org.dmfs.optional.Optional;
-import org.dmfs.optional.Present;
+import org.dmfs.iterables.elementary.Seq;
+import org.dmfs.jems.optional.Optional;
+import org.dmfs.jems.optional.elementary.Absent;
+import org.dmfs.jems.optional.elementary.Present;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
@@ -121,14 +121,14 @@ public class CompositeTest
     @Test
     public void testIterable() throws Exception
     {
-        assertThat(new Composite<Object>(
-                        new ArrayIterable<RowData<Object>>(
+        assertThat(new Composite<>(
+                        new Seq<RowData<Object>>(
                                 new CharSequenceRowData<>("key", "value"))),
                 builds(
                         withValuesOnly(
                                 containing("key", "value"))));
-        assertThat(new Composite<Object>(
-                        new ArrayIterable<RowData<Object>>(
+        assertThat(new Composite<>(
+                        new Seq<RowData<Object>>(
                                 new CharSequenceRowData<>("key", "value"),
                                 new CharSequenceRowData<>("key2", "value2"))),
                 builds(
