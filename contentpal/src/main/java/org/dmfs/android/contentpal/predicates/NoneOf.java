@@ -33,4 +33,11 @@ public final class NoneOf extends DelegatingPredicate
     {
         super(new Not(new AnyOf(predicates)));
     }
+
+
+    public NoneOf(@NonNull Iterable<Predicate> predicates)
+    {
+        super(new Not(new AnyOf(predicates)));
+    }
+
 }

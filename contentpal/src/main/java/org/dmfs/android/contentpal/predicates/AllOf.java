@@ -33,4 +33,10 @@ public final class AllOf extends DelegatingPredicate
     {
         super(new BinaryPredicate("and", predicates));
     }
+
+
+    public AllOf(@NonNull Iterable<Predicate> predicates)
+    {
+        super(new BinaryPredicate("and", predicates));
+    }
 }
