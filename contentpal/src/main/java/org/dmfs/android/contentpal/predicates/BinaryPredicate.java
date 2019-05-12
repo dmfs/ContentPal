@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 dmfs GmbH
+ * Copyright 2019 dmfs GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +24,8 @@ import org.dmfs.iterables.elementary.Seq;
 import org.dmfs.jems.iterable.composite.Joined;
 import org.dmfs.jems.iterable.decorators.Mapped;
 
+import java.util.Iterator;
+
 
 /**
  * A {@link Predicate} which connects a number of given predicates with the given binary operator. Like this:
@@ -37,11 +39,17 @@ import org.dmfs.jems.iterable.decorators.Mapped;
  */
 public final class BinaryPredicate implements Predicate
 {
-    private final Predicate[] mPredicates;
+    private final Iterable<Predicate> mPredicates;
     private final String mOperator;
 
 
     public BinaryPredicate(@NonNull String operator, @NonNull Predicate... predicates)
+    {
+        this(operator, new Seq<>(predicates));
+    }
+
+
+    public BinaryPredicate(@NonNull String operator, @NonNull Iterable<Predicate> predicates)
     {
         mOperator = operator;
         mPredicates = predicates;
@@ -52,24 +60,20 @@ public final class BinaryPredicate implements Predicate
     @Override
     public CharSequence selection(@NonNull TransactionContext transactionContext)
     {
-        if (mPredicates.length == 0)
+        Iterator<Predicate> iterator = mPredicates.iterator();
+        if (!iterator.hasNext())
         {
-            // if no predicates are present, all predicates are satisfied
             return "1";
         }
-        if (mPredicates.length == 1)
-        {
-            return mPredicates[0].selection(transactionContext);
-        }
-        StringBuilder result = new StringBuilder(mPredicates.length * 24);
+        StringBuilder result = new StringBuilder(256);
         result.append("( ");
-        result.append(mPredicates[0].selection(transactionContext));
-        for (int i = 1, count = mPredicates.length; i < count; ++i)
+        result.append(iterator.next().selection(transactionContext));
+        while (iterator.hasNext())
         {
             result.append(" ) ");
             result.append(mOperator);
             result.append(" ( ");
-            result.append(mPredicates[i].selection(transactionContext));
+            result.append(iterator.next().selection(transactionContext));
         }
         result.append(" )");
         return result;
@@ -84,6 +88,6 @@ public final class BinaryPredicate implements Predicate
         return new Joined<>(
                 new Mapped<>(
                         predicate -> predicate.arguments(transactionContext),
-                        new Seq<>(mPredicates)));
+                        mPredicates));
     }
 }

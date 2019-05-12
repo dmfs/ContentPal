@@ -33,4 +33,10 @@ public final class AnyOf extends DelegatingPredicate
     {
         super(new BinaryPredicate("or", predicates));
     }
+
+
+    public AnyOf(@NonNull Iterable<Predicate> predicates)
+    {
+        super(new BinaryPredicate("or", predicates));
+    }
 }

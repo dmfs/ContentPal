@@ -17,6 +17,8 @@
 package org.dmfs.android.contentpal.predicates;
 
 import org.dmfs.android.contentpal.testing.predicates.Mocked;
+import org.dmfs.iterables.EmptyIterable;
+import org.dmfs.iterables.elementary.Seq;
 import org.junit.Test;
 
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.absentBackReferences;
@@ -41,7 +43,7 @@ public class NoneOfTest
                 emptyArguments()));
 
         assertThat(new NoneOf(new Mocked("x", "a")), predicateWith(
-                selection("not ( x )"),
+                selection("not ( ( x ) )"),
                 argumentValues("a"),
                 absentBackReferences(1)));
 
@@ -56,4 +58,27 @@ public class NoneOfTest
                 absentBackReferences(4)));
     }
 
+
+    @Test
+    public void testIterable()
+    {
+        assertThat(new NoneOf(EmptyIterable.instance()), predicateWith(
+                selection("not ( 1 )"),
+                emptyArguments()));
+
+        assertThat(new NoneOf(new Seq<>(new Mocked("x", "a"))), predicateWith(
+                selection("not ( ( x ) )"),
+                argumentValues("a"),
+                absentBackReferences(1)));
+
+        assertThat(new NoneOf(new Seq<>(new Mocked("x", "a"), new Mocked("y", "1"))), predicateWith(
+                selection("not ( ( x ) or ( y ) )"),
+                argumentValues("a", "1"),
+                absentBackReferences(2)));
+
+        assertThat(new NoneOf(new Seq<>(new Mocked("x", "a"), new Mocked("z", "w", "z"), new Mocked("y", "1"))), predicateWith(
+                selection("not ( ( x ) or ( z ) or ( y ) )"),
+                argumentValues("a", "w", "z", "1"),
+                absentBackReferences(4)));
+    }
 }
