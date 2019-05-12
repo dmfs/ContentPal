@@ -20,7 +20,6 @@ import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Projection;
 import org.dmfs.iterables.elementary.Seq;
-import org.dmfs.jems.function.BiFunction;
 import org.dmfs.jems.single.elementary.Reduced;
 
 import java.util.ArrayList;
@@ -35,17 +34,17 @@ import java.util.List;
  */
 public final class Composite<T> implements Projection<T>
 {
-    private final Iterable<Projection<T>> mDelegates;
+    private final Iterable<? extends Projection<? super T>> mDelegates;
 
 
     @SafeVarargs
-    public Composite(Projection<T>... delegates)
+    public Composite(Projection<? super T>... delegates)
     {
         this(new Seq<>(delegates));
     }
 
 
-    public Composite(Iterable<Projection<T>> delegates)
+    public Composite(Iterable<? extends Projection<? super T>> delegates)
     {
         mDelegates = delegates;
     }
@@ -57,17 +56,12 @@ public final class Composite<T> implements Projection<T>
     {
         List<String> projection = new Reduced<>(
                 new ArrayList<String>(32),
-                new BiFunction<ArrayList<String>, Projection<T>, ArrayList<String>>()
-                {
-                    @Override
-                    public ArrayList<String> value(ArrayList<String> strings, Projection<T> projection)
-                    {
-                        // add the strings of all projections
-                        strings.addAll(Arrays.asList(projection.toArray()));
-                        return strings;
-                    }
+                (strings, projection1) -> {
+                    // add the strings of all projections
+                    strings.addAll(Arrays.asList(projection1.toArray()));
+                    return strings;
                 },
                 mDelegates).value();
-        return projection.toArray(new String[projection.size()]);
+        return projection.toArray(new String[0]);
     }
 }
