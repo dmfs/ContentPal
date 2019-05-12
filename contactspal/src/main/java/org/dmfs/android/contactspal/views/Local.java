@@ -53,7 +53,7 @@ public final class Local implements View<ContactsContract.RawContacts>
 
     @NonNull
     @Override
-    public Cursor rows(@NonNull UriParams uriParams, @NonNull Projection<ContactsContract.RawContacts> projection, @NonNull Predicate predicate, @NonNull Optional<String> sorting) throws RemoteException
+    public Cursor rows(@NonNull UriParams uriParams, @NonNull Projection<? super ContactsContract.RawContacts> projection, @NonNull Predicate predicate, @NonNull Optional<String> sorting) throws RemoteException
     {
         return mDelegate.rows(uriParams,
                 projection,
