@@ -34,8 +34,8 @@ import org.dmfs.jems.optional.Optional;
 
 /**
  * A view onto {@link CalendarContract.Events} which contains only events of a specific calendar. `{@link InsertOperation}`s returned by the result of {@link
- * #table()} will insert into the given calendar by default. Note, if you pass a virtual {@link RowSnapshot}, the {@link View} will always be empty, even
- * after adding and committing rows.
+ * #table()} will insert into the given calendar by default. Note, if you pass a virtual {@link RowSnapshot}, the {@link View} will always be empty, even after
+ * adding and committing rows.
  *
  * @author Marten Gajda
  */
@@ -68,7 +68,7 @@ public final class CalendarScoped implements View<CalendarContract.Events>
 
     @NonNull
     @Override
-    public Cursor rows(@NonNull UriParams uriParams, @NonNull Projection<CalendarContract.Events> projection, @NonNull Predicate predicate, @NonNull Optional<String> sorting) throws RemoteException
+    public Cursor rows(@NonNull UriParams uriParams, @NonNull Projection<? super CalendarContract.Events> projection, @NonNull Predicate predicate, @NonNull Optional<String> sorting) throws RemoteException
     {
         return mDelegate.rows(
                 uriParams,
