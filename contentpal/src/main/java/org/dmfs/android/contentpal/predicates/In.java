@@ -36,13 +36,19 @@ import org.dmfs.jems.iterable.decorators.Mapped;
 public final class In implements Predicate
 {
     private final String mColumnName;
-    private final Object[] mArguments;
+    private final Iterable<?> mArguments;
 
 
     public In(@NonNull String columnName, @NonNull Object... arguments)
     {
+        this(columnName, new Seq<>(arguments));
+    }
+
+
+    public In(@NonNull String columnName, @NonNull Iterable<?> arguments)
+    {
         mColumnName = columnName;
-        mArguments = arguments.clone();
+        mArguments = arguments;
     }
 
 
@@ -50,16 +56,21 @@ public final class In implements Predicate
     @Override
     public CharSequence selection(@NonNull TransactionContext transactionContext)
     {
-        StringBuilder sb = new StringBuilder(mColumnName.length() + mArguments.length * 3 + 9);
+        StringBuilder sb = new StringBuilder(128);
         sb.append(mColumnName);
-        sb.append(" in (");
-        if (mArguments.length > 0)
+        sb.append(" in ( ");
+        boolean first = true;
+        for (Object ignored : mArguments)
         {
-            sb.append(" ?");
-        }
-        for (int i = 1, count = mArguments.length; i < count; ++i)
-        {
-            sb.append(", ?");
+            if (first)
+            {
+                first = false;
+            }
+            else
+            {
+                sb.append(", ");
+            }
+            sb.append("?");
         }
         sb.append(" ) ");
         return sb;
@@ -70,6 +81,6 @@ public final class In implements Predicate
     @Override
     public Iterable<Argument> arguments(@NonNull TransactionContext transactionContext)
     {
-        return new Mapped<>(ValueArgument::new, new Seq<>(mArguments));
+        return new Mapped<>(ValueArgument::new, mArguments);
     }
 }

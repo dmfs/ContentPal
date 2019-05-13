@@ -16,6 +16,8 @@
 
 package org.dmfs.android.contentpal.predicates;
 
+import org.dmfs.iterables.EmptyIterable;
+import org.dmfs.iterables.elementary.Seq;
 import org.junit.Test;
 
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.absentBackReferences;
@@ -35,7 +37,7 @@ public class InTest
     public void test()
     {
         assertThat(new In("x"), predicateWith(
-                selection("x in ( ) "),
+                selection("x in (  ) "),
                 emptyArguments()));
 
         assertThat(new In("x", "a"), predicateWith(
@@ -49,6 +51,30 @@ public class InTest
                 absentBackReferences(2)));
 
         assertThat(new In("x", "a", 1, 1.2), predicateWith(
+                selection("x in ( ?, ?, ? ) "),
+                argumentValues("a", "1", "1.2"),
+                absentBackReferences(3)));
+    }
+
+
+    @Test
+    public void testIterable()
+    {
+        assertThat(new In("x", EmptyIterable.instance()), predicateWith(
+                selection("x in (  ) "),
+                emptyArguments()));
+
+        assertThat(new In("x", new Seq<>("a")), predicateWith(
+                selection("x in ( ? ) "),
+                argumentValues("a"),
+                absentBackReferences(1)));
+
+        assertThat(new In("x", new Seq<>("a", 1)), predicateWith(
+                selection("x in ( ?, ? ) "),
+                argumentValues("a", "1"),
+                absentBackReferences(2)));
+
+        assertThat(new In("x", new Seq<>("a", 1, 1.2)), predicateWith(
                 selection("x in ( ?, ?, ? ) "),
                 argumentValues("a", "1", "1.2"),
                 absentBackReferences(3)));
