@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 dmfs GmbH
+ * Copyright 2019 dmfs GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,47 +20,30 @@ import android.content.ContentProviderOperation;
 import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Operation;
+import org.dmfs.android.contentpal.RowData;
 import org.dmfs.android.contentpal.RowReference;
-import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.SoftRowReference;
 import org.dmfs.android.contentpal.TransactionContext;
-import org.dmfs.android.contentpal.references.RowSnapshotReference;
 import org.dmfs.jems.optional.Optional;
 
 import static org.dmfs.jems.optional.elementary.Absent.absent;
 
 
 /**
- * An {@link Operation} which deletes a row belonging to a {@link RowSnapshot} or {@link RowReference}.
+ * An update {@link Operation} on a database row identified by its {@link RowReference}.
  *
  * @author Marten Gajda
  */
-public final class Delete<T> implements Operation<T>
+public final class Update<T> implements Operation<T>
 {
-    private final RowReference<T> mRowReference;
+    private final RowReference<T> mReference;
+    private final RowData<T> mData;
 
 
-    /**
-     * Creates a {@link Delete} {@link Operation} for the row of the given {@link RowSnapshot}.
-     *
-     * @param rowSnapshot
-     *         A {@link RowSnapshot} of the row to delete.
-     */
-    public Delete(@NonNull RowSnapshot<T> rowSnapshot)
+    public Update(@NonNull RowReference<T> reference, @NonNull RowData<T> data)
     {
-        this(new RowSnapshotReference<>(rowSnapshot));
-    }
-
-
-    /**
-     * Creates a {@link Delete} {@link Operation} for the row of the given {@link RowReference}.
-     *
-     * @param rowReference
-     *         A {@link RowReference} to the row to delete.
-     */
-    public Delete(@NonNull RowReference<T> rowReference)
-    {
-        mRowReference = rowReference;
+        mReference = reference;
+        mData = data;
     }
 
 
@@ -74,8 +57,8 @@ public final class Delete<T> implements Operation<T>
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder contentOperationBuilder(@NonNull TransactionContext transactionContext)
+    public ContentProviderOperation.Builder contentOperationBuilder(@NonNull TransactionContext transactionContext) throws UnsupportedOperationException
     {
-        return mRowReference.deleteOperationBuilder(transactionContext);
+        return mData.updatedBuilder(transactionContext, mReference.putOperationBuilder(transactionContext));
     }
 }

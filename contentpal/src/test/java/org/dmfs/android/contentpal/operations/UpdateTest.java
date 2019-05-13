@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 dmfs GmbH
+ * Copyright 2019 dmfs GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,25 +19,27 @@ package org.dmfs.android.contentpal.operations;
 import android.content.ContentProviderOperation;
 import android.net.Uri;
 
-import org.dmfs.android.contentpal.RowSnapshot;
-import org.dmfs.android.contentpal.SoftRowReference;
+import org.dmfs.android.contentpal.RowData;
+import org.dmfs.android.contentpal.RowReference;
 import org.dmfs.android.contentpal.TransactionContext;
+import org.dmfs.android.contentpal.rowdata.CharSequenceRowData;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
-import static org.dmfs.android.contentpal.testing.contentoperationbuilder.OperationType.deleteOperation;
+import static org.dmfs.android.contentpal.testing.contentoperationbuilder.OperationType.updateOperation;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.TargetMatcher.targets;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithExpectedCount.withoutExpectedCount;
-import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withoutValues;
+import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withValuesOnly;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYieldAllowed.withYieldNotAllowed;
+import static org.dmfs.android.contentpal.testing.contentvalues.Containing.containing;
 import static org.dmfs.android.contentpal.testing.operations.OperationMatcher.builds;
 import static org.dmfs.jems.hamcrest.matchers.optional.AbsentMatcher.absent;
 import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
 import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
+import static org.hamcrest.Matchers.sameInstance;
 import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsSame.sameInstance;
 import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
@@ -48,51 +50,32 @@ import static org.mockito.Mockito.doReturn;
  */
 @RunWith(RobolectricTestRunner.class)
 @Config(manifest = Config.NONE)
-public class DeleteTest
+public class UpdateTest
 {
+
     @Test
     public void testVirtualReference() throws Exception
     {
-        RowSnapshot<Object> dummyRowSnapshot = dummy(RowSnapshot.class);
+        RowReference<Object> dummyRowReference = dummy(RowReference.class);
 
-        assertThat(new Delete<>(dummyRowSnapshot).reference(), is(absent()));
+        assertThat(new Update<Object>(dummyRowReference, failingMock(RowData.class)).reference(), is(absent()));
     }
 
 
     @Test
-    public void testContentOperationBuilder() throws Exception
+    public void testContentOperationBuilderWithData() throws Exception
     {
-        RowSnapshot<Object> mockRowSnapshot = failingMock(RowSnapshot.class);
-        SoftRowReference<Object> rowReference = failingMock(SoftRowReference.class);
-        doReturn(rowReference).when(mockRowSnapshot).reference();
+        RowReference<Object> mockRowReference = failingMock(RowReference.class);
         Uri dummyUri = dummy(Uri.class);
-        doReturn(ContentProviderOperation.newDelete(dummyUri)).when(rowReference).deleteOperationBuilder(any(TransactionContext.class));
+        doReturn(ContentProviderOperation.newUpdate(dummyUri)).when(mockRowReference).putOperationBuilder(any(TransactionContext.class));
 
-        assertThat(
-                new Delete<>(mockRowSnapshot),
+        assertThat(new Update<>(mockRowReference, new CharSequenceRowData<>("x", "y")),
                 builds(
                         targets(sameInstance(dummyUri)),
-                        deleteOperation(),
+                        updateOperation(),
                         withYieldNotAllowed(),
                         withoutExpectedCount(),
-                        withoutValues()));
-    }
-
-
-    @Test
-    public void testContentOperationBuilderFromReference() throws Exception
-    {
-        SoftRowReference<Object> rowReference = failingMock(SoftRowReference.class);
-        Uri dummyUri = dummy(Uri.class);
-        doReturn(ContentProviderOperation.newDelete(dummyUri)).when(rowReference).deleteOperationBuilder(any(TransactionContext.class));
-
-        assertThat(
-                new Delete<>(rowReference),
-                builds(
-                        targets(sameInstance(dummyUri)),
-                        deleteOperation(),
-                        withYieldNotAllowed(),
-                        withoutExpectedCount(),
-                        withoutValues()));
+                        withValuesOnly(
+                                containing("x", "y"))));
     }
 }
