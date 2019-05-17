@@ -51,6 +51,7 @@ dependencies {
 
     testImplementation project(':contentpal-testing')
     testImplementation deps.junit
+    testImplementation deps.hamcrest
     testImplementation deps.mockito
     testImplementation deps.roboelectric
 }
