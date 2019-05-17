@@ -33,19 +33,19 @@ import java.util.Iterator;
  * @author Marten Gajda
  * @see <a href="https://developer.android.com/guide/topics/providers/contacts-provider.html#Transactions">ContactsProvider - Batch modification</a>
  */
-public final class Yieldable implements Iterable<Operation<?>>
+public final class Yieldable<T> implements Iterable<Operation<T>>
 {
-    private final Iterable<Operation<?>> mDelegate;
+    private final Iterable<Operation<T>> mDelegate;
 
 
     /**
-     * Creates an {@link Iterable} of {@link Operation}s which allows yielding the database to other transactions after the given {@link Operation}s have
-     * been executed.
+     * Creates an {@link Iterable} of {@link Operation}s which allows yielding the database to other transactions after the given {@link Operation}s have been
+     * executed.
      *
      * @param delegate
      *         The {@link Iterable} of {@link Operation}s.
      */
-    public Yieldable(@NonNull Iterable<Operation<?>> delegate)
+    public Yieldable(@NonNull Iterable<Operation<T>> delegate)
     {
         mDelegate = delegate;
     }
@@ -53,11 +53,11 @@ public final class Yieldable implements Iterable<Operation<?>>
 
     @NonNull
     @Override
-    public Iterator<Operation<?>> iterator()
+    public Iterator<Operation<T>> iterator()
     {
-        final Iterator<Operation<?>> delegate = mDelegate.iterator();
+        final Iterator<Operation<T>> delegate = mDelegate.iterator();
         // return an iterator which decorates the last Operation with Yieldable.
-        return new AbstractBaseIterator<Operation<?>>()
+        return new AbstractBaseIterator<Operation<T>>()
         {
             private boolean mFirst = true;
 
@@ -71,9 +71,9 @@ public final class Yieldable implements Iterable<Operation<?>>
 
             @NonNull
             @Override
-            public Operation<?> next()
+            public Operation<T> next()
             {
-                Operation<?> next = mFirst ? new org.dmfs.android.contentpal.operations.Yieldable<>(delegate.next()) : delegate.next();
+                Operation<T> next = mFirst ? new org.dmfs.android.contentpal.operations.Yieldable<>(delegate.next()) : delegate.next();
                 mFirst = false;
                 return next;
             }
