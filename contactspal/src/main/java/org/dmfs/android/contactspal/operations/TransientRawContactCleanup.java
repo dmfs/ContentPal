@@ -16,19 +16,14 @@
 
 package org.dmfs.android.contactspal.operations;
 
-import android.content.ContentProviderOperation;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 
+import org.dmfs.android.contactspal.predicates.TransientRawContact;
 import org.dmfs.android.contentpal.Operation;
-import org.dmfs.android.contentpal.SoftRowReference;
 import org.dmfs.android.contentpal.Table;
-import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.operations.BulkDelete;
-import org.dmfs.android.contentpal.predicates.AllOf;
-import org.dmfs.android.contentpal.predicates.EqArg;
-import org.dmfs.android.contentpal.predicates.IsNull;
-import org.dmfs.jems.optional.Optional;
+import org.dmfs.android.contentpal.operations.DelegatingOperation;
 
 
 /**
@@ -36,32 +31,11 @@ import org.dmfs.jems.optional.Optional;
  *
  * @author Marten Gajda
  */
-public final class TransientRawContactCleanup implements Operation<ContactsContract.RawContacts>
+public final class TransientRawContactCleanup extends DelegatingOperation<ContactsContract.RawContacts>
 {
-    private final Operation<ContactsContract.RawContacts> mDelegate;
-
-
     public TransientRawContactCleanup(@NonNull Table<ContactsContract.RawContacts> rawContactsTable)
     {
         // delete all RawContacts without source id which have been deleted
-        mDelegate = new BulkDelete<>(rawContactsTable, new AllOf(
-                new IsNull(ContactsContract.RawContacts.SOURCE_ID),
-                new EqArg(ContactsContract.RawContacts.DELETED, 1)));
-    }
-
-
-    @NonNull
-    @Override
-    public Optional<SoftRowReference<ContactsContract.RawContacts>> reference()
-    {
-        return mDelegate.reference();
-    }
-
-
-    @NonNull
-    @Override
-    public ContentProviderOperation.Builder contentOperationBuilder(@NonNull TransactionContext transactionContext) throws UnsupportedOperationException
-    {
-        return mDelegate.contentOperationBuilder(transactionContext);
+        super(new BulkDelete<>(rawContactsTable, new TransientRawContact()));
     }
 }
