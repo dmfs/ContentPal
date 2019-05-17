@@ -57,7 +57,7 @@ public class YieldableTest
     @Test
     public void testEmpty() throws Exception
     {
-        assertThat(new Yieldable(EmptyIterable.<Operation<?>>instance()),
+        assertThat(new Yieldable<>(EmptyIterable.instance()),
                 emptyIterable());
     }
 
@@ -65,16 +65,16 @@ public class YieldableTest
     @Test
     public void testOperations() throws Exception
     {
-        Operation<?> mockOp1 = mock(Operation.class);
-        Operation<?> mockOp2 = mock(Operation.class);
-        Operation<?> mockOp3 = mock(Operation.class);
+        Operation<Object> mockOp1 = mock(Operation.class);
+        Operation<Object> mockOp2 = mock(Operation.class);
+        Operation<Object> mockOp3 = mock(Operation.class);
         Uri dummyUri = dummy(Uri.class);
 
         doReturn(ContentProviderOperation.newUpdate(dummyUri)).when(mockOp1).contentOperationBuilder(ArgumentMatchers.any(TransactionContext.class));
 
         // every last operation of each batch should allow yielding
 
-        assertThat(new Yieldable(new SingletonIterable<Operation<?>>(mockOp1)),
+        assertThat(new Yieldable<>(new SingletonIterable<>(mockOp1)),
                 iteratesTo(
                         builds(
                                 targets(sameInstance(dummyUri)),
@@ -83,7 +83,7 @@ public class YieldableTest
                                 withoutExpectedCount(),
                                 withYieldAllowed())));
 
-        assertThat(new Yieldable(new Seq<>(mockOp1, mockOp2)),
+        assertThat(new Yieldable<>(new Seq<>(mockOp1, mockOp2)),
                 iteratesTo(
                         builds(
                                 targets(sameInstance(dummyUri)),
@@ -93,7 +93,7 @@ public class YieldableTest
                                 withYieldAllowed()),
                         Matchers.<Operation>is(mockOp2)));
 
-        assertThat(new Yieldable(new Seq<>(mockOp1, mockOp2, mockOp3)),
+        assertThat(new Yieldable<>(new Seq<>(mockOp1, mockOp2, mockOp3)),
                 iteratesTo(
                         builds(
                                 targets(sameInstance(dummyUri)),
