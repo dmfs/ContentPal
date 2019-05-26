@@ -16,6 +16,7 @@
 
 package org.dmfs.android.contentpal.tables;
 
+import android.accounts.Account;
 import android.content.ContentProviderClient;
 import android.support.annotation.NonNull;
 
@@ -25,6 +26,7 @@ import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.Table;
 import org.dmfs.android.contentpal.UriParams;
 import org.dmfs.android.contentpal.View;
+import org.dmfs.android.contentpal.tools.uriparams.AccountScopedParams;
 import org.dmfs.android.contentpal.tools.uriparams.SyncParams;
 
 
@@ -39,11 +41,13 @@ import org.dmfs.android.contentpal.tools.uriparams.SyncParams;
  */
 public final class Synced<T> implements Table<T>
 {
+    private final Account mAccount;
     private final Table<T> mDelegate;
 
 
-    public Synced(@NonNull Table<T> delegate)
+    public Synced(@NonNull Account account, @NonNull Table<T> delegate)
     {
+        mAccount = account;
         mDelegate = delegate;
     }
 
@@ -52,7 +56,7 @@ public final class Synced<T> implements Table<T>
     @Override
     public InsertOperation<T> insertOperation(@NonNull UriParams uriParams)
     {
-        return mDelegate.insertOperation(new SyncParams(uriParams));
+        return mDelegate.insertOperation(new AccountScopedParams(mAccount, new SyncParams(uriParams)));
     }
 
 
@@ -60,7 +64,7 @@ public final class Synced<T> implements Table<T>
     @Override
     public Operation<T> updateOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate)
     {
-        return mDelegate.updateOperation(new SyncParams(uriParams), predicate);
+        return mDelegate.updateOperation(new AccountScopedParams(mAccount, new SyncParams(uriParams)), predicate);
     }
 
 
@@ -68,7 +72,7 @@ public final class Synced<T> implements Table<T>
     @Override
     public Operation<T> deleteOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate)
     {
-        return mDelegate.deleteOperation(new SyncParams(uriParams), predicate);
+        return mDelegate.deleteOperation(new AccountScopedParams(mAccount, new SyncParams(uriParams)), predicate);
     }
 
 
@@ -76,7 +80,7 @@ public final class Synced<T> implements Table<T>
     @Override
     public Operation<T> assertOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate)
     {
-        return mDelegate.assertOperation(new SyncParams(uriParams), predicate);
+        return mDelegate.assertOperation(new AccountScopedParams(mAccount, new SyncParams(uriParams)), predicate);
     }
 
 
@@ -84,7 +88,7 @@ public final class Synced<T> implements Table<T>
     @Override
     public View<T> view(@NonNull ContentProviderClient client)
     {
-        return new org.dmfs.android.contentpal.views.Synced<>(mDelegate.view(client));
+        return new org.dmfs.android.contentpal.views.Synced<>(mAccount, mDelegate.view(client));
     }
 
 }

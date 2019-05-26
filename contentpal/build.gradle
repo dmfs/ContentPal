@@ -54,5 +54,4 @@ dependencies {
     testImplementation deps.mockito
     testImplementation deps.roboelectric
     testImplementation deps.dmfs_jems_testing
-
 }

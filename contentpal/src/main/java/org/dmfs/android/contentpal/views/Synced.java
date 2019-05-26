@@ -16,6 +16,7 @@
 
 package org.dmfs.android.contentpal.views;
 
+import android.accounts.Account;
 import android.database.Cursor;
 import android.os.RemoteException;
 import android.support.annotation.NonNull;
@@ -25,6 +26,7 @@ import org.dmfs.android.contentpal.Projection;
 import org.dmfs.android.contentpal.Table;
 import org.dmfs.android.contentpal.UriParams;
 import org.dmfs.android.contentpal.View;
+import org.dmfs.android.contentpal.tools.uriparams.AccountScopedParams;
 import org.dmfs.android.contentpal.tools.uriparams.SyncParams;
 import org.dmfs.jems.optional.Optional;
 
@@ -40,11 +42,13 @@ import org.dmfs.jems.optional.Optional;
  */
 public final class Synced<T> implements View<T>
 {
+    private final Account mAccount;
     private final View<T> mDelegate;
 
 
-    public Synced(@NonNull View<T> delegate)
+    public Synced(@NonNull Account account, @NonNull View<T> delegate)
     {
+        mAccount = account;
         mDelegate = delegate;
     }
 
@@ -53,7 +57,7 @@ public final class Synced<T> implements View<T>
     @Override
     public Cursor rows(@NonNull UriParams uriParams, @NonNull Projection<? super T> projection, @NonNull Predicate predicate, @NonNull Optional<String> sorting) throws RemoteException
     {
-        return mDelegate.rows(new SyncParams(uriParams), projection, predicate, sorting);
+        return mDelegate.rows(new AccountScopedParams(mAccount, new SyncParams(uriParams)), projection, predicate, sorting);
     }
 
 
@@ -61,6 +65,6 @@ public final class Synced<T> implements View<T>
     @Override
     public Table<T> table()
     {
-        return new org.dmfs.android.contentpal.tables.Synced<>(mDelegate.table());
+        return new org.dmfs.android.contentpal.tables.Synced<>(mAccount, mDelegate.table());
     }
 }

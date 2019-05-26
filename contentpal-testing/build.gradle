@@ -47,6 +47,9 @@ dependencies {
     implementation deps.junit
     implementation deps.hamcrest
     implementation deps.mockito
-    implementation deps.dmfs_jems_testing
+    implementation(deps.dmfs_jems_testing) {
+        // need to exlude this as long as it imports hamcrest-all which conflicts with hamcrest-library
+        exclude group: 'org.hamcrest'
+    }
     testImplementation deps.roboelectric
 }

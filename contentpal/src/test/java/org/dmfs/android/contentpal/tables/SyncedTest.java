@@ -16,6 +16,7 @@
 
 package org.dmfs.android.contentpal.tables;
 
+import android.accounts.Account;
 import android.net.Uri;
 import android.provider.ContactsContract;
 
@@ -52,9 +53,10 @@ public class SyncedTest
     {
         InsertOperation<Object> dummyResultOperation = dummy(InsertOperation.class);
         Table<Object> mockTable = failingMock(Table.class);
-        doReturn(dummyResultOperation).when(mockTable).insertOperation(argThat(new UriParamsArgumentMatcher()));
+        Account account = new Account("name", "type");
+        doReturn(dummyResultOperation).when(mockTable).insertOperation(argThat(new UriParamsArgumentMatcher(account)));
 
-        assertThat(new Synced<>(mockTable).insertOperation(new EmptyUriParams()), sameInstance(dummyResultOperation));
+        assertThat(new Synced<>(account, mockTable).insertOperation(new EmptyUriParams()), sameInstance(dummyResultOperation));
     }
 
 
@@ -64,9 +66,11 @@ public class SyncedTest
         Operation<Object> dummyResultOperation = dummy(Operation.class);
         Predicate dummyPredicate = dummy(Predicate.class);
         Table<Object> mockTable = failingMock(Table.class);
-        doReturn(dummyResultOperation).when(mockTable).updateOperation(argThat(new UriParamsArgumentMatcher()), same(dummyPredicate));
+        Account account = new Account("name", "type");
+        doReturn(dummyResultOperation).when(mockTable).updateOperation(argThat(new UriParamsArgumentMatcher(account)), same(dummyPredicate));
 
-        assertThat(new Synced<>(mockTable).updateOperation(new EmptyUriParams(), dummyPredicate), sameInstance(dummyResultOperation));
+        assertThat(new Synced<>(account, mockTable).updateOperation(new EmptyUriParams(), dummyPredicate),
+                sameInstance(dummyResultOperation));
     }
 
 
@@ -76,9 +80,11 @@ public class SyncedTest
         Operation<Object> dummyResultOperation = dummy(Operation.class);
         Predicate dummyPredicate = dummy(Predicate.class);
         Table<Object> mockTable = failingMock(Table.class);
-        doReturn(dummyResultOperation).when(mockTable).deleteOperation(argThat(new UriParamsArgumentMatcher()), same(dummyPredicate));
+        Account account = new Account("name", "type");
+        doReturn(dummyResultOperation).when(mockTable).deleteOperation(argThat(new UriParamsArgumentMatcher(account)), same(dummyPredicate));
 
-        assertThat(new Synced<>(mockTable).deleteOperation(new EmptyUriParams(), dummyPredicate), sameInstance(dummyResultOperation));
+        assertThat(new Synced<>(account, mockTable).deleteOperation(new EmptyUriParams(), dummyPredicate),
+                sameInstance(dummyResultOperation));
     }
 
 
@@ -88,19 +94,31 @@ public class SyncedTest
         Operation<Object> dummyResultOperation = dummy(Operation.class);
         Predicate dummyPredicate = dummy(Predicate.class);
         Table<Object> mockTable = failingMock(Table.class);
-        doReturn(dummyResultOperation).when(mockTable).assertOperation(argThat(new UriParamsArgumentMatcher()), same(dummyPredicate));
+        Account account = new Account("name", "type");
+        doReturn(dummyResultOperation).when(mockTable).assertOperation(argThat(new UriParamsArgumentMatcher(account)), same(dummyPredicate));
 
-        assertThat(new Synced<>(mockTable).assertOperation(new EmptyUriParams(), dummyPredicate), sameInstance(dummyResultOperation));
+        assertThat(new Synced<>(account, mockTable).assertOperation(new EmptyUriParams(), dummyPredicate),
+                sameInstance(dummyResultOperation));
     }
 
 
     private static class UriParamsArgumentMatcher implements ArgumentMatcher<UriParams>
     {
+        private final Account mAccount;
+
+
+        private UriParamsArgumentMatcher(Account account)
+        {
+            mAccount = account;
+        }
+
+
         @Override
         public boolean matches(UriParams argument)
         {
             Uri uri = argument.withParam(new Uri.Builder()).build();
-            return uri.getBooleanQueryParameter(ContactsContract.CALLER_IS_SYNCADAPTER, false);
+            return uri.getBooleanQueryParameter(ContactsContract.CALLER_IS_SYNCADAPTER, false) &&
+                    mAccount.equals(new Account(uri.getQueryParameter("account_name"), uri.getQueryParameter("account_type")));
         }
     }
 
