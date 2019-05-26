@@ -27,7 +27,8 @@ import org.dmfs.jems.optional.Optional;
 
 
 /**
- * A {@link InsertOperation} decorator which adds {@code account_type} and {@code account_name} values to the inserted {@link ContactsContract.RawContacts} row.
+ * A {@link InsertOperation} decorator which adds {@code account_type} and {@code account_name} values to the inserted {@link ContactsContract.RawContacts}
+ * row.
  *
  * @author Marten Gajda
  */

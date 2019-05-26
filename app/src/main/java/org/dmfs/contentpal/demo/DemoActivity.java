@@ -128,8 +128,8 @@ public class DemoActivity extends AppCompatActivity
 
         mRawContacts = new Local(new RawContacts());
 
-        mCalendars = new org.dmfs.android.contentpal.tables.Synced<>(
-                new AccountScoped<>(new Account("Local", CalendarContract.ACCOUNT_TYPE_LOCAL), new Calendars()));
+        Account account = new Account("Local", CalendarContract.ACCOUNT_TYPE_LOCAL);
+        mCalendars = new org.dmfs.android.contentpal.tables.Synced<>(account, new AccountScoped<>(account, new Calendars()));
         mEvents = new Events();
     }
 
