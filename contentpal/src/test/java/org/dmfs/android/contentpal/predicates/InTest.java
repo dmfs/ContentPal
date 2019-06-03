@@ -16,16 +16,30 @@
 
 package org.dmfs.android.contentpal.predicates;
 
+import android.provider.BaseColumns;
+import android.provider.CalendarContract;
+
+import org.dmfs.android.contentpal.RowSet;
+import org.dmfs.android.contentpal.RowSnapshot;
+import org.dmfs.android.contentpal.rowdatasnapshots.MapRowDataSnapshot;
+import org.dmfs.android.contentpal.tools.FakeClosable;
 import org.dmfs.iterables.EmptyIterable;
 import org.dmfs.iterables.elementary.Seq;
 import org.junit.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import static java.util.Collections.emptyIterator;
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.absentBackReferences;
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.argumentValues;
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.emptyArguments;
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.predicateWith;
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.selection;
+import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.doReturn;
 
 
 /**
@@ -80,4 +94,50 @@ public class InTest
                 absentBackReferences(3)));
     }
 
+
+    @Test
+    public void testRowSet()
+    {
+        RowSet<CalendarContract.Calendars> mockRowSet = failingMock(RowSet.class);
+
+        doReturn(new FakeClosable<>(emptyIterator())).when(mockRowSet).iterator();
+
+        assertThat(new In("x", mockRowSet), predicateWith(
+                selection("x in (  ) "),
+                emptyArguments()));
+
+        RowSnapshot<CalendarContract.Calendars> rowSnapshot1 = failingMock(RowSnapshot.class);
+        Map<String, String> valueMap1 = new HashMap<>();
+        valueMap1.put(BaseColumns._ID, "1");
+        doReturn(new MapRowDataSnapshot<>(valueMap1, new HashMap<>())).when(rowSnapshot1).values();
+        doAnswer(invocation -> new FakeClosable<>(new org.dmfs.iterators.elementary.Seq<>(rowSnapshot1))).when(mockRowSet).iterator();
+
+        assertThat(new In("x", mockRowSet), predicateWith(
+                selection("x in ( ? ) "),
+                argumentValues("1"),
+                absentBackReferences(1)));
+
+        RowSnapshot<CalendarContract.Calendars> rowSnapshot2 = failingMock(RowSnapshot.class);
+        Map<String, String> valueMap2 = new HashMap<>();
+        valueMap2.put(BaseColumns._ID, "2");
+        doReturn(new MapRowDataSnapshot<>(valueMap2, new HashMap<>())).when(rowSnapshot2).values();
+        doAnswer(invocation -> new FakeClosable<>(new org.dmfs.iterators.elementary.Seq<>(rowSnapshot1, rowSnapshot2))).when(mockRowSet).iterator();
+
+        assertThat(new In("x", mockRowSet), predicateWith(
+                selection("x in ( ?, ? ) "),
+                argumentValues("1", "2"),
+                absentBackReferences(2)));
+
+        RowSnapshot<CalendarContract.Calendars> rowSnapshot3 = failingMock(RowSnapshot.class);
+        Map<String, String> valueMap3 = new HashMap<>();
+        valueMap3.put(BaseColumns._ID, "3");
+        doReturn(new MapRowDataSnapshot<>(valueMap3, new HashMap<>())).when(rowSnapshot3).values();
+        doAnswer(invocation -> new FakeClosable<>(new org.dmfs.iterators.elementary.Seq<>(rowSnapshot1, rowSnapshot2, rowSnapshot3))).when(mockRowSet)
+                .iterator();
+
+        assertThat(new In("x", mockRowSet), predicateWith(
+                selection("x in ( ?, ?, ? ) "),
+                argumentValues("1", "2", "3"),
+                absentBackReferences(3)));
+    }
 }
