@@ -16,9 +16,11 @@
 
 package org.dmfs.android.contentpal.predicates;
 
+import android.provider.BaseColumns;
 import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Predicate;
+import org.dmfs.android.contentpal.RowSet;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.predicates.arguments.ValueArgument;
 import org.dmfs.iterables.elementary.Seq;
@@ -37,6 +39,13 @@ public final class In implements Predicate
 {
     private final String mColumnName;
     private final Iterable<?> mArguments;
+
+
+    public In(@NonNull String columnName, @NonNull RowSet<? extends BaseColumns> arguments)
+    {
+        // note, every row must have a non-null _ID column
+        this(columnName, new Mapped<>(row -> row.values().data(BaseColumns._ID, Long::parseLong).value(), arguments));
+    }
 
 
     public In(@NonNull String columnName, @NonNull Object... arguments)
