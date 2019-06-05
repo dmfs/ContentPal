@@ -16,12 +16,12 @@
 
 package org.dmfs.android.contentpal.predicates;
 
-import android.support.annotation.NonNull;
-
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.predicates.arguments.ValueArgument;
 import org.dmfs.iterables.SingletonIterable;
+
+import androidx.annotation.NonNull;
 
 
 /**
@@ -54,6 +54,6 @@ public final class EqArg implements Predicate
     @Override
     public Iterable<Argument> arguments(@NonNull TransactionContext transactionContext)
     {
-        return new SingletonIterable<Argument>(new ValueArgument(mArgument));
+        return new SingletonIterable<>(new ValueArgument(mArgument));
     }
 }

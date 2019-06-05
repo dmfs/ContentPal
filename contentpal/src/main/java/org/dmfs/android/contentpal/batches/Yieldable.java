@@ -16,12 +16,12 @@
 
 package org.dmfs.android.contentpal.batches;
 
-import android.support.annotation.NonNull;
-
 import org.dmfs.android.contentpal.Operation;
 import org.dmfs.iterators.AbstractBaseIterator;
 
 import java.util.Iterator;
+
+import androidx.annotation.NonNull;
 
 
 /**

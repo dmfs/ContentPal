@@ -17,7 +17,6 @@
 package org.dmfs.android.contactspal.rowsets;
 
 import android.provider.ContactsContract;
-import android.support.annotation.NonNull;
 
 import org.dmfs.android.contactspal.tables.RawContacts;
 import org.dmfs.android.contentpal.Projection;
@@ -27,6 +26,8 @@ import org.dmfs.android.contentpal.predicates.AnyOf;
 import org.dmfs.android.contentpal.predicates.EqArg;
 import org.dmfs.android.contentpal.rowsets.DelegatingRowSet;
 import org.dmfs.android.contentpal.rowsets.QueryRowSet;
+
+import androidx.annotation.NonNull;
 
 
 /**

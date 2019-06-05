@@ -18,10 +18,11 @@ package org.dmfs.android.contentpal.queues;
 
 import android.content.OperationApplicationException;
 import android.os.RemoteException;
-import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.OperationsQueue;
+
+import androidx.annotation.NonNull;
 
 
 /**
@@ -34,7 +35,7 @@ public final class ThreadSafe implements OperationsQueue
     private final OperationsQueue mDelegate;
 
 
-    public ThreadSafe(OperationsQueue delegate)
+    public ThreadSafe(@NonNull OperationsQueue delegate)
     {
         mDelegate = delegate;
     }

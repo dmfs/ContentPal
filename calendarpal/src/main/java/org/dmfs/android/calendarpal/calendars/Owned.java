@@ -18,11 +18,12 @@ package org.dmfs.android.calendarpal.calendars;
 
 import android.content.ContentProviderOperation;
 import android.provider.CalendarContract;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import org.dmfs.android.contentpal.RowData;
 import org.dmfs.android.contentpal.TransactionContext;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 
 /**

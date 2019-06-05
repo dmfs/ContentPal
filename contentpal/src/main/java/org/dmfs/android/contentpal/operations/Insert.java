@@ -17,7 +17,6 @@
 package org.dmfs.android.contentpal.operations;
 
 import android.content.ContentProviderOperation;
-import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.InsertOperation;
 import org.dmfs.android.contentpal.RowData;
@@ -27,6 +26,8 @@ import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.rowdata.EmptyRowData;
 import org.dmfs.android.contentpal.tools.uriparams.EmptyUriParams;
 import org.dmfs.jems.optional.Optional;
+
+import androidx.annotation.NonNull;
 
 import static org.dmfs.jems.optional.elementary.Absent.absent;
 
@@ -50,7 +51,7 @@ public final class Insert<T> implements InsertOperation<T>
      */
     public Insert(@NonNull Table<T> table)
     {
-        this(table, EmptyRowData.<T>instance());
+        this(table, EmptyRowData.instance());
     }
 
 
@@ -60,7 +61,7 @@ public final class Insert<T> implements InsertOperation<T>
      * @param table
      *         The {@link Table} of the row to insert.
      */
-    public Insert(@NonNull Table<T> table, RowData<T> data)
+    public Insert(@NonNull Table<T> table, @NonNull RowData<T> data)
     {
         mTable = table;
         mData = data;

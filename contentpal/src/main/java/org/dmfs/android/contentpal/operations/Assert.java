@@ -17,7 +17,6 @@
 package org.dmfs.android.contentpal.operations;
 
 import android.content.ContentProviderOperation;
-import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.RowData;
@@ -26,6 +25,8 @@ import org.dmfs.android.contentpal.SoftRowReference;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.jems.optional.Optional;
 import org.dmfs.jems.optional.elementary.Absent;
+
+import androidx.annotation.NonNull;
 
 
 /**
@@ -39,7 +40,7 @@ public final class Assert<T> implements Operation<T>
     private final RowData<T> mRowData;
 
 
-    public Assert(RowSnapshot<T> rowSnapshot, RowData<T> rowData)
+    public Assert(@NonNull RowSnapshot<T> rowSnapshot, @NonNull RowData<T> rowData)
     {
         mRowSnapshot = rowSnapshot;
         mRowData = rowData;

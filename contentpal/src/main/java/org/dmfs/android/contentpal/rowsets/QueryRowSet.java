@@ -18,7 +18,6 @@ package org.dmfs.android.contentpal.rowsets;
 
 import android.database.Cursor;
 import android.os.RemoteException;
-import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.ClosableIterator;
 import org.dmfs.android.contentpal.Predicate;
@@ -38,6 +37,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
+
+import androidx.annotation.NonNull;
 
 import static org.dmfs.jems.optional.elementary.Absent.absent;
 
@@ -150,7 +151,7 @@ public final class QueryRowSet<T> implements RowSet<T>
                         charData.put(columnName, mCursor.getString(i));
                     }
                 }
-                RowSnapshot<T> rowSnapshot = new ValuesRowSnapshot<>(mTable, new MapRowDataSnapshot<T>(charData, byteData));
+                RowSnapshot<T> rowSnapshot = new ValuesRowSnapshot<>(mTable, new MapRowDataSnapshot<>(charData, byteData));
                 mCursor.moveToNext();
                 return rowSnapshot;
             }
@@ -177,7 +178,7 @@ public final class QueryRowSet<T> implements RowSet<T>
 
 
         @Override
-        public void close() throws IOException
+        public void close()
         {
             if (!mCursor.isClosed())
             {

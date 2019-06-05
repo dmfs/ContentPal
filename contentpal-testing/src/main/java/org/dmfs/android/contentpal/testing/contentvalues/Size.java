@@ -24,6 +24,8 @@ import org.hamcrest.TypeSafeDiagnosingMatcher;
 
 import java.util.Locale;
 
+import androidx.annotation.NonNull;
+
 
 /**
  * A {@link Matcher} which matches the expected size of {@link ContentValues}.
@@ -35,6 +37,7 @@ public final class Size extends TypeSafeDiagnosingMatcher<ContentValues>
     private final int mExpectedValueCount;
 
 
+    @NonNull
     public static Size withValueCount(int expectedValueCount)
     {
         return new Size(expectedValueCount);
@@ -48,7 +51,7 @@ public final class Size extends TypeSafeDiagnosingMatcher<ContentValues>
 
 
     @Override
-    protected boolean matchesSafely(ContentValues values, Description mismatchDescription)
+    protected boolean matchesSafely(@NonNull ContentValues values, @NonNull Description mismatchDescription)
     {
         if (values.size() != mExpectedValueCount)
         {
@@ -60,7 +63,7 @@ public final class Size extends TypeSafeDiagnosingMatcher<ContentValues>
 
 
     @Override
-    public void describeTo(Description description)
+    public void describeTo(@NonNull Description description)
     {
         description.appendText(String.format(Locale.ENGLISH, "has %d values", mExpectedValueCount));
     }

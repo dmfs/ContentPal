@@ -19,7 +19,6 @@ package org.dmfs.android.contactspal.views;
 import android.database.Cursor;
 import android.os.RemoteException;
 import android.provider.ContactsContract;
-import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.Projection;
@@ -30,6 +29,8 @@ import org.dmfs.android.contentpal.predicates.AllOf;
 import org.dmfs.android.contentpal.predicates.IsNull;
 import org.dmfs.android.contentpal.tables.AccountScoped;
 import org.dmfs.jems.optional.Optional;
+
+import androidx.annotation.NonNull;
 
 
 /**

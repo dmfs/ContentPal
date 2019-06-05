@@ -48,7 +48,7 @@ import static org.mockito.Mockito.doReturn;
 public class YieldableTest
 {
     @Test
-    public void testReference() throws Exception
+    public void testReference()
     {
         Optional<SoftRowReference<Object>> dummyReference = dummy(Optional.class);
         Operation<Object> mockOperation = failingMock(Operation.class);
@@ -60,7 +60,7 @@ public class YieldableTest
 
 
     @Test
-    public void testContentOperationBuilder() throws Exception
+    public void testContentOperationBuilder()
     {
         Uri dummyUri = dummy(Uri.class);
         assertThat(

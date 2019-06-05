@@ -54,7 +54,7 @@ public class UpdateTest
 {
 
     @Test
-    public void testVirtualReference() throws Exception
+    public void testVirtualReference()
     {
         RowReference<Object> dummyRowReference = dummy(RowReference.class);
 
@@ -63,7 +63,7 @@ public class UpdateTest
 
 
     @Test
-    public void testContentOperationBuilderWithData() throws Exception
+    public void testContentOperationBuilderWithData()
     {
         RowReference<Object> mockRowReference = failingMock(RowReference.class);
         Uri dummyUri = dummy(Uri.class);

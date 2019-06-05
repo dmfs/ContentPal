@@ -16,11 +16,11 @@
 
 package org.dmfs.android.contentpal.rowsets;
 
-import android.support.annotation.NonNull;
-
 import org.dmfs.android.contentpal.ClosableIterator;
 import org.dmfs.android.contentpal.RowSet;
 import org.dmfs.android.contentpal.RowSnapshot;
+
+import androidx.annotation.NonNull;
 
 
 /**
@@ -33,7 +33,7 @@ public abstract class DelegatingRowSet<T> implements RowSet<T>
     private final RowSet<T> mDelegate;
 
 
-    protected DelegatingRowSet(RowSet<T> delegate)
+    protected DelegatingRowSet(@NonNull RowSet<T> delegate)
     {
         mDelegate = delegate;
     }

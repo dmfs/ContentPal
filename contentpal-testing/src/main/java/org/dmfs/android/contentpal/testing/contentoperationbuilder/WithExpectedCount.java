@@ -28,6 +28,8 @@ import org.hamcrest.TypeSafeDiagnosingMatcher;
 
 import java.util.Locale;
 
+import androidx.annotation.NonNull;
+
 import static org.dmfs.jems.optional.elementary.Absent.absent;
 
 
@@ -42,12 +44,14 @@ public final class WithExpectedCount extends TypeSafeDiagnosingMatcher<ContentPr
     private final Optional<Integer> mExpectedCount;
 
 
+    @NonNull
     public static WithExpectedCount withExpectedCount(int expectedCount)
     {
         return new WithExpectedCount(expectedCount);
     }
 
 
+    @NonNull
     public static WithExpectedCount withoutExpectedCount()
     {
         return new WithExpectedCount();
@@ -66,14 +70,14 @@ public final class WithExpectedCount extends TypeSafeDiagnosingMatcher<ContentPr
     }
 
 
-    public WithExpectedCount(Optional<Integer> expectedCount)
+    public WithExpectedCount(@NonNull Optional<Integer> expectedCount)
     {
         mExpectedCount = expectedCount;
     }
 
 
     @Override
-    protected boolean matchesSafely(ContentProviderOperation.Builder builder, Description mismatchDescription)
+    protected boolean matchesSafely(@NonNull ContentProviderOperation.Builder builder, @NonNull Description mismatchDescription)
     {
         Optional<Integer> expectedCount = new NullSafe<>(new Field<Integer>(builder, "mExpectedCount").value());
 
@@ -93,7 +97,7 @@ public final class WithExpectedCount extends TypeSafeDiagnosingMatcher<ContentPr
 
 
     @Override
-    public void describeTo(Description description)
+    public void describeTo(@NonNull Description description)
     {
         description.appendText(mExpectedCount.isPresent()
                 ? String.format(Locale.ENGLISH, "expects %d results", mExpectedCount.value())

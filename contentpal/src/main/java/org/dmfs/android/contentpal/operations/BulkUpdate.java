@@ -17,7 +17,6 @@
 package org.dmfs.android.contentpal.operations;
 
 import android.content.ContentProviderOperation;
-import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.Predicate;
@@ -28,6 +27,8 @@ import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.predicates.AnyOf;
 import org.dmfs.android.contentpal.tools.uriparams.EmptyUriParams;
 import org.dmfs.jems.optional.Optional;
+
+import androidx.annotation.NonNull;
 
 import static org.dmfs.jems.optional.elementary.Absent.absent;
 

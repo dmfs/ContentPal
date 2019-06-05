@@ -18,11 +18,12 @@ package org.dmfs.android.calendarpal.events;
 
 import android.content.ContentProviderOperation;
 import android.provider.CalendarContract;
-import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.RowData;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.rfc5545.DateTime;
+
+import androidx.annotation.NonNull;
 
 
 /**
@@ -47,7 +48,7 @@ public final class SingleEventData implements RowData<CalendarContract.Events>
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder updatedBuilder(TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
+    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
         return builder.withValue(CalendarContract.Events.DTSTART, mStart.getTimestamp())
                 .withValue(CalendarContract.Events.EVENT_TIMEZONE, mStart.isAllDay() ? "UTC" : mStart.getTimeZone().getID())

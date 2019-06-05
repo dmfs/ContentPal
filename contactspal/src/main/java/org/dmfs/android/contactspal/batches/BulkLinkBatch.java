@@ -17,13 +17,14 @@
 package org.dmfs.android.contactspal.batches;
 
 import android.provider.ContactsContract;
-import android.support.annotation.NonNull;
 
 import org.dmfs.android.contactspal.aggregation.Link;
 import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.RowReference;
 import org.dmfs.iterables.decorators.DelegatingIterable;
 import org.dmfs.jems.iterable.decorators.Mapped;
+
+import androidx.annotation.NonNull;
 
 
 /**

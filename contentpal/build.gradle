@@ -2,11 +2,11 @@ apply plugin: 'com.android.library'
 apply plugin: 'jacoco-android'
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 28
 
     defaultConfig {
-        minSdkVersion 11
-        targetSdkVersion 25
+        minSdkVersion 14
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
 
@@ -46,8 +46,7 @@ android {
 dependencies {
     api project(':contentpal-api')
     api deps.dmfs_jems
-
-    implementation deps.support_annotations
+    api deps.support_annotations
 
     testImplementation project(':contentpal-testing')
     testImplementation deps.junit

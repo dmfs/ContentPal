@@ -16,9 +16,9 @@
 
 package org.dmfs.android.contentpal.projections;
 
-import android.support.annotation.NonNull;
-
 import org.dmfs.android.contentpal.Projection;
+
+import androidx.annotation.NonNull;
 
 
 /**
@@ -31,7 +31,7 @@ public abstract class DelegatingProjection<T> implements Projection<T>
     private final Projection<T> mDelegate;
 
 
-    public DelegatingProjection(Projection<T> delegate)
+    public DelegatingProjection(@NonNull Projection<T> delegate)
     {
         mDelegate = delegate;
     }

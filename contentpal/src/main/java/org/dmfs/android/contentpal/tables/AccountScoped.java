@@ -18,7 +18,6 @@ package org.dmfs.android.contentpal.tables;
 
 import android.accounts.Account;
 import android.content.ContentProviderClient;
-import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.InsertOperation;
 import org.dmfs.android.contentpal.Operation;
@@ -29,6 +28,8 @@ import org.dmfs.android.contentpal.View;
 import org.dmfs.android.contentpal.predicates.AccountEq;
 import org.dmfs.android.contentpal.predicates.AllOf;
 import org.dmfs.android.contentpal.tools.uriparams.AccountScopedParams;
+
+import androidx.annotation.NonNull;
 
 
 /**
@@ -92,7 +93,7 @@ public final class AccountScoped<T> implements Table<T>
     }
 
 
-    private Predicate accountScoped(Predicate predicate)
+    private Predicate accountScoped(@NonNull Predicate predicate)
     {
         return new AllOf(predicate, new AccountEq(mAccount));
     }

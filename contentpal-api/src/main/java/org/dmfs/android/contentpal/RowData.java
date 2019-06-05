@@ -17,7 +17,8 @@
 package org.dmfs.android.contentpal;
 
 import android.content.ContentProviderOperation;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 
 /**
@@ -45,5 +46,5 @@ public interface RowData<T>
      * @return The same {@link ContentProviderOperation.Builder}.
      */
     @NonNull
-    ContentProviderOperation.Builder updatedBuilder(TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder);
+    ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder);
 }

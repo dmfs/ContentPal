@@ -32,17 +32,17 @@ import static org.junit.Assert.assertThat;
 public class CompositeTest
 {
     @Test
-    public void testEmpty() throws Exception
+    public void testEmpty()
     {
-        assertThat(new Composite<>(new Seq<Projection<Contract>>(new EmptyProjection<Contract>())), projectsEmpty());
-        assertThat(new Composite<>(new Seq<Projection<Contract>>(new EmptyProjection<Contract>(), new EmptyProjection())), projectsEmpty());
-        assertThat(new Composite<>(new Seq<Projection<Contract>>(new EmptyProjection<Contract>(), new EmptyProjection(), new EmptyProjection())),
+        assertThat(new Composite<>(new Seq<Projection<Contract>>(new EmptyProjection<>())), projectsEmpty());
+        assertThat(new Composite<>(new Seq<Projection<Contract>>(new EmptyProjection<>(), new EmptyProjection())), projectsEmpty());
+        assertThat(new Composite<>(new Seq<Projection<Contract>>(new EmptyProjection<>(), new EmptyProjection(), new EmptyProjection())),
                 projectsEmpty());
     }
 
 
     @Test
-    public void testNonEmpty() throws Exception
+    public void testNonEmpty()
     {
         // test vararg ctor
         assertThat(new Composite<>(new MultiProjection<Contract>("abc")), projects("abc"));
@@ -53,24 +53,24 @@ public class CompositeTest
                 projects("abc", "xyz", "qrs", "123", "456", "789"));
 
         // test iterable ctor
-        assertThat(new Composite<>(new Seq<Projection<Contract>>(new MultiProjection<Contract>("abc"))), projects("abc"));
-        assertThat(new Composite<>(new Seq<Projection<Contract>>(new MultiProjection<Contract>("abc", "xyz", "qrs"))), projects("abc", "xyz", "qrs"));
-        assertThat(new Composite<>(new Seq<Projection<Contract>>(new MultiProjection<Contract>("abc"), new MultiProjection<Contract>("xyz"))),
+        assertThat(new Composite<>(new Seq<Projection<Contract>>(new MultiProjection<>("abc"))), projects("abc"));
+        assertThat(new Composite<>(new Seq<Projection<Contract>>(new MultiProjection<>("abc", "xyz", "qrs"))), projects("abc", "xyz", "qrs"));
+        assertThat(new Composite<>(new Seq<Projection<Contract>>(new MultiProjection<>("abc"), new MultiProjection<>("xyz"))),
                 projects("abc", "xyz"));
-        assertThat(new Composite<>(new Seq<Projection<Contract>>(new MultiProjection<Contract>("abc", "xyz", "qrs"))), projects("abc", "xyz", "qrs"));
+        assertThat(new Composite<>(new Seq<Projection<Contract>>(new MultiProjection<>("abc", "xyz", "qrs"))), projects("abc", "xyz", "qrs"));
         assertThat(new Composite<>(
-                        new Seq<Projection<Contract>>(new MultiProjection<Contract>("abc", "xyz", "qrs"), new MultiProjection<Contract>("123", "456", "789"))),
+                        new Seq<Projection<Contract>>(new MultiProjection<>("abc", "xyz", "qrs"), new MultiProjection<>("123", "456", "789"))),
                 projects("abc", "xyz", "qrs", "123", "456", "789"));
     }
 
 
     @Test
-    public void testDuplicateColumns() throws Exception
+    public void testDuplicateColumns()
     {
         assertThat(new Composite<>(
                         new Seq<Projection<Contract>>(
-                                new MultiProjection<Contract>("abc", "xyz", "qrs", "123", "456", "789"),
-                                new MultiProjection<Contract>("abc", "xyz", "qrs", "123", "456", "789"))),
+                                new MultiProjection<>("abc", "xyz", "qrs", "123", "456", "789"),
+                                new MultiProjection<>("abc", "xyz", "qrs", "123", "456", "789"))),
                 projects("abc", "xyz", "qrs", "123", "456", "789", "abc", "xyz", "qrs", "123", "456", "789"));
     }
 

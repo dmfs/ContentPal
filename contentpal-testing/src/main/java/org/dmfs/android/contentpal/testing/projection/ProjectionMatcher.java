@@ -24,6 +24,8 @@ import org.hamcrest.TypeSafeDiagnosingMatcher;
 
 import java.util.Arrays;
 
+import androidx.annotation.NonNull;
+
 import static org.hamcrest.Matchers.contains;
 
 
@@ -35,26 +37,28 @@ public final class ProjectionMatcher extends TypeSafeDiagnosingMatcher<Projectio
     private final Matcher<Iterable<? extends String>> mDelegate;
 
 
+    @NonNull
     public static Matcher<Projection<?>> projectsEmpty()
     {
-        return new ProjectionMatcher(Matchers.<String>emptyIterable());
+        return new ProjectionMatcher(Matchers.emptyIterable());
     }
 
 
-    public static Matcher<Projection<?>> projects(String... expectedColumns)
+    @NonNull
+    public static Matcher<Projection<?>> projects(@NonNull String... expectedColumns)
     {
         return new ProjectionMatcher(contains(expectedColumns));
     }
 
 
-    public ProjectionMatcher(Matcher<Iterable<? extends String>> delegate)
+    public ProjectionMatcher(@NonNull Matcher<Iterable<? extends String>> delegate)
     {
         mDelegate = delegate;
     }
 
 
     @Override
-    protected boolean matchesSafely(Projection<?> item, Description mismatchDescription)
+    protected boolean matchesSafely(@NonNull Projection<?> item, @NonNull Description mismatchDescription)
     {
         if (!mDelegate.matches(Arrays.asList(item.toArray())))
         {
@@ -80,7 +84,7 @@ public final class ProjectionMatcher extends TypeSafeDiagnosingMatcher<Projectio
 
 
     @Override
-    public void describeTo(Description description)
+    public void describeTo(@NonNull Description description)
     {
         mDelegate.describeTo(description);
     }

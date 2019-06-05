@@ -18,13 +18,14 @@ package org.dmfs.android.contentpal.operations.internal;
 
 import android.content.ContentProviderOperation;
 import android.net.Uri;
-import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.SoftRowReference;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.operations.BulkUpdate;
 import org.dmfs.jems.optional.Optional;
+
+import androidx.annotation.NonNull;
 
 import static org.dmfs.jems.optional.elementary.Absent.absent;
 
@@ -42,7 +43,7 @@ public final class RawUpdate<T> implements Operation<T>
     private final Uri mUri;
 
 
-    public RawUpdate(Uri uri)
+    public RawUpdate(@NonNull Uri uri)
     {
         mUri = uri;
     }

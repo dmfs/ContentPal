@@ -31,6 +31,6 @@ public final class Attendees extends DelegatingTable<CalendarContract.Attendees>
 {
     public Attendees()
     {
-        super(new BaseTable<CalendarContract.Attendees>(CalendarContract.Attendees.CONTENT_URI));
+        super(new BaseTable<>(CalendarContract.Attendees.CONTENT_URI));
     }
 }

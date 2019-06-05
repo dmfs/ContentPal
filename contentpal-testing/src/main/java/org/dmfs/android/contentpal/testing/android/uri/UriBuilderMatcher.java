@@ -22,6 +22,8 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 
+import androidx.annotation.NonNull;
+
 
 /**
  * Matcher for a {@link Uri.Builder}.
@@ -43,20 +45,21 @@ public final class UriBuilderMatcher extends TypeSafeDiagnosingMatcher<Uri.Build
      *
      * @return A {@link Matcher} for {@link Uri.Builder}s.
      */
-    public static Matcher<Uri.Builder> builds(Matcher<Uri> delegate)
+    @NonNull
+    public static Matcher<Uri.Builder> builds(@NonNull Matcher<Uri> delegate)
     {
         return new UriBuilderMatcher(delegate);
     }
 
 
-    public UriBuilderMatcher(Matcher<Uri> delegate)
+    public UriBuilderMatcher(@NonNull Matcher<Uri> delegate)
     {
         mDelegate = delegate;
     }
 
 
     @Override
-    protected boolean matchesSafely(Uri.Builder item, Description mismatchDescription)
+    protected boolean matchesSafely(@NonNull Uri.Builder item, @NonNull Description mismatchDescription)
     {
         if (!mDelegate.matches(item.build()))
         {
@@ -69,7 +72,7 @@ public final class UriBuilderMatcher extends TypeSafeDiagnosingMatcher<Uri.Build
 
 
     @Override
-    public void describeTo(Description description)
+    public void describeTo(@NonNull Description description)
     {
         description.appendText("builds a Uri with ");
         mDelegate.describeTo(description);

@@ -18,6 +18,8 @@ package org.dmfs.android.contentpal.testing.tools;
 
 import org.dmfs.jems.single.Single;
 
+import androidx.annotation.NonNull;
+
 
 /**
  * Holds the value of a field of an object retrieved with reflection.
@@ -30,7 +32,7 @@ public final class Field<T> implements Single<T>
     private final String mFieldName;
 
 
-    public Field(Object object, String fieldName)
+    public Field(@NonNull Object object, @NonNull String fieldName)
     {
         mObject = object;
         mFieldName = fieldName;

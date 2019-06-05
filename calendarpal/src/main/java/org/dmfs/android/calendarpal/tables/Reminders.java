@@ -31,6 +31,6 @@ public final class Reminders extends DelegatingTable<CalendarContract.Reminders>
 {
     public Reminders()
     {
-        super(new BaseTable<CalendarContract.Reminders>(CalendarContract.Reminders.CONTENT_URI));
+        super(new BaseTable<>(CalendarContract.Reminders.CONTENT_URI));
     }
 }

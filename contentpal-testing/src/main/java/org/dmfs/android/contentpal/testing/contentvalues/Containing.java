@@ -24,6 +24,8 @@ import org.hamcrest.TypeSafeDiagnosingMatcher;
 
 import java.util.Locale;
 
+import androidx.annotation.NonNull;
+
 import static org.hamcrest.Matchers.is;
 
 
@@ -38,19 +40,21 @@ public final class Containing<T> extends TypeSafeDiagnosingMatcher<ContentValues
     private final Matcher<T> mExpectedValueMatcher;
 
 
-    public static <T> Containing<T> containing(String expectedKey, T expectedValue)
+    @NonNull
+    public static <T> Containing<T> containing(@NonNull String expectedKey, @NonNull T expectedValue)
     {
         return new Containing<>(expectedKey, is(expectedValue));
     }
 
 
-    public static <T> Containing<T> containing(String expectedKey, Matcher<T> expectedValueMatcher)
+    @NonNull
+    public static <T> Containing<T> containing(@NonNull String expectedKey, @NonNull Matcher<T> expectedValueMatcher)
     {
         return new Containing<>(expectedKey, expectedValueMatcher);
     }
 
 
-    public Containing(String expectedKey, Matcher<T> expectedValueMatcher)
+    public Containing(@NonNull String expectedKey, @NonNull Matcher<T> expectedValueMatcher)
     {
         mExpectedKey = expectedKey;
         mExpectedValueMatcher = expectedValueMatcher;
@@ -58,7 +62,7 @@ public final class Containing<T> extends TypeSafeDiagnosingMatcher<ContentValues
 
 
     @Override
-    protected boolean matchesSafely(ContentValues values, Description mismatchDescription)
+    protected boolean matchesSafely(@NonNull ContentValues values, @NonNull Description mismatchDescription)
     {
         if (!mExpectedValueMatcher.matches(values.get(mExpectedKey)))
         {
@@ -71,7 +75,7 @@ public final class Containing<T> extends TypeSafeDiagnosingMatcher<ContentValues
 
 
     @Override
-    public void describeTo(Description description)
+    public void describeTo(@NonNull Description description)
     {
         description.appendText(String.format(Locale.ENGLISH, "has value of key \"%s\" ", mExpectedKey));
         mExpectedValueMatcher.describeTo(description);

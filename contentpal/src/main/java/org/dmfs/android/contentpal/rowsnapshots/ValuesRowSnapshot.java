@@ -16,13 +16,13 @@
 
 package org.dmfs.android.contentpal.rowsnapshots;
 
-import android.support.annotation.NonNull;
-
 import org.dmfs.android.contentpal.RowDataSnapshot;
 import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.SoftRowReference;
 import org.dmfs.android.contentpal.Table;
 import org.dmfs.android.contentpal.references.AbsoluteRowReference;
+
+import androidx.annotation.NonNull;
 
 
 /**

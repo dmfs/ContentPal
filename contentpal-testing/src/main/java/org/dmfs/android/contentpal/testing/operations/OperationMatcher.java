@@ -24,6 +24,8 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 
+import androidx.annotation.NonNull;
+
 import static org.hamcrest.Matchers.allOf;
 
 
@@ -40,14 +42,15 @@ public final class OperationMatcher extends TypeSafeDiagnosingMatcher<org.dmfs.a
     private final TransactionContext mTransactionContext;
 
 
+    @NonNull
     @SafeVarargs
-    public static OperationMatcher builds(Matcher<ContentProviderOperation.Builder>... builderMatchers)
+    public static OperationMatcher builds(@NonNull Matcher<ContentProviderOperation.Builder>... builderMatchers)
     {
         return new OperationMatcher(new BounceTransactionContext(), allOf(builderMatchers));
     }
 
 
-    public OperationMatcher(TransactionContext transactionContext, Matcher<ContentProviderOperation.Builder> builderMatchers)
+    public OperationMatcher(@NonNull TransactionContext transactionContext, @NonNull Matcher<ContentProviderOperation.Builder> builderMatchers)
     {
         mTransactionContext = transactionContext;
         mBuilderMatcher = builderMatchers;
@@ -55,7 +58,7 @@ public final class OperationMatcher extends TypeSafeDiagnosingMatcher<org.dmfs.a
 
 
     @Override
-    protected boolean matchesSafely(org.dmfs.android.contentpal.Operation item, Description mismatchDescription)
+    protected boolean matchesSafely(@NonNull org.dmfs.android.contentpal.Operation item, @NonNull Description mismatchDescription)
     {
         ContentProviderOperation.Builder builder = item.contentOperationBuilder(mTransactionContext);
         if (!mBuilderMatcher.matches(builder))
@@ -68,7 +71,7 @@ public final class OperationMatcher extends TypeSafeDiagnosingMatcher<org.dmfs.a
 
 
     @Override
-    public void describeTo(Description description)
+    public void describeTo(@NonNull Description description)
     {
         description.appendDescriptionOf(mBuilderMatcher);
     }

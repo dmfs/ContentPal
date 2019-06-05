@@ -16,12 +16,12 @@
 
 package org.dmfs.android.contentpal.predicates.arguments;
 
-import android.support.annotation.NonNull;
-
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.Transaction;
 import org.dmfs.jems.optional.Optional;
 import org.dmfs.jems.optional.elementary.Present;
+
+import androidx.annotation.NonNull;
 
 
 /**

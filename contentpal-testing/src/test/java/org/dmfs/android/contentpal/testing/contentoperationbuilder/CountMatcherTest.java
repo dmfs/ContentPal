@@ -41,7 +41,7 @@ import static org.junit.Assert.assertThat;
 public class CountMatcherTest
 {
     @Test
-    public void testMatches() throws Exception
+    public void testMatches()
     {
         assertThat(withExpectedCount(5).matches(ContentProviderOperation.newUpdate(dummy(Uri.class)).withExpectedCount(5)), is(true));
         assertThat(withExpectedCount(5).matches(ContentProviderOperation.newUpdate(dummy(Uri.class)).withExpectedCount(4)), is(false));
@@ -55,7 +55,7 @@ public class CountMatcherTest
 
 
     @Test
-    public void testMatchesSafelyMismatch() throws Exception
+    public void testMatchesSafelyMismatch()
     {
         Description description = new StringDescription();
         withExpectedCount(5).matchesSafely(ContentProviderOperation.newUpdate(dummy(Uri.class)).withExpectedCount(3), description);
@@ -64,7 +64,7 @@ public class CountMatcherTest
 
 
     @Test
-    public void testMatchesSafelyMismatch2() throws Exception
+    public void testMatchesSafelyMismatch2()
     {
         Description description = new StringDescription();
         withExpectedCount(5).matchesSafely(ContentProviderOperation.newUpdate(dummy(Uri.class)), description);
@@ -73,7 +73,7 @@ public class CountMatcherTest
 
 
     @Test
-    public void testMatchesSafelyMismatch3() throws Exception
+    public void testMatchesSafelyMismatch3()
     {
         Description description = new StringDescription();
         withoutExpectedCount().matchesSafely(ContentProviderOperation.newUpdate(dummy(Uri.class)).withExpectedCount(3), description);
@@ -82,7 +82,7 @@ public class CountMatcherTest
 
 
     @Test
-    public void testDescribeTo() throws Exception
+    public void testDescribeTo()
     {
         Description description = new StringDescription();
         withExpectedCount(5).describeTo(description);
@@ -91,7 +91,7 @@ public class CountMatcherTest
 
 
     @Test
-    public void testDescribeTo2() throws Exception
+    public void testDescribeTo2()
     {
         Description description = new StringDescription();
         withoutExpectedCount().describeTo(description);

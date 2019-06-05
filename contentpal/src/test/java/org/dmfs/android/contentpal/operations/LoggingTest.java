@@ -54,7 +54,7 @@ import static org.mockito.Mockito.verify;
 public class LoggingTest
 {
     @Test
-    public void testReference() throws Exception
+    public void testReference()
     {
         Optional<SoftRowReference<Object>> dummyReference = dummy(Optional.class);
         Operation<Object> mockOperation = failingMock(Operation.class);
@@ -66,7 +66,7 @@ public class LoggingTest
 
 
     @Test
-    public void testContentOperationBuilder() throws Exception
+    public void testContentOperationBuilder()
     {
         Procedure<String> mockProcedure = mock(Procedure.class);
         Uri dummyUri = Uri.parse("content://xyz");

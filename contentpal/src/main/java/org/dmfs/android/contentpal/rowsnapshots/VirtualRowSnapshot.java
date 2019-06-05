@@ -16,8 +16,6 @@
 
 package org.dmfs.android.contentpal.rowsnapshots;
 
-import android.support.annotation.NonNull;
-
 import org.dmfs.android.contentpal.InsertOperation;
 import org.dmfs.android.contentpal.RowDataSnapshot;
 import org.dmfs.android.contentpal.RowSnapshot;
@@ -26,6 +24,8 @@ import org.dmfs.android.contentpal.Table;
 import org.dmfs.android.contentpal.operations.Insert;
 import org.dmfs.android.contentpal.references.VirtualRowReference;
 import org.dmfs.android.contentpal.rowdatasnapshots.EmptyRowDataSnapshot;
+
+import androidx.annotation.NonNull;
 
 
 /**
@@ -40,7 +40,7 @@ public final class VirtualRowSnapshot<T> implements RowSnapshot<T>
 
     public VirtualRowSnapshot(@NonNull Table<T> table)
     {
-        this(new Insert<T>(table));
+        this(new Insert<>(table));
     }
 
 

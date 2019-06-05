@@ -42,32 +42,32 @@ import static org.junit.Assert.assertThat;
 public class CompositeTest
 {
     @Test
-    public void testEmpty() throws Exception
+    public void testEmpty()
     {
         assertThat(new Composite<Object>(new Optional[0]), builds(withoutValues()));
         assertThat(new Composite<Object>(new RowData[0]), builds(withoutValues()));
-        assertThat(new Composite<Object>(new EmptyIterable<RowData<Object>>()), builds(withoutValues()));
+        assertThat(new Composite<>(new EmptyIterable<>()), builds(withoutValues()));
 
-        assertThat(new Composite<Object>(Absent.<RowData<Object>>absent()), builds(withoutValues()));
-        assertThat(new Composite<Object>(Absent.<RowData<Object>>absent(), Absent.<RowData<Object>>absent()), builds(withoutValues()));
-        assertThat(new Composite<Object>(Absent.<RowData<Object>>absent(), Absent.<RowData<Object>>absent(), Absent.<RowData<Object>>absent()),
+        assertThat(new Composite<>(Absent.absent()), builds(withoutValues()));
+        assertThat(new Composite<>(Absent.absent(), Absent.absent()), builds(withoutValues()));
+        assertThat(new Composite<>(Absent.absent(), Absent.absent(), Absent.absent()),
                 builds(withoutValues()));
     }
 
 
     @Test
-    public void testOptional() throws Exception
+    public void testOptional()
     {
-        assertThat(new Composite<Object>(
-                        new Present<RowData<Object>>(
+        assertThat(new Composite<>(
+                        new Present<>(
                                 new CharSequenceRowData<>("key", "value"))),
                 builds(
                         withValuesOnly(
                                 containing("key", "value"))));
-        assertThat(new Composite<Object>(
-                        new Present<RowData<Object>>(
+        assertThat(new Composite<>(
+                        new Present<>(
                                 new CharSequenceRowData<>("key", "value")),
-                        new Present<RowData<Object>>(
+                        new Present<>(
                                 new CharSequenceRowData<>("key2", "value2"))),
                 builds(
                         withValuesOnly(
@@ -75,24 +75,24 @@ public class CompositeTest
                                 containing("key2", "value2"))));
 
         // add a few absent values
-        assertThat(new Composite<Object>(
-                        Absent.<RowData<Object>>absent(),
-                        new Present<RowData<Object>>(
+        assertThat(new Composite<>(
+                        Absent.absent(),
+                        new Present<>(
                                 new CharSequenceRowData<>("key", "value")),
-                        Absent.<RowData<Object>>absent()
+                        Absent.absent()
                 ),
                 builds(
                         withValuesOnly(
                                 containing("key", "value"))));
 
-        assertThat(new Composite<Object>(
-                        Absent.<RowData<Object>>absent(),
-                        new Present<RowData<Object>>(
+        assertThat(new Composite<>(
+                        Absent.absent(),
+                        new Present<>(
                                 new CharSequenceRowData<>("key", "value")),
-                        Absent.<RowData<Object>>absent(),
-                        new Present<RowData<Object>>(
+                        Absent.absent(),
+                        new Present<>(
                                 new CharSequenceRowData<>("key2", "value2")),
-                        Absent.<RowData<Object>>absent()),
+                        Absent.absent()),
                 builds(
                         withValuesOnly(
                                 containing("key", "value"),
@@ -101,14 +101,14 @@ public class CompositeTest
 
 
     @Test
-    public void testRowData() throws Exception
+    public void testRowData()
     {
-        assertThat(new Composite<Object>(
+        assertThat(new Composite<>(
                         new CharSequenceRowData<>("key", "value")),
                 builds(
                         withValuesOnly(
                                 containing("key", "value"))));
-        assertThat(new Composite<Object>(
+        assertThat(new Composite<>(
                         new CharSequenceRowData<>("key", "value"),
                         new CharSequenceRowData<>("key2", "value2")),
                 builds(
@@ -119,7 +119,7 @@ public class CompositeTest
 
 
     @Test
-    public void testIterable() throws Exception
+    public void testIterable()
     {
         assertThat(new Composite<>(
                         new Seq<RowData<Object>>(

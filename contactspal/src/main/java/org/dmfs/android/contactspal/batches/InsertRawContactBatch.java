@@ -49,6 +49,7 @@ public final class InsertRawContactBatch extends DelegatingIterable<Operation<?>
      * @param account
      * @param contactData
      */
+    @SafeVarargs
     public InsertRawContactBatch(Account account, RowData<ContactsContract.Data>... contactData)
     {
         this(account, new Seq<>(contactData));
@@ -73,6 +74,7 @@ public final class InsertRawContactBatch extends DelegatingIterable<Operation<?>
      * @param rawContacts
      * @param contactData
      */
+    @SafeVarargs
     public InsertRawContactBatch(Table<ContactsContract.RawContacts> rawContacts, RowData<ContactsContract.Data>... contactData)
     {
         this(rawContacts, new Seq<>(contactData));
@@ -97,6 +99,7 @@ public final class InsertRawContactBatch extends DelegatingIterable<Operation<?>
      * @param rawContact
      * @param contactData
      */
+    @SafeVarargs
     public InsertRawContactBatch(RowSnapshot<ContactsContract.RawContacts> rawContact, RowData<ContactsContract.Data>... contactData)
     {
         this(rawContact, new Seq<>(contactData));
@@ -112,7 +115,7 @@ public final class InsertRawContactBatch extends DelegatingIterable<Operation<?>
     public InsertRawContactBatch(RowSnapshot<ContactsContract.RawContacts> rawContact, Iterable<RowData<ContactsContract.Data>> contactData)
     {
         super(new Joined<>(
-                new SingletonIterable<Operation<?>>(
+                new SingletonIterable<>(
                         new Put<>(rawContact)),
                 new MultiInsertBatch<>(
                         new RawContactData(rawContact),

@@ -2,11 +2,11 @@ apply plugin: 'com.android.library'
 apply plugin: 'jacoco-android'
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 28
 
     defaultConfig {
-        minSdkVersion 11
-        targetSdkVersion 25
+        minSdkVersion 14
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
     }
@@ -42,14 +42,15 @@ android {
 }
 
 dependencies {
-    implementation project(':contentpal-api')
-    implementation deps.support_annotations
-    implementation deps.junit
-    implementation deps.hamcrest
+    api deps.hamcrest_core
+    api project(':contentpal-api')
+    api deps.support_annotations
+
+    implementation deps.hamcrest_lib
     implementation deps.mockito
-    implementation(deps.dmfs_jems_testing) {
-        // need to exlude this as long as it imports hamcrest-all which conflicts with hamcrest-library
-        exclude group: 'org.hamcrest'
-    }
+    implementation deps.dmfs_jems_testing
+
+    testImplementation deps.junit
+    testImplementation deps.hamcrest_lib
     testImplementation deps.roboelectric
 }

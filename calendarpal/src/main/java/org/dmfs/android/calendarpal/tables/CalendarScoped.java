@@ -18,7 +18,6 @@ package org.dmfs.android.calendarpal.tables;
 
 import android.content.ContentProviderClient;
 import android.provider.CalendarContract;
-import android.support.annotation.NonNull;
 
 import org.dmfs.android.calendarpal.operations.CalendarEvent;
 import org.dmfs.android.contentpal.InsertOperation;
@@ -29,13 +28,15 @@ import org.dmfs.android.contentpal.Table;
 import org.dmfs.android.contentpal.UriParams;
 import org.dmfs.android.contentpal.View;
 
+import androidx.annotation.NonNull;
+
 
 /**
  * A view onto the {@link CalendarContract.Events} table which contains only events of a specific calendar. Events created with {@link
  * #insertOperation(UriParams)} will automatically be added to this calendar.
  * <p>
- * Note, if you create a {@link View} (using {@link Table#view(ContentProviderClient)}) with a virtual {@link RowSnapshot}, the {@link View} will always
- * be empty, even after adding and committing rows.
+ * Note, if you create a {@link View} (using {@link Table#view(ContentProviderClient)}) with a virtual {@link RowSnapshot}, the {@link View} will always be
+ * empty, even after adding and committing rows.
  *
  * @author Marten Gajda
  */

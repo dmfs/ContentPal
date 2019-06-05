@@ -35,7 +35,7 @@ public final class DataProjection extends DelegatingProjection<ContactsContract.
     public DataProjection()
     {
         // TODO: it's probably better to compose this from smaller projections with just a few columns
-        super(new MultiProjection<ContactsContract.Data>(
+        super(new MultiProjection<>(
                 ContactsContract.Data._ID,
                 ContactsContract.Data.MIMETYPE,
                 ContactsContract.Data.RAW_CONTACT_ID,

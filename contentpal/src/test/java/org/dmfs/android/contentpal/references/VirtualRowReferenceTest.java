@@ -46,7 +46,7 @@ import static org.mockito.Mockito.mock;
 public class VirtualRowReferenceTest
 {
     @Test
-    public void testPutOperationBuilder() throws Exception
+    public void testPutOperationBuilder()
     {
         assertThat(new VirtualRowReference<>(new RawInsert<>(dummy(Uri.class))).putOperationBuilder(
                 dummy(TransactionContext.class)),
@@ -59,21 +59,21 @@ public class VirtualRowReferenceTest
 
 
     @Test(expected = UnsupportedOperationException.class)
-    public void testDeleteOperationBuilder() throws Exception
+    public void testDeleteOperationBuilder()
     {
         new VirtualRowReference<>(dummy(InsertOperation.class)).deleteOperationBuilder(dummy(TransactionContext.class));
     }
 
 
     @Test(expected = UnsupportedOperationException.class)
-    public void testAssertOperationBuilder() throws Exception
+    public void testAssertOperationBuilder()
     {
         new VirtualRowReference<>(dummy(InsertOperation.class)).assertOperationBuilder(dummy(TransactionContext.class));
     }
 
 
     @Test(expected = UnsupportedOperationException.class)
-    public void testBuilderWithReferenceData() throws Exception
+    public void testBuilderWithReferenceData()
     {
         new VirtualRowReference<>(dummy(InsertOperation.class)).builderWithReferenceData(dummy(TransactionContext.class),
                 mock(ContentProviderOperation.Builder.class), "_id");
@@ -81,14 +81,14 @@ public class VirtualRowReferenceTest
 
 
     @Test(expected = UnsupportedOperationException.class)
-    public void testPredicate() throws Exception
+    public void testPredicate()
     {
         new VirtualRowReference<>(dummy(InsertOperation.class)).predicate(dummy(TransactionContext.class), "_id");
     }
 
 
     @Test
-    public void testIsVirtual() throws Exception
+    public void testIsVirtual()
     {
         assertThat(new VirtualRowReference<>(mock(InsertOperation.class)).isVirtual(), is(true));
     }

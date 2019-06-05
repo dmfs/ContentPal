@@ -49,7 +49,7 @@ import static org.mockito.Mockito.doReturn;
 public class SyncedTest
 {
     @Test
-    public void testInsertOperation() throws Exception
+    public void testInsertOperation()
     {
         InsertOperation<Object> dummyResultOperation = dummy(InsertOperation.class);
         Table<Object> mockTable = failingMock(Table.class);
@@ -61,7 +61,7 @@ public class SyncedTest
 
 
     @Test
-    public void testUpdateOperation() throws Exception
+    public void testUpdateOperation()
     {
         Operation<Object> dummyResultOperation = dummy(Operation.class);
         Predicate dummyPredicate = dummy(Predicate.class);
@@ -75,7 +75,7 @@ public class SyncedTest
 
 
     @Test
-    public void testDeleteOperation() throws Exception
+    public void testDeleteOperation()
     {
         Operation<Object> dummyResultOperation = dummy(Operation.class);
         Predicate dummyPredicate = dummy(Predicate.class);
@@ -89,7 +89,7 @@ public class SyncedTest
 
 
     @Test
-    public void testAssertOperation() throws Exception
+    public void testAssertOperation()
     {
         Operation<Object> dummyResultOperation = dummy(Operation.class);
         Predicate dummyPredicate = dummy(Predicate.class);

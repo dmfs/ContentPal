@@ -21,6 +21,8 @@ import org.dmfs.android.contentpal.ClosableIterator;
 import java.io.IOException;
 import java.util.Iterator;
 
+import androidx.annotation.NonNull;
+
 
 /**
  * An adapter which makes any {@link Iterator} a {@link ClosableIterator}.
@@ -32,14 +34,14 @@ public final class FakeClosable<T> implements ClosableIterator<T>
     private final Iterator<T> mDelegate;
 
 
-    public FakeClosable(Iterator<T> delegate)
+    public FakeClosable(@NonNull Iterator<T> delegate)
     {
         mDelegate = delegate;
     }
 
 
     @Override
-    public void close() throws IOException
+    public void close()
     {
         // nothing to do
     }

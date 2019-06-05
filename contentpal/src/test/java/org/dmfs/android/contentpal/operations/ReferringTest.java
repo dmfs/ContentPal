@@ -52,7 +52,7 @@ import static org.mockito.Mockito.doReturn;
 public class ReferringTest
 {
     @Test
-    public void testReference() throws Exception
+    public void testReference()
     {
         RowSnapshot<Object> mockSnapshot = failingMock(RowSnapshot.class);
         Operation<Object> mockOperation = failingMock(Operation.class);
@@ -64,7 +64,7 @@ public class ReferringTest
 
 
     @Test
-    public void testContentOperationBuilder() throws Exception
+    public void testContentOperationBuilder()
     {
         RowSnapshot<Object> mockSnapshot = failingMock(RowSnapshot.class);
         doReturn(new RowUriReference<>(Uri.parse("content://abc/xyz/123"))).when(mockSnapshot).reference();

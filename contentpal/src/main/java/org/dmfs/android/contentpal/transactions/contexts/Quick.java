@@ -16,11 +16,11 @@
 
 package org.dmfs.android.contentpal.transactions.contexts;
 
-import android.support.annotation.NonNull;
-
 import org.dmfs.android.contentpal.RowReference;
 import org.dmfs.android.contentpal.SoftRowReference;
 import org.dmfs.android.contentpal.TransactionContext;
+
+import androidx.annotation.NonNull;
 
 
 /**
@@ -36,7 +36,7 @@ public final class Quick implements TransactionContext
     private final TransactionContext mDelegate;
 
 
-    public Quick(TransactionContext delegate)
+    public Quick(@NonNull TransactionContext delegate)
     {
         mDelegate = delegate;
     }

@@ -18,13 +18,14 @@ package org.dmfs.android.contentpal.testing.android.uri;
 
 import android.net.Uri;
 
-import org.dmfs.jems.function.Function;
 import org.dmfs.jems.iterable.decorators.Mapped;
 import org.dmfs.jems.pair.Pair;
 import org.dmfs.jems.pair.elementary.ValuePair;
-import org.hamcrest.FeatureMatcher;
 import org.hamcrest.Matcher;
 
+import androidx.annotation.NonNull;
+
+import static org.dmfs.jems.hamcrest.matchers.LambdaMatcher.having;
 import static org.hamcrest.CoreMatchers.is;
 
 
@@ -37,61 +38,47 @@ import static org.hamcrest.CoreMatchers.is;
  */
 public final class UriMatcher
 {
-    public static Matcher<Uri> hasParamSet(Matcher<Iterable<? extends Pair<String, String>>> paramNamesMatcher)
+    @NonNull
+    public static Matcher<Uri> hasParamSet(@NonNull Matcher<Iterable<? extends Pair<String, String>>> paramNamesMatcher)
     {
-        return new UriFunctionMatcher<>(
+        return having(
+                "parameters",
                 uri -> new Mapped<>(name -> new ValuePair<>(name, uri.getQueryParameter(name)), uri.getQueryParameterNames()),
-                paramNamesMatcher, "parameters");
+                paramNamesMatcher);
     }
 
 
-    public static Matcher<Uri> hasParam(String name, String value)
+    @NonNull
+    public static Matcher<Uri> hasParam(@NonNull String name, @NonNull String value)
     {
         return hasParam(name, is(value));
     }
 
 
-    public static Matcher<Uri> hasParam(String name, Matcher<String> valueMatcher)
+    @NonNull
+    public static Matcher<Uri> hasParam(@NonNull String name, @NonNull Matcher<String> valueMatcher)
     {
-        return new UriFunctionMatcher<>(uri -> uri.getQueryParameter(name), valueMatcher, String.format("parameter \"%s\"", name));
+        return having(String.format("parameter \"%s\"", name), uri -> uri.getQueryParameter(name), valueMatcher);
     }
 
 
-    public static Matcher<Uri> encodedPath(String path)
+    @NonNull
+    public static Matcher<Uri> encodedPath(@NonNull String path)
     {
-        return new UriFunctionMatcher<>(Uri::getEncodedPath, is(path), "path");
+        return having("path", Uri::getEncodedPath, is(path));
     }
 
 
+    @NonNull
     public static Matcher<Uri> hierarchical()
     {
-        return new UriFunctionMatcher<>(Uri::isHierarchical, is(true), "hierarchical");
+        return having("hierarchical", Uri::isHierarchical, is(true));
     }
 
 
+    @NonNull
     public static Matcher<Uri> absolute()
     {
-        return new UriFunctionMatcher<>(Uri::isAbsolute, is(true), "absolute");
-    }
-
-
-    // TODO: remove once the new FeatureMatcher is available in jems, see https://github.com/dmfs/jems/issues/169
-    private final static class UriFunctionMatcher<T> extends FeatureMatcher<Uri, T>
-    {
-        private final Function<Uri, T> mFunction;
-
-
-        public UriFunctionMatcher(Function<Uri, T> function, Matcher<T> matcher, String name)
-        {
-            super(matcher, name, name);
-            mFunction = function;
-        }
-
-
-        @Override
-        protected T featureValueOf(Uri actual)
-        {
-            return mFunction.value(actual);
-        }
+        return having("absolute", Uri::isAbsolute, is(true));
     }
 }

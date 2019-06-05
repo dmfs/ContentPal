@@ -29,7 +29,7 @@ import static org.junit.Assert.assertThat;
 public class SingleColProjectionTest
 {
     @Test
-    public void test() throws Exception
+    public void test()
     {
         assertThat(new SingleColProjection<Contract>("abc"), projects("abc"));
     }

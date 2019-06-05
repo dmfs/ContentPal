@@ -22,7 +22,6 @@ import android.net.Uri;
 import android.os.RemoteException;
 import android.provider.ContactsContract;
 
-import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.Projection;
 import org.dmfs.android.contentpal.UriParams;

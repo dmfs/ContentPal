@@ -16,10 +16,10 @@
 
 package org.dmfs.android.contentpal.predicates;
 
-import android.support.annotation.NonNull;
-
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.TransactionContext;
+
+import androidx.annotation.NonNull;
 
 
 /**
@@ -32,7 +32,7 @@ public abstract class DelegatingPredicate implements Predicate
     private final Predicate mDelegate;
 
 
-    public DelegatingPredicate(Predicate predicate)
+    public DelegatingPredicate(@NonNull Predicate predicate)
     {
         mDelegate = predicate;
     }

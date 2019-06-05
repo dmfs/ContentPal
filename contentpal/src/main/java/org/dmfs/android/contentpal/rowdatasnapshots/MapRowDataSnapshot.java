@@ -16,8 +16,6 @@
 
 package org.dmfs.android.contentpal.rowdatasnapshots;
 
-import android.support.annotation.NonNull;
-
 import org.dmfs.android.contentpal.RowDataSnapshot;
 import org.dmfs.iterators.decorators.Serialized;
 import org.dmfs.jems.function.Function;
@@ -28,6 +26,8 @@ import org.dmfs.jems.optional.elementary.NullSafe;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
+import androidx.annotation.NonNull;
 
 
 /**

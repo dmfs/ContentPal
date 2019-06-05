@@ -17,12 +17,13 @@
 package org.dmfs.android.contentpal.references;
 
 import android.content.ContentProviderOperation;
-import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.RowReference;
 import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.TransactionContext;
+
+import androidx.annotation.NonNull;
 
 
 /**

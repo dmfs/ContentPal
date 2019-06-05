@@ -18,11 +18,12 @@ package org.dmfs.android.calendarpal.events;
 
 import android.content.ContentProviderOperation;
 import android.provider.CalendarContract;
-import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.RowData;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.rowdata.EmptyRowData;
+
+import androidx.annotation.NonNull;
 
 
 /**
@@ -38,7 +39,7 @@ public final class Organized implements RowData<CalendarContract.Events>
 
     public Organized(@NonNull CharSequence organizer)
     {
-        this(organizer, EmptyRowData.<CalendarContract.Events>instance());
+        this(organizer, EmptyRowData.instance());
     }
 
 
@@ -51,7 +52,7 @@ public final class Organized implements RowData<CalendarContract.Events>
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder updatedBuilder(TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
+    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
         return mDelegate.updatedBuilder(transactionContext, builder)
                 .withValue(CalendarContract.Events.ORGANIZER, mOrganizer == null ? null : mOrganizer.toString());

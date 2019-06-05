@@ -48,7 +48,7 @@ public final class CalendarScopedPredicateTest
 {
 
     @Test
-    public void testSelection() throws Exception
+    public void testSelection()
     {
         TransactionContext mockTc = failingMock(TransactionContext.class);
         SoftRowReference<CalendarContract.Calendars> dummyReference = dummy(SoftRowReference.class);

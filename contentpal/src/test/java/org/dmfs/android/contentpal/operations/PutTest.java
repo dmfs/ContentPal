@@ -55,7 +55,7 @@ public class PutTest
 {
 
     @Test
-    public void testVirtualReference() throws Exception
+    public void testVirtualReference()
     {
         SoftRowReference<Object> dummyReference = dummy(SoftRowReference.class);
         RowSnapshot<Object> mockRowSnapshot = failingMock(RowSnapshot.class);
@@ -68,7 +68,7 @@ public class PutTest
 
 
     @Test
-    public void testContentOperationBuilder() throws Exception
+    public void testContentOperationBuilder()
     {
         RowSnapshot<Object> mockRowSnapshot = failingMock(RowSnapshot.class);
         SoftRowReference<Object> mockRowReference = failingMock(SoftRowReference.class);
@@ -90,7 +90,7 @@ public class PutTest
 
 
     @Test
-    public void testContentOperationBuilderWithData() throws Exception
+    public void testContentOperationBuilderWithData()
     {
         RowSnapshot<Object> mockRowSnapshot = failingMock(RowSnapshot.class);
         SoftRowReference<Object> mockRowReference = failingMock(SoftRowReference.class);

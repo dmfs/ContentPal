@@ -40,7 +40,7 @@ import static org.junit.Assert.assertThat;
 public class NameDataTest
 {
     @Test
-    public void test() throws Exception
+    public void test()
     {
         assertThat(new NameData("xyz"), builds(
                 withValuesOnly(

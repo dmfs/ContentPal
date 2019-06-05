@@ -37,7 +37,7 @@ import static org.junit.Assert.assertThat;
 public class AccessibleTest
 {
     @Test
-    public void testUpdatedBuilder() throws Exception
+    public void testUpdatedBuilder()
     {
         assertThat(new Accessible(123), builds(
                 withValuesOnly(

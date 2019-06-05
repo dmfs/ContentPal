@@ -37,7 +37,7 @@ import static org.junit.Assert.assertThat;
 public class NamedTest
 {
     @Test
-    public void testUpdatedBuilder() throws Exception
+    public void testUpdatedBuilder()
     {
         assertThat(new Named("xyz"), builds(
                 withValuesOnly(

@@ -17,7 +17,6 @@
 package org.dmfs.android.contentpal.operations;
 
 import android.content.ContentProviderOperation;
-import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.RowData;
@@ -27,6 +26,8 @@ import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.rowdata.EmptyRowData;
 import org.dmfs.jems.optional.Optional;
 import org.dmfs.jems.optional.elementary.Present;
+
+import androidx.annotation.NonNull;
 
 
 /**
@@ -46,7 +47,7 @@ public final class Put<T> implements Operation<T>
     }
 
 
-    public Put(@NonNull RowSnapshot<T> rowSnapshot, RowData<T> data)
+    public Put(@NonNull RowSnapshot<T> rowSnapshot, @NonNull RowData<T> data)
     {
         mRowSnapshot = rowSnapshot;
         mData = data;

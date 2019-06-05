@@ -24,6 +24,8 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 
+import androidx.annotation.NonNull;
+
 import static org.hamcrest.CoreMatchers.is;
 
 
@@ -37,32 +39,35 @@ public final class TargetMatcher extends TypeSafeDiagnosingMatcher<ContentProvid
     private final Matcher<Uri> mValueMatcher;
 
 
-    public static TargetMatcher targets(String uri)
+    @NonNull
+    public static TargetMatcher targets(@NonNull String uri)
     {
         return new TargetMatcher(is(Uri.parse(uri)));
     }
 
 
-    public static TargetMatcher targets(Uri uri)
+    @NonNull
+    public static TargetMatcher targets(@NonNull Uri uri)
     {
         return new TargetMatcher(is(uri));
     }
 
 
-    public static TargetMatcher targets(Matcher<Uri> uriMatcher)
+    @NonNull
+    public static TargetMatcher targets(@NonNull Matcher<Uri> uriMatcher)
     {
         return new TargetMatcher(uriMatcher);
     }
 
 
-    public TargetMatcher(Matcher<Uri> valueMatchers)
+    public TargetMatcher(@NonNull Matcher<Uri> valueMatchers)
     {
         mValueMatcher = valueMatchers;
     }
 
 
     @Override
-    protected boolean matchesSafely(ContentProviderOperation.Builder builder, Description mismatchDescription)
+    protected boolean matchesSafely(@NonNull ContentProviderOperation.Builder builder, @NonNull Description mismatchDescription)
     {
         Uri uri = new Field<Uri>(builder, "mUri").value();
 
@@ -77,7 +82,7 @@ public final class TargetMatcher extends TypeSafeDiagnosingMatcher<ContentProvid
 
 
     @Override
-    public void describeTo(Description description)
+    public void describeTo(@NonNull Description description)
     {
         description.appendText("Operation target ");
         mValueMatcher.describeTo(description);

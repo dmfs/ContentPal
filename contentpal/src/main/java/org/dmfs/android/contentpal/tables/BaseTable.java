@@ -19,7 +19,6 @@ package org.dmfs.android.contentpal.tables;
 import android.content.ContentProviderClient;
 import android.content.ContentProviderOperation;
 import android.net.Uri;
-import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.InsertOperation;
 import org.dmfs.android.contentpal.Operation;
@@ -38,6 +37,8 @@ import org.dmfs.jems.optional.Optional;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
 
 
 /**
@@ -71,7 +72,7 @@ public final class BaseTable<T> implements Table<T>
     @Override
     public Operation<T> updateOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate)
     {
-        return new Constrained<>(new RawUpdate<T>(uriParams.withParam(mTableUri.buildUpon()).build()), predicate);
+        return new Constrained<>(new RawUpdate<>(uriParams.withParam(mTableUri.buildUpon()).build()), predicate);
     }
 
 
@@ -79,7 +80,7 @@ public final class BaseTable<T> implements Table<T>
     @Override
     public Operation<T> deleteOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate)
     {
-        return new Constrained<>(new RawDelete<T>(uriParams.withParam(mTableUri.buildUpon()).build()), predicate);
+        return new Constrained<>(new RawDelete<>(uriParams.withParam(mTableUri.buildUpon()).build()), predicate);
     }
 
 
@@ -87,7 +88,7 @@ public final class BaseTable<T> implements Table<T>
     @Override
     public Operation<T> assertOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate)
     {
-        return new Constrained<>(new RawAssert<T>(uriParams.withParam(mTableUri.buildUpon()).build()), predicate);
+        return new Constrained<>(new RawAssert<>(uriParams.withParam(mTableUri.buildUpon()).build()), predicate);
     }
 
 
@@ -95,15 +96,15 @@ public final class BaseTable<T> implements Table<T>
     @Override
     public View<T> view(@NonNull ContentProviderClient client)
     {
-        return new BaseView<T>(client, mTableUri);
+        return new BaseView<>(client, mTableUri);
     }
 
 
     /**
      * A Decorators to add a selection to a given {@link Operation}.
      * <p>
-     * Note, this class is not public, because it is considered to be harmful in most cases other than in this class.
-     * The reason is that it's not possible to append a selection to a ContentProviderOperation.Builder, instead the previous selection is replaced.
+     * Note, this class is not public, because it is considered to be harmful in most cases other than in this class. The reason is that it's not possible to
+     * append a selection to a ContentProviderOperation.Builder, instead the previous selection is replaced.
      *
      * @param <T>
      */
@@ -113,7 +114,7 @@ public final class BaseTable<T> implements Table<T>
         private final Predicate mPredicate;
 
 
-        public Constrained(Operation<T> delegate, Predicate predicate)
+        public Constrained(@NonNull Operation<T> delegate, @NonNull Predicate predicate)
         {
             mDelegate = delegate;
             mPredicate = predicate;
@@ -145,7 +146,7 @@ public final class BaseTable<T> implements Table<T>
                 }
             }
 
-            return builder.withSelection(mPredicate.selection(transactionContext).toString(), arguments.toArray(new String[arguments.size()]));
+            return builder.withSelection(mPredicate.selection(transactionContext).toString(), arguments.toArray(new String[0]));
         }
     }
 }

@@ -55,7 +55,7 @@ public class YieldableTest
 {
 
     @Test
-    public void testEmpty() throws Exception
+    public void testEmpty()
     {
         assertThat(new Yieldable<>(EmptyIterable.instance()),
                 emptyIterable());
@@ -63,7 +63,7 @@ public class YieldableTest
 
 
     @Test
-    public void testOperations() throws Exception
+    public void testOperations()
     {
         Operation<Object> mockOp1 = mock(Operation.class);
         Operation<Object> mockOp2 = mock(Operation.class);
@@ -91,7 +91,7 @@ public class YieldableTest
                                 withoutValues(),
                                 withoutExpectedCount(),
                                 withYieldAllowed()),
-                        Matchers.<Operation>is(mockOp2)));
+                        Matchers.is(mockOp2)));
 
         assertThat(new Yieldable<>(new Seq<>(mockOp1, mockOp2, mockOp3)),
                 iteratesTo(
@@ -101,8 +101,8 @@ public class YieldableTest
                                 withoutValues(),
                                 withoutExpectedCount(),
                                 withYieldAllowed()),
-                        Matchers.<Operation>is(mockOp2),
-                        Matchers.<Operation>is(mockOp3)));
+                        Matchers.is(mockOp2),
+                        Matchers.is(mockOp3)));
     }
 
 }

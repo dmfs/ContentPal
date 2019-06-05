@@ -44,14 +44,14 @@ import static org.junit.Assert.assertThat;
 public class RawInsertTest
 {
     @Test
-    public void testReference() throws Exception
+    public void testReference()
     {
         assertThat(new RawInsert<>(dummy(Uri.class)).reference(), is(absent()));
     }
 
 
     @Test
-    public void testContentOperationBuilder() throws Exception
+    public void testContentOperationBuilder()
     {
         Uri dummyUri = dummy(Uri.class);
         assertThat(new RawInsert<>(dummyUri),

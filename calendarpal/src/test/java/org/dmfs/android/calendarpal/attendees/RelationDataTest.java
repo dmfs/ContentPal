@@ -39,7 +39,7 @@ import static org.junit.Assert.assertThat;
 public class RelationDataTest
 {
     @Test
-    public void test() throws Exception
+    public void test()
     {
         assertThat(new RelationData(1234), builds(
                 withValuesOnly(

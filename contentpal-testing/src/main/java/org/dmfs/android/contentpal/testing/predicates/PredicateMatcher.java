@@ -30,6 +30,8 @@ import org.hamcrest.Matcher;
 
 import java.util.Arrays;
 
+import androidx.annotation.NonNull;
+
 import static org.dmfs.jems.hamcrest.matchers.IterableMatcher.iteratesTo;
 import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
 import static org.dmfs.jems.optional.elementary.Absent.absent;
@@ -44,29 +46,32 @@ import static org.hamcrest.object.HasToString.hasToString;
  */
 public final class PredicateMatcher
 {
-
+    @NonNull
     @SafeVarargs
     @Factory
-    public static Matcher<Predicate> predicateWith(Matcher<Predicate>... matchers)
+    public static Matcher<Predicate> predicateWith(@NonNull Matcher<Predicate>... matchers)
     {
         return CoreMatchers.allOf(matchers);
     }
 
 
+    @NonNull
     @Factory
-    public static Matcher<Predicate> selection(CharSequence selection)
+    public static Matcher<Predicate> selection(@NonNull CharSequence selection)
     {
         return new Selection(absent(), selection);
     }
 
 
+    @NonNull
     @Factory
-    public static Matcher<Predicate> selection(TransactionContext tc, CharSequence selection)
+    public static Matcher<Predicate> selection(@NonNull TransactionContext tc, @NonNull CharSequence selection)
     {
         return new Selection(new Present<>(tc), selection);
     }
 
 
+    @NonNull
     @Factory
     public static Matcher<Predicate> emptyArguments()
     {
@@ -74,35 +79,40 @@ public final class PredicateMatcher
     }
 
 
+    @NonNull
     @Factory
-    public static Matcher<Predicate> emptyArguments(TransactionContext tc)
+    public static Matcher<Predicate> emptyArguments(@NonNull TransactionContext tc)
     {
         return new EmptyArgument(new Present<>(tc));
     }
 
 
+    @NonNull
     @Factory
-    public static Matcher<Predicate> argumentValues(String... values)
+    public static Matcher<Predicate> argumentValues(@NonNull String... values)
     {
         return new ArgumentValues(absent(), values);
     }
 
 
+    @NonNull
     @Factory
-    public static Matcher<Predicate> argumentValues(TransactionContext tc, String... values)
+    public static Matcher<Predicate> argumentValues(@NonNull TransactionContext tc, @NonNull String... values)
     {
         return new ArgumentValues(new Present<>(tc), values);
     }
 
 
+    @NonNull
     @Factory
     @SafeVarargs
-    public static Matcher<Predicate> backReferences(Matcher<Optional<Integer>>... backReferences)
+    public static Matcher<Predicate> backReferences(@NonNull Matcher<Optional<Integer>>... backReferences)
     {
         return new ArgumentBackReferences(absent(), backReferences);
     }
 
 
+    @NonNull
     @Factory
     @SafeVarargs
     public static Matcher<Predicate> backReferences(TransactionContext tc, Matcher<Optional<Integer>>... backReferences)
@@ -111,6 +121,7 @@ public final class PredicateMatcher
     }
 
 
+    @NonNull
     @Factory
     public static Matcher<Predicate> absentBackReferences(int noOfPredicateArguments)
     {
@@ -120,8 +131,9 @@ public final class PredicateMatcher
     }
 
 
+    @NonNull
     @Factory
-    public static Matcher<Predicate> absentBackReferences(TransactionContext tc, int noOfPredicateArguments)
+    public static Matcher<Predicate> absentBackReferences(@NonNull TransactionContext tc, int noOfPredicateArguments)
     {
         Matcher[] matchers = new Matcher[noOfPredicateArguments];
         Arrays.fill(matchers, AbsentMatcher.absent());
@@ -140,7 +152,7 @@ public final class PredicateMatcher
         private final Optional<TransactionContext> mTc;
 
 
-        Selection(Optional<TransactionContext> tc, CharSequence selection)
+        Selection(@NonNull Optional<TransactionContext> tc, @NonNull CharSequence selection)
         {
             super(hasToString(selection.toString()), "Predicate.selection(tc)", "selection");
             mTc = tc;
@@ -148,7 +160,7 @@ public final class PredicateMatcher
 
 
         @Override
-        protected CharSequence featureValueOf(Predicate actual)
+        protected CharSequence featureValueOf(@NonNull Predicate actual)
         {
             return actual.selection(new Backed<>(mTc, dummy(TransactionContext.class)).value());
         }

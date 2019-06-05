@@ -18,10 +18,11 @@ package org.dmfs.android.contactspal.views;
 
 import android.content.ContentProviderClient;
 import android.provider.ContactsContract;
-import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.views.BaseView;
 import org.dmfs.android.contentpal.views.DelegatingView;
+
+import androidx.annotation.NonNull;
 
 
 /**
@@ -33,6 +34,6 @@ public final class RawContacts extends DelegatingView<ContactsContract.RawContac
 {
     public RawContacts(@NonNull ContentProviderClient client)
     {
-        super(new BaseView<ContactsContract.RawContacts>(client, ContactsContract.RawContacts.CONTENT_URI));
+        super(new BaseView<>(client, ContactsContract.RawContacts.CONTENT_URI));
     }
 }

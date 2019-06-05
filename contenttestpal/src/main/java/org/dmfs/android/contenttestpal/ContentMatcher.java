@@ -28,10 +28,12 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
+import androidx.annotation.NonNull;
+
 
 /**
- * {@link Matcher} that checks whether executing the target {@link Operation}s results in a state of the {@link ContentProvider}
- * that corresponds to the given assert {@link Operation}s, i.e. they can be executed successfully.
+ * {@link Matcher} that checks whether executing the target {@link Operation}s results in a state of the {@link ContentProvider} that corresponds to the given
+ * assert {@link Operation}s, i.e. they can be executed successfully.
  * <p>
  * If there is mismatch, this {@link Matcher} throws an {@link AssertionError} rather than returning <code>false</code>.
  *
@@ -43,7 +45,7 @@ public final class ContentMatcher extends TypeSafeMatcher<Iterable<? extends Ope
     private final Iterable<? extends Operation<?>> mAssertOperationBatch;
 
 
-    public ContentMatcher(OperationsQueue operationsQueue, Iterable<? extends Operation<?>> assertOperationBatch)
+    public ContentMatcher(@NonNull OperationsQueue operationsQueue, @NonNull Iterable<? extends Operation<?>> assertOperationBatch)
     {
         mOperationsQueue = operationsQueue;
         mAssertOperationBatch = assertOperationBatch;
@@ -51,7 +53,7 @@ public final class ContentMatcher extends TypeSafeMatcher<Iterable<? extends Ope
 
 
     @Override
-    protected boolean matchesSafely(Iterable<? extends Operation<?>> targetBatch)
+    protected boolean matchesSafely(@NonNull Iterable<? extends Operation<?>> targetBatch)
     {
         try
         {
@@ -81,25 +83,28 @@ public final class ContentMatcher extends TypeSafeMatcher<Iterable<? extends Ope
 
 
     @Override
-    public void describeTo(Description description)
+    public void describeTo(@NonNull Description description)
     {
         throw new UnsupportedOperationException("Should not be called for this class as it fails with exception");
     }
 
 
-    public static Matcher<Iterable<? extends Operation<?>>> resultsIn(OperationsQueue queue, Iterable<? extends Operation<?>> assertingBatch)
+    @NonNull
+    public static Matcher<Iterable<? extends Operation<?>>> resultsIn(@NonNull OperationsQueue queue, @NonNull Iterable<? extends Operation<?>> assertingBatch)
     {
         return new ContentMatcher(queue, assertingBatch);
     }
 
 
-    public static Matcher<Iterable<? extends Operation<?>>> resultsIn(OperationsQueue queue, Operation... assertOperations)
+    @NonNull
+    public static Matcher<Iterable<? extends Operation<?>>> resultsIn(@NonNull OperationsQueue queue, @NonNull Operation... assertOperations)
     {
         return new ContentMatcher(queue, new Seq<Operation<?>>(assertOperations));
     }
 
 
-    public static Matcher<Iterable<? extends Operation<?>>> resultsIn(ContentProviderClient client, Operation... assertOperations)
+    @NonNull
+    public static Matcher<Iterable<? extends Operation<?>>> resultsIn(@NonNull ContentProviderClient client, @NonNull Operation... assertOperations)
     {
         return new ContentMatcher(new BasicOperationsQueue(client), new Seq<Operation<?>>(assertOperations));
     }

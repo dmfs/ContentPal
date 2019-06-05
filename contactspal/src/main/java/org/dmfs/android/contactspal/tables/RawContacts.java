@@ -31,6 +31,6 @@ public final class RawContacts extends DelegatingTable<ContactsContract.RawConta
 {
     public RawContacts()
     {
-        super(new BaseTable<ContactsContract.RawContacts>(ContactsContract.RawContacts.CONTENT_URI));
+        super(new BaseTable<>(ContactsContract.RawContacts.CONTENT_URI));
     }
 }

@@ -16,8 +16,6 @@
 
 package org.dmfs.android.contentpal.projections;
 
-import android.support.annotation.NonNull;
-
 import org.dmfs.android.contentpal.Projection;
 import org.dmfs.iterables.elementary.Seq;
 import org.dmfs.jems.single.elementary.Reduced;
@@ -25,6 +23,8 @@ import org.dmfs.jems.single.elementary.Reduced;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import androidx.annotation.NonNull;
 
 
 /**
@@ -38,13 +38,13 @@ public final class Composite<T> implements Projection<T>
 
 
     @SafeVarargs
-    public Composite(Projection<? super T>... delegates)
+    public Composite(@NonNull Projection<? super T>... delegates)
     {
         this(new Seq<>(delegates));
     }
 
 
-    public Composite(Iterable<? extends Projection<? super T>> delegates)
+    public Composite(@NonNull Iterable<? extends Projection<? super T>> delegates)
     {
         mDelegates = delegates;
     }

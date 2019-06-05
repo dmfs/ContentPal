@@ -30,7 +30,7 @@ import static org.junit.Assert.assertThat;
 public class MultiProjectionTest
 {
     @Test
-    public void test() throws Exception
+    public void test()
     {
         assertThat(new MultiProjection<Contract>(), projectsEmpty());
         assertThat(new MultiProjection<Contract>("abc"), projects("abc"));

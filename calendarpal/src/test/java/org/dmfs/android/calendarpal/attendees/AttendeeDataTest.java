@@ -41,7 +41,7 @@ import static org.junit.Assert.assertThat;
 public class AttendeeDataTest
 {
     @Test
-    public void testUpdatedBuilder() throws Exception
+    public void testUpdatedBuilder()
     {
         // without any attributes this sets email and defaults
         assertThat(new AttendeeData("xyz"), builds(
@@ -55,7 +55,7 @@ public class AttendeeDataTest
 
 
     @Test
-    public void testUpdatedBuilderAttributes() throws Exception
+    public void testUpdatedBuilderAttributes()
     {
         // attributes should be added too
         assertThat(new AttendeeData("xyz", new CharSequenceRowData<>("test", "value")), builds(
@@ -70,10 +70,10 @@ public class AttendeeDataTest
 
 
     @Test
-    public void testUpdatedBuilderOverrides() throws Exception
+    public void testUpdatedBuilderOverrides()
     {
         // overrides should be kept
-        assertThat(new AttendeeData("xyz", new Composite<CalendarContract.Attendees>(
+        assertThat(new AttendeeData("xyz", new Composite<>(
                         new CharSequenceRowData<>(CalendarContract.Attendees.ATTENDEE_TYPE, "type"),
                         new CharSequenceRowData<>(CalendarContract.Attendees.ATTENDEE_RELATIONSHIP, "rel"),
                         new CharSequenceRowData<>(CalendarContract.Attendees.ATTENDEE_STATUS, "stat"),

@@ -18,10 +18,11 @@ package org.dmfs.android.calendarpal.views;
 
 import android.content.ContentProviderClient;
 import android.provider.CalendarContract;
-import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.views.BaseView;
 import org.dmfs.android.contentpal.views.DelegatingView;
+
+import androidx.annotation.NonNull;
 
 
 /**
@@ -33,6 +34,6 @@ public final class Attendees extends DelegatingView<CalendarContract.Attendees>
 {
     public Attendees(@NonNull ContentProviderClient client)
     {
-        super(new BaseView<CalendarContract.Attendees>(client, CalendarContract.Attendees.CONTENT_URI));
+        super(new BaseView<>(client, CalendarContract.Attendees.CONTENT_URI));
     }
 }

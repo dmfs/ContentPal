@@ -30,7 +30,7 @@ import static org.junit.Assert.assertThat;
 public class DataProjectionTest
 {
     @Test
-    public void test() throws Exception
+    public void test()
     {
         assertThat(new DataProjection(),
                 projects(

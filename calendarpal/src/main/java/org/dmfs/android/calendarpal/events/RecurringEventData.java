@@ -18,7 +18,6 @@ package org.dmfs.android.calendarpal.events;
 
 import android.content.ContentProviderOperation;
 import android.provider.CalendarContract;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import org.dmfs.android.contentpal.RowData;
@@ -30,6 +29,8 @@ import org.dmfs.jems.iterable.decorators.Mapped;
 import org.dmfs.rfc5545.DateTime;
 import org.dmfs.rfc5545.Duration;
 import org.dmfs.rfc5545.recur.RecurrenceRule;
+
+import androidx.annotation.NonNull;
 
 
 /**
@@ -51,13 +52,13 @@ public final class RecurringEventData implements RowData<CalendarContract.Events
 
     public RecurringEventData(@NonNull CharSequence title, @NonNull DateTime start, @NonNull Duration duration, @NonNull RecurrenceRule rule)
     {
-        this(title, start, duration, new SingletonIterable<>(rule), EmptyIterable.<DateTime>instance(), EmptyIterable.<DateTime>instance());
+        this(title, start, duration, new SingletonIterable<>(rule), EmptyIterable.instance(), EmptyIterable.instance());
     }
 
 
     public RecurringEventData(@NonNull CharSequence title, @NonNull DateTime start, @NonNull Duration duration, @NonNull RecurrenceRule rule, @NonNull Iterable<DateTime> exDates)
     {
-        this(title, start, duration, new SingletonIterable<>(rule), exDates, EmptyIterable.<DateTime>instance());
+        this(title, start, duration, new SingletonIterable<>(rule), exDates, EmptyIterable.instance());
     }
 
 
@@ -69,13 +70,13 @@ public final class RecurringEventData implements RowData<CalendarContract.Events
 
     public RecurringEventData(@NonNull CharSequence title, @NonNull DateTime start, @NonNull Duration duration, @NonNull Iterable<RecurrenceRule> rules)
     {
-        this(title, start, duration, rules, EmptyIterable.<DateTime>instance(), EmptyIterable.<DateTime>instance());
+        this(title, start, duration, rules, EmptyIterable.instance(), EmptyIterable.instance());
     }
 
 
     public RecurringEventData(@NonNull CharSequence title, @NonNull DateTime start, @NonNull Duration duration, @NonNull Iterable<RecurrenceRule> rules, @NonNull Iterable<DateTime> exDates)
     {
-        this(title, start, duration, rules, exDates, EmptyIterable.<DateTime>instance());
+        this(title, start, duration, rules, exDates, EmptyIterable.instance());
     }
 
 
@@ -92,7 +93,7 @@ public final class RecurringEventData implements RowData<CalendarContract.Events
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder updatedBuilder(TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
+    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
         return builder.withValue(CalendarContract.Events.DTSTART, mStart.getTimestamp())
                 .withValue(CalendarContract.Events.EVENT_TIMEZONE, mStart.isAllDay() ? "UTC" : mStart.getTimeZone().getID())

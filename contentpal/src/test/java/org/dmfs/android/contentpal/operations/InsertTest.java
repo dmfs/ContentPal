@@ -53,7 +53,7 @@ import static org.mockito.Mockito.doReturn;
 public class InsertTest
 {
     @Test
-    public void testReference() throws Exception
+    public void testReference()
     {
         Table<Object> mockTable = failingMock(Table.class);
 
@@ -66,7 +66,7 @@ public class InsertTest
 
 
     @Test
-    public void testContentOperationBuilder() throws Exception
+    public void testContentOperationBuilder()
     {
         Table<Object> mockTable = failingMock(Table.class);
         Uri dummyUri = dummy(Uri.class);

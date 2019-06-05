@@ -17,11 +17,12 @@
 package org.dmfs.android.contentpal.rowdata;
 
 import android.content.ContentProviderOperation;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import org.dmfs.android.contentpal.RowData;
 import org.dmfs.android.contentpal.TransactionContext;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 
 /**
@@ -44,7 +45,7 @@ public final class CharSequenceRowData<T> implements RowData<T>
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder updatedBuilder(TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
+    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
         return builder.withValue(mKey, mValue == null ? null : mValue.toString());
     }

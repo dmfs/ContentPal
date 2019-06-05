@@ -33,7 +33,7 @@ import static org.junit.Assert.assertThat;
 public class EmptyTransactionContextTest
 {
     @Test
-    public void test() throws Exception
+    public void test()
     {
         SoftRowReference<Object> ref = dummy(SoftRowReference.class);
         assertThat(new EmptyTransactionContext().resolved(ref), is(sameInstance(ref)));

@@ -42,7 +42,7 @@ import static org.mockito.Mockito.doReturn;
 public class ReferringToTest
 {
     @Test
-    public void testSelection() throws Exception
+    public void testSelection()
     {
         RowSnapshot<Object> mockRowSnapshot = failingMock(RowSnapshot.class);
         SoftRowReference<Object> dummyRowReference = dummy(SoftRowReference.class);

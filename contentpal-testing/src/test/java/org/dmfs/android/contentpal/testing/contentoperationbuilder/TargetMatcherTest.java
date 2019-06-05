@@ -41,7 +41,7 @@ import static org.junit.Assert.assertThat;
 public class TargetMatcherTest
 {
     @Test
-    public void testTargets() throws Exception
+    public void testTargets()
     {
         Uri dummyUri = dummy(Uri.class);
         assertThat(targets(sameInstance(dummyUri)).matches(ContentProviderOperation.newInsert(dummyUri)), is(true));
@@ -50,7 +50,7 @@ public class TargetMatcherTest
 
 
     @Test
-    public void testTargets1() throws Exception
+    public void testTargets1()
     {
         Uri uri = Uri.parse("http://example.org/test");
         assertThat(targets(uri).matches(ContentProviderOperation.newInsert(uri)), is(true));
@@ -59,7 +59,7 @@ public class TargetMatcherTest
 
 
     @Test
-    public void testTargets2() throws Exception
+    public void testTargets2()
     {
         assertThat(targets("http://example.org/test").matches(ContentProviderOperation.newInsert(Uri.parse("http://example.org/test"))), is(true));
         assertThat(targets("http://example.org/test").matches(ContentProviderOperation.newInsert(Uri.parse("http://example.com"))), is(false));
@@ -67,7 +67,7 @@ public class TargetMatcherTest
 
 
     @Test
-    public void testMatchesSafelyMismatch() throws Exception
+    public void testMatchesSafelyMismatch()
     {
         Description description = new StringDescription();
         targets("http://example.com").matchesSafely(ContentProviderOperation.newInsert(Uri.parse("http://example.org/test")), description);
@@ -76,7 +76,7 @@ public class TargetMatcherTest
 
 
     @Test
-    public void testDescribeTo() throws Exception
+    public void testDescribeTo()
     {
         Description description = new StringDescription();
         targets("http://example.com").describeTo(description);

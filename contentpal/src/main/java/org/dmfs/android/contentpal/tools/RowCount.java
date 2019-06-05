@@ -27,6 +27,8 @@ import org.dmfs.android.contentpal.projections.SingleColProjection;
 import org.dmfs.android.contentpal.tools.uriparams.EmptyUriParams;
 import org.dmfs.jems.single.Single;
 
+import androidx.annotation.NonNull;
+
 import static org.dmfs.jems.optional.elementary.Absent.absent;
 
 
@@ -41,38 +43,30 @@ public final class RowCount<T> implements Single<Integer>
     private final Predicate mPredicate;
 
 
-    public RowCount(View<T> view, Predicate predicate)
+    public RowCount(@NonNull View<T> view, @NonNull Predicate predicate)
     {
         mView = view;
         mPredicate = predicate;
     }
 
 
-    public RowCount(View<T> view)
+    public RowCount(@NonNull View<T> view)
     {
         this(view, new AnyOf());
     }
 
 
+    @NonNull
     @Override
     public Integer value()
     {
-        Cursor cursor = null;
-        try
+        try (Cursor cursor = mView.rows(EmptyUriParams.INSTANCE, new SingleColProjection<>(BaseColumns._ID), mPredicate, absent()))
         {
-            cursor = mView.rows(EmptyUriParams.INSTANCE, new SingleColProjection(BaseColumns._ID), mPredicate, absent());
             return cursor.getCount();
         }
         catch (RemoteException e)
         {
             throw new RuntimeException("Query failed", e);
-        }
-        finally
-        {
-            if (cursor != null)
-            {
-                cursor.close();
-            }
         }
     }
 }

@@ -17,7 +17,6 @@
 package org.dmfs.android.contentpal.operations;
 
 import android.content.ContentProviderOperation;
-import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.Predicate;
@@ -31,10 +30,12 @@ import org.dmfs.android.contentpal.tools.uriparams.EmptyUriParams;
 import org.dmfs.jems.optional.Optional;
 import org.dmfs.jems.optional.elementary.Absent;
 
+import androidx.annotation.NonNull;
+
 
 /**
- * An {@link Operation} for an assert query which checks that the provided {@link RowData} is present in the given {@link Table}
- * filtered by the given {@link Predicate}.
+ * An {@link Operation} for an assert query which checks that the provided {@link RowData} is present in the given {@link Table} filtered by the given {@link
+ * Predicate}.
  *
  * @author Gabor Keszthelyi
  */
@@ -45,7 +46,7 @@ public final class BulkAssert<T> implements Operation<T>
     private final Predicate mPredicate;
 
 
-    public BulkAssert(Table<T> table, RowData<T> rowData, Predicate predicate)
+    public BulkAssert(@NonNull Table<T> table, @NonNull RowData<T> rowData, @NonNull Predicate predicate)
     {
         mTable = table;
         mRowData = rowData;
@@ -53,21 +54,21 @@ public final class BulkAssert<T> implements Operation<T>
     }
 
 
-    public BulkAssert(Table<T> table, RowData<T> rowData)
+    public BulkAssert(@NonNull Table<T> table, @NonNull RowData<T> rowData)
     {
         this(table, rowData, new AnyOf());
     }
 
 
-    public BulkAssert(Table<T> table, Predicate predicate)
+    public BulkAssert(@NonNull Table<T> table, @NonNull Predicate predicate)
     {
-        this(table, new EmptyRowData<T>(), predicate);
+        this(table, new EmptyRowData<>(), predicate);
     }
 
 
-    public BulkAssert(Table<T> table)
+    public BulkAssert(@NonNull Table<T> table)
     {
-        this(table, new EmptyRowData<T>(), new AnyOf());
+        this(table, new EmptyRowData<>(), new AnyOf());
     }
 
 

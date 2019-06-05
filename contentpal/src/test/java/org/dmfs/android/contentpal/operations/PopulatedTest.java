@@ -50,7 +50,7 @@ import static org.mockito.Mockito.doReturn;
 public class PopulatedTest
 {
     @Test
-    public void testReference() throws Exception
+    public void testReference()
     {
         Optional<SoftRowReference<Object>> dummyReference = dummy(Optional.class);
         InsertOperation<Object> mockOperation = failingMock(InsertOperation.class);
@@ -62,7 +62,7 @@ public class PopulatedTest
 
 
     @Test
-    public void testContentOperationBuilder() throws Exception
+    public void testContentOperationBuilder()
     {
         Uri dummyUri = dummy(Uri.class);
         assertThat(

@@ -19,7 +19,8 @@ package org.dmfs.android.contentpal;
 import android.content.ContentProviderClient;
 import android.content.OperationApplicationException;
 import android.os.RemoteException;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 
 /**
@@ -51,8 +52,8 @@ public interface Transaction
     TransactionContext commit(@NonNull ContentProviderClient client) throws RemoteException, OperationApplicationException;
 
     /**
-     * Appends the given {@link Operation}s to this {@link Transaction}. The Result is a new {@link Transaction} that contains all operations of this
-     * {@link Transaction} and the operations in the given {@link Operation}s. This means you should commit only one of both (usually the new one) {@link
+     * Appends the given {@link Operation}s to this {@link Transaction}. The Result is a new {@link Transaction} that contains all operations of this {@link
+     * Transaction} and the operations in the given {@link Operation}s. This means you should commit only one of both (usually the new one) {@link
      * Transaction}s.
      *
      * @param batch

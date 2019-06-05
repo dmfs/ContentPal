@@ -40,7 +40,7 @@ import static org.mockito.Mockito.doReturn;
 public class EmptyUriParamsTest
 {
     @Test
-    public void testWithParam() throws Exception
+    public void testWithParam()
     {
         Uri.Builder builder = new Uri.Builder();
         UriParams params = failingMock(UriParams.class);

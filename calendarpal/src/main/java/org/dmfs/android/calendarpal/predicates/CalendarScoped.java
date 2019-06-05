@@ -17,13 +17,14 @@
 package org.dmfs.android.calendarpal.predicates;
 
 import android.provider.CalendarContract;
-import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.predicates.AllOf;
 import org.dmfs.android.contentpal.predicates.DelegatingPredicate;
 import org.dmfs.android.contentpal.predicates.ReferringTo;
+
+import androidx.annotation.NonNull;
 
 
 /**

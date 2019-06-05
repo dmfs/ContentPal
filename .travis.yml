@@ -3,9 +3,12 @@ android:
   components:
     - tools
     - platform-tools
-    - build-tools-26.0.2
-    - android-25
+    - build-tools-28.0.3
+    - android-24
+    - android-28
+    - extra
     - extra-android-m2repository
+    - sys-img-armeabi-v7a-android-24
 script:
   - ./gradlew build check jacocoTestReport
 after_success:

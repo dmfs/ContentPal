@@ -16,8 +16,6 @@
 
 package org.dmfs.android.contentpal.rowsets;
 
-import android.support.annotation.NonNull;
-
 import org.dmfs.android.contentpal.ClosableIterator;
 import org.dmfs.android.contentpal.RowSet;
 import org.dmfs.android.contentpal.RowSnapshot;
@@ -26,6 +24,8 @@ import org.dmfs.android.contentpal.tools.FakeClosable;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
 
 
 /**
@@ -39,7 +39,7 @@ public final class Cached<T> implements RowSet<T>
     private List<RowSnapshot<T>> mSnapshots;
 
 
-    public Cached(RowSet<T> delegate)
+    public Cached(@NonNull RowSet<T> delegate)
     {
         mDelegate = delegate;
     }
@@ -52,24 +52,17 @@ public final class Cached<T> implements RowSet<T>
         if (mSnapshots == null)
         {
             // pull all the snapshots
-            ClosableIterator<RowSnapshot<T>> iterator = mDelegate.iterator();
-            try
+            try (ClosableIterator<RowSnapshot<T>> iterator = mDelegate.iterator())
             {
-                try
-                {
-                    List<RowSnapshot<T>> snapshots = new LinkedList<>();
+                List<RowSnapshot<T>> snapshots = new LinkedList<>();
 
-                    while (iterator.hasNext())
-                    {
-                        snapshots.add(iterator.next());
-                    }
-
-                    mSnapshots = snapshots;
-                }
-                finally
+                while (iterator.hasNext())
                 {
-                    iterator.close();
+                    snapshots.add(iterator.next());
                 }
+
+                mSnapshots = snapshots;
+
             }
             catch (IOException e)
             {

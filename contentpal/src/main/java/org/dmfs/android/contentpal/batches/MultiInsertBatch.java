@@ -16,8 +16,6 @@
 
 package org.dmfs.android.contentpal.batches;
 
-import android.support.annotation.NonNull;
-
 import org.dmfs.android.contentpal.InsertOperation;
 import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.RowData;
@@ -27,6 +25,8 @@ import org.dmfs.iterables.elementary.PresentValues;
 import org.dmfs.iterables.elementary.Seq;
 import org.dmfs.jems.iterable.decorators.Mapped;
 import org.dmfs.jems.optional.Optional;
+
+import androidx.annotation.NonNull;
 
 
 /**

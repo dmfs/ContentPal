@@ -17,11 +17,12 @@
 package org.dmfs.android.contentpal.rowdata;
 
 import android.content.ContentProviderOperation;
-import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.RowData;
 import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.TransactionContext;
+
+import androidx.annotation.NonNull;
 
 
 /**
@@ -36,7 +37,7 @@ public final class Referring<T> implements RowData<T>
     private final RowData<T> mDelegate;
 
 
-    public Referring(@NonNull String foreignIdColumnName, @NonNull RowSnapshot<?> referredRow, RowData<T> delegate)
+    public Referring(@NonNull String foreignIdColumnName, @NonNull RowSnapshot<?> referredRow, @NonNull RowData<T> delegate)
     {
         mForeignIdColumnName = foreignIdColumnName;
         mReferredRow = referredRow;
@@ -46,13 +47,13 @@ public final class Referring<T> implements RowData<T>
 
     public Referring(@NonNull String foreignIdColumnName, @NonNull RowSnapshot<?> referredRow)
     {
-        this(foreignIdColumnName, referredRow, EmptyRowData.<T>instance());
+        this(foreignIdColumnName, referredRow, EmptyRowData.instance());
     }
 
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder updatedBuilder(TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
+    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
         return mDelegate.updatedBuilder(transactionContext, transactionContext.resolved(mReferredRow.reference())
                 .builderWithReferenceData(transactionContext, builder, mForeignIdColumnName));

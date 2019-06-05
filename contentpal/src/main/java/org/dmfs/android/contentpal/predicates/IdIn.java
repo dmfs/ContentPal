@@ -17,10 +17,11 @@
 package org.dmfs.android.contentpal.predicates;
 
 import android.provider.BaseColumns;
-import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.iterables.elementary.Seq;
+
+import androidx.annotation.NonNull;
 
 
 /**

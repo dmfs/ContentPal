@@ -16,14 +16,14 @@
 
 package org.dmfs.android.contentpal.rowdatasnapshots;
 
-import android.support.annotation.NonNull;
-
 import org.dmfs.android.contentpal.RowDataSnapshot;
 import org.dmfs.iterators.EmptyIterator;
 import org.dmfs.jems.function.Function;
 import org.dmfs.jems.optional.Optional;
 
 import java.util.Iterator;
+
+import androidx.annotation.NonNull;
 
 import static org.dmfs.jems.optional.elementary.Absent.absent;
 
@@ -54,6 +54,7 @@ public final class EmptyRowDataSnapshot<Contract> implements RowDataSnapshot<Con
     }
 
 
+    @NonNull
     @Override
     public Iterator<String> iterator()
     {

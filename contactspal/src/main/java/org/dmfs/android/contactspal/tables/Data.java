@@ -34,6 +34,6 @@ public final class Data extends DelegatingTable<ContactsContract.Data>
 
     public Data()
     {
-        super(new BaseTable<ContactsContract.Data>(ContactsContract.Data.CONTENT_URI));
+        super(new BaseTable<>(ContactsContract.Data.CONTENT_URI));
     }
 }

@@ -16,10 +16,10 @@
 
 package org.dmfs.android.contentpal.operations;
 
-import android.support.annotation.NonNull;
-
 import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.RowSnapshot;
+
+import androidx.annotation.NonNull;
 
 
 /**
@@ -32,7 +32,7 @@ public final class Referring<T> extends DelegatingOperation<T>
 
     public Referring(@NonNull RowSnapshot<?> rowSnapshot, @NonNull String foreignKeyColumn, @NonNull Operation<T> original)
     {
-        super(new Populated<>(new org.dmfs.android.contentpal.rowdata.Referring<T>(foreignKeyColumn, rowSnapshot), original));
+        super(new Populated<>(new org.dmfs.android.contentpal.rowdata.Referring<>(foreignKeyColumn, rowSnapshot), original));
     }
 
 }
