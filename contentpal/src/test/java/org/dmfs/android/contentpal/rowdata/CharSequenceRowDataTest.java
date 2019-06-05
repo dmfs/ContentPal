@@ -36,7 +36,7 @@ import static org.junit.Assert.assertThat;
 public class CharSequenceRowDataTest
 {
     @Test
-    public void testUpdatedBuilder() throws Exception
+    public void testUpdatedBuilder()
     {
         assertThat(new CharSequenceRowData<>("key", null),
                 builds(

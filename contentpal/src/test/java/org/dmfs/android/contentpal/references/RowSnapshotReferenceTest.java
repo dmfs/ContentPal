@@ -43,7 +43,7 @@ import static org.mockito.Mockito.doReturn;
 public class RowSnapshotReferenceTest
 {
     @Test
-    public void testPutOperationBuilder() throws Exception
+    public void testPutOperationBuilder()
     {
         ContentProviderOperation.Builder dummyResultBuilder = dummy(ContentProviderOperation.Builder.class);
         SoftRowReference<Object> dummyOriginalReference = dummy(SoftRowReference.class);
@@ -60,7 +60,7 @@ public class RowSnapshotReferenceTest
 
 
     @Test
-    public void testDeleteOperationBuilder() throws Exception
+    public void testDeleteOperationBuilder()
     {
         ContentProviderOperation.Builder dummyResultBuilder = dummy(ContentProviderOperation.Builder.class);
         SoftRowReference<Object> dummyOriginalReference = dummy(SoftRowReference.class);
@@ -78,7 +78,7 @@ public class RowSnapshotReferenceTest
 
 
     @Test
-    public void testAssertOperationBuilder() throws Exception
+    public void testAssertOperationBuilder()
     {
         ContentProviderOperation.Builder dummyResultBuilder = dummy(ContentProviderOperation.Builder.class);
         SoftRowReference<Object> dummyOriginalReference = dummy(SoftRowReference.class);
@@ -96,7 +96,7 @@ public class RowSnapshotReferenceTest
 
 
     @Test
-    public void testBuilderWithReferenceData() throws Exception
+    public void testBuilderWithReferenceData()
     {
         ContentProviderOperation.Builder dummyResultBuilder = dummy(ContentProviderOperation.Builder.class);
         SoftRowReference<Object> dummyOriginalReference = dummy(SoftRowReference.class);
@@ -114,7 +114,7 @@ public class RowSnapshotReferenceTest
 
 
     @Test
-    public void testPredicate() throws Exception
+    public void testPredicate()
     {
         Predicate dummyResultPredicate = dummy(Predicate.class);
         SoftRowReference<Object> dummyOriginalReference = dummy(SoftRowReference.class);

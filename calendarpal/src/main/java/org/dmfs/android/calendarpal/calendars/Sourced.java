@@ -18,17 +18,18 @@ package org.dmfs.android.calendarpal.calendars;
 
 import android.content.ContentProviderOperation;
 import android.provider.CalendarContract;
-import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.RowData;
 import org.dmfs.android.contentpal.TransactionContext;
+
+import androidx.annotation.NonNull;
 
 
 /**
  * {@link CalendarContract.Calendars} {@link RowData} to set the {@code _SYNC_ID} of a calendar.
  * <p>
- * Note, this class is called {@code Sourced} rather than {@code Synced}
- * (reflecting the name {@code _SYNC_ID}) because it is assumed that this field identifies the source of this calendar (either directly or indirectly).
+ * Note, this class is called {@code Sourced} rather than {@code Synced} (reflecting the name {@code _SYNC_ID}) because it is assumed that this field identifies
+ * the source of this calendar (either directly or indirectly).
  *
  * @author Marten Gajda
  */

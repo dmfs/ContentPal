@@ -19,12 +19,13 @@ package org.dmfs.android.contentpal.references;
 import android.content.ContentProviderOperation;
 import android.content.ContentUris;
 import android.net.Uri;
-import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.SoftRowReference;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.predicates.EqArg;
+
+import androidx.annotation.NonNull;
 
 
 /**

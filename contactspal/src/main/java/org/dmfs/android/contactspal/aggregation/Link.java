@@ -17,7 +17,6 @@
 package org.dmfs.android.contactspal.aggregation;
 
 import android.provider.ContactsContract;
-import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.RowReference;
@@ -25,6 +24,8 @@ import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.operations.DelegatingOperation;
 import org.dmfs.android.contentpal.operations.Populated;
 import org.dmfs.android.contentpal.references.RowSnapshotReference;
+
+import androidx.annotation.NonNull;
 
 
 /**

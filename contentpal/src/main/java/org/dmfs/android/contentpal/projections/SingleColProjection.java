@@ -16,9 +16,9 @@
 
 package org.dmfs.android.contentpal.projections;
 
-import android.support.annotation.NonNull;
-
 import org.dmfs.android.contentpal.Projection;
+
+import androidx.annotation.NonNull;
 
 
 /**
@@ -31,7 +31,7 @@ public final class SingleColProjection<T> implements Projection<T>
     private final String mColumnName;
 
 
-    public SingleColProjection(String columnName)
+    public SingleColProjection(@NonNull String columnName)
     {
         mColumnName = columnName;
     }

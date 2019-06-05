@@ -16,17 +16,17 @@
 
 package org.dmfs.android.contentpal;
 
-import android.support.annotation.NonNull;
-
 import org.dmfs.jems.function.Function;
 import org.dmfs.jems.optional.Optional;
+
+import androidx.annotation.NonNull;
 
 
 /**
  * The data of a {@link RowSnapshot}. Iterating over a {@link RowDataSnapshot} returns all keys, including the ones without a value.
  * <p>
- * Note that at most one of {@link #data(String, Function)} and {@link #byteData(String)} will return a present value. Though, if the respective column
- * doesn't contain a value, both methods will return an absent {@link Optional}.
+ * Note that at most one of {@link #data(String, Function)} and {@link #byteData(String)} will return a present value. Though, if the respective column doesn't
+ * contain a value, both methods will return an absent {@link Optional}.
  *
  * @param <Contract>
  *         The contract of the view the data of this snapshot belongs to.

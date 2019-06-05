@@ -20,9 +20,10 @@ import android.content.ContentProvider;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.RemoteException;
-import android.support.annotation.NonNull;
 
 import org.dmfs.jems.optional.Optional;
+
+import androidx.annotation.NonNull;
 
 
 /**

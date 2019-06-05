@@ -19,13 +19,14 @@ package org.dmfs.android.contentpal.operations.internal;
 import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.net.Uri;
-import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.InsertOperation;
 import org.dmfs.android.contentpal.SoftRowReference;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.operations.Insert;
 import org.dmfs.jems.optional.Optional;
+
+import androidx.annotation.NonNull;
 
 import static org.dmfs.optional.Absent.absent;
 
@@ -42,7 +43,7 @@ public class RawInsert<T> implements InsertOperation<T>
     private final Uri mUri;
 
 
-    public RawInsert(Uri uri)
+    public RawInsert(@NonNull Uri uri)
     {
         mUri = uri;
     }

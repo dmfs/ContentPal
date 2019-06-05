@@ -16,9 +16,9 @@
 
 package org.dmfs.android.contentpal.predicates;
 
-import android.support.annotation.NonNull;
-
 import org.dmfs.android.contentpal.Predicate;
+
+import androidx.annotation.NonNull;
 
 
 /**

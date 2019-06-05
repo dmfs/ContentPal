@@ -56,14 +56,14 @@ public final class AssertTest
 {
 
     @Test
-    public void testReference() throws Exception
+    public void testReference()
     {
         assertThat(new Assert<Object>(dummy(RowSnapshot.class), dummy(RowData.class)).reference(), absent());
     }
 
 
     @Test
-    public void testContentOperationBuilder() throws Exception
+    public void testContentOperationBuilder()
     {
         RowSnapshot<Object> mockRowSnapshot = failingMock(RowSnapshot.class);
         SoftRowReference<Object> dummyRowReference = dummy(SoftRowReference.class);

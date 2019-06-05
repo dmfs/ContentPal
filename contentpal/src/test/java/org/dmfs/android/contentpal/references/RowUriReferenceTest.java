@@ -54,7 +54,7 @@ import static org.junit.Assert.assertThat;
 public class RowUriReferenceTest
 {
     @Test
-    public void testPutOperationBuilder() throws Exception
+    public void testPutOperationBuilder()
     {
         assertThat(new RowUriReference<>(Uri.parse("content://authority/path/123")).putOperationBuilder(
                 dummy(TransactionContext.class)),
@@ -68,7 +68,7 @@ public class RowUriReferenceTest
 
 
     @Test
-    public void testDeleteOperationBuilder() throws Exception
+    public void testDeleteOperationBuilder()
     {
         assertThat(new RowUriReference<>(Uri.parse("content://authority/path/123")).deleteOperationBuilder(
                 dummy(TransactionContext.class)),
@@ -82,7 +82,7 @@ public class RowUriReferenceTest
 
 
     @Test
-    public void testAssertOperationBuilder() throws Exception
+    public void testAssertOperationBuilder()
     {
         assertThat(new RowUriReference<>(Uri.parse("content://authority/path/123")).assertOperationBuilder(
                 dummy(TransactionContext.class)),
@@ -96,7 +96,7 @@ public class RowUriReferenceTest
 
 
     @Test
-    public void testBuilderWithReferenceData() throws Exception
+    public void testBuilderWithReferenceData()
     {
         Uri dummyUri = dummy(Uri.class);
         assertThat(new RowUriReference<>(Uri.parse("content://authority/path/123")).builderWithReferenceData(
@@ -112,7 +112,7 @@ public class RowUriReferenceTest
 
 
     @Test
-    public void testPredicate() throws Exception
+    public void testPredicate()
     {
         TransactionContext dummyTc = dummy(TransactionContext.class);
 
@@ -126,7 +126,7 @@ public class RowUriReferenceTest
 
 
     @Test
-    public void testIsVirtual() throws Exception
+    public void testIsVirtual()
     {
         assertThat(new RowUriReference<>(Uri.parse("content://authority/path/123")).isVirtual(),
                 is(false));

@@ -18,13 +18,14 @@ package org.dmfs.android.contactspal.data.organization;
 
 import android.content.ContentProviderOperation;
 import android.provider.ContactsContract;
-import android.support.annotation.NonNull;
 
 import org.dmfs.android.contactspal.data.Typed;
 import org.dmfs.android.contentpal.RowData;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.rowdata.Composite;
 import org.dmfs.iterables.elementary.Seq;
+
+import androidx.annotation.NonNull;
 
 
 /**
@@ -69,7 +70,7 @@ public final class WorkOrganization implements OrganizationData
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder updatedBuilder(TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
+    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
         return mDelegate.updatedBuilder(transactionContext, builder);
     }

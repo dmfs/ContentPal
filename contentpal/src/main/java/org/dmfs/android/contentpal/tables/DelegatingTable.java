@@ -17,7 +17,6 @@
 package org.dmfs.android.contentpal.tables;
 
 import android.content.ContentProviderClient;
-import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.InsertOperation;
 import org.dmfs.android.contentpal.Operation;
@@ -25,6 +24,8 @@ import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.Table;
 import org.dmfs.android.contentpal.UriParams;
 import org.dmfs.android.contentpal.View;
+
+import androidx.annotation.NonNull;
 
 
 /**

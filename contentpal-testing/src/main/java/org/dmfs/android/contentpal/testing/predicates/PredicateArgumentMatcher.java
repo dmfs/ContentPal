@@ -22,6 +22,8 @@ import org.dmfs.jems.optional.elementary.Present;
 import org.mockito.ArgumentMatcher;
 import org.mockito.hamcrest.MockitoHamcrest;
 
+import androidx.annotation.NonNull;
+
 import static org.dmfs.jems.optional.elementary.Absent.absent;
 
 
@@ -32,14 +34,15 @@ import static org.dmfs.jems.optional.elementary.Absent.absent;
  */
 public final class PredicateArgumentMatcher
 {
-
-    public static Predicate predicateWithSelection(CharSequence expectedSelection)
+    @NonNull
+    public static Predicate predicateWithSelection(@NonNull CharSequence expectedSelection)
     {
         return MockitoHamcrest.argThat(new PredicateMatcher.Selection(absent(), expectedSelection));
     }
 
 
-    public static Predicate predicateWithSelection(TransactionContext tc, CharSequence expectedSelection)
+    @NonNull
+    public static Predicate predicateWithSelection(@NonNull TransactionContext tc, @NonNull CharSequence expectedSelection)
     {
         return MockitoHamcrest.argThat(new PredicateMatcher.Selection(new Present<>(tc), expectedSelection));
     }

@@ -18,7 +18,8 @@ package org.dmfs.android.contentpal;
 
 import android.content.ContentProviderClient;
 import android.net.Uri;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 
 /**
@@ -82,6 +83,7 @@ public interface Table<T>
      *
      * @param client
      *         A {@link ContentProviderClient}.
+     *
      * @return A {@link View} on this table.
      */
     @NonNull

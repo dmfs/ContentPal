@@ -18,7 +18,6 @@ package org.dmfs.android.contentpal.views;
 
 import android.database.Cursor;
 import android.os.RemoteException;
-import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.Projection;
@@ -26,6 +25,8 @@ import org.dmfs.android.contentpal.Table;
 import org.dmfs.android.contentpal.UriParams;
 import org.dmfs.android.contentpal.View;
 import org.dmfs.jems.optional.Optional;
+
+import androidx.annotation.NonNull;
 
 
 /**

@@ -16,13 +16,13 @@
 
 package org.dmfs.android.contentpal.testing.rowset;
 
-import android.support.annotation.NonNull;
-
 import org.dmfs.android.contentpal.ClosableIterator;
 import org.dmfs.android.contentpal.RowSet;
 import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.testing.tools.FakeClosable;
 import org.dmfs.iterables.elementary.Seq;
+
+import androidx.annotation.NonNull;
 
 
 /**
@@ -35,14 +35,14 @@ public final class TestRowSet<T> implements RowSet<T>
     private final Iterable<RowSnapshot<T>> mDelegate;
 
 
-    public TestRowSet(Iterable<RowSnapshot<T>> delegate)
+    public TestRowSet(@NonNull Iterable<RowSnapshot<T>> delegate)
     {
         mDelegate = delegate;
     }
 
 
     @SafeVarargs
-    public TestRowSet(RowSnapshot<T>... rowSnapshots)
+    public TestRowSet(@NonNull RowSnapshot<T>... rowSnapshots)
     {
         this(new Seq<>(rowSnapshots));
     }

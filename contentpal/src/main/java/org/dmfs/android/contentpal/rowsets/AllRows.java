@@ -16,12 +16,12 @@
 
 package org.dmfs.android.contentpal.rowsets;
 
-import android.support.annotation.NonNull;
-
 import org.dmfs.android.contentpal.Projection;
 import org.dmfs.android.contentpal.RowSet;
 import org.dmfs.android.contentpal.View;
 import org.dmfs.android.contentpal.predicates.AnyOf;
+
+import androidx.annotation.NonNull;
 
 
 /**

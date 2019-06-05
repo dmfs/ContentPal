@@ -18,7 +18,6 @@ package org.dmfs.android.calendarpal.operations;
 
 import android.content.ContentProviderOperation;
 import android.provider.CalendarContract;
-import android.support.annotation.NonNull;
 
 import org.dmfs.android.calendarpal.tables.Events;
 import org.dmfs.android.contentpal.InsertOperation;
@@ -31,6 +30,8 @@ import org.dmfs.android.contentpal.operations.Insert;
 import org.dmfs.android.contentpal.operations.Referring;
 import org.dmfs.android.contentpal.tables.Synced;
 import org.dmfs.jems.optional.Optional;
+
+import androidx.annotation.NonNull;
 
 
 /**

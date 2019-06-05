@@ -16,9 +16,9 @@
 
 package org.dmfs.android.contentpal;
 
-import android.support.annotation.NonNull;
-
 import org.dmfs.jems.optional.Optional;
+
+import androidx.annotation.NonNull;
 
 
 /**

@@ -16,11 +16,11 @@
 
 package org.dmfs.android.contentpal.projections;
 
-import android.support.annotation.NonNull;
-
 import org.dmfs.android.contentpal.Projection;
 
 import java.util.Arrays;
+
+import androidx.annotation.NonNull;
 
 
 /**
@@ -33,7 +33,7 @@ public final class MultiProjection<T> implements Projection<T>
     private final String[] mColumnNames;
 
 
-    public MultiProjection(String... columnNames)
+    public MultiProjection(@NonNull String... columnNames)
     {
         mColumnNames = columnNames;
     }

@@ -19,7 +19,6 @@ package org.dmfs.android.contentpal.references;
 import android.content.ContentProviderOperation;
 import android.net.Uri;
 import android.provider.BaseColumns;
-import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.RowReference;
@@ -28,6 +27,8 @@ import org.dmfs.android.contentpal.Transaction;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.predicates.arguments.BackReferenceArgument;
 import org.dmfs.iterables.SingletonIterable;
+
+import androidx.annotation.NonNull;
 
 
 /**
@@ -57,7 +58,7 @@ public final class BackReference<T> implements RowReference<T>
     @Override
     public ContentProviderOperation.Builder putOperationBuilder(@NonNull TransactionContext transactionContext)
     {
-        return withSelection(ContentProviderOperation.newUpdate(mUri), BaseColumns._ID);
+        return withSelection(ContentProviderOperation.newUpdate(mUri));
     }
 
 
@@ -65,7 +66,7 @@ public final class BackReference<T> implements RowReference<T>
     @Override
     public ContentProviderOperation.Builder deleteOperationBuilder(@NonNull TransactionContext transactionContext)
     {
-        return withSelection(ContentProviderOperation.newDelete(mUri), BaseColumns._ID);
+        return withSelection(ContentProviderOperation.newDelete(mUri));
     }
 
 
@@ -73,7 +74,7 @@ public final class BackReference<T> implements RowReference<T>
     @Override
     public ContentProviderOperation.Builder assertOperationBuilder(@NonNull TransactionContext transactionContext)
     {
-        return withSelection(ContentProviderOperation.newAssertQuery(mUri), BaseColumns._ID);
+        return withSelection(ContentProviderOperation.newAssertQuery(mUri));
     }
 
 
@@ -94,7 +95,7 @@ public final class BackReference<T> implements RowReference<T>
 
 
     @NonNull
-    private ContentProviderOperation.Builder withSelection(@NonNull ContentProviderOperation.Builder builder, @NonNull String column)
+    private ContentProviderOperation.Builder withSelection(@NonNull ContentProviderOperation.Builder builder)
     {
         builder.withSelection(String.format(DEFAULT_SELECTION, BaseColumns._ID), DEFAULT_SELECTION_ARGS)
                 .withSelectionBackReference(0, mBackReference);
@@ -108,7 +109,7 @@ public final class BackReference<T> implements RowReference<T>
         private final int mBackReference;
 
 
-        public BackReferenceSelectionPredicate(String keyColumn, int backReference)
+        public BackReferenceSelectionPredicate(@NonNull String keyColumn, int backReference)
         {
             mKeyColumn = keyColumn;
             mBackReference = backReference;
@@ -127,7 +128,7 @@ public final class BackReference<T> implements RowReference<T>
         @Override
         public Iterable<Argument> arguments(@NonNull TransactionContext transactionContext)
         {
-            return new SingletonIterable<Argument>(new BackReferenceArgument(mBackReference));
+            return new SingletonIterable<>(new BackReferenceArgument(mBackReference));
         }
     }
 }

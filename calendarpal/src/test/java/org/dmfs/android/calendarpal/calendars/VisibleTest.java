@@ -37,7 +37,7 @@ import static org.junit.Assert.assertThat;
 public class VisibleTest
 {
     @Test
-    public void testUpdatedBuilder() throws Exception
+    public void testUpdatedBuilder()
     {
         assertThat(new Visible(), builds(
                 withValuesOnly(

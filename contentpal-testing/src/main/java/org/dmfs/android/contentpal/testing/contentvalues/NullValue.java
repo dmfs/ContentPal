@@ -22,6 +22,8 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 
+import androidx.annotation.NonNull;
+
 
 /**
  * A {@link Matcher} which matches if a value in a {@link ContentValues} is {@code null}.
@@ -33,7 +35,8 @@ public final class NullValue extends TypeSafeDiagnosingMatcher<ContentValues>
     private final String mExpectedKey;
 
 
-    public static NullValue withNullValue(String expectedKey)
+    @NonNull
+    public static NullValue withNullValue(@NonNull String expectedKey)
     {
         return new NullValue(expectedKey);
     }
@@ -46,7 +49,7 @@ public final class NullValue extends TypeSafeDiagnosingMatcher<ContentValues>
 
 
     @Override
-    protected boolean matchesSafely(ContentValues values, Description mismatchDescription)
+    protected boolean matchesSafely(@NonNull ContentValues values, @NonNull Description mismatchDescription)
     {
         if (values.get(mExpectedKey) != null)
         {
@@ -58,7 +61,7 @@ public final class NullValue extends TypeSafeDiagnosingMatcher<ContentValues>
 
 
     @Override
-    public void describeTo(Description description)
+    public void describeTo(@NonNull Description description)
     {
         description.appendText(String.format("value of key \"%s\" is null", mExpectedKey));
     }

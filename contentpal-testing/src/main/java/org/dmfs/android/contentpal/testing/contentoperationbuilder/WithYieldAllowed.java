@@ -25,6 +25,8 @@ import org.hamcrest.TypeSafeDiagnosingMatcher;
 
 import java.util.Locale;
 
+import androidx.annotation.NonNull;
+
 
 /**
  * A {@link ContentProviderOperation.Builder} {@link Matcher} which matches the "yield allowed" flag of an operation builder.
@@ -37,12 +39,14 @@ public final class WithYieldAllowed extends TypeSafeDiagnosingMatcher<ContentPro
     private final boolean mYieldable;
 
 
+    @NonNull
     public static WithYieldAllowed withYieldAllowed()
     {
         return new WithYieldAllowed(true);
     }
 
 
+    @NonNull
     public static WithYieldAllowed withYieldNotAllowed()
     {
         return new WithYieldAllowed(false);
@@ -56,7 +60,7 @@ public final class WithYieldAllowed extends TypeSafeDiagnosingMatcher<ContentPro
 
 
     @Override
-    protected boolean matchesSafely(ContentProviderOperation.Builder builder, Description mismatchDescription)
+    protected boolean matchesSafely(@NonNull ContentProviderOperation.Builder builder, @NonNull Description mismatchDescription)
     {
         boolean yieldable = new Field<Boolean>(builder, "mYieldAllowed").value();
         if (mYieldable != yieldable)
@@ -69,7 +73,7 @@ public final class WithYieldAllowed extends TypeSafeDiagnosingMatcher<ContentPro
 
 
     @Override
-    public void describeTo(Description description)
+    public void describeTo(@NonNull Description description)
     {
         description.appendText(String.format(Locale.ENGLISH, "yieldable is %s", Boolean.toString(mYieldable)));
     }

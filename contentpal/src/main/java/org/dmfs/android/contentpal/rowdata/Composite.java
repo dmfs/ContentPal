@@ -17,13 +17,14 @@
 package org.dmfs.android.contentpal.rowdata;
 
 import android.content.ContentProviderOperation;
-import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.RowData;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.iterables.elementary.PresentValues;
 import org.dmfs.iterables.elementary.Seq;
 import org.dmfs.jems.optional.Optional;
+
+import androidx.annotation.NonNull;
 
 
 /**
@@ -37,20 +38,20 @@ public final class Composite<T> implements RowData<T>
 
 
     @SafeVarargs
-    public Composite(Optional<RowData<T>>... optionalDelegates)
+    public Composite(@NonNull Optional<RowData<T>>... optionalDelegates)
     {
         this(new PresentValues<>(new Seq<>(optionalDelegates)));
     }
 
 
     @SafeVarargs
-    public Composite(RowData<T>... delegates)
+    public Composite(@NonNull RowData<T>... delegates)
     {
         this(new Seq<>(delegates));
     }
 
 
-    public Composite(Iterable<? extends RowData<T>> delegates)
+    public Composite(@NonNull Iterable<? extends RowData<T>> delegates)
     {
         mDelegates = delegates;
     }
@@ -58,7 +59,7 @@ public final class Composite<T> implements RowData<T>
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder updatedBuilder(TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
+    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
         for (RowData<T> rowData : mDelegates)
         {

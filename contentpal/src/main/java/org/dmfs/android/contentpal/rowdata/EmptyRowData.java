@@ -17,10 +17,11 @@
 package org.dmfs.android.contentpal.rowdata;
 
 import android.content.ContentProviderOperation;
-import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.RowData;
 import org.dmfs.android.contentpal.TransactionContext;
+
+import androidx.annotation.NonNull;
 
 
 /**
@@ -36,6 +37,7 @@ public final class EmptyRowData<T> implements RowData<T>
 
 
     @SuppressWarnings("unchecked")
+    @NonNull
     public static <T> EmptyRowData<T> instance()
     {
         return (EmptyRowData<T>) INSTANCE;
@@ -44,7 +46,7 @@ public final class EmptyRowData<T> implements RowData<T>
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder updatedBuilder(TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
+    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
         // nothing to add
         return builder;

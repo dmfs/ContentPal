@@ -56,7 +56,7 @@ import static org.junit.Assert.assertThat;
 public class BackReferenceTest
 {
     @Test
-    public void testPutOperationBuilder() throws Exception
+    public void testPutOperationBuilder()
     {
         assertThat(new BackReference<>(Uri.parse("content://authority/path/"), 123).putOperationBuilder(
                 dummy(TransactionContext.class)),
@@ -70,7 +70,7 @@ public class BackReferenceTest
 
 
     @Test
-    public void testDeleteOperationBuilder() throws Exception
+    public void testDeleteOperationBuilder()
     {
         assertThat(new BackReference<>(Uri.parse("content://authority/path/"), 123).deleteOperationBuilder(
                 dummy(TransactionContext.class)),
@@ -84,7 +84,7 @@ public class BackReferenceTest
 
 
     @Test
-    public void testAssertOperationBuilder() throws Exception
+    public void testAssertOperationBuilder()
     {
         assertThat(new BackReference<>(Uri.parse("content://authority/path/"), 123).assertOperationBuilder(
                 dummy(TransactionContext.class)),
@@ -98,7 +98,7 @@ public class BackReferenceTest
 
 
     @Test
-    public void testBuilderWithReferenceData() throws Exception
+    public void testBuilderWithReferenceData()
     {
         Uri dummyUri = dummy(Uri.class);
         assertThat(new BackReference<>(Uri.parse("content://authority/path/"), 123).builderWithReferenceData(
@@ -113,7 +113,7 @@ public class BackReferenceTest
 
 
     @Test
-    public void testPredicate() throws Exception
+    public void testPredicate()
     {
         TransactionContext mockTc = failingMock(TransactionContext.class);
 

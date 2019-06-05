@@ -81,7 +81,6 @@ import org.dmfs.android.contactspal.projections.RawContactsProjection;
 import org.dmfs.android.contactspal.rowsets.Unsynced;
 import org.dmfs.android.contactspal.tables.Local;
 import org.dmfs.android.contactspal.tables.RawContacts;
-import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.OperationsQueue;
 import org.dmfs.android.contentpal.RowDataSnapshot;
 import org.dmfs.android.contentpal.RowSnapshot;
@@ -123,7 +122,7 @@ public class DemoActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_demo);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         mRawContacts = new Local(new RawContacts());
@@ -221,7 +220,7 @@ public class DemoActivity extends AppCompatActivity
                                 new Typed(ContactsContract.CommonDataKinds.Phone.TYPE_WORK, new PhoneData("9876"))
                         ),
                         // Demonstrate how to link two contacts
-                        new SingletonIterable<Operation<?>>(new Link(rawContact, rawContact2)))
+                        new SingletonIterable<>(new Link(rawContact, rawContact2)))
         );
         mContactsQueue.flush();
 

@@ -17,13 +17,14 @@
 package org.dmfs.android.calendarpal.operations;
 
 import android.provider.CalendarContract;
-import android.support.annotation.NonNull;
 
 import org.dmfs.android.calendarpal.predicates.TransientEvent;
 import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.Table;
 import org.dmfs.android.contentpal.operations.BulkDelete;
 import org.dmfs.android.contentpal.operations.DelegatingOperation;
+
+import androidx.annotation.NonNull;
 
 
 /**

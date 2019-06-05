@@ -28,7 +28,6 @@ import static org.dmfs.android.contentpal.testing.android.uri.UriMatcher.hasPara
 import static org.dmfs.jems.hamcrest.matchers.matcher.MatcherMatcher.describesAs;
 import static org.dmfs.jems.hamcrest.matchers.matcher.MatcherMatcher.matches;
 import static org.dmfs.jems.hamcrest.matchers.matcher.MatcherMatcher.mismatches;
-import static org.hamcrest.core.AllOf.allOf;
 import static org.junit.Assert.assertThat;
 
 
@@ -42,15 +41,12 @@ import static org.junit.Assert.assertThat;
 public class UriBuilderMatcherTest
 {
     @Test
-    public void test() throws Exception
+    public void test()
     {
+        assertThat(builds(hasParam("p", "1")), matches(new Uri.Builder().scheme("https").authority("example.com").appendQueryParameter("p", "1")));
         assertThat(builds(hasParam("p", "1")),
-                allOf(
-                        matches(new Uri.Builder().scheme("https").authority("example.com").appendQueryParameter("p", "1")),
-                        mismatches(new Uri.Builder().scheme("https").authority("example.com").appendQueryParameter("p", "2"),
-                                "built Uri parameter \"p\" was \"2\""),
-                        describesAs("builds a Uri with parameter \"p\" is \"1\"")
-                ));
+                mismatches(new Uri.Builder().scheme("https").authority("example.com").appendQueryParameter("p", "2"), "built Uri parameter \"p\" was \"2\""));
+        assertThat(builds(hasParam("p", "1")), describesAs("builds a Uri with parameter \"p\" is \"1\""));
     }
 
 }

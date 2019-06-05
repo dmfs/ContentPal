@@ -34,7 +34,7 @@ import static org.junit.Assert.assertThat;
 public class EmptyRowDataTest
 {
     @Test
-    public void testUpdatedBuilder() throws Exception
+    public void testUpdatedBuilder()
     {
         assertThat(new EmptyRowData<>(),
                 builds(

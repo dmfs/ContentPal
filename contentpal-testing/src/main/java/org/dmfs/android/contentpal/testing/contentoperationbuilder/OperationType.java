@@ -26,13 +26,14 @@ import org.hamcrest.TypeSafeDiagnosingMatcher;
 
 import java.util.Locale;
 
+import androidx.annotation.NonNull;
+
 import static org.hamcrest.Matchers.any;
 
 
 /**
  * A {@link ContentProviderOperation.Builder} {@link Matcher} which matches the operation type.
  * <p>
- * TODO: match Uri
  *
  * @author Marten Gajda
  */
@@ -56,31 +57,35 @@ public final class OperationType extends TypeSafeDiagnosingMatcher<ContentProvid
     private final Matcher<Uri> mUriMatcher;
 
 
+    @NonNull
     public static OperationType insertOperation()
     {
         return new OperationType(any(Uri.class), Type.INSERT);
     }
 
 
+    @NonNull
     public static OperationType updateOperation()
     {
         return new OperationType(any(Uri.class), Type.UPDATE);
     }
 
 
+    @NonNull
     public static OperationType deleteOperation()
     {
         return new OperationType(any(Uri.class), Type.DELETE);
     }
 
 
+    @NonNull
     public static OperationType assertOperation()
     {
         return new OperationType(any(Uri.class), Type.ASSERT);
     }
 
 
-    private OperationType(Matcher<Uri> uriMatcher, Type expectedType)
+    private OperationType(@NonNull Matcher<Uri> uriMatcher, @NonNull Type expectedType)
     {
         mUriMatcher = uriMatcher;
         mExpectedType = expectedType;
@@ -88,7 +93,7 @@ public final class OperationType extends TypeSafeDiagnosingMatcher<ContentProvid
 
 
     @Override
-    protected boolean matchesSafely(ContentProviderOperation.Builder builder, Description mismatchDescription)
+    protected boolean matchesSafely(@NonNull ContentProviderOperation.Builder builder, @NonNull Description mismatchDescription)
     {
         Integer typeValue = new Field<Integer>(builder, "mType").value();
         if (mExpectedType.ordinal() + 1 /* 1-based */ != typeValue)
@@ -101,7 +106,7 @@ public final class OperationType extends TypeSafeDiagnosingMatcher<ContentProvid
 
 
     @Override
-    public void describeTo(Description description)
+    public void describeTo(@NonNull Description description)
     {
         description.appendText(String.format(Locale.ENGLISH, "is a %s operation", mExpectedType.toString()));
     }

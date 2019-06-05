@@ -18,10 +18,11 @@ package org.dmfs.android.contactspal.data.name;
 
 import android.content.ContentProviderOperation;
 import android.provider.ContactsContract;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import org.dmfs.android.contentpal.TransactionContext;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 
 /**
@@ -52,7 +53,7 @@ public final class NameData implements StructuredNameData
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder updatedBuilder(TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
+    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
         return mDelegate.updatedBuilder(transactionContext, builder)
                 .withValue(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME, mFirstName == null ? null : mFirstName.toString())

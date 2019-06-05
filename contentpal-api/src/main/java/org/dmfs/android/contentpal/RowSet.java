@@ -16,12 +16,12 @@
 
 package org.dmfs.android.contentpal;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 
 /**
- * The set of rows of a specific view. Iterating over this will return {@link RowSnapshot}s of all rows that exist at that time. Note, if the
- * database has been modified between two iterations, you'll get different results.
+ * The set of rows of a specific view. Iterating over this will return {@link RowSnapshot}s of all rows that exist at that time. Note, if the database has been
+ * modified between two iterations, you'll get different results.
  *
  * @author Marten Gajda
  */

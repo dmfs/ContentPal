@@ -18,6 +18,8 @@ package org.dmfs.android.contentpal.predicates;
 
 import android.accounts.Account;
 
+import androidx.annotation.NonNull;
+
 
 /**
  * A predicate which matches a specific account. Only to be used with tables which have {@code account_name} and {@code account_type} columns;
@@ -27,7 +29,7 @@ import android.accounts.Account;
 public final class AccountEq extends DelegatingPredicate
 {
 
-    public AccountEq(Account account)
+    public AccountEq(@NonNull Account account)
     {
         super(new AllOf(new EqArg("account_name", account.name), new EqArg("account_type", account.type)));
     }

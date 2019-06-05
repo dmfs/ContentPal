@@ -19,12 +19,13 @@ package org.dmfs.android.contentpal.queues;
 import android.content.ContentProviderClient;
 import android.content.OperationApplicationException;
 import android.os.RemoteException;
-import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.OperationsQueue;
 import org.dmfs.android.contentpal.Transaction;
 import org.dmfs.android.contentpal.transactions.BaseTransaction;
+
+import androidx.annotation.NonNull;
 
 
 /**

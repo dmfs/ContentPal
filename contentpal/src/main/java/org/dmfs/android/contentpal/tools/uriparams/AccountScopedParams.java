@@ -18,9 +18,10 @@ package org.dmfs.android.contentpal.tools.uriparams;
 
 import android.accounts.Account;
 import android.net.Uri;
-import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.UriParams;
+
+import androidx.annotation.NonNull;
 
 
 /**

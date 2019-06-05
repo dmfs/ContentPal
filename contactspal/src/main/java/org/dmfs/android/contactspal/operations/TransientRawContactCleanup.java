@@ -17,13 +17,14 @@
 package org.dmfs.android.contactspal.operations;
 
 import android.provider.ContactsContract;
-import android.support.annotation.NonNull;
 
 import org.dmfs.android.contactspal.predicates.TransientRawContact;
 import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.Table;
 import org.dmfs.android.contentpal.operations.BulkDelete;
 import org.dmfs.android.contentpal.operations.DelegatingOperation;
+
+import androidx.annotation.NonNull;
 
 
 /**

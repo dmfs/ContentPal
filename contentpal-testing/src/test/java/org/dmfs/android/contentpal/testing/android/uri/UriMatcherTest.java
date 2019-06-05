@@ -50,7 +50,7 @@ import static org.junit.Assert.assertThat;
 public class UriMatcherTest
 {
     @Test
-    public void test() throws Exception
+    public void test()
     {
         assertThat(absolute(),
                 allOf(matches(Uri.parse("https://example.com")),

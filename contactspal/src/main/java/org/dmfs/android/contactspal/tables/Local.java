@@ -18,7 +18,6 @@ package org.dmfs.android.contactspal.tables;
 
 import android.content.ContentProviderClient;
 import android.provider.ContactsContract;
-import android.support.annotation.NonNull;
 
 import org.dmfs.android.contactspal.operations.LocalAccountScoped;
 import org.dmfs.android.contentpal.InsertOperation;
@@ -30,6 +29,8 @@ import org.dmfs.android.contentpal.View;
 import org.dmfs.android.contentpal.predicates.AllOf;
 import org.dmfs.android.contentpal.predicates.IsNull;
 import org.dmfs.android.contentpal.tables.AccountScoped;
+
+import androidx.annotation.NonNull;
 
 
 /**
@@ -91,7 +92,7 @@ public final class Local implements Table<ContactsContract.RawContacts>
     }
 
 
-    private Predicate localAccountPredicate(Predicate predicate)
+    private Predicate localAccountPredicate(@NonNull Predicate predicate)
     {
         return new AllOf(predicate, new IsNull("account_name"), new IsNull("account_type"));
     }

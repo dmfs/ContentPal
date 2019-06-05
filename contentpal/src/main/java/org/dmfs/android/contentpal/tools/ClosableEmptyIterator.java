@@ -43,7 +43,7 @@ public final class ClosableEmptyIterator<T> extends AbstractBaseIterator<T> impl
 
 
     @Override
-    public void close() throws IOException
+    public void close()
     {
         // nothing to do
     }

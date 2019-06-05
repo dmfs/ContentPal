@@ -16,14 +16,14 @@
 
 package org.dmfs.android.contentpal.batches;
 
-import android.support.annotation.NonNull;
-
 import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.RowSet;
 import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.iterables.decorators.DelegatingIterable;
 import org.dmfs.jems.function.Function;
 import org.dmfs.jems.iterable.decorators.Mapped;
+
+import androidx.annotation.NonNull;
 
 
 /**

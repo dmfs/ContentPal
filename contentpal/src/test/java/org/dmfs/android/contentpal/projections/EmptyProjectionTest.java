@@ -29,7 +29,7 @@ import static org.junit.Assert.assertThat;
 public class EmptyProjectionTest
 {
     @Test
-    public void test() throws Exception
+    public void test()
     {
         assertThat(new EmptyProjection<Contract>(), projectsEmpty());
     }

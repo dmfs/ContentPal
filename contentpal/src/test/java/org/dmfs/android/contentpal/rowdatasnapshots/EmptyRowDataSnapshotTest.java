@@ -30,21 +30,21 @@ import static org.junit.Assert.assertThat;
 public class EmptyRowDataSnapshotTest
 {
     @Test
-    public void testCharData() throws Exception
+    public void testCharData()
     {
         assertThat(new EmptyRowDataSnapshot<>().data("key", x -> x), is(absent()));
     }
 
 
     @Test
-    public void testByteData() throws Exception
+    public void testByteData()
     {
         assertThat(new EmptyRowDataSnapshot<>().byteData("key"), is(absent()));
     }
 
 
     @Test
-    public void testIterator() throws Exception
+    public void testIterator()
     {
         assertThat(new EmptyRowDataSnapshot<>(), emptyIterable());
     }

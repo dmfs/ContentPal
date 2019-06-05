@@ -16,11 +16,11 @@
 
 package org.dmfs.android.contentpal.testing.dummies;
 
-import android.support.annotation.NonNull;
-
 import org.dmfs.android.contentpal.RowReference;
 import org.dmfs.android.contentpal.SoftRowReference;
 import org.dmfs.android.contentpal.TransactionContext;
+
+import androidx.annotation.NonNull;
 
 
 /**

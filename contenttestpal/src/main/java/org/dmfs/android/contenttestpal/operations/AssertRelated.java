@@ -29,36 +29,38 @@ import org.dmfs.android.contentpal.predicates.AnyOf;
 import org.dmfs.android.contentpal.predicates.ReferringTo;
 import org.dmfs.android.contentpal.rowdata.EmptyRowData;
 
+import androidx.annotation.NonNull;
+
 
 /**
- * An assert {@link Operation} that can be used to check rows in a table <code>T</code>
- * that has a value in the given foreign key column referring to the id of a row from another table.
+ * An assert {@link Operation} that can be used to check rows in a table <code>T</code> that has a value in the given foreign key column referring to the id of
+ * a row from another table.
  *
  * @author Gabor Keszthelyi
  */
 public final class AssertRelated<T> extends DelegatingOperation<T>
 {
 
-    public AssertRelated(Table<T> table, String foreignKeyColumn, RowSnapshot<?> rowSnapshot, RowData<T> rowData, Predicate predicate)
+    public AssertRelated(@NonNull Table<T> table, @NonNull String foreignKeyColumn, RowSnapshot<?> rowSnapshot, @NonNull RowData<T> rowData, @NonNull Predicate predicate)
     {
         super(new Counted<>(1, new BulkAssert<>(table, rowData, new AllOf(predicate, new ReferringTo<>(foreignKeyColumn, rowSnapshot)))));
     }
 
 
-    public AssertRelated(Table<T> table, String foreignKeyColumn, RowSnapshot<?> rowSnapshot, RowData<T> rowData)
+    public AssertRelated(@NonNull Table<T> table, @NonNull String foreignKeyColumn, @NonNull RowSnapshot<?> rowSnapshot, @NonNull RowData<T> rowData)
     {
         this(table, foreignKeyColumn, rowSnapshot, rowData, new AnyOf());
     }
 
 
-    public AssertRelated(Table<T> table, String foreignKeyColumn, RowSnapshot<?> rowSnapshot, Predicate predicate)
+    public AssertRelated(@NonNull Table<T> table, @NonNull String foreignKeyColumn, @NonNull RowSnapshot<?> rowSnapshot, @NonNull Predicate predicate)
     {
-        this(table, foreignKeyColumn, rowSnapshot, EmptyRowData.<T>instance(), predicate);
+        this(table, foreignKeyColumn, rowSnapshot, EmptyRowData.instance(), predicate);
     }
 
 
-    public AssertRelated(Table<T> table, String foreignKeyColumn, RowSnapshot<?> rowSnapshot)
+    public AssertRelated(@NonNull Table<T> table, @NonNull String foreignKeyColumn, @NonNull RowSnapshot<?> rowSnapshot)
     {
-        this(table, foreignKeyColumn, rowSnapshot, EmptyRowData.<T>instance(), new AnyOf());
+        this(table, foreignKeyColumn, rowSnapshot, EmptyRowData.instance(), new AnyOf());
     }
 }

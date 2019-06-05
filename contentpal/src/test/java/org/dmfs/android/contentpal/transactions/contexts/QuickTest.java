@@ -40,7 +40,7 @@ public class QuickTest
      * Test that {@link Quick} returns non-virtual references as is.
      */
     @Test
-    public void testNonVirtual() throws Exception
+    public void testNonVirtual()
     {
         SoftRowReference<Object> ref = dummy(SoftRowReference.class);
         doReturn(false).when(ref).isVirtual();
@@ -53,7 +53,7 @@ public class QuickTest
      * Test that {@link Quick} delegates resolution of virtual references.
      */
     @Test
-    public void testVirtual() throws Exception
+    public void testVirtual()
     {
         SoftRowReference<Object> ref = dummy(SoftRowReference.class);
         RowReference<Object> ref2 = dummy(RowReference.class);

@@ -31,6 +31,6 @@ public final class Calendars extends DelegatingTable<CalendarContract.Calendars>
 {
     public Calendars()
     {
-        super(new BaseTable<CalendarContract.Calendars>(CalendarContract.Calendars.CONTENT_URI));
+        super(new BaseTable<>(CalendarContract.Calendars.CONTENT_URI));
     }
 }

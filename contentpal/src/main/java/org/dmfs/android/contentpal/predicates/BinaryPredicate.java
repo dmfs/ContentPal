@@ -16,8 +16,6 @@
 
 package org.dmfs.android.contentpal.predicates;
 
-import android.support.annotation.NonNull;
-
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.iterables.elementary.Seq;
@@ -25,6 +23,8 @@ import org.dmfs.jems.iterable.composite.Joined;
 import org.dmfs.jems.iterable.decorators.Mapped;
 
 import java.util.Iterator;
+
+import androidx.annotation.NonNull;
 
 
 /**

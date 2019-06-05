@@ -22,7 +22,6 @@ import android.content.ContentProviderResult;
 import android.content.OperationApplicationException;
 import android.net.Uri;
 import android.os.RemoteException;
-import android.support.annotation.NonNull;
 import android.util.SparseArray;
 
 import org.dmfs.android.contentpal.Operation;
@@ -39,6 +38,8 @@ import org.dmfs.jems.optional.Optional;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+
+import androidx.annotation.NonNull;
 
 
 /**
@@ -61,11 +62,11 @@ public final class BaseTransaction implements Transaction
 
     public BaseTransaction(@NonNull TransactionContext context)
     {
-        this(new ArrayList<ContentProviderOperation>(0), context, context, new SparseArray<RowReference<?>>(64), 0);
+        this(new ArrayList<>(0), context, context, new SparseArray<>(64), 0);
     }
 
 
-    private BaseTransaction(@NonNull ArrayList<ContentProviderOperation> operations, @NonNull TransactionContext context, TransactionContext transactionContext, @NonNull SparseArray<RowReference<?>> transactionReferences, int size)
+    private BaseTransaction(@NonNull ArrayList<ContentProviderOperation> operations, @NonNull TransactionContext context, @NonNull TransactionContext transactionContext, @NonNull SparseArray<RowReference<?>> transactionReferences, int size)
     {
         mOperations = operations;
         mContext = context;
@@ -141,7 +142,7 @@ public final class BaseTransaction implements Transaction
         private Updated(@NonNull TransactionContext transactionContext, RowReference<?> originalReference, Uri uri, int backReference)
         {
             mTransactionContext = transactionContext;
-            mOriginalReference = new WeakReference<RowReference<?>>(originalReference);
+            mOriginalReference = new WeakReference<>(originalReference);
             mUri = uri;
             mBackReference = backReference;
         }
@@ -152,7 +153,7 @@ public final class BaseTransaction implements Transaction
         public <T> RowReference<T> resolved(@NonNull SoftRowReference<T> reference)
         {
             return reference == mOriginalReference.get()
-                    ? new BackReference<T>(mUri, mBackReference)
+                    ? new BackReference<>(mUri, mBackReference)
                     : mTransactionContext.resolved(reference);
         }
 
@@ -180,7 +181,7 @@ public final class BaseTransaction implements Transaction
         {
             int idx = mBatchReferences.indexOfValue(reference);
             return idx >= 0 ?
-                    new RowUriReference<T>(mResultsArray[mBatchReferences.keyAt(idx)].uri) :
+                    new RowUriReference<>(mResultsArray[mBatchReferences.keyAt(idx)].uri) :
                     mTransactionContext.resolved(reference);
         }
     }

@@ -26,6 +26,8 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 
+import androidx.annotation.NonNull;
+
 import static org.dmfs.android.contentpal.testing.contentvalues.Size.withValueCount;
 import static org.hamcrest.Matchers.allOf;
 
@@ -40,27 +42,29 @@ public final class WithValues extends TypeSafeDiagnosingMatcher<ContentProviderO
     private final Matcher<ContentValues> mValueMatcher;
 
 
+    @NonNull
     @SafeVarargs
-    public static WithValues withValuesOnly(Matcher<ContentValues>... valueMatchers)
+    public static WithValues withValuesOnly(@NonNull Matcher<ContentValues>... valueMatchers)
     {
         return new WithValues(allOf(allOf(valueMatchers), withValueCount(valueMatchers.length)));
     }
 
 
+    @NonNull
     public static WithValues withoutValues()
     {
         return new WithValues(withValueCount(0));
     }
 
 
-    public WithValues(Matcher<ContentValues> valueMatchers)
+    public WithValues(@NonNull Matcher<ContentValues> valueMatchers)
     {
         mValueMatcher = valueMatchers;
     }
 
 
     @Override
-    protected boolean matchesSafely(ContentProviderOperation.Builder builder, Description mismatchDescription)
+    protected boolean matchesSafely(@NonNull ContentProviderOperation.Builder builder, @NonNull Description mismatchDescription)
     {
         ContentValues values = new Backed<>(new NullSafe<>(new Field<ContentValues>(builder, "mValues").value()), new ContentValues()).value();
 
@@ -74,7 +78,7 @@ public final class WithValues extends TypeSafeDiagnosingMatcher<ContentProviderO
 
 
     @Override
-    public void describeTo(Description description)
+    public void describeTo(@NonNull Description description)
     {
         mValueMatcher.describeTo(description);
     }

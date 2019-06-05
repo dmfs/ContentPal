@@ -33,7 +33,7 @@ public final class RawContactsProjection extends DelegatingProjection<ContactsCo
     public RawContactsProjection()
     {
         // TODO: it's probably better to compose this from smaller projections with just a few columns
-        super(new MultiProjection<ContactsContract.RawContacts>(
+        super(new MultiProjection<>(
                 ContactsContract.RawContacts._ID,
                 ContactsContract.RawContacts.CONTACT_ID,
                 ContactsContract.RawContacts.AGGREGATION_MODE,

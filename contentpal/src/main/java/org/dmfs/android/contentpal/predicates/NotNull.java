@@ -16,11 +16,11 @@
 
 package org.dmfs.android.contentpal.predicates;
 
-import android.support.annotation.NonNull;
-
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.iterables.EmptyIterable;
+
+import androidx.annotation.NonNull;
 
 
 /**

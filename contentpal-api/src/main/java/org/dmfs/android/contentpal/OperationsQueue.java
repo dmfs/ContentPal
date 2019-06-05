@@ -18,7 +18,8 @@ package org.dmfs.android.contentpal;
 
 import android.content.OperationApplicationException;
 import android.os.RemoteException;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 
 /**
@@ -29,8 +30,8 @@ import android.support.annotation.NonNull;
 public interface OperationsQueue
 {
     /**
-     * Adds more {@link Operation}s for execution. The {@link Operation}s are added to a {@link Transaction} unless the transaction would exceed the
-     * size limit, in which case the transaction is committed before adding the new {@link Operation}s to a new transaction.
+     * Adds more {@link Operation}s for execution. The {@link Operation}s are added to a {@link Transaction} unless the transaction would exceed the size limit,
+     * in which case the transaction is committed before adding the new {@link Operation}s to a new transaction.
      *
      * @param operationsBatch
      *         The {@link Iterable} of {@link Operation}s to enqueue for execution.

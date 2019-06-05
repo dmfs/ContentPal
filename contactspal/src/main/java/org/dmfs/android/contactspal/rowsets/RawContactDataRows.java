@@ -18,7 +18,6 @@ package org.dmfs.android.contactspal.rowsets;
 
 import android.provider.BaseColumns;
 import android.provider.ContactsContract;
-import android.support.annotation.NonNull;
 
 import org.dmfs.android.contactspal.tables.Data;
 import org.dmfs.android.contentpal.Predicate;
@@ -34,6 +33,8 @@ import org.dmfs.android.contentpal.references.RowSnapshotReference;
 import org.dmfs.android.contentpal.rowsets.Cached;
 import org.dmfs.android.contentpal.rowsets.DelegatingRowSet;
 import org.dmfs.android.contentpal.rowsets.QueryRowSet;
+
+import androidx.annotation.NonNull;
 
 
 /**

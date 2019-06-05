@@ -17,7 +17,8 @@
 package org.dmfs.android.contentpal;
 
 import android.content.ContentProviderOperation;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 
 /**

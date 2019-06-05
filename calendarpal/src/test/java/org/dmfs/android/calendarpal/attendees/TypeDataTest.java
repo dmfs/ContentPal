@@ -39,7 +39,7 @@ import static org.junit.Assert.assertThat;
 public class TypeDataTest
 {
     @Test
-    public void test() throws Exception
+    public void test()
     {
         assertThat(new TypeData(1234), builds(
                 withValuesOnly(

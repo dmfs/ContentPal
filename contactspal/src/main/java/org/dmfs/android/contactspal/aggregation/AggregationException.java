@@ -18,7 +18,6 @@ package org.dmfs.android.contactspal.aggregation;
 
 import android.content.ContentProviderOperation;
 import android.provider.ContactsContract;
-import android.support.annotation.NonNull;
 
 import org.dmfs.android.contactspal.tables.AggregationExceptions;
 import org.dmfs.android.contentpal.Operation;
@@ -29,6 +28,8 @@ import org.dmfs.android.contentpal.predicates.AnyOf;
 import org.dmfs.android.contentpal.tools.uriparams.EmptyUriParams;
 import org.dmfs.jems.optional.Optional;
 import org.dmfs.jems.optional.elementary.Absent;
+
+import androidx.annotation.NonNull;
 
 
 /**

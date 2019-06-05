@@ -18,10 +18,11 @@ package org.dmfs.android.contactspal.rawcontacts;
 
 import android.content.ContentProviderOperation;
 import android.provider.ContactsContract;
-import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.RowData;
 import org.dmfs.android.contentpal.TransactionContext;
+
+import androidx.annotation.NonNull;
 
 
 /**
@@ -33,7 +34,7 @@ public final class CleanData implements RowData<ContactsContract.RawContacts>
 {
     @NonNull
     @Override
-    public ContentProviderOperation.Builder updatedBuilder(TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
+    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
         return builder.withValue(ContactsContract.RawContacts.DIRTY, 0);
     }

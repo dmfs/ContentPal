@@ -35,7 +35,7 @@ import static org.mockito.Mockito.doReturn;
 public class DelegatingRowDataTest
 {
     @Test
-    public void testUpdatedBuilder() throws Exception
+    public void testUpdatedBuilder()
     {
         ContentProviderOperation.Builder dummyResultBuilder = dummy(ContentProviderOperation.Builder.class);
         ContentProviderOperation.Builder dummyParamBuilder = dummy(ContentProviderOperation.Builder.class);

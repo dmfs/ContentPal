@@ -26,6 +26,8 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 
+import androidx.annotation.NonNull;
+
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.OperationType.updateOperation;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithExpectedCount.withoutExpectedCount;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYieldAllowed.withYieldNotAllowed;
@@ -45,8 +47,9 @@ public final class RowDataMatcher extends TypeSafeDiagnosingMatcher<RowData<?>>
     private final TransactionContext mContext;
 
 
+    @NonNull
     @SafeVarargs
-    public static <T> RowDataMatcher builds(Matcher<ContentProviderOperation.Builder>... builderMatchers)
+    public static <T> RowDataMatcher builds(@NonNull Matcher<ContentProviderOperation.Builder>... builderMatchers)
     {
         // note RowData is not allowed to change anything but values, hence we add a few more matchers here
         return new RowDataMatcher(new BounceTransactionContext(),
@@ -54,7 +57,7 @@ public final class RowDataMatcher extends TypeSafeDiagnosingMatcher<RowData<?>>
     }
 
 
-    public RowDataMatcher(TransactionContext context, Matcher<ContentProviderOperation.Builder> builderMatchers)
+    public RowDataMatcher(@NonNull TransactionContext context, @NonNull Matcher<ContentProviderOperation.Builder> builderMatchers)
     {
         mContext = context;
         mBuilderMatcher = builderMatchers;
@@ -62,7 +65,7 @@ public final class RowDataMatcher extends TypeSafeDiagnosingMatcher<RowData<?>>
 
 
     @Override
-    protected boolean matchesSafely(RowData<?> item, Description mismatchDescription)
+    protected boolean matchesSafely(@NonNull RowData<?> item, @NonNull Description mismatchDescription)
     {
         // note the type of the operation we feed into `updateBuilder` should not matter for this test (as long as it's not a delete operation)
         ContentProviderOperation.Builder builder = item.updatedBuilder(mContext, ContentProviderOperation.newUpdate(Uri.EMPTY));
@@ -76,7 +79,7 @@ public final class RowDataMatcher extends TypeSafeDiagnosingMatcher<RowData<?>>
 
 
     @Override
-    public void describeTo(Description description)
+    public void describeTo(@NonNull Description description)
     {
         description.appendDescriptionOf(mBuilderMatcher);
     }

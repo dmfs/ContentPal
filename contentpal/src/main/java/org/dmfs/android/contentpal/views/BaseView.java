@@ -21,7 +21,6 @@ import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
 import android.os.RemoteException;
-import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.Projection;
@@ -35,6 +34,8 @@ import org.dmfs.jems.single.combined.Backed;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
 
 
 /**
@@ -71,7 +72,7 @@ public final class BaseView<T> implements View<T>
         Cursor cursor = mClient.query(uriParams.withParam(mTableUri.buildUpon()).build(),
                 projectionArray,
                 predicate.selection(EmptyTransactionContext.INSTANCE).toString(),
-                args.toArray(new String[args.size()]),
+                args.toArray(new String[0]),
                 new Backed<>(sorting, (String) null).value());
         return cursor == null ? new MatrixCursor(projectionArray) : cursor;
     }

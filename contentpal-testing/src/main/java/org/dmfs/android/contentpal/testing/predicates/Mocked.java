@@ -16,14 +16,14 @@
 
 package org.dmfs.android.contentpal.testing.predicates;
 
-import android.support.annotation.NonNull;
-
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.iterables.elementary.Seq;
 import org.dmfs.jems.iterable.decorators.Mapped;
 import org.dmfs.jems.optional.Optional;
 import org.dmfs.jems.optional.elementary.Absent;
+
+import androidx.annotation.NonNull;
 
 
 /**
@@ -38,7 +38,7 @@ public final class Mocked implements Predicate
     private final Iterable<String> mArguments;
 
 
-    public Mocked(CharSequence selection, String... arguments)
+    public Mocked(@NonNull CharSequence selection, @NonNull String... arguments)
     {
         mSelection = selection;
         mArguments = new Seq<>(arguments);

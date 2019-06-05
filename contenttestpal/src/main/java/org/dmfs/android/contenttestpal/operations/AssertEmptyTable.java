@@ -22,6 +22,8 @@ import org.dmfs.android.contentpal.operations.BulkAssert;
 import org.dmfs.android.contentpal.operations.Counted;
 import org.dmfs.android.contentpal.operations.DelegatingOperation;
 
+import androidx.annotation.NonNull;
+
 
 /**
  * Assert {@link Operation} to verify that the provided table is empty.
@@ -30,8 +32,8 @@ import org.dmfs.android.contentpal.operations.DelegatingOperation;
  */
 public final class AssertEmptyTable<T> extends DelegatingOperation<T>
 {
-    public AssertEmptyTable(Table<T> table)
+    public AssertEmptyTable(@NonNull Table<T> table)
     {
-        super(new Counted<T>(0, new BulkAssert<T>(table)));
+        super(new Counted<>(0, new BulkAssert<>(table)));
     }
 }

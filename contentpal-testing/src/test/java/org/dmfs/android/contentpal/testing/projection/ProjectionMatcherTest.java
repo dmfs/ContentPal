@@ -38,7 +38,7 @@ import static org.mockito.Mockito.doReturn;
 public class ProjectionMatcherTest
 {
     @Test
-    public void testMatchesSafelyEmpty() throws Exception
+    public void testMatchesSafelyEmpty()
     {
         Projection emptyMockProjection = failingMock(Projection.class);
         doReturn(new String[0]).when(emptyMockProjection).toArray();
@@ -49,33 +49,19 @@ public class ProjectionMatcherTest
 
 
     @Test
-    public void testMatchesSafelyNonEmpty() throws Exception
+    public void testMatchesSafelyNonEmpty()
     {
         Projection mockProjection = failingMock(Projection.class);
-        doAnswer(new Answer()
-        {
-            @Override
-            public Object answer(InvocationOnMock invocation) throws Throwable
-            {
-                return new String[] { "1", "2", "3" };
-            }
-        }).when(mockProjection).toArray();
+        doAnswer(invocation -> new String[] { "1", "2", "3" }).when(mockProjection).toArray();
         assertThat(projects("1", "2", "3").matches(mockProjection), is(true));
     }
 
 
     @Test
-    public void testMismatchesSafely1() throws Exception
+    public void testMismatchesSafely1()
     {
         Projection mockProjection = failingMock(Projection.class);
-        doAnswer(new Answer()
-        {
-            @Override
-            public Object answer(InvocationOnMock invocation) throws Throwable
-            {
-                return new String[] { "1", "2", "3" };
-            }
-        }).when(mockProjection).toArray();
+        doAnswer(invocation -> new String[] { "1", "2", "3" }).when(mockProjection).toArray();
         assertThat(projectsEmpty().matches(mockProjection), is(false));
         assertThat(projects("1").matches(mockProjection), is(false));
         assertThat(projects("1", "2").matches(mockProjection), is(false));
@@ -85,7 +71,7 @@ public class ProjectionMatcherTest
 
 
     @Test
-    public void testNonImmutable() throws Exception
+    public void testNonImmutable()
     {
         Projection mockProjection = failingMock(Projection.class);
         // return the same array on every call, so modifications are "permanent"
@@ -95,7 +81,7 @@ public class ProjectionMatcherTest
 
 
     @Test
-    public void testDescribeTo() throws Exception
+    public void testDescribeTo()
     {
         Description description = new StringDescription();
         projects("123", "456").describeTo(description);
@@ -104,7 +90,7 @@ public class ProjectionMatcherTest
 
 
     @Test
-    public void testDescribeToEmpty() throws Exception
+    public void testDescribeToEmpty()
     {
         Description description = new StringDescription();
         projectsEmpty().describeTo(description);

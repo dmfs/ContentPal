@@ -51,7 +51,7 @@ import static org.mockito.Mockito.doReturn;
 public class DeleteTest
 {
     @Test
-    public void testVirtualReference() throws Exception
+    public void testVirtualReference()
     {
         RowSnapshot<Object> dummyRowSnapshot = dummy(RowSnapshot.class);
 
@@ -60,7 +60,7 @@ public class DeleteTest
 
 
     @Test
-    public void testContentOperationBuilder() throws Exception
+    public void testContentOperationBuilder()
     {
         RowSnapshot<Object> mockRowSnapshot = failingMock(RowSnapshot.class);
         SoftRowReference<Object> rowReference = failingMock(SoftRowReference.class);
@@ -80,7 +80,7 @@ public class DeleteTest
 
 
     @Test
-    public void testContentOperationBuilderFromReference() throws Exception
+    public void testContentOperationBuilderFromReference()
     {
         SoftRowReference<Object> rowReference = failingMock(SoftRowReference.class);
         Uri dummyUri = dummy(Uri.class);

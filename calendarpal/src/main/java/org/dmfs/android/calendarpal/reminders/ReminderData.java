@@ -18,10 +18,11 @@ package org.dmfs.android.calendarpal.reminders;
 
 import android.content.ContentProviderOperation;
 import android.provider.CalendarContract;
-import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.RowData;
 import org.dmfs.android.contentpal.TransactionContext;
+
+import androidx.annotation.NonNull;
 
 
 /**
@@ -56,7 +57,7 @@ public final class ReminderData implements RowData<CalendarContract.Reminders>
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder updatedBuilder(TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
+    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
         return builder.withValue(CalendarContract.Reminders.MINUTES, mMinutes)
                 .withValue(CalendarContract.Reminders.METHOD, mMethod);

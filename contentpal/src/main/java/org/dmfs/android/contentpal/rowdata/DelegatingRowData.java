@@ -17,10 +17,11 @@
 package org.dmfs.android.contentpal.rowdata;
 
 import android.content.ContentProviderOperation;
-import android.support.annotation.NonNull;
 
 import org.dmfs.android.contentpal.RowData;
 import org.dmfs.android.contentpal.TransactionContext;
+
+import androidx.annotation.NonNull;
 
 
 /**
@@ -33,7 +34,7 @@ public abstract class DelegatingRowData<T> implements RowData<T>
     private final RowData<T> mDelegate;
 
 
-    public DelegatingRowData(RowData<T> delegate)
+    public DelegatingRowData(@NonNull RowData<T> delegate)
     {
         mDelegate = delegate;
     }
@@ -41,7 +42,7 @@ public abstract class DelegatingRowData<T> implements RowData<T>
 
     @NonNull
     @Override
-    public final ContentProviderOperation.Builder updatedBuilder(TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
+    public final ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
         return mDelegate.updatedBuilder(transactionContext, builder);
     }

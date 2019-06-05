@@ -61,16 +61,10 @@ public class MultiInsertBatchTest
     public void testEmpty()
     {
         InsertOperation<Object> mockOp = mock(InsertOperation.class);
-        when(mockOp.contentOperationBuilder(any(TransactionContext.class))).then(new Answer<ContentProviderOperation.Builder>()
-        {
-            @Override
-            public ContentProviderOperation.Builder answer(InvocationOnMock invocation) throws Throwable
-            {
-                return ContentProviderOperation.newInsert(Uri.EMPTY);
-            }
-        });
+        when(mockOp.contentOperationBuilder(any(TransactionContext.class))).then(
+                (Answer<ContentProviderOperation.Builder>) invocation -> ContentProviderOperation.newInsert(Uri.EMPTY));
 
-        assertThat(new MultiInsertBatch<>(mockOp, new Seq<RowData<Object>>()), emptyIterable());
+        assertThat(new MultiInsertBatch<>(mockOp, new Seq<>()), emptyIterable());
         assertThat(new MultiInsertBatch<>(mockOp, Absent.absent()), emptyIterable());
         assertThat(new MultiInsertBatch<>(mockOp, Absent.absent(), Absent.absent()), emptyIterable());
     }
@@ -81,14 +75,8 @@ public class MultiInsertBatchTest
     {
         InsertOperation<Object> mockOp = mock(InsertOperation.class);
         final Uri dummyUri = dummy(Uri.class);
-        when(mockOp.contentOperationBuilder(any(TransactionContext.class))).then(new Answer<ContentProviderOperation.Builder>()
-        {
-            @Override
-            public ContentProviderOperation.Builder answer(InvocationOnMock invocation) throws Throwable
-            {
-                return ContentProviderOperation.newInsert(dummyUri);
-            }
-        });
+        when(mockOp.contentOperationBuilder(any(TransactionContext.class))).then(
+                (Answer<ContentProviderOperation.Builder>) invocation -> ContentProviderOperation.newInsert(dummyUri));
 
         assertThat(new MultiInsertBatch<>(mockOp, new CharSequenceRowData<>("key", "value")),
                 Matchers.contains(
@@ -107,14 +95,8 @@ public class MultiInsertBatchTest
         InsertOperation<Object> mockOp = mock(InsertOperation.class);
         final Uri dummyUri = dummy(Uri.class);
 
-        when(mockOp.contentOperationBuilder(any(TransactionContext.class))).then(new Answer<ContentProviderOperation.Builder>()
-        {
-            @Override
-            public ContentProviderOperation.Builder answer(InvocationOnMock invocation) throws Throwable
-            {
-                return ContentProviderOperation.newInsert(dummyUri);
-            }
-        });
+        when(mockOp.contentOperationBuilder(any(TransactionContext.class))).then(
+                (Answer<ContentProviderOperation.Builder>) invocation -> ContentProviderOperation.newInsert(dummyUri));
 
         assertThat(new MultiInsertBatch<>(mockOp,
                         new Composite<>(
@@ -139,14 +121,8 @@ public class MultiInsertBatchTest
     {
         InsertOperation<Object> mockOp = mock(InsertOperation.class);
         final Uri dummyUri = dummy(Uri.class);
-        when(mockOp.contentOperationBuilder(any(TransactionContext.class))).then(new Answer<ContentProviderOperation.Builder>()
-        {
-            @Override
-            public ContentProviderOperation.Builder answer(InvocationOnMock invocation) throws Throwable
-            {
-                return ContentProviderOperation.newInsert(dummyUri);
-            }
-        });
+        when(mockOp.contentOperationBuilder(any(TransactionContext.class))).then(
+                (Answer<ContentProviderOperation.Builder>) invocation -> ContentProviderOperation.newInsert(dummyUri));
 
         assertThat(new MultiInsertBatch<>(mockOp,
                         new CharSequenceRowData<>("key", "value"),
@@ -179,14 +155,8 @@ public class MultiInsertBatchTest
     {
         InsertOperation<Object> mockOp = mock(InsertOperation.class);
         final Uri dummyUri = dummy(Uri.class);
-        when(mockOp.contentOperationBuilder(any(TransactionContext.class))).then(new Answer<ContentProviderOperation.Builder>()
-        {
-            @Override
-            public ContentProviderOperation.Builder answer(InvocationOnMock invocation) throws Throwable
-            {
-                return ContentProviderOperation.newInsert(dummyUri);
-            }
-        });
+        when(mockOp.contentOperationBuilder(any(TransactionContext.class))).then(
+                (Answer<ContentProviderOperation.Builder>) invocation -> ContentProviderOperation.newInsert(dummyUri));
 
         assertThat(new MultiInsertBatch<>(mockOp,
                         new Composite<>(
