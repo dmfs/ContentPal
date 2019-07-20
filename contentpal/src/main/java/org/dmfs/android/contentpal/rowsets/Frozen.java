@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 dmfs GmbH
+ * Copyright 2019 dmfs GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,8 +20,9 @@ import org.dmfs.android.contentpal.ClosableIterator;
 import org.dmfs.android.contentpal.RowSet;
 import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.tools.FakeClosable;
+import org.dmfs.jems.single.Single;
+import org.dmfs.jems.single.adapters.Unchecked;
 
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -29,19 +30,30 @@ import androidx.annotation.NonNull;
 
 
 /**
- * A {@link RowSet} Decorator which caches the content of the decorated {@link RowSet}.
+ * A {@link RowSet} which eagerly evaluates another {@link RowSet}. Iterating over this {@link RowSet} more than once will not cause additional content provider
+ * queries.
  *
  * @author Marten Gajda
  */
-public final class Cached<T> implements RowSet<T>
+public final class Frozen<T> implements RowSet<T>
 {
-    private final RowSet<T> mDelegate;
-    private List<RowSnapshot<T>> mSnapshots;
+    private final Single<Iterable<RowSnapshot<T>>> mDelegate;
 
 
-    public Cached(@NonNull RowSet<T> delegate)
+    public Frozen(@NonNull RowSet<T> delegate)
     {
-        mDelegate = delegate;
+        mDelegate = new org.dmfs.jems.single.elementary.Frozen<>(new Unchecked<>(() -> {
+            try (ClosableIterator<RowSnapshot<T>> iterator = delegate.iterator())
+            {
+                List<RowSnapshot<T>> result = new LinkedList<>();
+
+                while (iterator.hasNext())
+                {
+                    result.add(iterator.next());
+                }
+                return result;
+            }
+        }));
     }
 
 
@@ -49,26 +61,6 @@ public final class Cached<T> implements RowSet<T>
     @Override
     public ClosableIterator<RowSnapshot<T>> iterator()
     {
-        if (mSnapshots == null)
-        {
-            // pull all the snapshots
-            try (ClosableIterator<RowSnapshot<T>> iterator = mDelegate.iterator())
-            {
-                List<RowSnapshot<T>> snapshots = new LinkedList<>();
-
-                while (iterator.hasNext())
-                {
-                    snapshots.add(iterator.next());
-                }
-
-                mSnapshots = snapshots;
-
-            }
-            catch (IOException e)
-            {
-                throw new RuntimeException("IOException without doing any IO");
-            }
-        }
-        return new FakeClosable<>(mSnapshots.iterator());
+        return new FakeClosable<>(mDelegate.value().iterator());
     }
 }

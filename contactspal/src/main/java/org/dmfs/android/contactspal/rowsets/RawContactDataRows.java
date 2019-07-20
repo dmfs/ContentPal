@@ -30,8 +30,8 @@ import org.dmfs.android.contentpal.predicates.AllOf;
 import org.dmfs.android.contentpal.predicates.AnyOf;
 import org.dmfs.android.contentpal.predicates.ReferringTo;
 import org.dmfs.android.contentpal.references.RowSnapshotReference;
-import org.dmfs.android.contentpal.rowsets.Cached;
 import org.dmfs.android.contentpal.rowsets.DelegatingRowSet;
+import org.dmfs.android.contentpal.rowsets.Frozen;
 import org.dmfs.android.contentpal.rowsets.QueryRowSet;
 
 import androidx.annotation.NonNull;
@@ -40,7 +40,7 @@ import androidx.annotation.NonNull;
 /**
  * The {@link RowSet} of the {@link ContactsContract.Data} rows of a specific raw contact.
  * <p>
- * Note, the result is not cached. Iterating this multiple times, will query the content provider each time. Use {@link Cached} to cache the result.
+ * Note, the result is not cached. Iterating this multiple times, will query the content provider each time. Use {@link Frozen} to retain the result.
  *
  * @author Marten Gajda
  */
