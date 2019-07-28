@@ -53,7 +53,7 @@ public interface Table<T>
      * @return An {@link Operation} for this table.
      */
     @NonNull
-    Operation<T> updateOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate);
+    Operation<T> updateOperation(@NonNull UriParams uriParams, @NonNull Predicate<? super T> predicate);
 
     /**
      * Returns an {@link Operation} to delete rows of this table.
@@ -64,7 +64,7 @@ public interface Table<T>
      * @return An {@link Operation} for this table.
      */
     @NonNull
-    Operation<T> deleteOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate);
+    Operation<T> deleteOperation(@NonNull UriParams uriParams, @NonNull Predicate<? super T> predicate);
 
     /**
      * Returns an {@link Operation} to assert rows of this table.
@@ -76,7 +76,7 @@ public interface Table<T>
      * @return An {@link Operation} for this table.
      */
     @NonNull
-    Operation<T> assertOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate);
+    Operation<T> assertOperation(@NonNull UriParams uriParams, @NonNull Predicate<? super T> predicate);
 
     /**
      * Returns a {@link View} on this table.

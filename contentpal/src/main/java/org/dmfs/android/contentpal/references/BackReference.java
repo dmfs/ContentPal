@@ -88,9 +88,9 @@ public final class BackReference<T> implements RowReference<T>
 
     @NonNull
     @Override
-    public Predicate predicate(@NonNull TransactionContext transactionContext, @NonNull final String keyColumn)
+    public Predicate<T> predicate(@NonNull TransactionContext transactionContext, @NonNull final String keyColumn)
     {
-        return new BackReferenceSelectionPredicate(keyColumn, mBackReference);
+        return new BackReferenceSelectionPredicate<>(keyColumn, mBackReference);
     }
 
 
@@ -103,7 +103,7 @@ public final class BackReference<T> implements RowReference<T>
     }
 
 
-    private static class BackReferenceSelectionPredicate implements Predicate
+    private static class BackReferenceSelectionPredicate<Contract> implements Predicate<Contract>
     {
         private final String mKeyColumn;
         private final int mBackReference;

@@ -29,23 +29,23 @@ import androidx.annotation.NonNull;
  *
  * @author Marten Gajda
  */
-public final class IdIn extends DelegatingPredicate
+public final class IdIn<Contract> extends DelegatingPredicate<Contract>
 {
     public IdIn(@NonNull String id)
     {
-        super(new EqArg(BaseColumns._ID, id));
+        super(new EqArg<>(BaseColumns._ID, id));
     }
 
 
     public IdIn(@NonNull String... ids)
     {
-        super(new In(BaseColumns._ID, new Seq<>(ids)));
+        super(new In<>(BaseColumns._ID, new Seq<>(ids)));
     }
 
 
     public IdIn(long id)
     {
-        super(new EqArg(BaseColumns._ID, id));
+        super(new EqArg<>(BaseColumns._ID, id));
     }
 
 
@@ -57,6 +57,6 @@ public final class IdIn extends DelegatingPredicate
 
     public IdIn(@NonNull Iterable<Long> ids)
     {
-        super(new In(BaseColumns._ID, ids));
+        super(new In<>(BaseColumns._ID, ids));
     }
 }

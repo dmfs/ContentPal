@@ -55,9 +55,9 @@ public final class AccountScoped<T> implements View<T>
 
     @NonNull
     @Override
-    public Cursor rows(@NonNull UriParams uriParams, @NonNull Projection<? super T> projection, @NonNull Predicate predicate, @NonNull Optional<String> sorting) throws RemoteException
+    public Cursor rows(@NonNull UriParams uriParams, @NonNull Projection<? super T> projection, @NonNull Predicate<? super T> predicate, @NonNull Optional<String> sorting) throws RemoteException
     {
-        return mDelegate.rows(uriParams, projection, new AllOf(predicate, new AccountEq(mAccount)), sorting);
+        return mDelegate.rows(uriParams, projection, new AllOf<>(predicate, new AccountEq<>(mAccount)), sorting);
     }
 
 

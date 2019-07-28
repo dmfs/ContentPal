@@ -97,7 +97,7 @@ public final class BulkUpdateTest
     public void testContentOperationBuilder_ctor_table_data_predicate()
     {
         Table<Object> mockTable = failingMock(Table.class);
-        Predicate dummyPredicate = dummy(Predicate.class);
+        Predicate<Object> dummyPredicate = dummy(Predicate.class);
         Operation<Object> mockOperation = failingMock(Operation.class);
 
         doReturn(mockOperation).when(mockTable).updateOperation(EmptyUriParams.INSTANCE, dummyPredicate);

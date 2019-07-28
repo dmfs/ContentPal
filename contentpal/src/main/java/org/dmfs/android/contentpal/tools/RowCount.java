@@ -40,10 +40,10 @@ import static org.dmfs.jems.optional.elementary.Absent.absent;
 public final class RowCount<T> implements Single<Integer>
 {
     private final View<T> mView;
-    private final Predicate mPredicate;
+    private final Predicate<? super T> mPredicate;
 
 
-    public RowCount(@NonNull View<T> view, @NonNull Predicate predicate)
+    public RowCount(@NonNull View<T> view, @NonNull Predicate<? super T> predicate)
     {
         mView = view;
         mPredicate = predicate;
@@ -52,7 +52,7 @@ public final class RowCount<T> implements Single<Integer>
 
     public RowCount(@NonNull View<T> view)
     {
-        this(view, new AnyOf());
+        this(view, new AnyOf<>());
     }
 
 

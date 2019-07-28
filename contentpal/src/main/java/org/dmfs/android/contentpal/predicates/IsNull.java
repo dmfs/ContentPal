@@ -28,7 +28,7 @@ import androidx.annotation.NonNull;
  *
  * @author Marten Gajda
  */
-public final class IsNull implements Predicate
+public final class IsNull<Contract> implements Predicate<Contract>
 {
     private final String mColumnName;
 

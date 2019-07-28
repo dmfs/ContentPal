@@ -49,7 +49,7 @@ public final class PredicateMatcher
     @NonNull
     @SafeVarargs
     @Factory
-    public static Matcher<Predicate> predicateWith(@NonNull Matcher<Predicate>... matchers)
+    public static <T> Matcher<Predicate<? super T>> predicateWith(@NonNull Matcher<Predicate<? super T>>... matchers)
     {
         return CoreMatchers.allOf(matchers);
     }
@@ -57,87 +57,87 @@ public final class PredicateMatcher
 
     @NonNull
     @Factory
-    public static Matcher<Predicate> selection(@NonNull CharSequence selection)
+    public static <T> Matcher<Predicate<? super T>> selection(@NonNull CharSequence selection)
     {
-        return new Selection(absent(), selection);
+        return new Selection<>(absent(), selection);
     }
 
 
     @NonNull
     @Factory
-    public static Matcher<Predicate> selection(@NonNull TransactionContext tc, @NonNull CharSequence selection)
+    public static <T> Matcher<Predicate<? super T>> selection(@NonNull TransactionContext tc, @NonNull CharSequence selection)
     {
-        return new Selection(new Present<>(tc), selection);
+        return new Selection<>(new Present<>(tc), selection);
     }
 
 
     @NonNull
     @Factory
-    public static Matcher<Predicate> emptyArguments()
+    public static <T> Matcher<Predicate<? super T>> emptyArguments()
     {
-        return new EmptyArgument(absent());
+        return new EmptyArgument<>(absent());
     }
 
 
     @NonNull
     @Factory
-    public static Matcher<Predicate> emptyArguments(@NonNull TransactionContext tc)
+    public static <T> Matcher<Predicate<? super T>> emptyArguments(@NonNull TransactionContext tc)
     {
-        return new EmptyArgument(new Present<>(tc));
+        return new EmptyArgument<>(new Present<>(tc));
     }
 
 
     @NonNull
     @Factory
-    public static Matcher<Predicate> argumentValues(@NonNull String... values)
+    public static <T> Matcher<Predicate<? super T>> argumentValues(@NonNull String... values)
     {
-        return new ArgumentValues(absent(), values);
+        return new ArgumentValues<>(absent(), values);
     }
 
 
     @NonNull
     @Factory
-    public static Matcher<Predicate> argumentValues(@NonNull TransactionContext tc, @NonNull String... values)
+    public static <T> Matcher<Predicate<? super T>> argumentValues(@NonNull TransactionContext tc, @NonNull String... values)
     {
-        return new ArgumentValues(new Present<>(tc), values);
-    }
-
-
-    @NonNull
-    @Factory
-    @SafeVarargs
-    public static Matcher<Predicate> backReferences(@NonNull Matcher<Optional<Integer>>... backReferences)
-    {
-        return new ArgumentBackReferences(absent(), backReferences);
+        return new ArgumentValues<>(new Present<>(tc), values);
     }
 
 
     @NonNull
     @Factory
     @SafeVarargs
-    public static Matcher<Predicate> backReferences(TransactionContext tc, Matcher<Optional<Integer>>... backReferences)
+    public static <T> Matcher<Predicate<? super T>> backReferences(@NonNull Matcher<Optional<Integer>>... backReferences)
     {
-        return new ArgumentBackReferences(new Present<>(tc), backReferences);
+        return new ArgumentBackReferences<>(absent(), backReferences);
     }
 
 
     @NonNull
     @Factory
-    public static Matcher<Predicate> absentBackReferences(int noOfPredicateArguments)
+    @SafeVarargs
+    public static <T> Matcher<Predicate<? super T>> backReferences(TransactionContext tc, Matcher<Optional<Integer>>... backReferences)
     {
-        Matcher[] matchers = new Matcher[noOfPredicateArguments];
-        Arrays.fill(matchers, AbsentMatcher.absent());
-        return new ArgumentBackReferences(absent(), matchers);
+        return new ArgumentBackReferences<>(new Present<>(tc), backReferences);
     }
 
 
     @NonNull
     @Factory
-    public static Matcher<Predicate> absentBackReferences(@NonNull TransactionContext tc, int noOfPredicateArguments)
+    public static <T> Matcher<Predicate<? super T>> absentBackReferences(int noOfPredicateArguments)
     {
         Matcher[] matchers = new Matcher[noOfPredicateArguments];
         Arrays.fill(matchers, AbsentMatcher.absent());
-        return new ArgumentBackReferences(new Present<>(tc), matchers);
+        return new ArgumentBackReferences<>(absent(), matchers);
+    }
+
+
+    @NonNull
+    @Factory
+    public static <T> Matcher<Predicate<? super T>> absentBackReferences(@NonNull TransactionContext tc, int noOfPredicateArguments)
+    {
+        Matcher[] matchers = new Matcher[noOfPredicateArguments];
+        Arrays.fill(matchers, AbsentMatcher.absent());
+        return new ArgumentBackReferences<>(new Present<>(tc), matchers);
     }
 
 
@@ -147,7 +147,7 @@ public final class PredicateMatcher
     }
 
 
-    static final class Selection extends FeatureMatcher<Predicate, CharSequence>
+    static final class Selection<T> extends FeatureMatcher<Predicate<? super T>, CharSequence>
     {
         private final Optional<TransactionContext> mTc;
 
@@ -160,14 +160,14 @@ public final class PredicateMatcher
 
 
         @Override
-        protected CharSequence featureValueOf(@NonNull Predicate actual)
+        protected CharSequence featureValueOf(@NonNull Predicate<? super T> actual)
         {
             return actual.selection(new Backed<>(mTc, dummy(TransactionContext.class)).value());
         }
     }
 
 
-    private static final class ArgumentValues extends FeatureMatcher<Predicate, Iterable<String>>
+    private static final class ArgumentValues<T> extends FeatureMatcher<Predicate<? super T>, Iterable<String>>
     {
 
         private final Optional<TransactionContext> mTc;
@@ -181,14 +181,14 @@ public final class PredicateMatcher
 
 
         @Override
-        protected Iterable<String> featureValueOf(Predicate predicate)
+        protected Iterable<String> featureValueOf(Predicate<? super T> predicate)
         {
             return new Mapped<>(Predicate.Argument::value, predicate.arguments(new Backed<>(mTc, dummy(TransactionContext.class)).value()));
         }
     }
 
 
-    private static final class EmptyArgument extends FeatureMatcher<Predicate, Iterable<Predicate.Argument>>
+    private static final class EmptyArgument<T> extends FeatureMatcher<Predicate<? super T>, Iterable<Predicate.Argument>>
     {
 
         private final Optional<TransactionContext> mTc;
@@ -202,14 +202,14 @@ public final class PredicateMatcher
 
 
         @Override
-        protected Iterable<Predicate.Argument> featureValueOf(Predicate predicate)
+        protected Iterable<Predicate.Argument> featureValueOf(Predicate<? super T> predicate)
         {
             return predicate.arguments(new Backed<>(mTc, dummy(TransactionContext.class)).value());
         }
     }
 
 
-    private static final class ArgumentBackReferences extends FeatureMatcher<Predicate, Iterable<Optional<Integer>>>
+    private static final class ArgumentBackReferences<T> extends FeatureMatcher<Predicate<? super T>, Iterable<Optional<Integer>>>
     {
 
         private final Optional<TransactionContext> mTc;
@@ -224,7 +224,7 @@ public final class PredicateMatcher
 
 
         @Override
-        protected Iterable<Optional<Integer>> featureValueOf(Predicate predicate)
+        protected Iterable<Optional<Integer>> featureValueOf(Predicate<? super T> predicate)
         {
             return new Mapped<>(Predicate.Argument::backReference, predicate.arguments(new Backed<>(mTc, dummy(TransactionContext.class)).value()));
         }

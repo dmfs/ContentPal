@@ -70,7 +70,7 @@ final class AggregationException implements Operation<ContactsContract.Aggregati
                         transactionContext,
                         AggregationExceptions.INSTANCE.updateOperation(
                                 EmptyUriParams.INSTANCE,
-                                new AnyOf()
+                                new AnyOf<>()
                         ).contentOperationBuilder(transactionContext),
                         ContactsContract.AggregationExceptions.RAW_CONTACT_ID1), ContactsContract.AggregationExceptions.RAW_CONTACT_ID2);
 

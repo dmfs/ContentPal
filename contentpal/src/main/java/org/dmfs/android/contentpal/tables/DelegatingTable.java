@@ -57,7 +57,7 @@ public abstract class DelegatingTable<T> implements Table<T>
 
     @NonNull
     @Override
-    public final Operation<T> updateOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate)
+    public final Operation<T> updateOperation(@NonNull UriParams uriParams, @NonNull Predicate<? super T> predicate)
     {
         return mDelegate.updateOperation(uriParams, predicate);
     }
@@ -65,7 +65,7 @@ public abstract class DelegatingTable<T> implements Table<T>
 
     @NonNull
     @Override
-    public final Operation<T> deleteOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate)
+    public final Operation<T> deleteOperation(@NonNull UriParams uriParams, @NonNull Predicate<? super T> predicate)
     {
         return mDelegate.deleteOperation(uriParams, predicate);
     }
@@ -73,7 +73,7 @@ public abstract class DelegatingTable<T> implements Table<T>
 
     @NonNull
     @Override
-    public final Operation<T> assertOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate)
+    public final Operation<T> assertOperation(@NonNull UriParams uriParams, @NonNull Predicate<? super T> predicate)
     {
         return mDelegate.assertOperation(uriParams, predicate);
     }

@@ -63,7 +63,7 @@ public final class AccountScoped<T> implements Table<T>
 
     @NonNull
     @Override
-    public Operation<T> updateOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate)
+    public Operation<T> updateOperation(@NonNull UriParams uriParams, @NonNull Predicate<? super T> predicate)
     {
         return mDelegate.updateOperation(uriParams, accountScoped(predicate));
     }
@@ -71,7 +71,7 @@ public final class AccountScoped<T> implements Table<T>
 
     @NonNull
     @Override
-    public Operation<T> deleteOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate)
+    public Operation<T> deleteOperation(@NonNull UriParams uriParams, @NonNull Predicate<? super T> predicate)
     {
         return mDelegate.deleteOperation(uriParams, accountScoped(predicate));
     }
@@ -79,7 +79,7 @@ public final class AccountScoped<T> implements Table<T>
 
     @NonNull
     @Override
-    public Operation<T> assertOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate)
+    public Operation<T> assertOperation(@NonNull UriParams uriParams, @NonNull Predicate<? super T> predicate)
     {
         return mDelegate.assertOperation(uriParams, accountScoped(predicate));
     }
@@ -93,8 +93,8 @@ public final class AccountScoped<T> implements Table<T>
     }
 
 
-    private Predicate accountScoped(@NonNull Predicate predicate)
+    private Predicate<? super T> accountScoped(@NonNull Predicate<? super T> predicate)
     {
-        return new AllOf(predicate, new AccountEq(mAccount));
+        return new AllOf<>(predicate, new AccountEq<>(mAccount));
     }
 }

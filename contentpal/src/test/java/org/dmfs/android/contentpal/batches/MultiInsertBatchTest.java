@@ -20,7 +20,6 @@ import android.content.ContentProviderOperation;
 import android.net.Uri;
 
 import org.dmfs.android.contentpal.InsertOperation;
-import org.dmfs.android.contentpal.RowData;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.rowdata.CharSequenceRowData;
 import org.dmfs.android.contentpal.rowdata.Composite;
@@ -29,7 +28,6 @@ import org.dmfs.jems.optional.elementary.Absent;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;

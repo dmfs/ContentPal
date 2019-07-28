@@ -50,21 +50,21 @@ public class InTest
     @Test
     public void test()
     {
-        assertThat(new In("x"), predicateWith(
+        assertThat(new In<>("x"), predicateWith(
                 selection("x in (  ) "),
                 emptyArguments()));
 
-        assertThat(new In("x", "a"), predicateWith(
+        assertThat(new In<>("x", "a"), predicateWith(
                 selection("x in ( ? ) "),
                 argumentValues("a"),
                 absentBackReferences(1)));
 
-        assertThat(new In("x", "a", 1), predicateWith(
+        assertThat(new In<>("x", "a", 1), predicateWith(
                 selection("x in ( ?, ? ) "),
                 argumentValues("a", "1"),
                 absentBackReferences(2)));
 
-        assertThat(new In("x", "a", 1, 1.2), predicateWith(
+        assertThat(new In<>("x", "a", 1, 1.2), predicateWith(
                 selection("x in ( ?, ?, ? ) "),
                 argumentValues("a", "1", "1.2"),
                 absentBackReferences(3)));
@@ -74,21 +74,21 @@ public class InTest
     @Test
     public void testIterable()
     {
-        assertThat(new In("x", EmptyIterable.instance()), predicateWith(
+        assertThat(new In<>("x", EmptyIterable.instance()), predicateWith(
                 selection("x in (  ) "),
                 emptyArguments()));
 
-        assertThat(new In("x", new Seq<>("a")), predicateWith(
+        assertThat(new In<>("x", new Seq<>("a")), predicateWith(
                 selection("x in ( ? ) "),
                 argumentValues("a"),
                 absentBackReferences(1)));
 
-        assertThat(new In("x", new Seq<>("a", 1)), predicateWith(
+        assertThat(new In<>("x", new Seq<>("a", 1)), predicateWith(
                 selection("x in ( ?, ? ) "),
                 argumentValues("a", "1"),
                 absentBackReferences(2)));
 
-        assertThat(new In("x", new Seq<>("a", 1, 1.2)), predicateWith(
+        assertThat(new In<>("x", new Seq<>("a", 1, 1.2)), predicateWith(
                 selection("x in ( ?, ?, ? ) "),
                 argumentValues("a", "1", "1.2"),
                 absentBackReferences(3)));
@@ -102,7 +102,7 @@ public class InTest
 
         doReturn(new FakeClosable<>(emptyIterator())).when(mockRowSet).iterator();
 
-        assertThat(new In("x", mockRowSet), predicateWith(
+        assertThat(new In<>("x", mockRowSet), predicateWith(
                 selection("x in (  ) "),
                 emptyArguments()));
 
@@ -112,7 +112,7 @@ public class InTest
         doReturn(new MapRowDataSnapshot<>(valueMap1, new HashMap<>())).when(rowSnapshot1).values();
         doAnswer(invocation -> new FakeClosable<>(new org.dmfs.iterators.elementary.Seq<>(rowSnapshot1))).when(mockRowSet).iterator();
 
-        assertThat(new In("x", mockRowSet), predicateWith(
+        assertThat(new In<>("x", mockRowSet), predicateWith(
                 selection("x in ( ? ) "),
                 argumentValues("1"),
                 absentBackReferences(1)));
@@ -123,7 +123,7 @@ public class InTest
         doReturn(new MapRowDataSnapshot<>(valueMap2, new HashMap<>())).when(rowSnapshot2).values();
         doAnswer(invocation -> new FakeClosable<>(new org.dmfs.iterators.elementary.Seq<>(rowSnapshot1, rowSnapshot2))).when(mockRowSet).iterator();
 
-        assertThat(new In("x", mockRowSet), predicateWith(
+        assertThat(new In<>("x", mockRowSet), predicateWith(
                 selection("x in ( ?, ? ) "),
                 argumentValues("1", "2"),
                 absentBackReferences(2)));
@@ -135,7 +135,7 @@ public class InTest
         doAnswer(invocation -> new FakeClosable<>(new org.dmfs.iterators.elementary.Seq<>(rowSnapshot1, rowSnapshot2, rowSnapshot3))).when(mockRowSet)
                 .iterator();
 
-        assertThat(new In("x", mockRowSet), predicateWith(
+        assertThat(new In<>("x", mockRowSet), predicateWith(
                 selection("x in ( ?, ?, ? ) "),
                 argumentValues("1", "2", "3"),
                 absentBackReferences(3)));

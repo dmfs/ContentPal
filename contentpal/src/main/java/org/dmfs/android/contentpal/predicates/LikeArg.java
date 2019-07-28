@@ -29,7 +29,7 @@ import androidx.annotation.NonNull;
  *
  * @author Marten Gajda
  */
-public final class LikeArg implements Predicate
+public final class LikeArg<Contract> implements Predicate<Contract>
 {
     private final String mColumnName;
     private final Object mArgument;

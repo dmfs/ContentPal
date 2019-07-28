@@ -143,7 +143,7 @@ public final class PredicateMatcherTest
     @Test
     public void testCombined()
     {
-        Predicate predicateMock = failingMock(Predicate.class);
+        Predicate<Object> predicateMock = failingMock(Predicate.class);
         Predicate.Argument argumentMock = failingMock(Predicate.Argument.class);
 
         doReturn("sel").when(predicateMock).selection(any(TransactionContext.class));

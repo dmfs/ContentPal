@@ -27,12 +27,12 @@ import androidx.annotation.NonNull;
  *
  * @author Gabor Keszthelyi
  */
-public abstract class DelegatingPredicate implements Predicate
+public abstract class DelegatingPredicate<Contract> implements Predicate<Contract>
 {
-    private final Predicate mDelegate;
+    private final Predicate<Contract> mDelegate;
 
 
-    public DelegatingPredicate(@NonNull Predicate predicate)
+    public DelegatingPredicate(@NonNull Predicate<Contract> predicate)
     {
         mDelegate = predicate;
     }

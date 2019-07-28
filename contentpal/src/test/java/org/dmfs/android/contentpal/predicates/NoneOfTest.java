@@ -38,21 +38,21 @@ public class NoneOfTest
     @Test
     public void test()
     {
-        assertThat(new NoneOf(), predicateWith(
+        assertThat(new NoneOf<>(), predicateWith(
                 selection("not ( 1 )"),
                 emptyArguments()));
 
-        assertThat(new NoneOf(new Mocked("x", "a")), predicateWith(
+        assertThat(new NoneOf<>(new Mocked<>("x", "a")), predicateWith(
                 selection("not ( ( x ) )"),
                 argumentValues("a"),
                 absentBackReferences(1)));
 
-        assertThat(new NoneOf(new Mocked("x", "a"), new Mocked("y", "1")), predicateWith(
+        assertThat(new NoneOf<>(new Mocked<>("x", "a"), new Mocked<>("y", "1")), predicateWith(
                 selection("not ( ( x ) or ( y ) )"),
                 argumentValues("a", "1"),
                 absentBackReferences(2)));
 
-        assertThat(new NoneOf(new Mocked("x", "a"), new Mocked("z", "w", "z"), new Mocked("y", "1")), predicateWith(
+        assertThat(new NoneOf<>(new Mocked<>("x", "a"), new Mocked<>("z", "w", "z"), new Mocked<>("y", "1")), predicateWith(
                 selection("not ( ( x ) or ( z ) or ( y ) )"),
                 argumentValues("a", "w", "z", "1"),
                 absentBackReferences(4)));
@@ -62,21 +62,21 @@ public class NoneOfTest
     @Test
     public void testIterable()
     {
-        assertThat(new NoneOf(EmptyIterable.instance()), predicateWith(
+        assertThat(new NoneOf<>(EmptyIterable.instance()), predicateWith(
                 selection("not ( 1 )"),
                 emptyArguments()));
 
-        assertThat(new NoneOf(new Seq<>(new Mocked("x", "a"))), predicateWith(
+        assertThat(new NoneOf<>(new Seq<>(new Mocked<>("x", "a"))), predicateWith(
                 selection("not ( ( x ) )"),
                 argumentValues("a"),
                 absentBackReferences(1)));
 
-        assertThat(new NoneOf(new Seq<>(new Mocked("x", "a"), new Mocked("y", "1"))), predicateWith(
+        assertThat(new NoneOf<>(new Seq<>(new Mocked<>("x", "a"), new Mocked<>("y", "1"))), predicateWith(
                 selection("not ( ( x ) or ( y ) )"),
                 argumentValues("a", "1"),
                 absentBackReferences(2)));
 
-        assertThat(new NoneOf(new Seq<>(new Mocked("x", "a"), new Mocked("z", "w", "z"), new Mocked("y", "1"))), predicateWith(
+        assertThat(new NoneOf<>(new Seq<>(new Mocked<>("x", "a"), new Mocked<>("z", "w", "z"), new Mocked<>("y", "1"))), predicateWith(
                 selection("not ( ( x ) or ( z ) or ( y ) )"),
                 argumentValues("a", "w", "z", "1"),
                 absentBackReferences(4)));

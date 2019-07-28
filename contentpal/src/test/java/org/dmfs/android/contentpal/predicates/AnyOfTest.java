@@ -38,21 +38,21 @@ public class AnyOfTest
     @Test
     public void test()
     {
-        assertThat(new AnyOf(), predicateWith(
+        assertThat(new AnyOf<>(), predicateWith(
                 selection("1"),
                 emptyArguments()));
 
-        assertThat(new AnyOf(new Mocked("x", "a")), predicateWith(
+        assertThat(new AnyOf<>(new Mocked<>("x", "a")), predicateWith(
                 selection("( x )"),
                 argumentValues("a"),
                 absentBackReferences(1)));
 
-        assertThat(new AnyOf(new Mocked("x", "a"), new Mocked("y", "1")), predicateWith(
+        assertThat(new AnyOf<>(new Mocked<>("x", "a"), new Mocked<>("y", "1")), predicateWith(
                 selection("( x ) or ( y )"),
                 argumentValues("a", "1"),
                 absentBackReferences(2)));
 
-        assertThat(new AnyOf(new Mocked("x", "a"), new Mocked("z", "w", "z"), new Mocked("y", "1")), predicateWith(
+        assertThat(new AnyOf<>(new Mocked<>("x", "a"), new Mocked<>("z", "w", "z"), new Mocked<>("y", "1")), predicateWith(
                 selection("( x ) or ( z ) or ( y )"),
                 argumentValues("a", "w", "z", "1"),
                 absentBackReferences(4)));
@@ -62,21 +62,21 @@ public class AnyOfTest
     @Test
     public void testIterable()
     {
-        assertThat(new AnyOf(EmptyIterable.instance()), predicateWith(
+        assertThat(new AnyOf<>(EmptyIterable.instance()), predicateWith(
                 selection("1"),
                 emptyArguments()));
 
-        assertThat(new AnyOf(new Seq<>(new Mocked("x", "a"))), predicateWith(
+        assertThat(new AnyOf<>(new Seq<>(new Mocked<>("x", "a"))), predicateWith(
                 selection("( x )"),
                 argumentValues("a"),
                 absentBackReferences(1)));
 
-        assertThat(new AnyOf(new Seq<>(new Mocked("x", "a"), new Mocked("y", "1"))), predicateWith(
+        assertThat(new AnyOf<>(new Seq<>(new Mocked<>("x", "a"), new Mocked<>("y", "1"))), predicateWith(
                 selection("( x ) or ( y )"),
                 argumentValues("a", "1"),
                 absentBackReferences(2)));
 
-        assertThat(new AnyOf(new Seq<>(new Mocked("x", "a"), new Mocked("z", "w", "z"), new Mocked("y", "1"))), predicateWith(
+        assertThat(new AnyOf<>(new Seq<>(new Mocked<>("x", "a"), new Mocked<>("z", "w", "z"), new Mocked<>("y", "1"))), predicateWith(
                 selection("( x ) or ( z ) or ( y )"),
                 argumentValues("a", "w", "z", "1"),
                 absentBackReferences(4)));

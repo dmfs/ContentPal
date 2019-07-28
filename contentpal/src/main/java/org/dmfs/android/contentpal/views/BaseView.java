@@ -61,7 +61,7 @@ public final class BaseView<T> implements View<T>
 
     @NonNull
     @Override
-    public Cursor rows(@NonNull UriParams uriParams, @NonNull Projection<? super T> projection, @NonNull final Predicate predicate, @NonNull final Optional<String> sorting) throws RemoteException
+    public Cursor rows(@NonNull UriParams uriParams, @NonNull Projection<? super T> projection, @NonNull final Predicate<? super T> predicate, @NonNull final Optional<String> sorting) throws RemoteException
     {
         List<String> args = new LinkedList<>();
         for (Predicate.Argument arg : predicate.arguments(EmptyTransactionContext.INSTANCE))

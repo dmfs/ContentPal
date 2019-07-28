@@ -344,7 +344,7 @@ public class DemoActivity extends AppCompatActivity
         }
 
         mCalendarQueue.enqueue(
-                new SingletonIterable<>(new BulkDelete<>(mCalendars, new AllOf())));
+                new SingletonIterable<>(new BulkDelete<>(mCalendars, new AllOf<>())));
         mCalendarQueue.flush();
     }
 

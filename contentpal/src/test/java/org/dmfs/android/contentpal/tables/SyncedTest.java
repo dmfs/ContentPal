@@ -64,7 +64,7 @@ public class SyncedTest
     public void testUpdateOperation()
     {
         Operation<Object> dummyResultOperation = dummy(Operation.class);
-        Predicate dummyPredicate = dummy(Predicate.class);
+        Predicate<Object> dummyPredicate = dummy(Predicate.class);
         Table<Object> mockTable = failingMock(Table.class);
         Account account = new Account("name", "type");
         doReturn(dummyResultOperation).when(mockTable).updateOperation(argThat(new UriParamsArgumentMatcher(account)), same(dummyPredicate));
@@ -78,7 +78,7 @@ public class SyncedTest
     public void testDeleteOperation()
     {
         Operation<Object> dummyResultOperation = dummy(Operation.class);
-        Predicate dummyPredicate = dummy(Predicate.class);
+        Predicate<Object> dummyPredicate = dummy(Predicate.class);
         Table<Object> mockTable = failingMock(Table.class);
         Account account = new Account("name", "type");
         doReturn(dummyResultOperation).when(mockTable).deleteOperation(argThat(new UriParamsArgumentMatcher(account)), same(dummyPredicate));
@@ -92,7 +92,7 @@ public class SyncedTest
     public void testAssertOperation()
     {
         Operation<Object> dummyResultOperation = dummy(Operation.class);
-        Predicate dummyPredicate = dummy(Predicate.class);
+        Predicate<Object> dummyPredicate = dummy(Predicate.class);
         Table<Object> mockTable = failingMock(Table.class);
         Account account = new Account("name", "type");
         doReturn(dummyResultOperation).when(mockTable).assertOperation(argThat(new UriParamsArgumentMatcher(account)), same(dummyPredicate));

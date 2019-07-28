@@ -20,8 +20,6 @@ import org.dmfs.android.contentpal.Projection;
 import org.hamcrest.Description;
 import org.hamcrest.StringDescription;
 import org.junit.Test;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 
 import static org.dmfs.android.contentpal.testing.projection.ProjectionMatcher.projects;
 import static org.dmfs.android.contentpal.testing.projection.ProjectionMatcher.projectsEmpty;

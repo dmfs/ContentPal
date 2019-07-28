@@ -57,7 +57,7 @@ public final class CalendarScopedPredicateTest
         doReturn(dummyReference).when(mockCalendarRow).reference();
         doReturn(new BackReference<>(dummy(Uri.class), 12)).when(mockTc).resolved(dummyReference);
 
-        assertThat(new CalendarScoped(mockCalendarRow, new EqArg("x", "y")),
+        assertThat(new CalendarScoped(mockCalendarRow, new EqArg<>("x", "y")),
                 predicateWith(
                         selection(mockTc, "( x = ? ) and ( calendar_id = ? )"),
                         argumentValues(mockTc, "y", "-1"),

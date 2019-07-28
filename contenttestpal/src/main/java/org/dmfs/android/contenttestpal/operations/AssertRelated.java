@@ -41,19 +41,19 @@ import androidx.annotation.NonNull;
 public final class AssertRelated<T> extends DelegatingOperation<T>
 {
 
-    public AssertRelated(@NonNull Table<T> table, @NonNull String foreignKeyColumn, RowSnapshot<?> rowSnapshot, @NonNull RowData<T> rowData, @NonNull Predicate predicate)
+    public AssertRelated(@NonNull Table<T> table, @NonNull String foreignKeyColumn, RowSnapshot<?> rowSnapshot, @NonNull RowData<T> rowData, @NonNull Predicate<? super T> predicate)
     {
-        super(new Counted<>(1, new BulkAssert<>(table, rowData, new AllOf(predicate, new ReferringTo<>(foreignKeyColumn, rowSnapshot)))));
+        super(new Counted<>(1, new BulkAssert<>(table, rowData, new AllOf<>(predicate, new ReferringTo<>(foreignKeyColumn, rowSnapshot)))));
     }
 
 
     public AssertRelated(@NonNull Table<T> table, @NonNull String foreignKeyColumn, @NonNull RowSnapshot<?> rowSnapshot, @NonNull RowData<T> rowData)
     {
-        this(table, foreignKeyColumn, rowSnapshot, rowData, new AnyOf());
+        this(table, foreignKeyColumn, rowSnapshot, rowData, new AnyOf<>());
     }
 
 
-    public AssertRelated(@NonNull Table<T> table, @NonNull String foreignKeyColumn, @NonNull RowSnapshot<?> rowSnapshot, @NonNull Predicate predicate)
+    public AssertRelated(@NonNull Table<T> table, @NonNull String foreignKeyColumn, @NonNull RowSnapshot<?> rowSnapshot, @NonNull Predicate<? super T> predicate)
     {
         this(table, foreignKeyColumn, rowSnapshot, EmptyRowData.instance(), predicate);
     }
@@ -61,6 +61,6 @@ public final class AssertRelated<T> extends DelegatingOperation<T>
 
     public AssertRelated(@NonNull Table<T> table, @NonNull String foreignKeyColumn, @NonNull RowSnapshot<?> rowSnapshot)
     {
-        this(table, foreignKeyColumn, rowSnapshot, EmptyRowData.instance(), new AnyOf());
+        this(table, foreignKeyColumn, rowSnapshot, EmptyRowData.instance(), new AnyOf<>());
     }
 }

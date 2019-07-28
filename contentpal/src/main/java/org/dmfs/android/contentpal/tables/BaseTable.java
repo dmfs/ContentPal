@@ -70,7 +70,7 @@ public final class BaseTable<T> implements Table<T>
 
     @NonNull
     @Override
-    public Operation<T> updateOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate)
+    public Operation<T> updateOperation(@NonNull UriParams uriParams, @NonNull Predicate<? super T> predicate)
     {
         return new Constrained<>(new RawUpdate<>(uriParams.withParam(mTableUri.buildUpon()).build()), predicate);
     }
@@ -78,7 +78,7 @@ public final class BaseTable<T> implements Table<T>
 
     @NonNull
     @Override
-    public Operation<T> deleteOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate)
+    public Operation<T> deleteOperation(@NonNull UriParams uriParams, @NonNull Predicate<? super T> predicate)
     {
         return new Constrained<>(new RawDelete<>(uriParams.withParam(mTableUri.buildUpon()).build()), predicate);
     }
@@ -86,7 +86,7 @@ public final class BaseTable<T> implements Table<T>
 
     @NonNull
     @Override
-    public Operation<T> assertOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate)
+    public Operation<T> assertOperation(@NonNull UriParams uriParams, @NonNull Predicate<? super T> predicate)
     {
         return new Constrained<>(new RawAssert<>(uriParams.withParam(mTableUri.buildUpon()).build()), predicate);
     }
@@ -111,10 +111,10 @@ public final class BaseTable<T> implements Table<T>
     private final static class Constrained<T> implements Operation<T>
     {
         private final Operation<T> mDelegate;
-        private final Predicate mPredicate;
+        private final Predicate<? super T> mPredicate;
 
 
-        public Constrained(@NonNull Operation<T> delegate, @NonNull Predicate predicate)
+        public Constrained(@NonNull Operation<T> delegate, @NonNull Predicate<? super T> predicate)
         {
             mDelegate = delegate;
             mPredicate = predicate;

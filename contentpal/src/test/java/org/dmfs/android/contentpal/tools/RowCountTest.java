@@ -56,7 +56,7 @@ public final class RowCountTest
     public void test_thatCursorGetCountIsReturned() throws Exception
     {
         View<Object> mockView = failingMock(View.class);
-        Predicate dummyPredicate = dummy(Predicate.class);
+        Predicate<Object> dummyPredicate = dummy(Predicate.class);
         Cursor mockCursor = failingMock(Cursor.class);
 
         doReturn(mockCursor).when(mockView).rows(same(EmptyUriParams.INSTANCE), any(Projection.class), same(dummyPredicate), same(absent()));
@@ -89,7 +89,7 @@ public final class RowCountTest
     public void test_whenRowsThrows_ExceptionIsThrown() throws Exception
     {
         View<Object> mockView = failingMock(View.class);
-        Predicate dummyPredicate = dummy(Predicate.class);
+        Predicate<Object> dummyPredicate = dummy(Predicate.class);
 
         doThrow(new RemoteException("msg")).when(mockView)
                 .rows(same(EmptyUriParams.INSTANCE), any(Projection.class), same(dummyPredicate), same(absent()));
@@ -102,7 +102,7 @@ public final class RowCountTest
     public void test_whenCursorGetCountThrows_CursorIsClosed() throws Exception
     {
         View<Object> mockView = mock(View.class, new FailAnswer());
-        Predicate dummyPredicate = mock(Predicate.class, new FailAnswer());
+        Predicate<Object> dummyPredicate = mock(Predicate.class, new FailAnswer());
         Cursor mockCursor = mock(Cursor.class, new FailAnswer());
 
         doReturn(mockCursor).when(mockView).rows(same(EmptyUriParams.INSTANCE), any(Projection.class), same(dummyPredicate), same(absent()));

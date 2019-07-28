@@ -54,11 +54,12 @@ public final class Local implements View<ContactsContract.RawContacts>
 
     @NonNull
     @Override
-    public Cursor rows(@NonNull UriParams uriParams, @NonNull Projection<? super ContactsContract.RawContacts> projection, @NonNull Predicate predicate, @NonNull Optional<String> sorting) throws RemoteException
+    public Cursor rows(@NonNull UriParams uriParams, @NonNull Projection<? super ContactsContract.RawContacts> projection, @NonNull Predicate<? super ContactsContract.RawContacts> predicate, @NonNull Optional<String> sorting) throws RemoteException
     {
         return mDelegate.rows(uriParams,
                 projection,
-                new AllOf(predicate, new IsNull(ContactsContract.RawContacts.ACCOUNT_NAME), new IsNull(ContactsContract.RawContacts.ACCOUNT_TYPE)), sorting);
+                new AllOf<>(predicate, new IsNull<>(ContactsContract.RawContacts.ACCOUNT_NAME), new IsNull<>(ContactsContract.RawContacts.ACCOUNT_TYPE)),
+                sorting);
     }
 
 

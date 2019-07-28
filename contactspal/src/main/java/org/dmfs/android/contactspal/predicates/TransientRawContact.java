@@ -30,12 +30,12 @@ import org.dmfs.android.contentpal.predicates.IsNull;
  *
  * @author Marten Gajda
  */
-public final class TransientRawContact extends DelegatingPredicate
+public final class TransientRawContact extends DelegatingPredicate<ContactsContract.RawContacts>
 {
     public TransientRawContact()
     {
-        super(new AllOf(
-                new IsNull(ContactsContract.RawContacts.SOURCE_ID),
-                new EqArg(ContactsContract.RawContacts.DELETED, 1)));
+        super(new AllOf<>(
+                new IsNull<>(ContactsContract.RawContacts.SOURCE_ID),
+                new EqArg<>(ContactsContract.RawContacts.DELETED, 1)));
     }
 }

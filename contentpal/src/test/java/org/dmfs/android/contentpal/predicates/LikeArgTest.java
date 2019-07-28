@@ -34,7 +34,7 @@ public class LikeArgTest
     @Test
     public void test()
     {
-        assertThat(new LikeArg("x", "y"),
+        assertThat(new LikeArg<>("x", "y"),
                 predicateWith(
                         selection("x like ?"),
                         argumentValues("y"),
