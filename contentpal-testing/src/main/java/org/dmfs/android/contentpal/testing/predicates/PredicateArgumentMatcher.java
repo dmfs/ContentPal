@@ -35,16 +35,16 @@ import static org.dmfs.jems.optional.elementary.Absent.absent;
 public final class PredicateArgumentMatcher
 {
     @NonNull
-    public static Predicate predicateWithSelection(@NonNull CharSequence expectedSelection)
+    public static <T> Predicate<? super T> predicateWithSelection(@NonNull CharSequence expectedSelection)
     {
-        return MockitoHamcrest.argThat(new PredicateMatcher.Selection(absent(), expectedSelection));
+        return MockitoHamcrest.argThat(new PredicateMatcher.Selection<>(absent(), expectedSelection));
     }
 
 
     @NonNull
-    public static Predicate predicateWithSelection(@NonNull TransactionContext tc, @NonNull CharSequence expectedSelection)
+    public static <T> Predicate<? super T> predicateWithSelection(@NonNull TransactionContext tc, @NonNull CharSequence expectedSelection)
     {
-        return MockitoHamcrest.argThat(new PredicateMatcher.Selection(new Present<>(tc), expectedSelection));
+        return MockitoHamcrest.argThat(new PredicateMatcher.Selection<>(new Present<>(tc), expectedSelection));
     }
 
 

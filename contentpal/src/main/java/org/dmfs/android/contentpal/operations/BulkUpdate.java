@@ -42,16 +42,16 @@ public final class BulkUpdate<T> implements Operation<T>
 {
     private final Table<T> mTable;
     private final RowData<T> mData;
-    private final Predicate mPredicate;
+    private final Predicate<? super T> mPredicate;
 
 
     public BulkUpdate(@NonNull Table<T> table, @NonNull RowData<T> data)
     {
-        this(table, data, new AnyOf());
+        this(table, data, new AnyOf<>());
     }
 
 
-    public BulkUpdate(@NonNull Table<T> table, @NonNull RowData<T> data, @NonNull Predicate predicate)
+    public BulkUpdate(@NonNull Table<T> table, @NonNull RowData<T> data, @NonNull Predicate<? super T> predicate)
     {
         mTable = table;
         mData = data;

@@ -30,13 +30,13 @@ import org.dmfs.android.contentpal.predicates.IsNull;
  *
  * @author Marten Gajda
  */
-public final class TransientEvent extends DelegatingPredicate
+public final class TransientEvent extends DelegatingPredicate<CalendarContract.Events>
 {
     public TransientEvent()
     {
-        super(new AllOf(
-                new IsNull(CalendarContract.Events.ORIGINAL_SYNC_ID),
-                new IsNull(CalendarContract.Events._SYNC_ID),
-                new EqArg(CalendarContract.Events.DELETED, 1)));
+        super(new AllOf<>(
+                new IsNull<>(CalendarContract.Events.ORIGINAL_SYNC_ID),
+                new IsNull<>(CalendarContract.Events._SYNC_ID),
+                new EqArg<>(CalendarContract.Events.DELETED, 1)));
     }
 }

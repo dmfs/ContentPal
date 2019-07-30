@@ -39,7 +39,7 @@ public class IdInTest
     @Test
     public void testLong()
     {
-        assertThat(new IdIn(123), predicateWith(
+        assertThat(new IdIn<>(123), predicateWith(
                 selection("_id = ?"),
                 argumentValues("123"),
                 absentBackReferences(1)
@@ -50,7 +50,7 @@ public class IdInTest
     @Test
     public void testLongVarArg()
     {
-        assertThat(new IdIn(1L, 2L, 3L), predicateWith(
+        assertThat(new IdIn<>(1L, 2L, 3L), predicateWith(
                 selection("_id in ( ?, ?, ? ) "),
                 argumentValues("1", "2", "3"),
                 absentBackReferences(3)
@@ -61,7 +61,7 @@ public class IdInTest
     @Test
     public void testEmptyLongVarArg()
     {
-        assertThat(new IdIn(new Long[0]), predicateWith(
+        assertThat(new IdIn<>(new Long[0]), predicateWith(
                 selection("_id in (  ) "),
                 emptyArguments()
         ));
@@ -71,7 +71,7 @@ public class IdInTest
     @Test
     public void testString()
     {
-        assertThat(new IdIn("123"), predicateWith(
+        assertThat(new IdIn<>("123"), predicateWith(
                 selection("_id = ?"),
                 argumentValues("123"),
                 absentBackReferences(1)
@@ -82,7 +82,7 @@ public class IdInTest
     @Test
     public void testStringVarArg()
     {
-        assertThat(new IdIn("1", "2", "3"), predicateWith(
+        assertThat(new IdIn<>("1", "2", "3"), predicateWith(
                 selection("_id in ( ?, ?, ? ) "),
                 argumentValues("1", "2", "3"),
                 absentBackReferences(3)
@@ -93,7 +93,7 @@ public class IdInTest
     @Test
     public void testEmptyStringVarArg()
     {
-        assertThat(new IdIn(new String[0]), predicateWith(
+        assertThat(new IdIn<>(new String[0]), predicateWith(
                 selection("_id in (  ) "),
                 emptyArguments()
         ));
@@ -103,7 +103,7 @@ public class IdInTest
     @Test
     public void testLongIterable()
     {
-        assertThat(new IdIn(new Seq<>(1L, 2L, 3L)), predicateWith(
+        assertThat(new IdIn<>(new Seq<>(1L, 2L, 3L)), predicateWith(
                 selection("_id in ( ?, ?, ? ) "),
                 argumentValues("1", "2", "3"),
                 absentBackReferences(3)
@@ -114,7 +114,7 @@ public class IdInTest
     @Test
     public void testEmptyLongIterable()
     {
-        assertThat(new IdIn(EmptyIterable.instance()), predicateWith(
+        assertThat(new IdIn<>(EmptyIterable.instance()), predicateWith(
                 selection("_id in (  ) "),
                 emptyArguments()
         ));

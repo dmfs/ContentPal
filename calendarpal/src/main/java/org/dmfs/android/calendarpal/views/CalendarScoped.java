@@ -69,7 +69,7 @@ public final class CalendarScoped implements View<CalendarContract.Events>
 
     @NonNull
     @Override
-    public Cursor rows(@NonNull UriParams uriParams, @NonNull Projection<? super CalendarContract.Events> projection, @NonNull Predicate predicate, @NonNull Optional<String> sorting) throws RemoteException
+    public Cursor rows(@NonNull UriParams uriParams, @NonNull Projection<? super CalendarContract.Events> projection, @NonNull Predicate<? super CalendarContract.Events> predicate, @NonNull Optional<String> sorting) throws RemoteException
     {
         return mDelegate.rows(
                 uriParams,

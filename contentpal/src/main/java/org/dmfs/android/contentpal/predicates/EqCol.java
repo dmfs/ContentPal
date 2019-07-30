@@ -26,7 +26,7 @@ import androidx.annotation.NonNull;
 /**
  * @author Marten Gajda
  */
-public final class EqCol implements Predicate
+public final class EqCol<Contract> implements Predicate<Contract>
 {
     private final String mColumn1Name;
     private final String mColumn2Name;

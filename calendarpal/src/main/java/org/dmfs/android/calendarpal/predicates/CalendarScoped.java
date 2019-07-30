@@ -32,10 +32,10 @@ import androidx.annotation.NonNull;
  *
  * @author Gabor Keszthelyi
  */
-public final class CalendarScoped extends DelegatingPredicate
+public final class CalendarScoped extends DelegatingPredicate<CalendarContract.Events>
 {
-    public CalendarScoped(@NonNull RowSnapshot<CalendarContract.Calendars> calendarRow, @NonNull Predicate predicate)
+    public CalendarScoped(@NonNull RowSnapshot<CalendarContract.Calendars> calendarRow, @NonNull Predicate<? super CalendarContract.Events> predicate)
     {
-        super(new AllOf(predicate, new ReferringTo<>(CalendarContract.Events.CALENDAR_ID, calendarRow)));
+        super(new AllOf<>(predicate, new ReferringTo<>(CalendarContract.Events.CALENDAR_ID, calendarRow)));
     }
 }

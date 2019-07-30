@@ -31,7 +31,7 @@ import androidx.annotation.NonNull;
  *
  * @author Marten Gajda
  */
-public final class Mocked implements Predicate
+public final class Mocked<Contract> implements Predicate<Contract>
 {
 
     private final CharSequence mSelection;

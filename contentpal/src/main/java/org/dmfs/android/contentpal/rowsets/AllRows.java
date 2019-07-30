@@ -33,7 +33,7 @@ public final class AllRows<T> extends DelegatingRowSet<T>
 {
     public AllRows(@NonNull View<T> view, @NonNull Projection<T> projection)
     {
-        super(new QueryRowSet<>(view, projection, new AnyOf()));
+        super(new QueryRowSet<>(view, projection, new AnyOf<>()));
     }
 
 }

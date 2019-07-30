@@ -30,7 +30,7 @@ import androidx.annotation.NonNull;
  *
  * @author Marten Gajda
  */
-public final class ReferringTo<T> implements Predicate
+public final class ReferringTo<Contract, T> implements Predicate<Contract>
 {
     private final String mColumnName;
     private final RowReference<T> mRowReference;

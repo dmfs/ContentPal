@@ -53,7 +53,7 @@ public interface View<T>
      * @return A {@link Cursor} as returned by the {@link ContentProvider}.
      */
     @NonNull
-    Cursor rows(@NonNull UriParams uriParams, @NonNull Projection<? super T> projection, @NonNull Predicate predicate, @NonNull Optional<String> sorting) throws RemoteException;
+    Cursor rows(@NonNull UriParams uriParams, @NonNull Projection<? super T> projection, @NonNull Predicate<? super T> predicate, @NonNull Optional<String> sorting) throws RemoteException;
 
     /**
      * Returns a {@link Table} to write to.

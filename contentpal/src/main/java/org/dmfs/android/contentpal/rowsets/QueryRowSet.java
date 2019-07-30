@@ -33,7 +33,6 @@ import org.dmfs.android.contentpal.tools.uriparams.EmptyUriParams;
 import org.dmfs.android.contentpal.transactions.contexts.EmptyTransactionContext;
 import org.dmfs.iterators.AbstractBaseIterator;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -52,10 +51,10 @@ public final class QueryRowSet<T> implements RowSet<T>
 {
     private final View<T> mView;
     private final Projection<? super T> mProjection;
-    private final Predicate mPredicate;
+    private final Predicate<? super T> mPredicate;
 
 
-    public QueryRowSet(@NonNull View<T> view, @NonNull Projection<? super T> projection, @NonNull Predicate predicate)
+    public QueryRowSet(@NonNull View<T> view, @NonNull Projection<? super T> projection, @NonNull Predicate<? super T> predicate)
     {
         mView = view;
         mProjection = projection;

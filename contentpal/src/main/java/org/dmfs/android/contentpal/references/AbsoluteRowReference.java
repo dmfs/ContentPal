@@ -53,7 +53,7 @@ public final class AbsoluteRowReference<T> implements SoftRowReference<T>
     @Override
     public ContentProviderOperation.Builder putOperationBuilder(@NonNull TransactionContext transactionContext)
     {
-        return mTable.updateOperation(EmptyUriParams.INSTANCE, new EqArg(BaseColumns._ID, rowId())).contentOperationBuilder(transactionContext);
+        return mTable.updateOperation(EmptyUriParams.INSTANCE, new EqArg<>(BaseColumns._ID, rowId())).contentOperationBuilder(transactionContext);
     }
 
 
@@ -61,7 +61,7 @@ public final class AbsoluteRowReference<T> implements SoftRowReference<T>
     @Override
     public ContentProviderOperation.Builder deleteOperationBuilder(@NonNull TransactionContext transactionContext)
     {
-        return mTable.deleteOperation(EmptyUriParams.INSTANCE, new EqArg(BaseColumns._ID, rowId())).contentOperationBuilder(transactionContext);
+        return mTable.deleteOperation(EmptyUriParams.INSTANCE, new EqArg<>(BaseColumns._ID, rowId())).contentOperationBuilder(transactionContext);
     }
 
 
@@ -69,7 +69,7 @@ public final class AbsoluteRowReference<T> implements SoftRowReference<T>
     @Override
     public ContentProviderOperation.Builder assertOperationBuilder(@NonNull TransactionContext transactionContext)
     {
-        return mTable.assertOperation(EmptyUriParams.INSTANCE, new EqArg(BaseColumns._ID, rowId())).contentOperationBuilder(transactionContext);
+        return mTable.assertOperation(EmptyUriParams.INSTANCE, new EqArg<>(BaseColumns._ID, rowId())).contentOperationBuilder(transactionContext);
     }
 
 
@@ -83,9 +83,9 @@ public final class AbsoluteRowReference<T> implements SoftRowReference<T>
 
     @NonNull
     @Override
-    public Predicate predicate(@NonNull TransactionContext transactionContext, @NonNull String keyColumn)
+    public Predicate<T> predicate(@NonNull TransactionContext transactionContext, @NonNull String keyColumn)
     {
-        return new EqArg(keyColumn, rowId());
+        return new EqArg<>(keyColumn, rowId());
     }
 
 

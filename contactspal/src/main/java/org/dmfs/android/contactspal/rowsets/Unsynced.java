@@ -38,7 +38,7 @@ public final class Unsynced extends DelegatingRowSet<ContactsContract.RawContact
 
     public Unsynced(@NonNull View<ContactsContract.RawContacts> mRawContacts, @NonNull Projection<ContactsContract.RawContacts> projection)
     {
-        super(new QueryRowSet<>(mRawContacts, projection, new IsNull(ContactsContract.RawContacts.SOURCE_ID)));
+        super(new QueryRowSet<>(mRawContacts, projection, new IsNull<>(ContactsContract.RawContacts.SOURCE_ID)));
     }
 
 }

@@ -69,7 +69,7 @@ public final class CalendarScoped implements Table<CalendarContract.Events>
 
     @NonNull
     @Override
-    public Operation<CalendarContract.Events> updateOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate)
+    public Operation<CalendarContract.Events> updateOperation(@NonNull UriParams uriParams, @NonNull Predicate<? super CalendarContract.Events> predicate)
     {
         return mDelegate.updateOperation(uriParams, calendarScoped(predicate));
     }
@@ -77,7 +77,7 @@ public final class CalendarScoped implements Table<CalendarContract.Events>
 
     @NonNull
     @Override
-    public Operation<CalendarContract.Events> deleteOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate)
+    public Operation<CalendarContract.Events> deleteOperation(@NonNull UriParams uriParams, @NonNull Predicate<? super CalendarContract.Events> predicate)
     {
         return mDelegate.deleteOperation(uriParams, calendarScoped(predicate));
     }
@@ -85,7 +85,7 @@ public final class CalendarScoped implements Table<CalendarContract.Events>
 
     @NonNull
     @Override
-    public Operation<CalendarContract.Events> assertOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate)
+    public Operation<CalendarContract.Events> assertOperation(@NonNull UriParams uriParams, @NonNull Predicate<? super CalendarContract.Events> predicate)
     {
         return mDelegate.assertOperation(uriParams, calendarScoped(predicate));
     }
@@ -99,7 +99,7 @@ public final class CalendarScoped implements Table<CalendarContract.Events>
     }
 
 
-    private Predicate calendarScoped(@NonNull Predicate predicate)
+    private Predicate<? super CalendarContract.Events> calendarScoped(@NonNull Predicate<? super CalendarContract.Events> predicate)
     {
         return new org.dmfs.android.calendarpal.predicates.CalendarScoped(mCalendarRow, predicate);
     }

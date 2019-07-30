@@ -39,16 +39,16 @@ import androidx.annotation.NonNull;
 public final class BulkDelete<T> implements Operation<T>
 {
     private final Table<T> mTable;
-    private final Predicate mPredicate;
+    private final Predicate<? super T> mPredicate;
 
 
     public BulkDelete(@NonNull Table<T> table)
     {
-        this(table, new AnyOf());
+        this(table, new AnyOf<>());
     }
 
 
-    public BulkDelete(@NonNull Table<T> table, @NonNull Predicate predicate)
+    public BulkDelete(@NonNull Table<T> table, @NonNull Predicate<? super T> predicate)
     {
         mTable = table;
         mPredicate = predicate;

@@ -27,17 +27,18 @@ import androidx.annotation.NonNull;
  *
  * @author Marten Gajda
  */
-public final class NoneOf extends DelegatingPredicate
+public final class NoneOf<Contract> extends DelegatingPredicate<Contract>
 {
-    public NoneOf(@NonNull Predicate... predicates)
+    @SafeVarargs
+    public NoneOf(@NonNull Predicate<? super Contract>... predicates)
     {
-        super(new Not(new AnyOf(predicates)));
+        super(new Not<>(new AnyOf<>(predicates)));
     }
 
 
-    public NoneOf(@NonNull Iterable<Predicate> predicates)
+    public NoneOf(@NonNull Iterable<Predicate<? super Contract>> predicates)
     {
-        super(new Not(new AnyOf(predicates)));
+        super(new Not<>(new AnyOf<>(predicates)));
     }
 
 }

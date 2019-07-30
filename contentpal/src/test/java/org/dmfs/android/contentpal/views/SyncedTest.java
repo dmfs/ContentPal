@@ -58,7 +58,7 @@ public class SyncedTest
     public void test() throws RemoteException
     {
         Cursor dummyResult = dummy(Cursor.class);
-        Predicate dummyPredicate = dummy(Predicate.class);
+        Predicate<Object> dummyPredicate = dummy(Predicate.class);
         Projection<Object> dummyProjection = dummy(Projection.class);
         View<Object> mockView = failingMock(View.class);
         Account account = new Account("name", "type");

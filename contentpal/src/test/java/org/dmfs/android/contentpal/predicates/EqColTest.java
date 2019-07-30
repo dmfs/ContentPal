@@ -33,7 +33,7 @@ public class EqColTest
     @Test
     public void test()
     {
-        assertThat(new EqCol("x", "y"),
+        assertThat(new EqCol<>("x", "y"),
                 predicateWith(
                         selection("x = y"),
                         emptyArguments()

@@ -43,7 +43,7 @@ public final class AccountEqTest
     @Test
     public void test()
     {
-        assertThat(new AccountEq(new Account("name", "type")),
+        assertThat(new AccountEq<>(new Account("name", "type")),
                 predicateWith(
                         selection("( account_name = ? ) and ( account_type = ? )"),
                         argumentValues("name", "type"),

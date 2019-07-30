@@ -50,7 +50,7 @@ public abstract class DelegatingView<T> implements View<T>
 
     @NonNull
     @Override
-    public final Cursor rows(@NonNull UriParams uriParams, @NonNull Projection<? super T> projection, @NonNull Predicate predicate, @NonNull Optional<String> sorting) throws RemoteException
+    public final Cursor rows(@NonNull UriParams uriParams, @NonNull Projection<? super T> projection, @NonNull Predicate<? super T> predicate, @NonNull Optional<String> sorting) throws RemoteException
     {
         return mDelegate.rows(uriParams, projection, predicate, sorting);
     }

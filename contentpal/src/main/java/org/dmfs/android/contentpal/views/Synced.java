@@ -56,7 +56,7 @@ public final class Synced<T> implements View<T>
 
     @NonNull
     @Override
-    public Cursor rows(@NonNull UriParams uriParams, @NonNull Projection<? super T> projection, @NonNull Predicate predicate, @NonNull Optional<String> sorting) throws RemoteException
+    public Cursor rows(@NonNull UriParams uriParams, @NonNull Projection<? super T> projection, @NonNull Predicate<? super T> predicate, @NonNull Optional<String> sorting) throws RemoteException
     {
         return mDelegate.rows(new AccountScopedParams(mAccount, new SyncParams(uriParams)), projection, predicate, sorting);
     }

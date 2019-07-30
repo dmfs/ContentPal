@@ -24,9 +24,12 @@ import androidx.annotation.NonNull;
 /**
  * A predicate.
  *
+ * @param <Contract>
+ *         The contract of the table this predicate belongs to.
+ *
  * @author Marten Gajda
  */
-public interface Predicate
+public interface Predicate<Contract>
 {
     /**
      * A selection argument.

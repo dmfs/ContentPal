@@ -38,21 +38,21 @@ public class AllOfTest
     @Test
     public void test()
     {
-        assertThat(new AllOf(), predicateWith(
+        assertThat(new AllOf<>(), predicateWith(
                 selection("1"),
                 emptyArguments()));
 
-        assertThat(new AllOf(new Mocked("x", "a")), predicateWith(
+        assertThat(new AllOf<>(new Mocked<>("x", "a")), predicateWith(
                 selection("( x )"),
                 argumentValues("a"),
                 absentBackReferences(1)));
 
-        assertThat(new AllOf(new Mocked("x", "a"), new Mocked("y", "1")), predicateWith(
+        assertThat(new AllOf<>(new Mocked<>("x", "a"), new Mocked<>("y", "1")), predicateWith(
                 selection("( x ) and ( y )"),
                 argumentValues("a", "1"),
                 absentBackReferences(2)));
 
-        assertThat(new AllOf(new Mocked("x", "a"), new Mocked("z", "w", "z"), new Mocked("y", "1")), predicateWith(
+        assertThat(new AllOf<>(new Mocked<>("x", "a"), new Mocked<>("z", "w", "z"), new Mocked<>("y", "1")), predicateWith(
                 selection("( x ) and ( z ) and ( y )"),
                 argumentValues("a", "w", "z", "1"),
                 absentBackReferences(4)));
@@ -62,21 +62,21 @@ public class AllOfTest
     @Test
     public void testIterable()
     {
-        assertThat(new AllOf(EmptyIterable.instance()), predicateWith(
+        assertThat(new AllOf<>(EmptyIterable.instance()), predicateWith(
                 selection("1"),
                 emptyArguments()));
 
-        assertThat(new AllOf(new Seq<>(new Mocked("x", "a"))), predicateWith(
+        assertThat(new AllOf<>(new Seq<>(new Mocked<>("x", "a"))), predicateWith(
                 selection("( x )"),
                 argumentValues("a"),
                 absentBackReferences(1)));
 
-        assertThat(new AllOf(new Seq<>(new Mocked("x", "a"), new Mocked("y", "1"))), predicateWith(
+        assertThat(new AllOf<>(new Seq<>(new Mocked<>("x", "a"), new Mocked<>("y", "1"))), predicateWith(
                 selection("( x ) and ( y )"),
                 argumentValues("a", "1"),
                 absentBackReferences(2)));
 
-        assertThat(new AllOf(new Seq<>(new Mocked("x", "a"), new Mocked("z", "w", "z"), new Mocked("y", "1"))), predicateWith(
+        assertThat(new AllOf<>(new Seq<>(new Mocked<>("x", "a"), new Mocked<>("z", "w", "z"), new Mocked<>("y", "1"))), predicateWith(
                 selection("( x ) and ( z ) and ( y )"),
                 argumentValues("a", "w", "z", "1"),
                 absentBackReferences(4)));

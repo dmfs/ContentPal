@@ -116,7 +116,7 @@ public class RowSnapshotReferenceTest
     @Test
     public void testPredicate()
     {
-        Predicate dummyResultPredicate = dummy(Predicate.class);
+        Predicate<Object> dummyResultPredicate = dummy(Predicate.class);
         SoftRowReference<Object> dummyOriginalReference = dummy(SoftRowReference.class);
         RowReference<Object> mockResolvedReference = failingMock(RowReference.class);
         RowSnapshot<Object> mockSnapshot = failingMock(RowSnapshot.class);

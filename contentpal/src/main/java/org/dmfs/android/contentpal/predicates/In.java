@@ -36,7 +36,7 @@ import androidx.annotation.NonNull;
  *
  * @author Marten Gajda
  */
-public final class In implements Predicate
+public final class In<Contract> implements Predicate<Contract>
 {
     private final String mColumnName;
     private final Iterable<?> mArguments;

@@ -18,6 +18,7 @@ package org.dmfs.android.calendarpal.predicates;
 
 import android.provider.CalendarContract;
 
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.absentBackReferences;
@@ -25,7 +26,6 @@ import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.ar
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.predicateWith;
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.selection;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
 
 
 /**
@@ -39,7 +39,7 @@ public class TransientEventTest
     public void test()
     {
         assertThat(new TransientEvent(),
-                is(predicateWith(
+                Matchers.is(predicateWith(
                         selection(String.format("( %s is null ) and ( %s is null ) and ( %s = ? )",
                                 CalendarContract.Events.ORIGINAL_SYNC_ID,
                                 CalendarContract.Events._SYNC_ID,

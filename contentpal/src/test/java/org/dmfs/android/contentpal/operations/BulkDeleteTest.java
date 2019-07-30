@@ -91,7 +91,7 @@ public final class BulkDeleteTest
     {
         Table<Object> mockTable = failingMock(Table.class);
         Operation<Object> mockOperation = failingMock(Operation.class);
-        Predicate dummyPredicate = mock(Predicate.class);
+        Predicate<Object> dummyPredicate = mock(Predicate.class);
 
         doReturn(mockOperation).when(mockTable).deleteOperation(EmptyUriParams.INSTANCE, dummyPredicate);
         Uri dummyUri = dummy(Uri.class);

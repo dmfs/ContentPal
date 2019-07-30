@@ -97,7 +97,7 @@ public final class BulkAssertTest
     public void testContentOperationBuilder_ctor_table_predicate()
     {
         Table<Object> mockTable = failingMock(Table.class);
-        Predicate dummyPredicate = dummy(Predicate.class);
+        Predicate<Object> dummyPredicate = dummy(Predicate.class);
         Operation<Object> mockAssertOperation = failingMock(Operation.class);
 
         doReturn(mockAssertOperation).when(mockTable).assertOperation(EmptyUriParams.INSTANCE, dummyPredicate);
@@ -139,7 +139,7 @@ public final class BulkAssertTest
     public void testContentOperationBuilder_ctor_table_data_predicate()
     {
         Table<Object> mockTable = failingMock(Table.class);
-        Predicate dummyPredicate = dummy(Predicate.class);
+        Predicate<Object> dummyPredicate = dummy(Predicate.class);
         Operation<Object> mockAssertOperation = failingMock(Operation.class);
 
         doReturn(mockAssertOperation).when(mockTable).assertOperation(EmptyUriParams.INSTANCE, dummyPredicate);

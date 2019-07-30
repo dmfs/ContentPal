@@ -25,12 +25,12 @@ import androidx.annotation.NonNull;
 /**
  * @author Marten Gajda
  */
-public final class Not implements Predicate
+public final class Not<Contract> implements Predicate<Contract>
 {
-    private final Predicate mPredicate;
+    private final Predicate<? super Contract> mPredicate;
 
 
-    public Not(@NonNull Predicate predicate)
+    public Not(@NonNull Predicate<? super Contract> predicate)
     {
         mPredicate = predicate;
     }

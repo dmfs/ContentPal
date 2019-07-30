@@ -27,16 +27,17 @@ import androidx.annotation.NonNull;
  *
  * @author Marten Gajda
  */
-public final class AllOf extends DelegatingPredicate
+public final class AllOf<Contract> extends DelegatingPredicate<Contract>
 {
-    public AllOf(@NonNull Predicate... predicates)
+    @SafeVarargs
+    public AllOf(@NonNull Predicate<? super Contract>... predicates)
     {
-        super(new BinaryPredicate("and", predicates));
+        super(new BinaryPredicate<>("and", predicates));
     }
 
 
-    public AllOf(@NonNull Iterable<Predicate> predicates)
+    public AllOf(@NonNull Iterable<Predicate<? super Contract>> predicates)
     {
-        super(new BinaryPredicate("and", predicates));
+        super(new BinaryPredicate<>("and", predicates));
     }
 }

@@ -63,7 +63,7 @@ public final class Synced<T> implements Table<T>
 
     @NonNull
     @Override
-    public Operation<T> updateOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate)
+    public Operation<T> updateOperation(@NonNull UriParams uriParams, @NonNull Predicate<? super T> predicate)
     {
         return mDelegate.updateOperation(new AccountScopedParams(mAccount, new SyncParams(uriParams)), predicate);
     }
@@ -71,7 +71,7 @@ public final class Synced<T> implements Table<T>
 
     @NonNull
     @Override
-    public Operation<T> deleteOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate)
+    public Operation<T> deleteOperation(@NonNull UriParams uriParams, @NonNull Predicate<? super T> predicate)
     {
         return mDelegate.deleteOperation(new AccountScopedParams(mAccount, new SyncParams(uriParams)), predicate);
     }
@@ -79,7 +79,7 @@ public final class Synced<T> implements Table<T>
 
     @NonNull
     @Override
-    public Operation<T> assertOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate)
+    public Operation<T> assertOperation(@NonNull UriParams uriParams, @NonNull Predicate<? super T> predicate)
     {
         return mDelegate.assertOperation(new AccountScopedParams(mAccount, new SyncParams(uriParams)), predicate);
     }

@@ -26,12 +26,12 @@ import androidx.annotation.NonNull;
  *
  * @author Marten Gajda
  */
-public final class AccountEq extends DelegatingPredicate
+public final class AccountEq<Contract> extends DelegatingPredicate<Contract>
 {
 
     public AccountEq(@NonNull Account account)
     {
-        super(new AllOf(new EqArg("account_name", account.name), new EqArg("account_type", account.type)));
+        super(new AllOf<>(new EqArg<>("account_name", account.name), new EqArg<>("account_type", account.type)));
     }
 
 }

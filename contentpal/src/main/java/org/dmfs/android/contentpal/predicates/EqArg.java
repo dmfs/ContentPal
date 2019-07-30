@@ -29,7 +29,7 @@ import androidx.annotation.NonNull;
  *
  * @author Marten Gajda
  */
-public final class EqArg implements Predicate
+public final class EqArg<Contract> implements Predicate<Contract>
 {
     private final String mColumnName;
     private final Object mArgument;

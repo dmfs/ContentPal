@@ -20,7 +20,6 @@ import org.dmfs.android.contentpal.ClosableIterator;
 import org.dmfs.iterators.AbstractBaseIterator;
 
 import java.io.Closeable;
-import java.io.IOException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 

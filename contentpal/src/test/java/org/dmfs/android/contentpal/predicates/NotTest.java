@@ -35,12 +35,12 @@ public class NotTest
     @Test
     public void test()
     {
-        assertThat(new Not(new Mocked("x", "a")), predicateWith(
+        assertThat(new Not<>(new Mocked<>("x", "a")), predicateWith(
                 selection("not ( x )"),
                 argumentValues("a"),
                 absentBackReferences(1)));
 
-        assertThat(new Not(new Mocked("x", "a", "z", "w")), predicateWith(
+        assertThat(new Not<>(new Mocked<>("x", "a", "z", "w")), predicateWith(
                 selection("not ( x )"),
                 argumentValues("a", "z", "w"),
                 absentBackReferences(3)));

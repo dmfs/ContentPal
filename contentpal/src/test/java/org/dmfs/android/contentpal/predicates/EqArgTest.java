@@ -34,7 +34,7 @@ public class EqArgTest
     @Test
     public void test()
     {
-        assertThat(new EqArg("x", "y"),
+        assertThat(new EqArg<>("x", "y"),
                 predicateWith(
                         selection("x = ?"),
                         argumentValues("y"),

@@ -62,7 +62,7 @@ public final class Local implements Table<ContactsContract.RawContacts>
 
     @NonNull
     @Override
-    public Operation<ContactsContract.RawContacts> updateOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate)
+    public Operation<ContactsContract.RawContacts> updateOperation(@NonNull UriParams uriParams, @NonNull Predicate<? super ContactsContract.RawContacts> predicate)
     {
         return mDelegate.updateOperation(uriParams, localAccountPredicate(predicate));
     }
@@ -70,7 +70,7 @@ public final class Local implements Table<ContactsContract.RawContacts>
 
     @NonNull
     @Override
-    public Operation<ContactsContract.RawContacts> deleteOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate)
+    public Operation<ContactsContract.RawContacts> deleteOperation(@NonNull UriParams uriParams, @NonNull Predicate<? super ContactsContract.RawContacts> predicate)
     {
         return mDelegate.deleteOperation(uriParams, localAccountPredicate(predicate));
     }
@@ -78,7 +78,7 @@ public final class Local implements Table<ContactsContract.RawContacts>
 
     @NonNull
     @Override
-    public Operation<ContactsContract.RawContacts> assertOperation(@NonNull UriParams uriParams, @NonNull Predicate predicate)
+    public Operation<ContactsContract.RawContacts> assertOperation(@NonNull UriParams uriParams, @NonNull Predicate<? super ContactsContract.RawContacts> predicate)
     {
         return mDelegate.assertOperation(uriParams, localAccountPredicate(predicate));
     }
@@ -92,8 +92,8 @@ public final class Local implements Table<ContactsContract.RawContacts>
     }
 
 
-    private Predicate localAccountPredicate(@NonNull Predicate predicate)
+    private Predicate<? super ContactsContract.RawContacts> localAccountPredicate(@NonNull Predicate<? super ContactsContract.RawContacts> predicate)
     {
-        return new AllOf(predicate, new IsNull("account_name"), new IsNull("account_type"));
+        return new AllOf<>(predicate, new IsNull<>("account_name"), new IsNull<>("account_type"));
     }
 }

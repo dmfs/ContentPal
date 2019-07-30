@@ -37,19 +37,20 @@ import androidx.annotation.NonNull;
  *
  * @author Marten Gajda
  */
-public final class BinaryPredicate implements Predicate
+public final class BinaryPredicate<Contract> implements Predicate<Contract>
 {
-    private final Iterable<Predicate> mPredicates;
+    private final Iterable<Predicate<? super Contract>> mPredicates;
     private final String mOperator;
 
 
-    public BinaryPredicate(@NonNull String operator, @NonNull Predicate... predicates)
+    @SafeVarargs
+    public BinaryPredicate(@NonNull String operator, @NonNull Predicate<? super Contract>... predicates)
     {
         this(operator, new Seq<>(predicates));
     }
 
 
-    public BinaryPredicate(@NonNull String operator, @NonNull Iterable<Predicate> predicates)
+    public BinaryPredicate(@NonNull String operator, @NonNull Iterable<Predicate<? super Contract>> predicates)
     {
         mOperator = operator;
         mPredicates = predicates;
@@ -60,7 +61,7 @@ public final class BinaryPredicate implements Predicate
     @Override
     public CharSequence selection(@NonNull TransactionContext transactionContext)
     {
-        Iterator<Predicate> iterator = mPredicates.iterator();
+        Iterator<Predicate<? super Contract>> iterator = mPredicates.iterator();
         if (!iterator.hasNext())
         {
             return "1";

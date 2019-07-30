@@ -41,9 +41,9 @@ public final class Dirty extends DelegatingRowSet<ContactsContract.RawContacts>
     {
         super(new QueryRowSet<>(mRawContacts,
                 projection,
-                new AnyOf(
-                        new EqArg(ContactsContract.RawContacts.DIRTY, 1),
-                        new EqArg(ContactsContract.RawContacts.DELETED, 1))));
+                new AnyOf<>(
+                        new EqArg<>(ContactsContract.RawContacts.DIRTY, 1),
+                        new EqArg<>(ContactsContract.RawContacts.DELETED, 1))));
     }
 
 }

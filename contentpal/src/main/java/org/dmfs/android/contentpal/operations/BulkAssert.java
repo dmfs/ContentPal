@@ -43,10 +43,10 @@ public final class BulkAssert<T> implements Operation<T>
 {
     private final Table<T> mTable;
     private final RowData<T> mRowData;
-    private final Predicate mPredicate;
+    private final Predicate<? super T> mPredicate;
 
 
-    public BulkAssert(@NonNull Table<T> table, @NonNull RowData<T> rowData, @NonNull Predicate predicate)
+    public BulkAssert(@NonNull Table<T> table, @NonNull RowData<T> rowData, @NonNull Predicate<? super T> predicate)
     {
         mTable = table;
         mRowData = rowData;
@@ -56,11 +56,11 @@ public final class BulkAssert<T> implements Operation<T>
 
     public BulkAssert(@NonNull Table<T> table, @NonNull RowData<T> rowData)
     {
-        this(table, rowData, new AnyOf());
+        this(table, rowData, new AnyOf<>());
     }
 
 
-    public BulkAssert(@NonNull Table<T> table, @NonNull Predicate predicate)
+    public BulkAssert(@NonNull Table<T> table, @NonNull Predicate<? super T> predicate)
     {
         this(table, new EmptyRowData<>(), predicate);
     }
@@ -68,7 +68,7 @@ public final class BulkAssert<T> implements Operation<T>
 
     public BulkAssert(@NonNull Table<T> table)
     {
-        this(table, new EmptyRowData<>(), new AnyOf());
+        this(table, new EmptyRowData<>(), new AnyOf<>());
     }
 
 

@@ -33,7 +33,7 @@ public class NotNullTest
     @Test
     public void test()
     {
-        assertThat(new NotNull("x"),
+        assertThat(new NotNull<>("x"),
                 predicateWith(
                         selection("x is not null"),
                         emptyArguments()
