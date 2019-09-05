@@ -7,14 +7,29 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.1'
+        classpath 'com.android.tools.build:gradle:3.4.2'
         classpath 'com.dicedmelon.gradle:jacoco-android:0.1.4'
         classpath 'org.jacoco:org.jacoco.core:0.8.3'
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.17.0'
+        classpath 'digital.wup:android-maven-publish:3.6.2'
     }
 }
 
+
+
+def gitVersion = { ->
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'describe', '--tags'
+        standardOutput = stdout
+    }
+    return stdout.toString().trim()
+}
+
+
 allprojects {
+    group 'org.dmfs'
+    version gitVersion()
     repositories {
         jcenter()
         mavenCentral()
