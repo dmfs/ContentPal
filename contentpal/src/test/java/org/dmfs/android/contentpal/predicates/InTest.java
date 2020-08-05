@@ -24,7 +24,7 @@ import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.rowdatasnapshots.MapRowDataSnapshot;
 import org.dmfs.android.contentpal.tools.FakeClosable;
 import org.dmfs.iterables.EmptyIterable;
-import org.dmfs.iterables.elementary.Seq;
+import org.dmfs.jems.iterable.elementary.Seq;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -110,7 +110,7 @@ public class InTest
         Map<String, String> valueMap1 = new HashMap<>();
         valueMap1.put(BaseColumns._ID, "1");
         doReturn(new MapRowDataSnapshot<>(valueMap1, new HashMap<>())).when(rowSnapshot1).values();
-        doAnswer(invocation -> new FakeClosable<>(new org.dmfs.iterators.elementary.Seq<>(rowSnapshot1))).when(mockRowSet).iterator();
+        doAnswer(invocation -> new FakeClosable<>(new org.dmfs.jems.iterator.elementary.Seq<>(rowSnapshot1))).when(mockRowSet).iterator();
 
         assertThat(new In<>("x", mockRowSet), predicateWith(
                 selection("x in ( ? ) "),
@@ -121,7 +121,7 @@ public class InTest
         Map<String, String> valueMap2 = new HashMap<>();
         valueMap2.put(BaseColumns._ID, "2");
         doReturn(new MapRowDataSnapshot<>(valueMap2, new HashMap<>())).when(rowSnapshot2).values();
-        doAnswer(invocation -> new FakeClosable<>(new org.dmfs.iterators.elementary.Seq<>(rowSnapshot1, rowSnapshot2))).when(mockRowSet).iterator();
+        doAnswer(invocation -> new FakeClosable<>(new org.dmfs.jems.iterator.elementary.Seq<>(rowSnapshot1, rowSnapshot2))).when(mockRowSet).iterator();
 
         assertThat(new In<>("x", mockRowSet), predicateWith(
                 selection("x in ( ?, ? ) "),
@@ -132,7 +132,7 @@ public class InTest
         Map<String, String> valueMap3 = new HashMap<>();
         valueMap3.put(BaseColumns._ID, "3");
         doReturn(new MapRowDataSnapshot<>(valueMap3, new HashMap<>())).when(rowSnapshot3).values();
-        doAnswer(invocation -> new FakeClosable<>(new org.dmfs.iterators.elementary.Seq<>(rowSnapshot1, rowSnapshot2, rowSnapshot3))).when(mockRowSet)
+        doAnswer(invocation -> new FakeClosable<>(new org.dmfs.jems.iterator.elementary.Seq<>(rowSnapshot1, rowSnapshot2, rowSnapshot3))).when(mockRowSet)
                 .iterator();
 
         assertThat(new In<>("x", mockRowSet), predicateWith(

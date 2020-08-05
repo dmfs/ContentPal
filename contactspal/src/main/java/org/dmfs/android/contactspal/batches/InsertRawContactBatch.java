@@ -31,8 +31,8 @@ import org.dmfs.android.contentpal.rowsnapshots.VirtualRowSnapshot;
 import org.dmfs.android.contentpal.tables.AccountScoped;
 import org.dmfs.iterables.SingletonIterable;
 import org.dmfs.iterables.decorators.DelegatingIterable;
-import org.dmfs.iterables.elementary.Seq;
 import org.dmfs.jems.iterable.composite.Joined;
+import org.dmfs.jems.iterable.elementary.Seq;
 
 
 /**
