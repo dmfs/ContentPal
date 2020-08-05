@@ -23,7 +23,7 @@ import android.content.OperationApplicationException;
 import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.OperationsQueue;
 import org.dmfs.android.contentpal.queues.BasicOperationsQueue;
-import org.dmfs.iterables.elementary.Seq;
+import org.dmfs.jems.iterable.elementary.Seq;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;

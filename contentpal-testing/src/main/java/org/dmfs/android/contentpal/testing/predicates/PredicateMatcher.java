@@ -106,7 +106,7 @@ public final class PredicateMatcher
     @NonNull
     @Factory
     @SafeVarargs
-    public static <T> Matcher<Predicate<? super T>> backReferences(@NonNull Matcher<Optional<Integer>>... backReferences)
+    public static <T> Matcher<Predicate<? super T>> backReferences(@NonNull Matcher<? super Optional<Integer>>... backReferences)
     {
         return new ArgumentBackReferences<>(absent(), backReferences);
     }
@@ -115,7 +115,7 @@ public final class PredicateMatcher
     @NonNull
     @Factory
     @SafeVarargs
-    public static <T> Matcher<Predicate<? super T>> backReferences(TransactionContext tc, Matcher<Optional<Integer>>... backReferences)
+    public static <T> Matcher<Predicate<? super T>> backReferences(TransactionContext tc, Matcher<? super Optional<Integer>>... backReferences)
     {
         return new ArgumentBackReferences<>(new Present<>(tc), backReferences);
     }
@@ -216,7 +216,7 @@ public final class PredicateMatcher
 
 
         @SafeVarargs
-        private ArgumentBackReferences(Optional<TransactionContext> tc, Matcher<Optional<Integer>>... backReferences)
+        private ArgumentBackReferences(Optional<TransactionContext> tc, Matcher<? super Optional<Integer>>... backReferences)
         {
             super(iteratesTo(backReferences), "Predicate.arguments(tc).backreference()s", "backreferences");
             mTc = tc;

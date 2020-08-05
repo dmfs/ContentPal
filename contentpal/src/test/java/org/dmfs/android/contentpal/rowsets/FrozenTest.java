@@ -21,7 +21,7 @@ import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.testing.table.Contract;
 import org.dmfs.android.contentpal.tools.FakeClosable;
 import org.dmfs.iterators.EmptyIterator;
-import org.dmfs.iterators.elementary.Seq;
+import org.dmfs.jems.iterator.elementary.Seq;
 import org.junit.Test;
 
 import static org.dmfs.jems.hamcrest.matchers.IterableMatcher.iteratesTo;

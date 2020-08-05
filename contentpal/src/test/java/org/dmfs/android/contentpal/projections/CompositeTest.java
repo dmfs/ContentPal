@@ -18,7 +18,7 @@ package org.dmfs.android.contentpal.projections;
 
 import org.dmfs.android.contentpal.Projection;
 import org.dmfs.android.contentpal.testing.table.Contract;
-import org.dmfs.iterables.elementary.Seq;
+import org.dmfs.jems.iterable.elementary.Seq;
 import org.junit.Test;
 
 import static org.dmfs.android.contentpal.testing.projection.ProjectionMatcher.projects;

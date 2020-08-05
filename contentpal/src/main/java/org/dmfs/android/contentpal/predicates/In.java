@@ -22,8 +22,8 @@ import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.RowSet;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.predicates.arguments.ValueArgument;
-import org.dmfs.iterables.elementary.Seq;
 import org.dmfs.jems.iterable.decorators.Mapped;
+import org.dmfs.jems.iterable.elementary.Seq;
 
 import androidx.annotation.NonNull;
 

@@ -23,7 +23,7 @@ import org.dmfs.android.contentpal.InsertOperation;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.rowdata.CharSequenceRowData;
 import org.dmfs.android.contentpal.rowdata.Composite;
-import org.dmfs.iterables.elementary.Seq;
+import org.dmfs.jems.iterable.elementary.Seq;
 import org.dmfs.jems.optional.elementary.Absent;
 import org.hamcrest.Matchers;
 import org.junit.Test;

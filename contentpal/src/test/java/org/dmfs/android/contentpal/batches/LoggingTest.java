@@ -21,7 +21,7 @@ import android.content.ContentProviderOperation;
 import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.iterables.EmptyIterable;
-import org.dmfs.iterables.elementary.Seq;
+import org.dmfs.jems.iterable.elementary.Seq;
 import org.dmfs.jems.procedure.Procedure;
 import org.junit.Test;
 import org.junit.runner.RunWith;

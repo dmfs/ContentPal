@@ -18,7 +18,7 @@ package org.dmfs.android.contentpal.rowdata;
 
 import org.dmfs.android.contentpal.RowData;
 import org.dmfs.iterables.EmptyIterable;
-import org.dmfs.iterables.elementary.Seq;
+import org.dmfs.jems.iterable.elementary.Seq;
 import org.dmfs.jems.optional.Optional;
 import org.dmfs.jems.optional.elementary.Absent;
 import org.dmfs.jems.optional.elementary.Present;

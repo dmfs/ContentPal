@@ -19,8 +19,8 @@ package org.dmfs.android.contentpal.testing.predicates;
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.iterables.EmptyIterable;
-import org.dmfs.iterables.elementary.Seq;
 import org.dmfs.jems.hamcrest.matchers.optional.AbsentMatcher;
+import org.dmfs.jems.iterable.elementary.Seq;
 import org.dmfs.jems.optional.elementary.Present;
 import org.junit.Test;
 

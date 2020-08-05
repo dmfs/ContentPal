@@ -20,7 +20,7 @@ import org.dmfs.android.contentpal.ClosableIterator;
 import org.dmfs.android.contentpal.RowSet;
 import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.testing.tools.FakeClosable;
-import org.dmfs.iterables.elementary.Seq;
+import org.dmfs.jems.iterable.elementary.Seq;
 
 import androidx.annotation.NonNull;
 
