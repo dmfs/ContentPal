@@ -27,8 +27,9 @@ import androidx.annotation.NonNull;
 
 
 /**
- * @author Marten Gajda
+ * @deprecated in favour of {@link GroupMembershipData}.
  */
+@Deprecated
 public final class GroupRowMembership implements RowData<ContactsContract.Data>
 {
     private final RowSnapshot<ContactsContract.Groups> mGroup;
@@ -46,6 +47,6 @@ public final class GroupRowMembership implements RowData<ContactsContract.Data>
     {
         // this data row refers to the given group
         return transactionContext.resolved(mGroup.reference())
-                .builderWithReferenceData(transactionContext, builder, ContactsContract.CommonDataKinds.GroupMembership.GROUP_ROW_ID);
+            .builderWithReferenceData(transactionContext, builder, ContactsContract.CommonDataKinds.GroupMembership.GROUP_ROW_ID);
     }
 }

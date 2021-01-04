@@ -16,48 +16,41 @@
 
 package org.dmfs.android.contactspal.data.organization;
 
-import android.content.ContentProviderOperation;
 import android.provider.ContactsContract;
 
 import org.dmfs.android.contactspal.data.Custom;
+import org.dmfs.android.contactspal.data.MimeTypeData;
 import org.dmfs.android.contactspal.data.Typed;
-import org.dmfs.android.contentpal.TransactionContext;
+import org.dmfs.android.contentpal.rowdata.CharSequenceRowData;
+import org.dmfs.android.contentpal.rowdata.Composite;
+import org.dmfs.android.contentpal.rowdata.DelegatingRowData;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 
 /**
- * Phonetic name of an organization. Use it standalone or as decorator to another {@link OrganizationData}.
+ * Phonetic name of an organization.
  * <p>
  * Use {@link Typed} or {@link Custom} to add a type.
- *
- * @author Marten Gajda
  */
-public final class PhoneticNameData implements OrganizationData
+public final class PhoneticNameData extends DelegatingRowData<ContactsContract.Data> implements OrganizationData
 {
-    private final OrganizationData mDelegate;
-    private final CharSequence mPhoneticName;
-
 
     public PhoneticNameData(@Nullable CharSequence phoneticName)
     {
-        this(phoneticName, EmptyOrganizationData.INSTANCE);
+        super(new Composite<>(
+            new MimeTypeData(ContactsContract.CommonDataKinds.Organization.CONTENT_ITEM_TYPE),
+            new CharSequenceRowData<>(ContactsContract.CommonDataKinds.Organization.PHONETIC_NAME, phoneticName)));
     }
 
 
+    @Deprecated
     public PhoneticNameData(@Nullable CharSequence phoneticName, @NonNull OrganizationData delegate)
     {
-        mDelegate = delegate;
-        mPhoneticName = phoneticName;
-    }
-
-
-    @NonNull
-    @Override
-    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
-    {
-        return mDelegate.updatedBuilder(transactionContext, builder)
-                .withValue(ContactsContract.CommonDataKinds.Organization.PHONETIC_NAME, mPhoneticName == null ? null : mPhoneticName.toString());
+        super(new Composite<>(
+            delegate,
+            new MimeTypeData(ContactsContract.CommonDataKinds.Organization.CONTENT_ITEM_TYPE),
+            new CharSequenceRowData<>(ContactsContract.CommonDataKinds.Organization.PHONETIC_NAME, phoneticName)));
     }
 }

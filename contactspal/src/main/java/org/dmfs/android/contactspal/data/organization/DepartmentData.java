@@ -16,48 +16,41 @@
 
 package org.dmfs.android.contactspal.data.organization;
 
-import android.content.ContentProviderOperation;
 import android.provider.ContactsContract;
 
 import org.dmfs.android.contactspal.data.Custom;
+import org.dmfs.android.contactspal.data.MimeTypeData;
 import org.dmfs.android.contactspal.data.Typed;
-import org.dmfs.android.contentpal.TransactionContext;
+import org.dmfs.android.contentpal.rowdata.CharSequenceRowData;
+import org.dmfs.android.contentpal.rowdata.Composite;
+import org.dmfs.android.contentpal.rowdata.DelegatingRowData;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 
 /**
- * Department of an organization. Use it standalone or as decorator to another {@link OrganizationData}.
+ * Department of an organization.
  * <p>
  * Use {@link Typed} or {@link Custom} to add a type.
- *
- * @author Marten Gajda
  */
-public final class DepartmentData implements OrganizationData
+public final class DepartmentData extends DelegatingRowData<ContactsContract.Data> implements OrganizationData
 {
-    private final OrganizationData mDelegate;
-    private final CharSequence mDepartment;
-
 
     public DepartmentData(@Nullable CharSequence department)
     {
-        this(department, EmptyOrganizationData.INSTANCE);
+        super(new Composite<>(
+            new MimeTypeData(ContactsContract.CommonDataKinds.Organization.CONTENT_ITEM_TYPE),
+            new CharSequenceRowData<>(ContactsContract.CommonDataKinds.Organization.DEPARTMENT, department)));
     }
 
 
+    @Deprecated
     public DepartmentData(@Nullable CharSequence department, @NonNull OrganizationData delegate)
     {
-        mDelegate = delegate;
-        mDepartment = department;
-    }
-
-
-    @NonNull
-    @Override
-    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
-    {
-        return mDelegate.updatedBuilder(transactionContext, builder)
-                .withValue(ContactsContract.CommonDataKinds.Organization.DEPARTMENT, mDepartment == null ? null : mDepartment.toString());
+        super(new Composite<>(
+            delegate,
+            new MimeTypeData(ContactsContract.CommonDataKinds.Organization.CONTENT_ITEM_TYPE),
+            new CharSequenceRowData<>(ContactsContract.CommonDataKinds.Organization.DEPARTMENT, department)));
     }
 }

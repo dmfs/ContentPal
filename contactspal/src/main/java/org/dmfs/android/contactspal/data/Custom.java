@@ -16,7 +16,6 @@
 
 package org.dmfs.android.contactspal.data;
 
-import android.content.ContentProviderOperation;
 import android.provider.ContactsContract;
 
 import org.dmfs.android.contactspal.data.email.EmailData;
@@ -29,7 +28,10 @@ import org.dmfs.android.contactspal.data.relation.RelationData;
 import org.dmfs.android.contactspal.data.sip.SipAddressData;
 import org.dmfs.android.contactspal.data.website.WebsiteData;
 import org.dmfs.android.contentpal.RowData;
-import org.dmfs.android.contentpal.TransactionContext;
+import org.dmfs.android.contentpal.rowdata.CharSequenceRowData;
+import org.dmfs.android.contentpal.rowdata.Composite;
+import org.dmfs.android.contentpal.rowdata.DelegatingRowData;
+import org.dmfs.android.contentpal.rowdata.IntegerRowData;
 
 import androidx.annotation.NonNull;
 
@@ -47,30 +49,15 @@ import androidx.annotation.NonNull;
  * <li>{@link StructuredPostalData}</li>
  * <li>{@link OrganizationData}</li>
  * </ul>
- *
- * @author Marten Gajda
  */
-public final class Custom implements RowData<ContactsContract.Data>
+public final class Custom extends DelegatingRowData<ContactsContract.Data>
 {
-    private final RowData<ContactsContract.Data> mDelegate;
-    private final CharSequence mLabel;
-
-
     public Custom(@NonNull CharSequence label, @NonNull RowData<ContactsContract.Data> delegate)
     {
-        mDelegate = delegate;
-        mLabel = label;
-    }
-
-
-    @NonNull
-    @Override
-    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
-    {
-        return mDelegate.updatedBuilder(transactionContext, builder)
-                // note this is universal, because all supported data types use the same type and label column for custom labels
-                .withValue(ContactsContract.CommonDataKinds.Phone.TYPE, ContactsContract.CommonDataKinds.BaseTypes.TYPE_CUSTOM)
-                .withValue(ContactsContract.CommonDataKinds.Phone.LABEL, mLabel.toString());
-
+        super(new Composite<>(
+            delegate,
+            // note this is universal, because all supported data types use the same type and label column for custom labels
+            new IntegerRowData<>(ContactsContract.CommonDataKinds.Phone.TYPE, ContactsContract.CommonDataKinds.BaseTypes.TYPE_CUSTOM),
+            new CharSequenceRowData<>(ContactsContract.CommonDataKinds.Phone.LABEL, label)));
     }
 }

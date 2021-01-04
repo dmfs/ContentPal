@@ -16,8 +16,9 @@
 
 package org.dmfs.android.contactspal.data;
 
-import android.content.ContentProviderOperation;
 import android.provider.ContactsContract;
+
+import androidx.annotation.NonNull;
 
 import org.dmfs.android.contactspal.data.email.EmailData;
 import org.dmfs.android.contactspal.data.event.EventData;
@@ -29,45 +30,31 @@ import org.dmfs.android.contactspal.data.relation.RelationData;
 import org.dmfs.android.contactspal.data.sip.SipAddressData;
 import org.dmfs.android.contactspal.data.website.WebsiteData;
 import org.dmfs.android.contentpal.RowData;
-import org.dmfs.android.contentpal.TransactionContext;
-
-import androidx.annotation.NonNull;
+import org.dmfs.android.contentpal.rowdata.Composite;
+import org.dmfs.android.contentpal.rowdata.DelegatingRowData;
+import org.dmfs.android.contentpal.rowdata.IntegerRowData;
 
 
 /**
  * Gives the decorated {@link RowData} a specific type. Works with
  * <ul>
  * <li>{@link EmailData},</li>
- * <li>{@link PhoneData},</li>
- * <li>{@link SipAddressData},</li>
  * <li>{@link EventData},</li>
  * <li>{@link NicknameData} and</li>
- * <li>{@link WebsiteData}.</li>
- * <li>{@link RelationData} (although not necessary)</li>
- * <li>{@link StructuredPostalData}</li>
  * <li>{@link OrganizationData}</li>
+ * <li>{@link PhoneData},</li>
+ * <li>{@link RelationData} (although not necessary)</li>
+ * <li>{@link SipAddressData},</li>
+ * <li>{@link StructuredPostalData}</li>
+ * <li>{@link WebsiteData}.</li>
  * </ul>
- *
- * @author Marten Gajda
  */
-public final class Typed implements RowData<ContactsContract.Data>
+public final class Typed extends DelegatingRowData<ContactsContract.Data>
 {
-    private final RowData<ContactsContract.Data> mDelegate;
-    private final int mType;
-
-
     public Typed(int type, @NonNull RowData<ContactsContract.Data> delegate)
     {
-        mDelegate = delegate;
-        mType = type;
-    }
-
-
-    @NonNull
-    @Override
-    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
-    {
-        // note that all data types use the same column for TYPE
-        return mDelegate.updatedBuilder(transactionContext, builder).withValue(ContactsContract.CommonDataKinds.Phone.TYPE, mType);
+        super(new Composite<>(
+            delegate,
+            new IntegerRowData<>(ContactsContract.CommonDataKinds.Phone.TYPE, type)));
     }
 }

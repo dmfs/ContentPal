@@ -27,8 +27,6 @@ import androidx.annotation.Nullable;
 
 /**
  * Phonetic name component of a {@link StructuredNameData}.
- *
- * @author Marten Gajda
  */
 public final class PhoneticNameData implements StructuredNameData
 {
@@ -44,7 +42,11 @@ public final class PhoneticNameData implements StructuredNameData
     }
 
 
-    public PhoneticNameData(@Nullable CharSequence firstName, @Nullable CharSequence middleName, @Nullable CharSequence lastName, @NonNull StructuredNameData delegate)
+    public PhoneticNameData(
+        @Nullable CharSequence firstName,
+        @Nullable CharSequence middleName,
+        @Nullable CharSequence lastName,
+        @NonNull StructuredNameData delegate)
     {
         mDelegate = delegate;
         mFirstName = firstName;
@@ -58,8 +60,8 @@ public final class PhoneticNameData implements StructuredNameData
     public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
         return mDelegate.updatedBuilder(transactionContext, builder)
-                .withValue(ContactsContract.CommonDataKinds.StructuredName.PHONETIC_GIVEN_NAME, mFirstName == null ? null : mFirstName.toString())
-                .withValue(ContactsContract.CommonDataKinds.StructuredName.PHONETIC_MIDDLE_NAME, mMiddleName == null ? null : mMiddleName.toString())
-                .withValue(ContactsContract.CommonDataKinds.StructuredName.PHONETIC_FAMILY_NAME, mLastName == null ? null : mLastName.toString());
+            .withValue(ContactsContract.CommonDataKinds.StructuredName.PHONETIC_GIVEN_NAME, mFirstName == null ? null : mFirstName.toString())
+            .withValue(ContactsContract.CommonDataKinds.StructuredName.PHONETIC_MIDDLE_NAME, mMiddleName == null ? null : mMiddleName.toString())
+            .withValue(ContactsContract.CommonDataKinds.StructuredName.PHONETIC_FAMILY_NAME, mLastName == null ? null : mLastName.toString());
     }
 }

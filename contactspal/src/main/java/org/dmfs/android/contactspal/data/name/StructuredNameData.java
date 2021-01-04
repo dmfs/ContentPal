@@ -26,6 +26,7 @@ import org.dmfs.android.contentpal.RowData;
  *
  * @author Marten Gajda
  */
+@Deprecated
 public interface StructuredNameData extends RowData<ContactsContract.Data>
 {
 }

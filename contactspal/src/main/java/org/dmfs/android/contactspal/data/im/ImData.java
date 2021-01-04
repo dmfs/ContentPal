@@ -16,34 +16,31 @@
 
 package org.dmfs.android.contactspal.data.im;
 
-import android.content.ContentProviderOperation;
 import android.provider.ContactsContract;
 
 import org.dmfs.android.contactspal.data.Custom;
+import org.dmfs.android.contactspal.data.MimeTypeData;
 import org.dmfs.android.contactspal.data.Typed;
-import org.dmfs.android.contentpal.RowData;
-import org.dmfs.android.contentpal.TransactionContext;
+import org.dmfs.android.contentpal.rowdata.CharSequenceRowData;
+import org.dmfs.android.contentpal.rowdata.Composite;
+import org.dmfs.android.contentpal.rowdata.DelegatingRowData;
+import org.dmfs.android.contentpal.rowdata.IntegerRowData;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 
 /**
  * Im data.
  * <p>
  * Use {@link Typed} or {@link Custom} to add a type.
- *
- * @author Marten Gajda
  */
-public final class ImData implements RowData<ContactsContract.Data>
+public final class ImData extends DelegatingRowData<ContactsContract.Data>
 {
-    private final CharSequence mAddress;
-    private final int mProtocol;
-    private final CharSequence mCustomProtocol;
-
 
     public ImData(@NonNull CharSequence address, int protocol)
     {
-        this(address, protocol, "");
+        this(address, protocol, null);
     }
 
 
@@ -53,22 +50,14 @@ public final class ImData implements RowData<ContactsContract.Data>
     }
 
 
-    private ImData(@NonNull CharSequence address, int protocol, @NonNull CharSequence customProtocol)
+    private ImData(@NonNull CharSequence address, int protocol, @Nullable CharSequence customProtocol)
     {
-        mAddress = address;
-        mProtocol = protocol;
-        mCustomProtocol = customProtocol;
+        super(new Composite<>(
+            new MimeTypeData(ContactsContract.CommonDataKinds.Im.CONTENT_ITEM_TYPE),
+            new CharSequenceRowData<>(ContactsContract.CommonDataKinds.Im.DATA, address),
+            new CharSequenceRowData<>(ContactsContract.CommonDataKinds.Im.CUSTOM_PROTOCOL, customProtocol),
+            new IntegerRowData<>(ContactsContract.CommonDataKinds.Im.PROTOCOL, protocol)
+        ));
     }
 
-
-    @NonNull
-    @Override
-    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
-    {
-        return builder
-                .withValue(ContactsContract.CommonDataKinds.Im.MIMETYPE, ContactsContract.CommonDataKinds.Im.CONTENT_ITEM_TYPE)
-                .withValue(ContactsContract.CommonDataKinds.Im.DATA, mAddress.toString())
-                .withValue(ContactsContract.CommonDataKinds.Im.PROTOCOL, mProtocol)
-                .withValue(ContactsContract.CommonDataKinds.Im.CUSTOM_PROTOCOL, mCustomProtocol.toString());
-    }
 }

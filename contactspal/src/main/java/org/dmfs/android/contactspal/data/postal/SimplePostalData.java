@@ -44,13 +44,13 @@ public final class SimplePostalData implements StructuredPostalData
     public SimplePostalData(@Nullable CharSequence street, @Nullable CharSequence postcode, @Nullable CharSequence city, @Nullable CharSequence country)
     {
         mDelegate = new Composite<>(
-                new StreetData(street),
-                new NeighborhoodData(null),
-                new RegionData(null),
-                new PostcodeData(postcode),
-                new PoBoxData(null),
-                new CityData(city),
-                new CountryData(country)
+            new StreetData(street),
+            new NeighborhoodData(null),
+            new RegionData(null),
+            new PostcodeData(postcode),
+            new PoBoxData(null),
+            new CityData(city),
+            new CountryData(country)
         );
     }
 

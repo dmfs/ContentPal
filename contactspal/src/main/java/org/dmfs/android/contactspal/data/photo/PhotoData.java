@@ -27,8 +27,6 @@ import androidx.annotation.NonNull;
 
 /**
  * Data of a {@link ContactsContract.CommonDataKinds.Photo} row.
- *
- * @author Marten Gajda
  */
 public final class PhotoData implements RowData<ContactsContract.Data>
 {
@@ -46,7 +44,7 @@ public final class PhotoData implements RowData<ContactsContract.Data>
     public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
         return builder
-                .withValue(ContactsContract.CommonDataKinds.Photo.MIMETYPE, ContactsContract.CommonDataKinds.Photo.CONTENT_ITEM_TYPE)
-                .withValue(ContactsContract.CommonDataKinds.Photo.PHOTO, mPhotoData);
+            .withValue(ContactsContract.CommonDataKinds.Photo.MIMETYPE, ContactsContract.CommonDataKinds.Photo.CONTENT_ITEM_TYPE)
+            .withValue(ContactsContract.CommonDataKinds.Photo.PHOTO, mPhotoData);
     }
 }

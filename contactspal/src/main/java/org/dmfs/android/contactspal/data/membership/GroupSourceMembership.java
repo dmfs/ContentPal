@@ -19,15 +19,16 @@ package org.dmfs.android.contactspal.data.membership;
 import android.content.ContentProviderOperation;
 import android.provider.ContactsContract;
 
+import androidx.annotation.NonNull;
+
 import org.dmfs.android.contentpal.RowData;
 import org.dmfs.android.contentpal.TransactionContext;
 
-import androidx.annotation.NonNull;
-
 
 /**
- * @author Marten Gajda
+ * @deprecated in favour of {@link GroupMembershipData}.
  */
+@Deprecated
 public final class GroupSourceMembership implements RowData<ContactsContract.Data>
 {
     private final CharSequence mGroupSourceId;

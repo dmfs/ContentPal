@@ -16,35 +16,25 @@
 
 package org.dmfs.android.contactspal.data;
 
-import android.content.ContentProviderOperation;
 import android.provider.ContactsContract;
 
-import org.dmfs.android.contentpal.RowData;
-import org.dmfs.android.contentpal.TransactionContext;
-
 import androidx.annotation.NonNull;
+
+import org.dmfs.android.contentpal.RowData;
+import org.dmfs.android.contentpal.rowdata.Composite;
+import org.dmfs.android.contentpal.rowdata.DelegatingRowData;
+import org.dmfs.android.contentpal.rowdata.IntegerRowData;
 
 
 /**
  * Marks the decorated {@link RowData} as the primary element of its kind.
- *
- * @author Marten Gajda
  */
-public final class Primary implements RowData<ContactsContract.Data>
+public final class Primary extends DelegatingRowData<ContactsContract.Data>
 {
-    private final RowData<ContactsContract.Data> mDelegate;
-
-
     public Primary(@NonNull RowData<ContactsContract.Data> delegate)
     {
-        mDelegate = delegate;
-    }
-
-
-    @NonNull
-    @Override
-    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
-    {
-        return mDelegate.updatedBuilder(transactionContext, builder).withValue(ContactsContract.Data.IS_PRIMARY, 1);
+        super(new Composite<>(
+            delegate,
+            new IntegerRowData<>(ContactsContract.Data.IS_PRIMARY, 1)));
     }
 }

@@ -54,6 +54,6 @@ public final class PoBoxData implements StructuredPostalData
     public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
         return mDelegate.updatedBuilder(transactionContext, builder)
-                .withValue(ContactsContract.CommonDataKinds.StructuredPostal.POBOX, mPoBox == null ? null : mPoBox.toString());
+            .withValue(ContactsContract.CommonDataKinds.StructuredPostal.POBOX, mPoBox == null ? null : mPoBox.toString());
     }
 }

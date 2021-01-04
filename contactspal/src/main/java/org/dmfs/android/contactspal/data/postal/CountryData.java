@@ -54,6 +54,6 @@ public final class CountryData implements StructuredPostalData
     public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
         return mDelegate.updatedBuilder(transactionContext, builder)
-                .withValue(ContactsContract.CommonDataKinds.StructuredPostal.COUNTRY, mCountry == null ? null : mCountry.toString());
+            .withValue(ContactsContract.CommonDataKinds.StructuredPostal.COUNTRY, mCountry == null ? null : mCountry.toString());
     }
 }

@@ -54,6 +54,6 @@ public final class RegionData implements StructuredPostalData
     public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
         return mDelegate.updatedBuilder(transactionContext, builder)
-                .withValue(ContactsContract.CommonDataKinds.StructuredPostal.REGION, mRegion == null ? null : mRegion.toString());
+            .withValue(ContactsContract.CommonDataKinds.StructuredPostal.REGION, mRegion == null ? null : mRegion.toString());
     }
 }

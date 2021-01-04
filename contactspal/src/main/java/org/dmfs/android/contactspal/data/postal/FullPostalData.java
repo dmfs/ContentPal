@@ -16,49 +16,41 @@
 
 package org.dmfs.android.contactspal.data.postal;
 
-import android.content.ContentProviderOperation;
 import android.provider.ContactsContract;
+
+import androidx.annotation.Nullable;
 
 import org.dmfs.android.contactspal.data.Custom;
 import org.dmfs.android.contactspal.data.Typed;
-import org.dmfs.android.contentpal.RowData;
-import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.rowdata.Composite;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import org.dmfs.android.contentpal.rowdata.DelegatingRowData;
 
 
 /**
  * Full postal data.
  * <p>
  * Use {@link Typed} or {@link Custom} to add a type.
- *
- * @author Marten Gajda
  */
-public final class FullPostalData implements StructuredPostalData
+public final class FullPostalData extends DelegatingRowData<ContactsContract.Data> implements StructuredPostalData
 {
-    private final RowData<ContactsContract.Data> mDelegate;
 
-
-    public FullPostalData(@Nullable CharSequence street, @Nullable CharSequence neighborhood, @Nullable CharSequence region, @Nullable CharSequence postcode, @Nullable CharSequence poBox, @Nullable CharSequence city, @Nullable CharSequence country)
+    public FullPostalData(
+        @Nullable CharSequence street,
+        @Nullable CharSequence neighborhood,
+        @Nullable CharSequence region,
+        @Nullable CharSequence postcode,
+        @Nullable CharSequence poBox,
+        @Nullable CharSequence city,
+        @Nullable CharSequence country)
     {
-        mDelegate = new Composite<>(
-                new StreetData(street),
-                new NeighborhoodData(neighborhood),
-                new RegionData(region),
-                new PostcodeData(postcode),
-                new PoBoxData(poBox),
-                new CityData(city),
-                new CountryData(country)
-        );
-    }
-
-
-    @NonNull
-    @Override
-    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
-    {
-        return mDelegate.updatedBuilder(transactionContext, builder);
+        super(new Composite<>(
+            new StreetData(street),
+            new NeighborhoodData(neighborhood),
+            new RegionData(region),
+            new PostcodeData(postcode),
+            new PoBoxData(poBox),
+            new CityData(city),
+            new CountryData(country)
+        ));
     }
 }

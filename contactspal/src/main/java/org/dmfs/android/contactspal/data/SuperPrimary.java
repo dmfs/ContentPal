@@ -16,39 +16,28 @@
 
 package org.dmfs.android.contactspal.data;
 
-import android.content.ContentProviderOperation;
 import android.provider.ContactsContract;
 
-import org.dmfs.android.contentpal.RowData;
-import org.dmfs.android.contentpal.TransactionContext;
-
 import androidx.annotation.NonNull;
+
+import org.dmfs.android.contentpal.RowData;
+import org.dmfs.android.contentpal.rowdata.Composite;
+import org.dmfs.android.contentpal.rowdata.DelegatingRowData;
+import org.dmfs.android.contentpal.rowdata.IntegerRowData;
 
 
 /**
  * Marks the decorated {@link RowData} as the super primary element of its kind.
  * <p>
  * Note by definition this also makes an element the primary of its kind.
- *
- * @author Marten Gajda
  */
-public final class SuperPrimary implements RowData<ContactsContract.Data>
+public final class SuperPrimary extends DelegatingRowData<ContactsContract.Data>
 {
-    private final RowData<ContactsContract.Data> mDelegate;
-
 
     public SuperPrimary(@NonNull RowData<ContactsContract.Data> delegate)
     {
-        mDelegate = delegate;
-    }
-
-
-    @NonNull
-    @Override
-    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
-    {
-        return mDelegate.updatedBuilder(transactionContext, builder)
-                .withValue(ContactsContract.Data.IS_SUPER_PRIMARY, 1)
-                .withValue(ContactsContract.Data.IS_PRIMARY, 1);
+        super(new Composite<>(
+            new Primary(delegate),
+            new IntegerRowData<>(ContactsContract.Data.IS_SUPER_PRIMARY, 1)));
     }
 }

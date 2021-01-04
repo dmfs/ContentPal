@@ -29,6 +29,7 @@ import androidx.annotation.NonNull;
  *
  * @author Marten Gajda
  */
+@Deprecated
 final class EmptyNameData implements StructuredNameData
 {
     public final static StructuredNameData INSTANCE = new EmptyNameData();

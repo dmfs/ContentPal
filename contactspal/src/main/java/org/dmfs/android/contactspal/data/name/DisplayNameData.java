@@ -16,10 +16,12 @@
 
 package org.dmfs.android.contactspal.data.name;
 
-import android.content.ContentProviderOperation;
 import android.provider.ContactsContract;
 
-import org.dmfs.android.contentpal.TransactionContext;
+import org.dmfs.android.contactspal.data.MimeTypeData;
+import org.dmfs.android.contentpal.rowdata.CharSequenceRowData;
+import org.dmfs.android.contentpal.rowdata.Composite;
+import org.dmfs.android.contentpal.rowdata.DelegatingRowData;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,33 +29,25 @@ import androidx.annotation.Nullable;
 
 /**
  * Display name of a {@link ContactsContract.CommonDataKinds.StructuredName} row.
- *
- * @author Marten Gajda
  */
-public final class DisplayNameData implements StructuredNameData
+public final class DisplayNameData extends DelegatingRowData<ContactsContract.Data> implements StructuredNameData
 {
-    private final StructuredNameData mDelegate;
-    private final CharSequence mDisplayName;
-
 
     public DisplayNameData(@Nullable CharSequence displayName)
     {
-        this(displayName, EmptyNameData.INSTANCE);
+        super(new Composite<>(
+            new MimeTypeData(ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE),
+            new CharSequenceRowData<>(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, displayName)));
     }
 
 
+    @Deprecated
     public DisplayNameData(@Nullable CharSequence displayName, @NonNull StructuredNameData delegate)
     {
-        mDelegate = delegate;
-        mDisplayName = displayName;
+        super(new Composite<>(
+            new MimeTypeData(ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE),
+            new CharSequenceRowData<>(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, displayName),
+            delegate));
     }
 
-
-    @NonNull
-    @Override
-    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
-    {
-        return mDelegate.updatedBuilder(transactionContext, builder)
-                .withValue(ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME, mDisplayName == null ? null : mDisplayName.toString());
-    }
 }

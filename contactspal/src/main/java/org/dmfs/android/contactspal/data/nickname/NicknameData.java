@@ -16,42 +16,32 @@
 
 package org.dmfs.android.contactspal.data.nickname;
 
-import android.content.ContentProviderOperation;
 import android.provider.ContactsContract;
 
 import org.dmfs.android.contactspal.data.Custom;
+import org.dmfs.android.contactspal.data.MimeTypeData;
 import org.dmfs.android.contactspal.data.Typed;
-import org.dmfs.android.contentpal.RowData;
-import org.dmfs.android.contentpal.TransactionContext;
+import org.dmfs.android.contentpal.rowdata.CharSequenceRowData;
+import org.dmfs.android.contentpal.rowdata.Composite;
+import org.dmfs.android.contentpal.rowdata.DelegatingRowData;
+import org.dmfs.android.contentpal.rowdata.IntegerRowData;
 
 import androidx.annotation.NonNull;
 
 
 /**
- * Data of a {@link ContactsContract.CommonDataKinds.Nickname} row or type {@link ContactsContract.CommonDataKinds.Nickname#TYPE_DEFAULT}
+ * Data of a {@link ContactsContract.CommonDataKinds.Nickname} row of type {@link ContactsContract.CommonDataKinds.Nickname#TYPE_DEFAULT}
  * <p>
  * Use {@link Typed} or {@link Custom} to add another type.
- *
- * @author Marten Gajda
  */
-public final class NicknameData implements RowData<ContactsContract.Data>
+public final class NicknameData extends DelegatingRowData<ContactsContract.Data>
 {
-    private final CharSequence mNickname;
-
-
     public NicknameData(@NonNull CharSequence nickname)
     {
-        mNickname = nickname;
+        super(new Composite<>(
+            new MimeTypeData(ContactsContract.CommonDataKinds.Nickname.CONTENT_ITEM_TYPE),
+            new CharSequenceRowData<>(ContactsContract.CommonDataKinds.Nickname.NAME, nickname.toString()),
+            new IntegerRowData<>(ContactsContract.CommonDataKinds.Nickname.TYPE, ContactsContract.CommonDataKinds.Nickname.TYPE_DEFAULT)));
     }
 
-
-    @NonNull
-    @Override
-    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
-    {
-        return builder
-                .withValue(ContactsContract.CommonDataKinds.Nickname.MIMETYPE, ContactsContract.CommonDataKinds.Nickname.CONTENT_ITEM_TYPE)
-                .withValue(ContactsContract.CommonDataKinds.Nickname.NAME, mNickname.toString())
-                .withValue(ContactsContract.CommonDataKinds.Nickname.TYPE, ContactsContract.CommonDataKinds.Nickname.TYPE_DEFAULT);
-    }
 }

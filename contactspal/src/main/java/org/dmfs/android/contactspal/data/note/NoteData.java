@@ -16,37 +16,25 @@
 
 package org.dmfs.android.contactspal.data.note;
 
-import android.content.ContentProviderOperation;
 import android.provider.ContactsContract;
 
-import org.dmfs.android.contentpal.RowData;
-import org.dmfs.android.contentpal.TransactionContext;
+import org.dmfs.android.contactspal.data.MimeTypeData;
+import org.dmfs.android.contentpal.rowdata.CharSequenceRowData;
+import org.dmfs.android.contentpal.rowdata.Composite;
+import org.dmfs.android.contentpal.rowdata.DelegatingRowData;
 
 import androidx.annotation.NonNull;
 
 
 /**
  * Data of a {@link ContactsContract.CommonDataKinds.Note} row.
- *
- * @author Marten Gajda
  */
-public final class NoteData implements RowData<ContactsContract.Data>
+public final class NoteData extends DelegatingRowData<ContactsContract.Data>
 {
-    private final CharSequence mNote;
-
-
     public NoteData(@NonNull CharSequence note)
     {
-        mNote = note;
-    }
-
-
-    @NonNull
-    @Override
-    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
-    {
-        return builder
-                .withValue(ContactsContract.CommonDataKinds.Note.MIMETYPE, ContactsContract.CommonDataKinds.Note.CONTENT_ITEM_TYPE)
-                .withValue(ContactsContract.CommonDataKinds.Note.NOTE, mNote.toString());
+        super(new Composite<>(
+            new MimeTypeData(ContactsContract.CommonDataKinds.Note.CONTENT_ITEM_TYPE),
+            new CharSequenceRowData<>(ContactsContract.CommonDataKinds.Note.NOTE, note)));
     }
 }

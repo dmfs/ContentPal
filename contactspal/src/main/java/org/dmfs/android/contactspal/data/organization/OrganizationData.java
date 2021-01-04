@@ -23,9 +23,8 @@ import org.dmfs.android.contentpal.RowData;
 
 /**
  * The interface of organization data.
- *
- * @author Marten Gajda
  */
+@Deprecated
 public interface OrganizationData extends RowData<ContactsContract.Data>
 {
 }

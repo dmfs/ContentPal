@@ -16,48 +16,41 @@
 
 package org.dmfs.android.contactspal.data.organization;
 
-import android.content.ContentProviderOperation;
 import android.provider.ContactsContract;
 
 import org.dmfs.android.contactspal.data.Custom;
+import org.dmfs.android.contactspal.data.MimeTypeData;
 import org.dmfs.android.contactspal.data.Typed;
-import org.dmfs.android.contentpal.TransactionContext;
+import org.dmfs.android.contentpal.rowdata.CharSequenceRowData;
+import org.dmfs.android.contentpal.rowdata.Composite;
+import org.dmfs.android.contentpal.rowdata.DelegatingRowData;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 
 /**
- * Office Location. Use it standalone or as decorator to other {@link OrganizationData}.
+ * Office Location.
  * <p>
  * Use {@link Typed} or {@link Custom} to add a type.
- *
- * @author Marten Gajda
  */
-public final class OfficeLocationData implements OrganizationData
+public final class OfficeLocationData extends DelegatingRowData<ContactsContract.Data> implements OrganizationData
 {
-    private final OrganizationData mDelegate;
-    private final CharSequence mOfficeLocation;
-
 
     public OfficeLocationData(@Nullable CharSequence officeLocation)
     {
-        this(officeLocation, EmptyOrganizationData.INSTANCE);
+        super(new Composite<>(
+            new MimeTypeData(ContactsContract.CommonDataKinds.Organization.CONTENT_ITEM_TYPE),
+            new CharSequenceRowData<>(ContactsContract.CommonDataKinds.Organization.OFFICE_LOCATION, officeLocation)));
     }
 
 
+    @Deprecated
     public OfficeLocationData(@Nullable CharSequence officeLocation, @NonNull OrganizationData delegate)
     {
-        mDelegate = delegate;
-        mOfficeLocation = officeLocation;
-    }
-
-
-    @NonNull
-    @Override
-    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
-    {
-        return mDelegate.updatedBuilder(transactionContext, builder)
-                .withValue(ContactsContract.CommonDataKinds.Organization.OFFICE_LOCATION, mOfficeLocation == null ? null : mOfficeLocation.toString());
+        super(new Composite<>(
+            delegate,
+            new MimeTypeData(ContactsContract.CommonDataKinds.Organization.CONTENT_ITEM_TYPE),
+            new CharSequenceRowData<>(ContactsContract.CommonDataKinds.Organization.OFFICE_LOCATION, officeLocation)));
     }
 }

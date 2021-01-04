@@ -16,48 +16,41 @@
 
 package org.dmfs.android.contactspal.data.organization;
 
-import android.content.ContentProviderOperation;
 import android.provider.ContactsContract;
 
 import org.dmfs.android.contactspal.data.Custom;
+import org.dmfs.android.contactspal.data.MimeTypeData;
 import org.dmfs.android.contactspal.data.Typed;
-import org.dmfs.android.contentpal.TransactionContext;
+import org.dmfs.android.contentpal.rowdata.CharSequenceRowData;
+import org.dmfs.android.contentpal.rowdata.Composite;
+import org.dmfs.android.contentpal.rowdata.DelegatingRowData;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 
 /**
- * Job description. Use it standalone or as decorator to other {@link OrganizationData}.
+ * Job description.
  * <p>
  * Use {@link Typed} or {@link Custom} to add a type.
- *
- * @author Marten Gajda
  */
-public final class JobData implements OrganizationData
+public final class JobData extends DelegatingRowData<ContactsContract.Data> implements OrganizationData
 {
-    private final OrganizationData mDelegate;
-    private final CharSequence mJobDescription;
 
-
-    public JobData(@Nullable CharSequence jobDescription)
+    public JobData(@Nullable CharSequence job)
     {
-        this(jobDescription, EmptyOrganizationData.INSTANCE);
+        super(new Composite<>(
+            new MimeTypeData(ContactsContract.CommonDataKinds.Organization.CONTENT_ITEM_TYPE),
+            new CharSequenceRowData<>(ContactsContract.CommonDataKinds.Organization.JOB_DESCRIPTION, job)));
     }
 
 
-    public JobData(@Nullable CharSequence jobDescription, @NonNull OrganizationData delegate)
+    @Deprecated
+    public JobData(@Nullable CharSequence job, @NonNull OrganizationData delegate)
     {
-        mDelegate = delegate;
-        mJobDescription = jobDescription;
-    }
-
-
-    @NonNull
-    @Override
-    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
-    {
-        return mDelegate.updatedBuilder(transactionContext, builder)
-                .withValue(ContactsContract.CommonDataKinds.Organization.JOB_DESCRIPTION, mJobDescription == null ? null : mJobDescription.toString());
+        super(new Composite<>(
+            delegate,
+            new MimeTypeData(ContactsContract.CommonDataKinds.Organization.CONTENT_ITEM_TYPE),
+            new CharSequenceRowData<>(ContactsContract.CommonDataKinds.Organization.JOB_DESCRIPTION, job)));
     }
 }

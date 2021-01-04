@@ -54,6 +54,6 @@ public final class PostcodeData implements StructuredPostalData
     public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
         return mDelegate.updatedBuilder(transactionContext, builder)
-                .withValue(ContactsContract.CommonDataKinds.StructuredPostal.POSTCODE, mPostcode == null ? null : mPostcode.toString());
+            .withValue(ContactsContract.CommonDataKinds.StructuredPostal.POSTCODE, mPostcode == null ? null : mPostcode.toString());
     }
 }
