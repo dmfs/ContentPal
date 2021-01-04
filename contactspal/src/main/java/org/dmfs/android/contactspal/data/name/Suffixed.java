@@ -19,10 +19,10 @@ package org.dmfs.android.contactspal.data.name;
 import android.content.ContentProviderOperation;
 import android.provider.ContactsContract;
 
-import org.dmfs.android.contentpal.TransactionContext;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import org.dmfs.android.contentpal.TransactionContext;
 
 
 /**
@@ -30,6 +30,7 @@ import androidx.annotation.Nullable;
  *
  * @author Marten Gajda
  */
+@Deprecated
 public final class Suffixed implements StructuredNameData
 {
     private final StructuredNameData mDelegate;
@@ -54,6 +55,6 @@ public final class Suffixed implements StructuredNameData
     public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
         return mDelegate.updatedBuilder(transactionContext, builder)
-                .withValue(ContactsContract.CommonDataKinds.StructuredName.SUFFIX, mSuffix == null ? null : mSuffix.toString());
+            .withValue(ContactsContract.CommonDataKinds.StructuredName.SUFFIX, mSuffix == null ? null : mSuffix.toString());
     }
 }

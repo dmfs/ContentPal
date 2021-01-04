@@ -16,41 +16,32 @@
 
 package org.dmfs.android.contactspal.data.phone;
 
-import android.content.ContentProviderOperation;
 import android.provider.ContactsContract;
 
-import org.dmfs.android.contactspal.data.Custom;
-import org.dmfs.android.contactspal.data.Typed;
-import org.dmfs.android.contentpal.RowData;
-import org.dmfs.android.contentpal.TransactionContext;
-
 import androidx.annotation.NonNull;
+
+import org.dmfs.android.contactspal.data.Custom;
+import org.dmfs.android.contactspal.data.MimeTypeData;
+import org.dmfs.android.contactspal.data.Typed;
+import org.dmfs.android.contentpal.rowdata.CharSequenceRowData;
+import org.dmfs.android.contentpal.rowdata.Composite;
+import org.dmfs.android.contentpal.rowdata.DelegatingRowData;
 
 
 /**
  * Data of a {@link ContactsContract.CommonDataKinds.Phone} row of type {@link ContactsContract.CommonDataKinds.Phone#TYPE_OTHER}.
  * <p>
  * Use {@link Typed} or {@link Custom} to add a type.
- *
- * @author Marten Gajda
  */
-public final class PhoneData implements RowData<ContactsContract.Data>
+public final class PhoneData extends DelegatingRowData<ContactsContract.Data>
 {
-    private final CharSequence mPhoneNumber;
-
 
     public PhoneData(@NonNull CharSequence phoneNumber)
     {
-        mPhoneNumber = phoneNumber;
-    }
-
-
-    @NonNull
-    @Override
-    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
-    {
-        return builder
-                .withValue(ContactsContract.CommonDataKinds.Phone.MIMETYPE, ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE)
-                .withValue(ContactsContract.CommonDataKinds.Phone.NUMBER, mPhoneNumber.toString());
+        super(new Typed(
+            ContactsContract.CommonDataKinds.Phone.TYPE_OTHER,
+            new Composite<>(
+                new MimeTypeData(ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE),
+                new CharSequenceRowData<>(ContactsContract.CommonDataKinds.Phone.NUMBER, phoneNumber))));
     }
 }

@@ -16,41 +16,30 @@
 
 package org.dmfs.android.contactspal.data.website;
 
-import android.content.ContentProviderOperation;
 import android.provider.ContactsContract;
 
-import org.dmfs.android.contactspal.data.Custom;
-import org.dmfs.android.contactspal.data.Typed;
-import org.dmfs.android.contentpal.RowData;
-import org.dmfs.android.contentpal.TransactionContext;
-
 import androidx.annotation.NonNull;
+
+import org.dmfs.android.contactspal.data.Custom;
+import org.dmfs.android.contactspal.data.MimeTypeData;
+import org.dmfs.android.contactspal.data.Typed;
+import org.dmfs.android.contentpal.rowdata.CharSequenceRowData;
+import org.dmfs.android.contentpal.rowdata.Composite;
+import org.dmfs.android.contentpal.rowdata.DelegatingRowData;
 
 
 /**
  * Data of a {@link ContactsContract.CommonDataKinds.Website} row with type {@link ContactsContract.CommonDataKinds.Website#TYPE_OTHER}.
  * <p>
  * Use {@link Typed} or {@link Custom} to add a type.
- *
- * @author Marten Gajda
  */
-public final class WebsiteData implements RowData<ContactsContract.Data>
+public final class WebsiteData extends DelegatingRowData<ContactsContract.Data>
 {
-    private final CharSequence mWebSite;
-
-
     public WebsiteData(@NonNull CharSequence webSite)
     {
-        mWebSite = webSite;
-    }
-
-
-    @NonNull
-    @Override
-    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
-    {
-        return builder
-                .withValue(ContactsContract.CommonDataKinds.Website.MIMETYPE, ContactsContract.CommonDataKinds.Website.CONTENT_ITEM_TYPE)
-                .withValue(ContactsContract.CommonDataKinds.Website.URL, mWebSite.toString());
+        super(new Typed(ContactsContract.CommonDataKinds.Website.TYPE_OTHER,
+            new Composite<>(
+                new MimeTypeData(ContactsContract.CommonDataKinds.Website.CONTENT_ITEM_TYPE),
+                new CharSequenceRowData<>(ContactsContract.CommonDataKinds.Website.URL, webSite))));
     }
 }

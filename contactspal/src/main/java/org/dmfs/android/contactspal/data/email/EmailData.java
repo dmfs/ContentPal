@@ -16,41 +16,32 @@
 
 package org.dmfs.android.contactspal.data.email;
 
-import android.content.ContentProviderOperation;
 import android.provider.ContactsContract;
 
 import org.dmfs.android.contactspal.data.Custom;
+import org.dmfs.android.contactspal.data.MimeTypeData;
 import org.dmfs.android.contactspal.data.Typed;
-import org.dmfs.android.contentpal.RowData;
-import org.dmfs.android.contentpal.TransactionContext;
+import org.dmfs.android.contentpal.rowdata.CharSequenceRowData;
+import org.dmfs.android.contentpal.rowdata.Composite;
+import org.dmfs.android.contentpal.rowdata.DelegatingRowData;
 
 import androidx.annotation.NonNull;
 
 
 /**
- * Data of a {@link ContactsContract.CommonDataKinds.Email} row with type {@link ContactsContract.CommonDataKinds.Email#ADDRESS}
+ * Data of a {@link ContactsContract.CommonDataKinds.Email} row.
  * <p>
- * Use {@link Typed} or {@link Custom} to add a type.
- *
- * @author Marten Gajda
+ * Use {@link Typed} or {@link Custom} to add a type, the default is {@link ContactsContract.CommonDataKinds.Email#TYPE_OTHER}
  */
-public final class EmailData implements RowData<ContactsContract.Data>
+public final class EmailData extends DelegatingRowData<ContactsContract.Data>
 {
-    private final CharSequence mAddress;
-
 
     public EmailData(@NonNull CharSequence address)
     {
-        mAddress = address;
-    }
-
-
-    @NonNull
-    @Override
-    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
-    {
-        return builder
-                .withValue(ContactsContract.CommonDataKinds.Email.MIMETYPE, ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE)
-                .withValue(ContactsContract.CommonDataKinds.Email.ADDRESS, mAddress.toString());
+        super(new Typed(
+            ContactsContract.CommonDataKinds.Email.TYPE_OTHER,
+            new Composite<>(
+                new MimeTypeData(ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE),
+                new CharSequenceRowData<>(ContactsContract.CommonDataKinds.Email.ADDRESS, address))));
     }
 }

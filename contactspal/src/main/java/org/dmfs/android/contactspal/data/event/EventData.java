@@ -16,45 +16,34 @@
 
 package org.dmfs.android.contactspal.data.event;
 
-import android.content.ContentProviderOperation;
 import android.provider.ContactsContract;
 
 import org.dmfs.android.contactspal.data.Custom;
+import org.dmfs.android.contactspal.data.MimeTypeData;
 import org.dmfs.android.contactspal.data.Typed;
-import org.dmfs.android.contentpal.RowData;
-import org.dmfs.android.contentpal.TransactionContext;
+import org.dmfs.android.contentpal.rowdata.CharSequenceRowData;
+import org.dmfs.android.contentpal.rowdata.Composite;
+import org.dmfs.android.contentpal.rowdata.DelegatingRowData;
 
 import androidx.annotation.NonNull;
 
 
 /**
- * Data of a {@link ContactsContract.CommonDataKinds.Event} row of {@link ContactsContract.CommonDataKinds.Event#TYPE_OTHER}.
+ * Data of a {@link ContactsContract.CommonDataKinds.Event} row.
  * <p>
  * Use {@link Typed} or {@link Custom} to add a type.
  * <p>
  * TODO: better use a DateTime parameter instead of a CharSequence
  * <p>
  * TODO: does it make sense to create dedicated classes for Birthday and Anniversary?
- *
- * @author Marten Gajda
  */
-public final class EventData implements RowData<ContactsContract.Data>
+public final class EventData extends DelegatingRowData<ContactsContract.Data>
 {
-    private final CharSequence mDate;
-
 
     public EventData(@NonNull CharSequence date)
     {
-        mDate = date;
-    }
-
-
-    @NonNull
-    @Override
-    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
-    {
-        return builder
-                .withValue(ContactsContract.CommonDataKinds.Event.MIMETYPE, ContactsContract.CommonDataKinds.Event.CONTENT_ITEM_TYPE)
-                .withValue(ContactsContract.CommonDataKinds.Event.START_DATE, mDate.toString());
+        super(new Composite<>(
+            new MimeTypeData(ContactsContract.CommonDataKinds.Event.CONTENT_ITEM_TYPE),
+            new CharSequenceRowData<>(ContactsContract.CommonDataKinds.Event.START_DATE, date)));
     }
 }

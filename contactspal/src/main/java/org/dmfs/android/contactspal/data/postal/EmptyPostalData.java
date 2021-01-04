@@ -19,9 +19,9 @@ package org.dmfs.android.contactspal.data.postal;
 import android.content.ContentProviderOperation;
 import android.provider.ContactsContract;
 
-import org.dmfs.android.contentpal.TransactionContext;
-
 import androidx.annotation.NonNull;
+
+import org.dmfs.android.contentpal.TransactionContext;
 
 
 /**
@@ -29,6 +29,7 @@ import androidx.annotation.NonNull;
  *
  * @author Marten Gajda
  */
+@Deprecated
 final class EmptyPostalData implements StructuredPostalData
 {
     public final static StructuredPostalData INSTANCE = new EmptyPostalData();
@@ -40,6 +41,6 @@ final class EmptyPostalData implements StructuredPostalData
     {
         // add content item type here, so other postal data can just delegate this part
         return builder
-                .withValue(ContactsContract.CommonDataKinds.StructuredPostal.MIMETYPE, ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_ITEM_TYPE);
+            .withValue(ContactsContract.CommonDataKinds.StructuredPostal.MIMETYPE, ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_ITEM_TYPE);
     }
 }

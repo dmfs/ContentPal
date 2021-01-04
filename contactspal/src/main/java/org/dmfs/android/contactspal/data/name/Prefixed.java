@@ -30,6 +30,7 @@ import androidx.annotation.Nullable;
  *
  * @author Marten Gajda
  */
+@Deprecated
 public final class Prefixed implements StructuredNameData
 {
     private final StructuredNameData mDelegate;
@@ -54,6 +55,6 @@ public final class Prefixed implements StructuredNameData
     public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
         return mDelegate.updatedBuilder(transactionContext, builder)
-                .withValue(ContactsContract.CommonDataKinds.StructuredName.PREFIX, mPrefix == null ? null : mPrefix.toString());
+            .withValue(ContactsContract.CommonDataKinds.StructuredName.PREFIX, mPrefix == null ? null : mPrefix.toString());
     }
 }

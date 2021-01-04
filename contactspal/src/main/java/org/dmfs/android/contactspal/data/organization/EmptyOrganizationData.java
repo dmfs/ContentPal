@@ -19,9 +19,9 @@ package org.dmfs.android.contactspal.data.organization;
 import android.content.ContentProviderOperation;
 import android.provider.ContactsContract;
 
-import org.dmfs.android.contentpal.TransactionContext;
-
 import androidx.annotation.NonNull;
+
+import org.dmfs.android.contentpal.TransactionContext;
 
 
 /**
@@ -29,6 +29,7 @@ import androidx.annotation.NonNull;
  *
  * @author Marten Gajda
  */
+@Deprecated
 final class EmptyOrganizationData implements OrganizationData
 {
     public final static OrganizationData INSTANCE = new EmptyOrganizationData();
@@ -40,6 +41,6 @@ final class EmptyOrganizationData implements OrganizationData
     {
         // add content item type here, so other organization data can just delegate this part
         return builder
-                .withValue(ContactsContract.CommonDataKinds.Organization.MIMETYPE, ContactsContract.CommonDataKinds.Organization.CONTENT_ITEM_TYPE);
+            .withValue(ContactsContract.CommonDataKinds.Organization.MIMETYPE, ContactsContract.CommonDataKinds.Organization.CONTENT_ITEM_TYPE);
     }
 }

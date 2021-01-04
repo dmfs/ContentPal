@@ -16,43 +16,30 @@
 
 package org.dmfs.android.contactspal.data.relation;
 
-import android.content.ContentProviderOperation;
 import android.provider.ContactsContract;
 
-import org.dmfs.android.contactspal.data.Custom;
-import org.dmfs.android.contentpal.RowData;
-import org.dmfs.android.contentpal.TransactionContext;
-
 import androidx.annotation.NonNull;
+
+import org.dmfs.android.contactspal.data.Custom;
+import org.dmfs.android.contactspal.data.MimeTypeData;
+import org.dmfs.android.contactspal.data.Typed;
+import org.dmfs.android.contentpal.rowdata.CharSequenceRowData;
+import org.dmfs.android.contentpal.rowdata.Composite;
+import org.dmfs.android.contentpal.rowdata.DelegatingRowData;
 
 
 /**
  * Data of a {@link ContactsContract.CommonDataKinds.Relation} row.
  * <p>
  * Use {@link Custom} to add a custom type.
- *
- * @author Marten Gajda
  */
-public final class RelationData implements RowData<ContactsContract.Data>
+public final class RelationData extends DelegatingRowData<ContactsContract.Data>
 {
-    private final int mType;
-    private final CharSequence mName;
-
-
     public RelationData(int type, @NonNull CharSequence name)
     {
-        mType = type;
-        mName = name;
-    }
-
-
-    @NonNull
-    @Override
-    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
-    {
-        return builder
-                .withValue(ContactsContract.CommonDataKinds.Relation.MIMETYPE, ContactsContract.CommonDataKinds.Relation.CONTENT_ITEM_TYPE)
-                .withValue(ContactsContract.CommonDataKinds.Relation.TYPE, mType)
-                .withValue(ContactsContract.CommonDataKinds.Relation.NAME, mName.toString());
+        super(new Typed(type,
+            new Composite<>(
+                new MimeTypeData(ContactsContract.CommonDataKinds.Relation.CONTENT_ITEM_TYPE),
+                new CharSequenceRowData<>(ContactsContract.CommonDataKinds.Relation.NAME, name))));
     }
 }

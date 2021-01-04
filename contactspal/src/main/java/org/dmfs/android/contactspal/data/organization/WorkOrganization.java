@@ -16,46 +16,72 @@
 
 package org.dmfs.android.contactspal.data.organization;
 
-import android.content.ContentProviderOperation;
 import android.provider.ContactsContract;
 
 import org.dmfs.android.contactspal.data.Typed;
 import org.dmfs.android.contentpal.RowData;
-import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.rowdata.Composite;
+import org.dmfs.android.contentpal.rowdata.DelegatingRowData;
+import org.dmfs.iterables.SingletonIterable;
+import org.dmfs.jems.iterable.composite.Joined;
 import org.dmfs.jems.iterable.elementary.Seq;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 
 /**
- * Decorator for work organizations.
- *
- * @author Marten Gajda
+ * A Work organization.
  */
-public final class WorkOrganization implements OrganizationData
+public final class WorkOrganization extends DelegatingRowData<ContactsContract.Data> implements OrganizationData
 {
-    private final RowData<ContactsContract.Data> mDelegate;
-
-
+    @Deprecated
     public WorkOrganization()
     {
         this(EmptyOrganizationData.INSTANCE);
     }
 
 
+    public WorkOrganization(@Nullable String company)
+    {
+        this(new SingletonIterable<>(new CompanyData(company)));
+    }
+
+
+    public WorkOrganization(
+        @Nullable String company,
+        @Nullable String department)
+    {
+        this(new Seq<>(
+            new CompanyData(company),
+            new DepartmentData(department)));
+    }
+
+
+    @Deprecated
     public WorkOrganization(@NonNull OrganizationData... data)
     {
         this(new Seq<>(data));
     }
 
 
-    public WorkOrganization(@NonNull Iterable<OrganizationData> data)
+    public WorkOrganization(@NonNull Iterable<? extends RowData<ContactsContract.Data>> data)
     {
-        this(new Composite<>(data));
+        this(new Composite<>(
+            new Joined<>(
+                new Seq<>(
+                    new CompanyData(null),
+                    new DepartmentData(null),
+                    new JobData(null),
+                    new OfficeLocationData(null),
+                    new SymbolData(null),
+                    new PhoneticNameData(null),
+                    new TitleData(null)),
+                data)));
     }
 
 
+    @Deprecated
     public WorkOrganization(@NonNull OrganizationData delegate)
     {
         this((RowData<ContactsContract.Data>) delegate);
@@ -64,14 +90,6 @@ public final class WorkOrganization implements OrganizationData
 
     private WorkOrganization(@NonNull RowData<ContactsContract.Data> delegate)
     {
-        mDelegate = new Typed(ContactsContract.CommonDataKinds.Organization.TYPE_WORK, delegate);
-    }
-
-
-    @NonNull
-    @Override
-    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
-    {
-        return mDelegate.updatedBuilder(transactionContext, builder);
+        super(new Typed(ContactsContract.CommonDataKinds.Organization.TYPE_WORK, delegate));
     }
 }

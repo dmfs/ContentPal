@@ -54,6 +54,6 @@ public final class StreetData implements StructuredPostalData
     public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
         return mDelegate.updatedBuilder(transactionContext, builder)
-                .withValue(ContactsContract.CommonDataKinds.StructuredPostal.STREET, mStreet == null ? null : mStreet.toString());
+            .withValue(ContactsContract.CommonDataKinds.StructuredPostal.STREET, mStreet == null ? null : mStreet.toString());
     }
 }

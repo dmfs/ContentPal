@@ -16,48 +16,41 @@
 
 package org.dmfs.android.contactspal.data.organization;
 
-import android.content.ContentProviderOperation;
 import android.provider.ContactsContract;
 
 import org.dmfs.android.contactspal.data.Custom;
+import org.dmfs.android.contactspal.data.MimeTypeData;
 import org.dmfs.android.contactspal.data.Typed;
-import org.dmfs.android.contentpal.TransactionContext;
+import org.dmfs.android.contentpal.rowdata.CharSequenceRowData;
+import org.dmfs.android.contentpal.rowdata.Composite;
+import org.dmfs.android.contentpal.rowdata.DelegatingRowData;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 
 /**
- * Organization Symbol. Use it standalone or as decorator to other {@link OrganizationData}.
+ * Organization Symbol.
  * <p>
  * Use {@link Typed} or {@link Custom} to add a type.
- *
- * @author Marten Gajda
  */
-public final class SymbolData implements OrganizationData
+public final class SymbolData extends DelegatingRowData<ContactsContract.Data> implements OrganizationData
 {
-    private final OrganizationData mDelegate;
-    private final CharSequence mSymbol;
-
 
     public SymbolData(@Nullable CharSequence symbol)
     {
-        this(symbol, EmptyOrganizationData.INSTANCE);
+        super(new Composite<>(
+            new MimeTypeData(ContactsContract.CommonDataKinds.Organization.CONTENT_ITEM_TYPE),
+            new CharSequenceRowData<>(ContactsContract.CommonDataKinds.Organization.SYMBOL, symbol)));
     }
 
 
+    @Deprecated
     public SymbolData(@Nullable CharSequence symbol, @NonNull OrganizationData delegate)
     {
-        mDelegate = delegate;
-        mSymbol = symbol;
-    }
-
-
-    @NonNull
-    @Override
-    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
-    {
-        return mDelegate.updatedBuilder(transactionContext, builder)
-                .withValue(ContactsContract.CommonDataKinds.Organization.SYMBOL, mSymbol == null ? null : mSymbol.toString());
+        super(new Composite<>(
+            delegate,
+            new MimeTypeData(ContactsContract.CommonDataKinds.Organization.CONTENT_ITEM_TYPE),
+            new CharSequenceRowData<>(ContactsContract.CommonDataKinds.Organization.SYMBOL, symbol)));
     }
 }

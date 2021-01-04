@@ -16,47 +16,62 @@
 
 package org.dmfs.android.contactspal.data.name;
 
-import android.content.ContentProviderOperation;
 import android.provider.ContactsContract;
 
-import org.dmfs.android.contentpal.TransactionContext;
+import org.dmfs.android.contentpal.rowdata.Composite;
+import org.dmfs.android.contentpal.rowdata.DelegatingRowData;
+import org.dmfs.jems.iterable.elementary.Seq;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 
 /**
- * Display name of a {@link ContactsContract.CommonDataKinds.StructuredName} row.
- *
- * @author Marten Gajda
+ * Name data.
  */
-public final class NameData implements StructuredNameData
+public final class NameData extends DelegatingRowData<ContactsContract.Data> implements StructuredNameData
 {
-    private final StructuredNameData mDelegate;
-    private final CharSequence mFirstName;
-    private final CharSequence mLastName;
+
+    @Deprecated
+    public NameData(@NonNull StructuredNameData... nameData)
+    {
+        this(new Seq<>(nameData));
+    }
+
+
+    public NameData(@Nullable CharSequence firstName, @Nullable CharSequence middleName, @Nullable CharSequence lastName)
+    {
+        super(new Composite<>(
+            new FirstNameData(firstName),
+            new MiddleNameData(middleName),
+            new LastNameData(lastName)));
+    }
 
 
     public NameData(@Nullable CharSequence firstName, @Nullable CharSequence lastName)
     {
-        this(firstName, lastName, EmptyNameData.INSTANCE);
+        super(new Composite<>(
+            new FirstNameData(firstName),
+            new MiddleNameData(null),
+            new LastNameData(lastName)));
     }
 
 
+    @Deprecated
     public NameData(@Nullable CharSequence firstName, @Nullable CharSequence lastName, @NonNull StructuredNameData delegate)
     {
-        mDelegate = delegate;
-        mFirstName = firstName;
-        mLastName = lastName;
+        super(new Composite<>(
+            new FirstNameData(firstName),
+            new MiddleNameData(null),
+            new LastNameData(lastName),
+            delegate));
     }
 
 
-    @NonNull
-    @Override
-    public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
+    @Deprecated
+    public NameData(@NonNull Iterable<StructuredNameData> nameData)
     {
-        return mDelegate.updatedBuilder(transactionContext, builder)
-                .withValue(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME, mFirstName == null ? null : mFirstName.toString())
-                .withValue(ContactsContract.CommonDataKinds.StructuredName.FAMILY_NAME, mLastName == null ? null : mLastName.toString());
+        super(new Composite<>(nameData));
     }
+
 }

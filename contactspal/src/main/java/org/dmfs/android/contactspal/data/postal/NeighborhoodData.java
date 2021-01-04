@@ -54,6 +54,6 @@ public final class NeighborhoodData implements StructuredPostalData
     public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
         return mDelegate.updatedBuilder(transactionContext, builder)
-                .withValue(ContactsContract.CommonDataKinds.StructuredPostal.NEIGHBORHOOD, mNeighborhood == null ? null : mNeighborhood.toString());
+            .withValue(ContactsContract.CommonDataKinds.StructuredPostal.NEIGHBORHOOD, mNeighborhood == null ? null : mNeighborhood.toString());
     }
 }
