@@ -29,29 +29,27 @@ import androidx.annotation.NonNull;
 
 /**
  * {@link RowData} composition decorator, i.e. {@link RowData} composed of other {@link RowData}.
- *
- * @author Marten Gajda
  */
 public final class Composite<T> implements RowData<T>
 {
-    private final Iterable<? extends RowData<T>> mDelegates;
+    private final Iterable<? extends RowData<? super T>> mDelegates;
 
 
     @SafeVarargs
-    public Composite(@NonNull Optional<RowData<T>>... optionalDelegates)
+    public Composite(@NonNull Optional<? extends RowData<? super T>>... optionalDelegates)
     {
-        this(new PresentValues<>(new Seq<>(optionalDelegates)));
+        this(new PresentValues<>(optionalDelegates));
     }
 
 
     @SafeVarargs
-    public Composite(@NonNull RowData<T>... delegates)
+    public Composite(@NonNull RowData<? super T>... delegates)
     {
         this(new Seq<>(delegates));
     }
 
 
-    public Composite(@NonNull Iterable<? extends RowData<T>> delegates)
+    public Composite(@NonNull Iterable<? extends RowData<? super T>> delegates)
     {
         mDelegates = delegates;
     }
@@ -61,7 +59,7 @@ public final class Composite<T> implements RowData<T>
     @Override
     public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
-        for (RowData<T> rowData : mDelegates)
+        for (RowData<? super T> rowData : mDelegates)
         {
             rowData.updatedBuilder(transactionContext, builder);
         }
