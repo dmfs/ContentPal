@@ -16,7 +16,6 @@
 
 package org.dmfs.android.contactspal.rowsets;
 
-import android.provider.BaseColumns;
 import android.provider.ContactsContract;
 
 import org.dmfs.android.contactspal.tables.Data;
@@ -50,11 +49,14 @@ public final class RawContactDataRows extends DelegatingRowSet<ContactsContract.
      * Creates a {@link RowSet} of all {@link ContactsContract.Data} rows of the given raw contact.
      *
      * @param dataView
-     *         A {@link View} onto the {@link ContactsContract.Data} table, like {@link Data}.
+     *     A {@link View} onto the {@link ContactsContract.Data} table, like {@link Data}.
      * @param rawContact
-     *         The {@link RowSnapshot} of a RawContact.
+     *     The {@link RowSnapshot} of a RawContact.
      */
-    public RawContactDataRows(@NonNull View<ContactsContract.Data> dataView, @NonNull Projection<ContactsContract.Data> projection, @NonNull RowSnapshot<ContactsContract.RawContacts> rawContact)
+    public RawContactDataRows(
+        @NonNull View<ContactsContract.Data> dataView,
+        @NonNull Projection<ContactsContract.Data> projection,
+        @NonNull RowSnapshot<ContactsContract.RawContacts> rawContact)
     {
         this(dataView, projection, rawContact, new AnyOf<>());
     }
@@ -64,11 +66,14 @@ public final class RawContactDataRows extends DelegatingRowSet<ContactsContract.
      * Creates a {@link RowSet} of all {@link ContactsContract.Data} rows of the given raw contact.
      *
      * @param dataView
-     *         A {@link View} onto the {@link ContactsContract.Data} table, like {@link Data}.
+     *     A {@link View} onto the {@link ContactsContract.Data} table, like {@link Data}.
      * @param rawContact
-     *         The {@link RowReference} of a RawContact.
+     *     The {@link RowReference} of a RawContact.
      */
-    public RawContactDataRows(@NonNull View<ContactsContract.Data> dataView, @NonNull Projection<ContactsContract.Data> projection, @NonNull RowReference<ContactsContract.RawContacts> rawContact)
+    public RawContactDataRows(
+        @NonNull View<ContactsContract.Data> dataView,
+        @NonNull Projection<ContactsContract.Data> projection,
+        @NonNull RowReference<ContactsContract.RawContacts> rawContact)
     {
         this(dataView, projection, rawContact, new AnyOf<>());
     }
@@ -78,13 +83,17 @@ public final class RawContactDataRows extends DelegatingRowSet<ContactsContract.
      * Creates a {@link RowSet} of all {@link ContactsContract.Data} rows of the given raw contact.
      *
      * @param dataView
-     *         A {@link View} onto the {@link ContactsContract.Data} table, like {@link Data}.
+     *     A {@link View} onto the {@link ContactsContract.Data} table, like {@link Data}.
      * @param rawContact
-     *         The {@link RowSnapshot} of a RawContact.
+     *     The {@link RowSnapshot} of a RawContact.
      * @param predicate
-     *         A {@link Predicate} to filter the data rows to return.
+     *     A {@link Predicate} to filter the data rows to return.
      */
-    public RawContactDataRows(@NonNull View<ContactsContract.Data> dataView, @NonNull Projection<ContactsContract.Data> projection, @NonNull RowSnapshot<ContactsContract.RawContacts> rawContact, @NonNull Predicate<? super ContactsContract.Data> predicate)
+    public RawContactDataRows(
+        @NonNull View<ContactsContract.Data> dataView,
+        @NonNull Projection<ContactsContract.Data> projection,
+        @NonNull RowSnapshot<ContactsContract.RawContacts> rawContact,
+        @NonNull Predicate<? super ContactsContract.Data> predicate)
     {
         this(dataView, projection, new RowSnapshotReference<>(rawContact), predicate);
     }
@@ -94,19 +103,26 @@ public final class RawContactDataRows extends DelegatingRowSet<ContactsContract.
      * Creates a {@link RowSet} of all {@link ContactsContract.Data} rows of the given raw contact.
      *
      * @param dataView
-     *         A {@link View} onto the {@link ContactsContract.Data} table, like {@link Data}.
+     *     A {@link View} onto the {@link ContactsContract.Data} table, like {@link Data}.
      * @param rawContactReference
-     *         The {@link RowReference} of a RawContact.
+     *     The {@link RowReference} of a RawContact.
      * @param predicate
-     *         A {@link Predicate} to filter the data rows to return.
+     *     A {@link Predicate} to filter the data rows to return.
      */
-    public RawContactDataRows(@NonNull View<ContactsContract.Data> dataView, @NonNull Projection<ContactsContract.Data> projection, @NonNull RowReference<ContactsContract.RawContacts> rawContactReference, @NonNull Predicate<? super ContactsContract.Data> predicate)
+    public RawContactDataRows(
+        @NonNull View<ContactsContract.Data> dataView,
+        @NonNull Projection<ContactsContract.Data> projection,
+        @NonNull RowReference<ContactsContract.RawContacts> rawContactReference,
+        @NonNull Predicate<? super ContactsContract.Data> predicate)
     {
-        this(dataView, projection, new AllOf<>(new ReferringTo<>(BaseColumns._ID, rawContactReference), predicate));
+        this(dataView, projection, new AllOf<>(new ReferringTo<>(ContactsContract.Data.RAW_CONTACT_ID, rawContactReference), predicate));
     }
 
 
-    private RawContactDataRows(@NonNull View<ContactsContract.Data> dataView, @NonNull Projection<ContactsContract.Data> projection, @NonNull Predicate<? super ContactsContract.Data> predicate)
+    private RawContactDataRows(
+        @NonNull View<ContactsContract.Data> dataView,
+        @NonNull Projection<ContactsContract.Data> projection,
+        @NonNull Predicate<? super ContactsContract.Data> predicate)
     {
         super(new QueryRowSet<>(dataView, projection, predicate));
     }
