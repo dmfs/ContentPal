@@ -18,9 +18,11 @@ package org.dmfs.android.contactspal.data.membership;
 
 import android.provider.ContactsContract;
 
+import org.dmfs.android.contactspal.data.MimeTypeData;
 import org.dmfs.android.contentpal.RowData;
 import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.rowdata.CharSequenceRowData;
+import org.dmfs.android.contentpal.rowdata.Composite;
 import org.dmfs.android.contentpal.rowdata.DelegatingRowData;
 import org.dmfs.android.contentpal.rowdata.Referring;
 
@@ -36,12 +38,20 @@ public final class GroupMembershipData extends DelegatingRowData<ContactsContrac
 
     public GroupMembershipData(@NonNull CharSequence groupSourceId)
     {
-        super(new CharSequenceRowData<>(ContactsContract.CommonDataKinds.GroupMembership.GROUP_SOURCE_ID, groupSourceId));
+        this(new CharSequenceRowData<>(ContactsContract.CommonDataKinds.GroupMembership.GROUP_SOURCE_ID, groupSourceId));
     }
 
 
     public GroupMembershipData(@NonNull RowSnapshot<ContactsContract.Groups> group)
     {
-        super(new Referring<>(ContactsContract.CommonDataKinds.GroupMembership.GROUP_ROW_ID, group));
+        this(new Referring<>(ContactsContract.CommonDataKinds.GroupMembership.GROUP_ROW_ID, group));
+    }
+
+
+    private GroupMembershipData(@NonNull RowData<ContactsContract.Data> reference)
+    {
+        super(new Composite<>(
+            new MimeTypeData(ContactsContract.CommonDataKinds.GroupMembership.CONTENT_ITEM_TYPE),
+            reference));
     }
 }
