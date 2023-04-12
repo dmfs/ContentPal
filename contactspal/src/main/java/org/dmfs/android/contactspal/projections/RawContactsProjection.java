@@ -34,27 +34,27 @@ public final class RawContactsProjection extends DelegatingProjection<ContactsCo
     {
         // TODO: it's probably better to compose this from smaller projections with just a few columns
         super(new MultiProjection<>(
-                ContactsContract.RawContacts._ID,
-                ContactsContract.RawContacts.CONTACT_ID,
-                ContactsContract.RawContacts.AGGREGATION_MODE,
-                ContactsContract.RawContacts.DELETED,
-                // the following column doesn't seem to work on Android 7.1
-                //ContactsContract.RawContacts.RAW_CONTACT_IS_READ_ONLY,
+            ContactsContract.RawContacts._ID,
+            ContactsContract.RawContacts.CONTACT_ID,
+            ContactsContract.RawContacts.AGGREGATION_MODE,
+            ContactsContract.RawContacts.DELETED,
+            // the following column doesn't seem to work on Android 7.1
+            //ContactsContract.RawContacts.RAW_CONTACT_IS_READ_ONLY,
 
-                // values from ContactNameColumns
-                ContactsContract.RawContacts.DISPLAY_NAME_SOURCE,
-                ContactsContract.RawContacts.DISPLAY_NAME_PRIMARY,
-                ContactsContract.RawContacts.DISPLAY_NAME_ALTERNATIVE,
-                ContactsContract.RawContacts.PHONETIC_NAME_STYLE,
-                ContactsContract.RawContacts.PHONETIC_NAME,
-                ContactsContract.RawContacts.SORT_KEY_PRIMARY,
-                ContactsContract.RawContacts.SORT_KEY_ALTERNATIVE,
+            // values from ContactNameColumns
+            ContactsContract.RawContacts.DISPLAY_NAME_SOURCE,
+            ContactsContract.RawContacts.DISPLAY_NAME_PRIMARY,
+            ContactsContract.RawContacts.DISPLAY_NAME_ALTERNATIVE,
+            ContactsContract.RawContacts.PHONETIC_NAME_STYLE,
+            ContactsContract.RawContacts.PHONETIC_NAME,
+            ContactsContract.RawContacts.SORT_KEY_PRIMARY,
+            ContactsContract.RawContacts.SORT_KEY_ALTERNATIVE,
 
-                // values from SyncColumns
-                ContactsContract.RawContacts.ACCOUNT_NAME,
-                ContactsContract.RawContacts.ACCOUNT_TYPE,
-                ContactsContract.RawContacts.DIRTY,
-                ContactsContract.RawContacts.SOURCE_ID,
-                ContactsContract.RawContacts.VERSION));
+            // values from SyncColumns
+            ContactsContract.RawContacts.ACCOUNT_NAME,
+            ContactsContract.RawContacts.ACCOUNT_TYPE,
+            ContactsContract.RawContacts.DIRTY,
+            ContactsContract.RawContacts.SOURCE_ID,
+            ContactsContract.RawContacts.VERSION));
     }
 }

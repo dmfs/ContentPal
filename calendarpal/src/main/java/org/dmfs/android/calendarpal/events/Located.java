@@ -56,6 +56,6 @@ public final class Located implements RowData<CalendarContract.Events>
     public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
         return mDelegate.updatedBuilder(transactionContext, builder)
-                .withValue(CalendarContract.Events.EVENT_LOCATION, mLocation == null ? null : mLocation.toString());
+            .withValue(CalendarContract.Events.EVENT_LOCATION, mLocation == null ? null : mLocation.toString());
     }
 }

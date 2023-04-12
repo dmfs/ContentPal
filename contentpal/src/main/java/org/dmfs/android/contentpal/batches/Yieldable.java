@@ -17,7 +17,7 @@
 package org.dmfs.android.contentpal.batches;
 
 import org.dmfs.android.contentpal.Operation;
-import org.dmfs.iterators.AbstractBaseIterator;
+import org.dmfs.jems2.iterator.BaseIterator;
 
 import java.util.Iterator;
 
@@ -43,7 +43,7 @@ public final class Yieldable<T> implements Iterable<Operation<T>>
      * executed.
      *
      * @param delegate
-     *         The {@link Iterable} of {@link Operation}s.
+     *     The {@link Iterable} of {@link Operation}s.
      */
     public Yieldable(@NonNull Iterable<Operation<T>> delegate)
     {
@@ -57,7 +57,7 @@ public final class Yieldable<T> implements Iterable<Operation<T>>
     {
         final Iterator<Operation<T>> delegate = mDelegate.iterator();
         // return an iterator which decorates the last Operation with Yieldable.
-        return new AbstractBaseIterator<Operation<T>>()
+        return new BaseIterator<Operation<T>>()
         {
             private boolean mFirst = true;
 

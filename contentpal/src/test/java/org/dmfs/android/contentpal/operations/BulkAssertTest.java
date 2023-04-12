@@ -40,11 +40,11 @@ import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYi
 import static org.dmfs.android.contentpal.testing.contentvalues.Containing.containing;
 import static org.dmfs.android.contentpal.testing.operations.OperationMatcher.builds;
 import static org.dmfs.android.contentpal.testing.predicates.PredicateArgumentMatcher.predicateWithSelection;
-import static org.dmfs.jems.hamcrest.matchers.optional.AbsentMatcher.absent;
-import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
-import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
+import static org.dmfs.jems2.hamcrest.matchers.optional.AbsentMatcher.absent;
+import static org.dmfs.jems2.mockito.doubles.TestDoubles.dummy;
+import static org.dmfs.jems2.mockito.doubles.TestDoubles.failingMock;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsSame.sameInstance;
-import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.same;
 import static org.mockito.Mockito.doReturn;
@@ -84,12 +84,12 @@ public final class BulkAssertTest
         doReturn(ContentProviderOperation.newAssertQuery(dummyUri)).when(mockAssertOperation).contentOperationBuilder(any(TransactionContext.class));
 
         assertThat(new BulkAssert<>(mockTable),
-                builds(
-                        targets(sameInstance(dummyUri)),
-                        assertOperation(),
-                        withoutExpectedCount(),
-                        withYieldNotAllowed(),
-                        withoutValues()));
+            builds(
+                targets(sameInstance(dummyUri)),
+                assertOperation(),
+                withoutExpectedCount(),
+                withYieldNotAllowed(),
+                withoutValues()));
     }
 
 
@@ -105,12 +105,12 @@ public final class BulkAssertTest
         doReturn(ContentProviderOperation.newAssertQuery(dummyUri)).when(mockAssertOperation).contentOperationBuilder(any(TransactionContext.class));
 
         assertThat(new BulkAssert<>(mockTable, dummyPredicate),
-                builds(
-                        targets(sameInstance(dummyUri)),
-                        assertOperation(),
-                        withoutExpectedCount(),
-                        withYieldNotAllowed(),
-                        withoutValues()));
+            builds(
+                targets(sameInstance(dummyUri)),
+                assertOperation(),
+                withoutExpectedCount(),
+                withYieldNotAllowed(),
+                withoutValues()));
     }
 
 
@@ -125,13 +125,13 @@ public final class BulkAssertTest
         doReturn(ContentProviderOperation.newAssertQuery(dummyUri)).when(mockAssertOperation).contentOperationBuilder(any(TransactionContext.class));
 
         assertThat(new BulkAssert<>(mockTable, new CharSequenceRowData<>("key", "value")),
-                builds(
-                        targets(sameInstance(dummyUri)),
-                        assertOperation(),
-                        withoutExpectedCount(),
-                        withYieldNotAllowed(),
-                        withValuesOnly(
-                                containing("key", "value"))));
+            builds(
+                targets(sameInstance(dummyUri)),
+                assertOperation(),
+                withoutExpectedCount(),
+                withYieldNotAllowed(),
+                withValuesOnly(
+                    containing("key", "value"))));
     }
 
 
@@ -147,13 +147,13 @@ public final class BulkAssertTest
         doReturn(ContentProviderOperation.newAssertQuery(dummyUri)).when(mockAssertOperation).contentOperationBuilder(any(TransactionContext.class));
 
         assertThat(new BulkAssert<>(mockTable, new CharSequenceRowData<>("key", "value"), dummyPredicate),
-                builds(
-                        targets(sameInstance(dummyUri)),
-                        assertOperation(),
-                        withoutExpectedCount(),
-                        withYieldNotAllowed(),
-                        withValuesOnly(
-                                containing("key", "value"))));
+            builds(
+                targets(sameInstance(dummyUri)),
+                assertOperation(),
+                withoutExpectedCount(),
+                withYieldNotAllowed(),
+                withValuesOnly(
+                    containing("key", "value"))));
     }
 
 }

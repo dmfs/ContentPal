@@ -22,7 +22,7 @@ import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.ab
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.argumentValues;
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.predicateWith;
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.selection;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 
 /**
@@ -35,11 +35,11 @@ public class EqArgTest
     public void test()
     {
         assertThat(new EqArg<>("x", "y"),
-                predicateWith(
-                        selection("x = ?"),
-                        argumentValues("y"),
-                        absentBackReferences(1)
-                ));
+            predicateWith(
+                selection("x = ?"),
+                argumentValues("y"),
+                absentBackReferences(1)
+            ));
     }
 
 }

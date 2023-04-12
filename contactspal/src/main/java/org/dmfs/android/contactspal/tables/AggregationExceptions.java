@@ -58,7 +58,9 @@ public final class AggregationExceptions implements Table<ContactsContract.Aggre
 
     @NonNull
     @Override
-    public Operation<ContactsContract.AggregationExceptions> updateOperation(@NonNull UriParams uriParams, @NonNull Predicate<? super ContactsContract.AggregationExceptions> predicate)
+    public Operation<ContactsContract.AggregationExceptions> updateOperation(
+        @NonNull UriParams uriParams,
+        @NonNull Predicate<? super ContactsContract.AggregationExceptions> predicate)
     {
         return mDelegate.updateOperation(uriParams, predicate);
     }
@@ -66,7 +68,9 @@ public final class AggregationExceptions implements Table<ContactsContract.Aggre
 
     @NonNull
     @Override
-    public Operation<ContactsContract.AggregationExceptions> deleteOperation(@NonNull UriParams uriParams, @NonNull Predicate<? super ContactsContract.AggregationExceptions> predicate)
+    public Operation<ContactsContract.AggregationExceptions> deleteOperation(
+        @NonNull UriParams uriParams,
+        @NonNull Predicate<? super ContactsContract.AggregationExceptions> predicate)
     {
         throw new UnsupportedOperationException("AggregationExceptions doesn't support deletes");
     }
@@ -74,7 +78,9 @@ public final class AggregationExceptions implements Table<ContactsContract.Aggre
 
     @NonNull
     @Override
-    public Operation<ContactsContract.AggregationExceptions> assertOperation(@NonNull UriParams uriParams, @NonNull Predicate<? super ContactsContract.AggregationExceptions> predicate)
+    public Operation<ContactsContract.AggregationExceptions> assertOperation(
+        @NonNull UriParams uriParams,
+        @NonNull Predicate<? super ContactsContract.AggregationExceptions> predicate)
     {
         return mDelegate.assertOperation(uriParams, predicate);
     }

@@ -60,6 +60,6 @@ public final class ReminderData implements RowData<CalendarContract.Reminders>
     public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
         return builder.withValue(CalendarContract.Reminders.MINUTES, mMinutes)
-                .withValue(CalendarContract.Reminders.METHOD, mMethod);
+            .withValue(CalendarContract.Reminders.METHOD, mMethod);
     }
 }

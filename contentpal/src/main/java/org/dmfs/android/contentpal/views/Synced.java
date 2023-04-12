@@ -27,7 +27,7 @@ import org.dmfs.android.contentpal.UriParams;
 import org.dmfs.android.contentpal.View;
 import org.dmfs.android.contentpal.tools.uriparams.AccountScopedParams;
 import org.dmfs.android.contentpal.tools.uriparams.SyncParams;
-import org.dmfs.jems.optional.Optional;
+import org.dmfs.jems2.Optional;
 
 import androidx.annotation.NonNull;
 
@@ -37,7 +37,7 @@ import androidx.annotation.NonNull;
  * {@code caller_is_syncadapter} query parameters.
  *
  * @param <T>
- *         The contract of this view.
+ *     The contract of this view.
  *
  * @author Marten Gajda
  */
@@ -56,7 +56,11 @@ public final class Synced<T> implements View<T>
 
     @NonNull
     @Override
-    public Cursor rows(@NonNull UriParams uriParams, @NonNull Projection<? super T> projection, @NonNull Predicate<? super T> predicate, @NonNull Optional<String> sorting) throws RemoteException
+    public Cursor rows(
+        @NonNull UriParams uriParams,
+        @NonNull Projection<? super T> projection,
+        @NonNull Predicate<? super T> predicate,
+        @NonNull Optional<String> sorting) throws RemoteException
     {
         return mDelegate.rows(new AccountScopedParams(mAccount, new SyncParams(uriParams)), projection, predicate, sorting);
     }

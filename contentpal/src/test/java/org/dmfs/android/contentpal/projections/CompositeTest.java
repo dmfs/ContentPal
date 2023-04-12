@@ -18,12 +18,12 @@ package org.dmfs.android.contentpal.projections;
 
 import org.dmfs.android.contentpal.Projection;
 import org.dmfs.android.contentpal.testing.table.Contract;
-import org.dmfs.jems.iterable.elementary.Seq;
+import org.dmfs.jems2.iterable.Seq;
 import org.junit.Test;
 
 import static org.dmfs.android.contentpal.testing.projection.ProjectionMatcher.projects;
 import static org.dmfs.android.contentpal.testing.projection.ProjectionMatcher.projectsEmpty;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 
 /**
@@ -35,9 +35,9 @@ public class CompositeTest
     public void testEmpty()
     {
         assertThat(new Composite<>(new Seq<Projection<Contract>>(new EmptyProjection<>())), projectsEmpty());
-        assertThat(new Composite<>(new Seq<Projection<Contract>>(new EmptyProjection<>(), new EmptyProjection())), projectsEmpty());
-        assertThat(new Composite<>(new Seq<Projection<Contract>>(new EmptyProjection<>(), new EmptyProjection(), new EmptyProjection())),
-                projectsEmpty());
+        assertThat(new Composite<>(new Seq<Projection<Contract>>(new EmptyProjection<>(), new EmptyProjection<>())), projectsEmpty());
+        assertThat(new Composite<>(new Seq<Projection<Contract>>(new EmptyProjection<>(), new EmptyProjection<>(), new EmptyProjection<>())),
+            projectsEmpty());
     }
 
 
@@ -50,17 +50,17 @@ public class CompositeTest
         assertThat(new Composite<>(new MultiProjection<Contract>("abc"), new MultiProjection<Contract>("xyz")), projects("abc", "xyz"));
         assertThat(new Composite<>(new MultiProjection<Contract>("abc", "xyz", "qrs")), projects("abc", "xyz", "qrs"));
         assertThat(new Composite<>(new MultiProjection<Contract>("abc", "xyz", "qrs"), new MultiProjection<Contract>("123", "456", "789")),
-                projects("abc", "xyz", "qrs", "123", "456", "789"));
+            projects("abc", "xyz", "qrs", "123", "456", "789"));
 
         // test iterable ctor
         assertThat(new Composite<>(new Seq<Projection<Contract>>(new MultiProjection<>("abc"))), projects("abc"));
         assertThat(new Composite<>(new Seq<Projection<Contract>>(new MultiProjection<>("abc", "xyz", "qrs"))), projects("abc", "xyz", "qrs"));
         assertThat(new Composite<>(new Seq<Projection<Contract>>(new MultiProjection<>("abc"), new MultiProjection<>("xyz"))),
-                projects("abc", "xyz"));
+            projects("abc", "xyz"));
         assertThat(new Composite<>(new Seq<Projection<Contract>>(new MultiProjection<>("abc", "xyz", "qrs"))), projects("abc", "xyz", "qrs"));
         assertThat(new Composite<>(
-                        new Seq<Projection<Contract>>(new MultiProjection<>("abc", "xyz", "qrs"), new MultiProjection<>("123", "456", "789"))),
-                projects("abc", "xyz", "qrs", "123", "456", "789"));
+                new Seq<Projection<Contract>>(new MultiProjection<>("abc", "xyz", "qrs"), new MultiProjection<>("123", "456", "789"))),
+            projects("abc", "xyz", "qrs", "123", "456", "789"));
     }
 
 
@@ -68,10 +68,10 @@ public class CompositeTest
     public void testDuplicateColumns()
     {
         assertThat(new Composite<>(
-                        new Seq<Projection<Contract>>(
-                                new MultiProjection<>("abc", "xyz", "qrs", "123", "456", "789"),
-                                new MultiProjection<>("abc", "xyz", "qrs", "123", "456", "789"))),
-                projects("abc", "xyz", "qrs", "123", "456", "789", "abc", "xyz", "qrs", "123", "456", "789"));
+                new Seq<Projection<Contract>>(
+                    new MultiProjection<>("abc", "xyz", "qrs", "123", "456", "789"),
+                    new MultiProjection<>("abc", "xyz", "qrs", "123", "456", "789"))),
+            projects("abc", "xyz", "qrs", "123", "456", "789", "abc", "xyz", "qrs", "123", "456", "789"));
     }
 
 }

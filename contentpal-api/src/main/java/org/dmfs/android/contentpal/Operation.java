@@ -18,7 +18,7 @@ package org.dmfs.android.contentpal;
 
 import android.content.ContentProviderOperation;
 
-import org.dmfs.jems.optional.Optional;
+import org.dmfs.jems2.Optional;
 
 import androidx.annotation.NonNull;
 
@@ -27,7 +27,7 @@ import androidx.annotation.NonNull;
  * A single operation on a content provider table.
  *
  * @param <T>
- *         The contract of the table this {@link Operation} belongs to.
+ *     The contract of the table this {@link Operation} belongs to.
  *
  * @author Marten Gajda
  */
@@ -47,12 +47,12 @@ public interface Operation<T>
      * Creates a {@link ContentProviderOperation.Builder} for this {@link Operation}.
      *
      * @param transactionContext
-     *         The current {@link TransactionContext}.
+     *     The current {@link TransactionContext}.
      *
      * @return A {@link ContentProviderOperation.Builder} that builds the {@link ContentProviderOperation} on {@link ContentProviderOperation.Builder#build()}.
      *
      * @throws UnsupportedOperationException
-     *         If this is a NoOp.
+     *     If this is a NoOp.
      */
     @NonNull
     ContentProviderOperation.Builder contentOperationBuilder(@NonNull TransactionContext transactionContext) throws UnsupportedOperationException;

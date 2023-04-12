@@ -48,6 +48,6 @@ public final class Named implements RowData<CalendarContract.Calendars>
     public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
         return builder.withValue(CalendarContract.Calendars.CALENDAR_DISPLAY_NAME, mName.toString())
-                .withValue(CalendarContract.Calendars.NAME, mName.toString());
+            .withValue(CalendarContract.Calendars.NAME, mName.toString());
     }
 }

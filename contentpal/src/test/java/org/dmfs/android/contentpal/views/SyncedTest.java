@@ -27,18 +27,18 @@ import org.dmfs.android.contentpal.Projection;
 import org.dmfs.android.contentpal.UriParams;
 import org.dmfs.android.contentpal.View;
 import org.dmfs.android.contentpal.tools.uriparams.EmptyUriParams;
-import org.dmfs.jems.optional.Optional;
-import org.dmfs.jems.optional.elementary.Present;
+import org.dmfs.jems2.Optional;
+import org.dmfs.jems2.optional.Present;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatcher;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
-import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
-import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
+import static org.dmfs.jems2.mockito.doubles.TestDoubles.dummy;
+import static org.dmfs.jems2.mockito.doubles.TestDoubles.failingMock;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.sameInstance;
-import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.same;
@@ -63,10 +63,10 @@ public class SyncedTest
         View<Object> mockView = failingMock(View.class);
         Account account = new Account("name", "type");
         doReturn(dummyResult).when(mockView)
-                .rows(argThat(new UriParamsArgumentMatcher(account)), same(dummyProjection), same(dummyPredicate), any(Optional.class));
+            .rows(argThat(new UriParamsArgumentMatcher(account)), same(dummyProjection), same(dummyPredicate), any(Optional.class));
 
         assertThat(new Synced<>(account, mockView).rows(new EmptyUriParams(), dummyProjection, dummyPredicate, new Present<>("sorting")),
-                sameInstance(dummyResult));
+            sameInstance(dummyResult));
     }
 
 
@@ -86,7 +86,7 @@ public class SyncedTest
         {
             Uri uri = argument.withParam(new Uri.Builder()).build();
             return uri.getBooleanQueryParameter(ContactsContract.CALLER_IS_SYNCADAPTER, false) &&
-                    mAccount.equals(new Account(uri.getQueryParameter("account_name"), uri.getQueryParameter("account_type")));
+                mAccount.equals(new Account(uri.getQueryParameter("account_name"), uri.getQueryParameter("account_type")));
         }
     }
 }

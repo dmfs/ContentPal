@@ -39,12 +39,12 @@ public class TransientEventTest
     public void test()
     {
         assertThat(new TransientEvent(),
-                Matchers.is(predicateWith(
-                        selection(String.format("( %s is null ) and ( %s is null ) and ( %s = ? )",
-                                CalendarContract.Events.ORIGINAL_SYNC_ID,
-                                CalendarContract.Events._SYNC_ID,
-                                CalendarContract.Events.DELETED)),
-                        argumentValues("1"),
-                        absentBackReferences(1))));
+            Matchers.is(predicateWith(
+                selection(String.format("( %s is null ) and ( %s is null ) and ( %s = ? )",
+                    CalendarContract.Events.ORIGINAL_SYNC_ID,
+                    CalendarContract.Events._SYNC_ID,
+                    CalendarContract.Events.DELETED)),
+                argumentValues("1"),
+                absentBackReferences(1))));
     }
 }

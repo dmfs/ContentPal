@@ -25,10 +25,11 @@ import org.dmfs.android.contentpal.Table;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.predicates.AnyOf;
 import org.dmfs.android.contentpal.tools.uriparams.EmptyUriParams;
-import org.dmfs.jems.optional.Optional;
-import org.dmfs.jems.optional.elementary.Absent;
+import org.dmfs.jems2.Optional;
 
 import androidx.annotation.NonNull;
+
+import static org.dmfs.jems2.optional.Absent.absent;
 
 
 /**
@@ -59,7 +60,7 @@ public final class BulkDelete<T> implements Operation<T>
     @Override
     public Optional<SoftRowReference<T>> reference()
     {
-        return Absent.absent();
+        return absent();
     }
 
 

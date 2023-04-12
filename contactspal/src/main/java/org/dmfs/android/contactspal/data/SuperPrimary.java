@@ -18,12 +18,12 @@ package org.dmfs.android.contactspal.data;
 
 import android.provider.ContactsContract;
 
-import androidx.annotation.NonNull;
-
 import org.dmfs.android.contentpal.RowData;
 import org.dmfs.android.contentpal.rowdata.Composite;
 import org.dmfs.android.contentpal.rowdata.DelegatingRowData;
 import org.dmfs.android.contentpal.rowdata.IntegerRowData;
+
+import androidx.annotation.NonNull;
 
 
 /**

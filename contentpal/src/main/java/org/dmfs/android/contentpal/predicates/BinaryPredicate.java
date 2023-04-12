@@ -18,9 +18,9 @@ package org.dmfs.android.contentpal.predicates;
 
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.TransactionContext;
-import org.dmfs.jems.iterable.composite.Joined;
-import org.dmfs.jems.iterable.decorators.Mapped;
-import org.dmfs.jems.iterable.elementary.Seq;
+import org.dmfs.jems2.iterable.Joined;
+import org.dmfs.jems2.iterable.Mapped;
+import org.dmfs.jems2.iterable.Seq;
 
 import java.util.Iterator;
 
@@ -87,8 +87,8 @@ public final class BinaryPredicate<Contract> implements Predicate<Contract>
     public Iterable<Argument> arguments(@NonNull final TransactionContext transactionContext)
     {
         return new Joined<>(
-                new Mapped<>(
-                        predicate -> predicate.arguments(transactionContext),
-                        mPredicates));
+            new Mapped<>(
+                predicate -> predicate.arguments(transactionContext),
+                mPredicates));
     }
 }

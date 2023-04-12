@@ -17,11 +17,11 @@
 package org.dmfs.android.contentpal.testing.contentoperationbuilder;
 
 import android.content.ContentProviderOperation;
-import android.content.ContentValues;
+import android.util.ArrayMap;
 
 import org.dmfs.android.contentpal.testing.tools.Field;
-import org.dmfs.jems.optional.elementary.NullSafe;
-import org.dmfs.jems.single.combined.Backed;
+import org.dmfs.jems2.optional.NullSafe;
+import org.dmfs.jems2.single.Backed;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
@@ -39,12 +39,12 @@ import static org.hamcrest.Matchers.allOf;
  */
 public final class WithValues extends TypeSafeDiagnosingMatcher<ContentProviderOperation.Builder>
 {
-    private final Matcher<ContentValues> mValueMatcher;
+    private final Matcher<ArrayMap<String, Object>> mValueMatcher;
 
 
     @NonNull
     @SafeVarargs
-    public static WithValues withValuesOnly(@NonNull Matcher<ContentValues>... valueMatchers)
+    public static WithValues withValuesOnly(@NonNull Matcher<ArrayMap<String, Object>>... valueMatchers)
     {
         return new WithValues(allOf(allOf(valueMatchers), withValueCount(valueMatchers.length)));
     }
@@ -57,7 +57,7 @@ public final class WithValues extends TypeSafeDiagnosingMatcher<ContentProviderO
     }
 
 
-    public WithValues(@NonNull Matcher<ContentValues> valueMatchers)
+    public WithValues(@NonNull Matcher<ArrayMap<String, Object>> valueMatchers)
     {
         mValueMatcher = valueMatchers;
     }
@@ -66,7 +66,8 @@ public final class WithValues extends TypeSafeDiagnosingMatcher<ContentProviderO
     @Override
     protected boolean matchesSafely(@NonNull ContentProviderOperation.Builder builder, @NonNull Description mismatchDescription)
     {
-        ContentValues values = new Backed<>(new NullSafe<>(new Field<ContentValues>(builder, "mValues").value()), new ContentValues()).value();
+        ArrayMap<String, Object> values = new Backed<>(new NullSafe<>(new Field<ArrayMap<String, Object>>(builder, "mValues").value()),
+            new ArrayMap<String, Object>()).value();
 
         if (!mValueMatcher.matches(values))
         {

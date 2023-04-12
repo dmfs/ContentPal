@@ -25,15 +25,15 @@ import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.Projection;
 import org.dmfs.android.contentpal.View;
 import org.dmfs.android.contentpal.tools.uriparams.EmptyUriParams;
-import org.dmfs.jems.mockito.answers.FailAnswer;
+import org.dmfs.jems2.mockito.answers.FailAnswer;
 import org.junit.Test;
 
 import static org.dmfs.android.contentpal.testing.predicates.PredicateArgumentMatcher.predicateWithSelection;
-import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
-import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
-import static org.dmfs.jems.optional.elementary.Absent.absent;
+import static org.dmfs.jems2.mockito.doubles.TestDoubles.dummy;
+import static org.dmfs.jems2.mockito.doubles.TestDoubles.failingMock;
+import static org.dmfs.jems2.optional.Absent.absent;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.same;
@@ -75,7 +75,7 @@ public final class RowCountTest
         Cursor mockCursor = failingMock(Cursor.class);
 
         doReturn(mockCursor).when(mockView)
-                .rows(same(EmptyUriParams.INSTANCE), any(Projection.class), predicateWithSelection("1"), same(absent()));
+            .rows(same(EmptyUriParams.INSTANCE), any(Projection.class), predicateWithSelection("1"), same(absent()));
         doReturn(5).when(mockCursor).getCount();
         doNothing().when(mockCursor).close();
 
@@ -92,7 +92,7 @@ public final class RowCountTest
         Predicate<Object> dummyPredicate = dummy(Predicate.class);
 
         doThrow(new RemoteException("msg")).when(mockView)
-                .rows(same(EmptyUriParams.INSTANCE), any(Projection.class), same(dummyPredicate), same(absent()));
+            .rows(same(EmptyUriParams.INSTANCE), any(Projection.class), same(dummyPredicate), same(absent()));
 
         new RowCount<>(mockView, dummyPredicate).value();
     }

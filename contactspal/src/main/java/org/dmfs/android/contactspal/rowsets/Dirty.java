@@ -40,10 +40,10 @@ public final class Dirty extends DelegatingRowSet<ContactsContract.RawContacts>
     public Dirty(@NonNull View<ContactsContract.RawContacts> mRawContacts, @NonNull Projection<ContactsContract.RawContacts> projection)
     {
         super(new QueryRowSet<>(mRawContacts,
-                projection,
-                new AnyOf<>(
-                        new EqArg<>(ContactsContract.RawContacts.DIRTY, 1),
-                        new EqArg<>(ContactsContract.RawContacts.DELETED, 1))));
+            projection,
+            new AnyOf<>(
+                new EqArg<>(ContactsContract.RawContacts.DIRTY, 1),
+                new EqArg<>(ContactsContract.RawContacts.DELETED, 1))));
     }
 
 }

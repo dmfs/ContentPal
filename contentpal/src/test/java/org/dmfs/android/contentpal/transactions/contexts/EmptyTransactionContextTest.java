@@ -19,10 +19,10 @@ package org.dmfs.android.contentpal.transactions.contexts;
 import org.dmfs.android.contentpal.SoftRowReference;
 import org.junit.Test;
 
-import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
+import static org.dmfs.jems2.mockito.doubles.TestDoubles.dummy;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 
 /**

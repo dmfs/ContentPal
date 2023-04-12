@@ -31,7 +31,7 @@ import org.dmfs.android.contentpal.rowsnapshots.ValuesRowSnapshot;
 import org.dmfs.android.contentpal.tools.ClosableEmptyIterator;
 import org.dmfs.android.contentpal.tools.uriparams.EmptyUriParams;
 import org.dmfs.android.contentpal.transactions.contexts.EmptyTransactionContext;
-import org.dmfs.iterators.AbstractBaseIterator;
+import org.dmfs.jems2.iterator.BaseIterator;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,7 +39,7 @@ import java.util.NoSuchElementException;
 
 import androidx.annotation.NonNull;
 
-import static org.dmfs.jems.optional.elementary.Absent.absent;
+import static org.dmfs.jems2.optional.Absent.absent;
 
 
 /**
@@ -79,14 +79,14 @@ public final class QueryRowSet<T> implements RowSet<T>
         catch (RemoteException e)
         {
             throw new RuntimeException(
-                    String.format("Unable to execute query on view \"%s\" with selection \"%s\"",
-                            mView.toString(),
-                            mPredicate.selection(EmptyTransactionContext.INSTANCE).toString()), e);
+                String.format("Unable to execute query on view \"%s\" with selection \"%s\"",
+                    mView.toString(),
+                    mPredicate.selection(EmptyTransactionContext.INSTANCE).toString()), e);
         }
     }
 
 
-    private final static class RowIterator<T> extends AbstractBaseIterator<RowSnapshot<T>> implements ClosableIterator<RowSnapshot<T>>
+    private final static class RowIterator<T> extends BaseIterator<RowSnapshot<T>> implements ClosableIterator<RowSnapshot<T>>
     {
         private final Cursor mCursor;
         private final Table<T> mTable;

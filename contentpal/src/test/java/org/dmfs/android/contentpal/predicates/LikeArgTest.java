@@ -22,7 +22,7 @@ import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.ab
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.argumentValues;
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.predicateWith;
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.selection;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 
 /**
@@ -35,11 +35,11 @@ public class LikeArgTest
     public void test()
     {
         assertThat(new LikeArg<>("x", "y"),
-                predicateWith(
-                        selection("x like ?"),
-                        argumentValues("y"),
-                        absentBackReferences(1)
-                ));
+            predicateWith(
+                selection("x like ?"),
+                argumentValues("y"),
+                absentBackReferences(1)
+            ));
     }
 
 }

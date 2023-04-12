@@ -21,7 +21,7 @@ import android.provider.CalendarContract;
 import org.junit.Test;
 
 import static org.dmfs.android.contentpal.testing.projection.ProjectionMatcher.projects;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 
 /**
@@ -34,12 +34,12 @@ public class AttendeesProjectionTest
     public void test()
     {
         assertThat(new AttendeesProjection(),
-                projects(
-                        CalendarContract.Attendees._ID,
-                        CalendarContract.Attendees.ATTENDEE_EMAIL,
-                        CalendarContract.Attendees.ATTENDEE_NAME,
-                        CalendarContract.Attendees.ATTENDEE_RELATIONSHIP,
-                        CalendarContract.Attendees.ATTENDEE_STATUS,
-                        CalendarContract.Attendees.ATTENDEE_TYPE));
+            projects(
+                CalendarContract.Attendees._ID,
+                CalendarContract.Attendees.ATTENDEE_EMAIL,
+                CalendarContract.Attendees.ATTENDEE_NAME,
+                CalendarContract.Attendees.ATTENDEE_RELATIONSHIP,
+                CalendarContract.Attendees.ATTENDEE_STATUS,
+                CalendarContract.Attendees.ATTENDEE_TYPE));
     }
 }

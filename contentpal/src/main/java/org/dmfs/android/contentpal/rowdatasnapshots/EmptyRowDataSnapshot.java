@@ -17,15 +17,15 @@
 package org.dmfs.android.contentpal.rowdatasnapshots;
 
 import org.dmfs.android.contentpal.RowDataSnapshot;
-import org.dmfs.iterators.EmptyIterator;
-import org.dmfs.jems.function.Function;
-import org.dmfs.jems.optional.Optional;
+import org.dmfs.jems2.Function;
+import org.dmfs.jems2.Optional;
 
 import java.util.Iterator;
 
 import androidx.annotation.NonNull;
 
-import static org.dmfs.jems.optional.elementary.Absent.absent;
+import static org.dmfs.jems2.iterator.EmptyIterator.emptyIterator;
+import static org.dmfs.jems2.optional.Absent.absent;
 
 
 /**
@@ -58,6 +58,6 @@ public final class EmptyRowDataSnapshot<Contract> implements RowDataSnapshot<Con
     @Override
     public Iterator<String> iterator()
     {
-        return EmptyIterator.instance();
+        return emptyIterator();
     }
 }

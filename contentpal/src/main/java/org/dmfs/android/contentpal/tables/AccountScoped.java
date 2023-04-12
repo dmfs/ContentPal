@@ -36,7 +36,7 @@ import androidx.annotation.NonNull;
  * A {@link Table} filtered by account. This only works for tables that support the {@code account_name} and {@code account_type} query parameters.
  *
  * @param <T>
- *         The contract of this table.
+ *     The contract of this table.
  *
  * @author Marten Gajda
  */

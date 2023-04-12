@@ -16,7 +16,7 @@
 
 package org.dmfs.android.contentpal;
 
-import org.dmfs.jems.optional.Optional;
+import org.dmfs.jems2.Optional;
 
 import androidx.annotation.NonNull;
 
@@ -25,7 +25,7 @@ import androidx.annotation.NonNull;
  * A predicate.
  *
  * @param <Contract>
- *         The contract of the table this predicate belongs to.
+ *     The contract of the table this predicate belongs to.
  *
  * @author Marten Gajda
  */
@@ -38,16 +38,12 @@ public interface Predicate<Contract>
     {
         /**
          * Returns the string representation of the argument.
-         *
-         * @return
          */
         @NonNull
         String value();
 
         /**
          * Returns an optional back reference which will replace the argument value.
-         *
-         * @return
          */
         @NonNull
         Optional<Integer> backReference();
@@ -57,9 +53,7 @@ public interface Predicate<Contract>
      * Returns an SQL selection CharSequence which selects elements matching this predicate.
      *
      * @param transactionContext
-     *         The {@link TransactionContext} of the Transaction this is executed in.
-     *
-     * @return
+     *     The {@link TransactionContext} of the Transaction this is executed in.
      */
     @NonNull
     CharSequence selection(@NonNull TransactionContext transactionContext);
@@ -68,7 +62,7 @@ public interface Predicate<Contract>
      * An {@link Iterable} of all arguments of this predicate.
      *
      * @param transactionContext
-     *         The {@link TransactionContext} of the Transaction this is executed in.
+     *     The {@link TransactionContext} of the Transaction this is executed in.
      */
     @NonNull
     Iterable<Argument> arguments(@NonNull TransactionContext transactionContext);

@@ -18,14 +18,14 @@ package org.dmfs.android.contentpal.testing.android.uri;
 
 import android.net.Uri;
 
-import org.dmfs.jems.iterable.decorators.Mapped;
-import org.dmfs.jems.pair.Pair;
-import org.dmfs.jems.pair.elementary.ValuePair;
+import org.dmfs.jems2.Pair;
+import org.dmfs.jems2.iterable.Mapped;
+import org.dmfs.jems2.pair.ValuePair;
 import org.hamcrest.Matcher;
 
 import androidx.annotation.NonNull;
 
-import static org.dmfs.jems.hamcrest.matchers.LambdaMatcher.having;
+import static org.dmfs.jems2.hamcrest.matchers.LambdaMatcher.having;
 import static org.hamcrest.CoreMatchers.is;
 
 
@@ -42,9 +42,9 @@ public final class UriMatcher
     public static Matcher<Uri> hasParamSet(@NonNull Matcher<Iterable<? extends Pair<String, String>>> paramNamesMatcher)
     {
         return having(
-                "parameters",
-                uri -> new Mapped<>(name -> new ValuePair<>(name, uri.getQueryParameter(name)), uri.getQueryParameterNames()),
-                paramNamesMatcher);
+            "parameters",
+            uri -> new Mapped<>(name -> new ValuePair<>(name, uri.getQueryParameter(name)), uri.getQueryParameterNames()),
+            paramNamesMatcher);
     }
 
 

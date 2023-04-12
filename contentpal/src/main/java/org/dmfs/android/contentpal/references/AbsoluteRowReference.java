@@ -26,9 +26,10 @@ import org.dmfs.android.contentpal.Table;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.predicates.EqArg;
 import org.dmfs.android.contentpal.tools.uriparams.EmptyUriParams;
-import org.dmfs.jems.function.elementary.IdentityFunction;
 
 import androidx.annotation.NonNull;
+
+import static org.dmfs.jems2.function.IdentityFunction.identity;
 
 
 /**
@@ -75,7 +76,10 @@ public final class AbsoluteRowReference<T> implements SoftRowReference<T>
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder builderWithReferenceData(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder operationBuilder, @NonNull String foreignKeyColumn)
+    public ContentProviderOperation.Builder builderWithReferenceData(
+        @NonNull TransactionContext transactionContext,
+        @NonNull ContentProviderOperation.Builder operationBuilder,
+        @NonNull String foreignKeyColumn)
     {
         return operationBuilder.withValue(foreignKeyColumn, rowId());
     }
@@ -91,7 +95,7 @@ public final class AbsoluteRowReference<T> implements SoftRowReference<T>
 
     private String rowId()
     {
-        return mRowDataSnapshot.data(BaseColumns._ID, new IdentityFunction<>()).value();
+        return mRowDataSnapshot.data(BaseColumns._ID, identity()).value();
     }
 
 

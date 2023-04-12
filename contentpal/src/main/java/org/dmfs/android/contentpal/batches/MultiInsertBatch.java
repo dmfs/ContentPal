@@ -20,11 +20,11 @@ import org.dmfs.android.contentpal.InsertOperation;
 import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.RowData;
 import org.dmfs.android.contentpal.operations.Populated;
-import org.dmfs.iterables.decorators.DelegatingIterable;
-import org.dmfs.jems.iterable.adapters.PresentValues;
-import org.dmfs.jems.iterable.decorators.Mapped;
-import org.dmfs.jems.iterable.elementary.Seq;
-import org.dmfs.jems.optional.Optional;
+import org.dmfs.jems2.Optional;
+import org.dmfs.jems2.iterable.DelegatingIterable;
+import org.dmfs.jems2.iterable.Mapped;
+import org.dmfs.jems2.iterable.PresentValues;
+import org.dmfs.jems2.iterable.Seq;
 
 import androidx.annotation.NonNull;
 
@@ -46,7 +46,7 @@ import androidx.annotation.NonNull;
  * }</pre>
  *
  * @param <T>
- *         The contract of the rows to insert.
+ *     The contract of the rows to insert.
  *
  * @author Marten Gajda
  */
@@ -58,9 +58,9 @@ public final class MultiInsertBatch<T> extends DelegatingIterable<Operation<?>>
      * InsertOperation}. Only present {@link RowData} will generate a new row.
      *
      * @param insertOperation
-     *         The {@link InsertOperation} to use for each row.
+     *     The {@link InsertOperation} to use for each row.
      * @param data
-     *         The {@link Optional} {@link RowData} of the rows to insert (one {@link RowData} per row)
+     *     The {@link Optional} {@link RowData} of the rows to insert (one {@link RowData} per row)
      */
     @SafeVarargs
     public MultiInsertBatch(@NonNull InsertOperation<T> insertOperation, @NonNull Optional<RowData<T>>... data)
@@ -73,9 +73,9 @@ public final class MultiInsertBatch<T> extends DelegatingIterable<Operation<?>>
      * Creates an {@link Iterable} of {@link Operation}s to insert rows with the given {@link RowData}, based on the given {@link InsertOperation}.
      *
      * @param insertOperation
-     *         The {@link InsertOperation} to use for each row.
+     *     The {@link InsertOperation} to use for each row.
      * @param data
-     *         The {@link RowData} of the rows to insert (one {@link RowData} per row)
+     *     The {@link RowData} of the rows to insert (one {@link RowData} per row)
      */
     @SafeVarargs
     public MultiInsertBatch(@NonNull InsertOperation<T> insertOperation, @NonNull RowData<T>... data)
@@ -88,9 +88,9 @@ public final class MultiInsertBatch<T> extends DelegatingIterable<Operation<?>>
      * Creates an {@link Iterable} of {@link Operation}s to insert rows with the given {@link RowData}, based on the given {@link InsertOperation}.
      *
      * @param insertOperation
-     *         The {@link InsertOperation} to use for each row.
+     *     The {@link InsertOperation} to use for each row.
      * @param data
-     *         An {@link Iterable} of {@link RowData} of the rows to insert (one {@link RowData} per row)
+     *     An {@link Iterable} of {@link RowData} of the rows to insert (one {@link RowData} per row)
      */
     public MultiInsertBatch(@NonNull final InsertOperation<T> insertOperation, @NonNull Iterable<RowData<T>> data)
     {

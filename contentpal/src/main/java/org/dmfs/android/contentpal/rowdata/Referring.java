@@ -56,6 +56,6 @@ public final class Referring<T> implements RowData<T>
     public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
         return mDelegate.updatedBuilder(transactionContext, transactionContext.resolved(mReferredRow.reference())
-                .builderWithReferenceData(transactionContext, builder, mForeignIdColumnName));
+            .builderWithReferenceData(transactionContext, builder, mForeignIdColumnName));
     }
 }

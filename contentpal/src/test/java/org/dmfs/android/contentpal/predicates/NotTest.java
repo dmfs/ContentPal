@@ -23,7 +23,7 @@ import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.ab
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.argumentValues;
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.predicateWith;
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.selection;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 
 /**
@@ -36,14 +36,14 @@ public class NotTest
     public void test()
     {
         assertThat(new Not<>(new Mocked<>("x", "a")), predicateWith(
-                selection("not ( x )"),
-                argumentValues("a"),
-                absentBackReferences(1)));
+            selection("not ( x )"),
+            argumentValues("a"),
+            absentBackReferences(1)));
 
         assertThat(new Not<>(new Mocked<>("x", "a", "z", "w")), predicateWith(
-                selection("not ( x )"),
-                argumentValues("a", "z", "w"),
-                absentBackReferences(3)));
+            selection("not ( x )"),
+            argumentValues("a", "z", "w"),
+            absentBackReferences(3)));
     }
 
 }

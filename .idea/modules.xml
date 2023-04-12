@@ -2,14 +2,35 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ContentPal.iml" filepath="$PROJECT_DIR$/ContentPal.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/calendarpal/calendarpal.iml" filepath="$PROJECT_DIR$/calendarpal/calendarpal.iml" />
-      <module fileurl="file://$PROJECT_DIR$/contactspal/contactspal.iml" filepath="$PROJECT_DIR$/contactspal/contactspal.iml" />
-      <module fileurl="file://$PROJECT_DIR$/contentpal/contentpal.iml" filepath="$PROJECT_DIR$/contentpal/contentpal.iml" />
-      <module fileurl="file://$PROJECT_DIR$/contentpal-api/contentpal-api.iml" filepath="$PROJECT_DIR$/contentpal-api/contentpal-api.iml" />
-      <module fileurl="file://$PROJECT_DIR$/contentpal-testing/contentpal-testing.iml" filepath="$PROJECT_DIR$/contentpal-testing/contentpal-testing.iml" />
-      <module fileurl="file://$PROJECT_DIR$/contenttestpal/contenttestpal.iml" filepath="$PROJECT_DIR$/contenttestpal/contenttestpal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ContentPal.iml" filepath="$PROJECT_DIR$/.idea/modules/ContentPal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ContentPal.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ContentPal.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ContentPal.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ContentPal.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ContentPal.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ContentPal.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ContentPal.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ContentPal.app.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/calendarpal/ContentPal.calendarpal.iml" filepath="$PROJECT_DIR$/.idea/modules/calendarpal/ContentPal.calendarpal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/calendarpal/ContentPal.calendarpal.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/calendarpal/ContentPal.calendarpal.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/calendarpal/ContentPal.calendarpal.main.iml" filepath="$PROJECT_DIR$/.idea/modules/calendarpal/ContentPal.calendarpal.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/calendarpal/ContentPal.calendarpal.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/calendarpal/ContentPal.calendarpal.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/contactspal/ContentPal.contactspal.iml" filepath="$PROJECT_DIR$/.idea/modules/contactspal/ContentPal.contactspal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/contactspal/ContentPal.contactspal.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/contactspal/ContentPal.contactspal.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/contactspal/ContentPal.contactspal.main.iml" filepath="$PROJECT_DIR$/.idea/modules/contactspal/ContentPal.contactspal.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/contactspal/ContentPal.contactspal.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/contactspal/ContentPal.contactspal.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/contentpal/ContentPal.contentpal.iml" filepath="$PROJECT_DIR$/.idea/modules/contentpal/ContentPal.contentpal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/contentpal-api/ContentPal.contentpal-api.iml" filepath="$PROJECT_DIR$/.idea/modules/contentpal-api/ContentPal.contentpal-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/contentpal-api/ContentPal.contentpal-api.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/contentpal-api/ContentPal.contentpal-api.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/contentpal-api/ContentPal.contentpal-api.main.iml" filepath="$PROJECT_DIR$/.idea/modules/contentpal-api/ContentPal.contentpal-api.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/contentpal-api/ContentPal.contentpal-api.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/contentpal-api/ContentPal.contentpal-api.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/contentpal-testing/ContentPal.contentpal-testing.iml" filepath="$PROJECT_DIR$/.idea/modules/contentpal-testing/ContentPal.contentpal-testing.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/contentpal-testing/ContentPal.contentpal-testing.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/contentpal-testing/ContentPal.contentpal-testing.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/contentpal-testing/ContentPal.contentpal-testing.main.iml" filepath="$PROJECT_DIR$/.idea/modules/contentpal-testing/ContentPal.contentpal-testing.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/contentpal-testing/ContentPal.contentpal-testing.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/contentpal-testing/ContentPal.contentpal-testing.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/contentpal/ContentPal.contentpal.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/contentpal/ContentPal.contentpal.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/contentpal/ContentPal.contentpal.main.iml" filepath="$PROJECT_DIR$/.idea/modules/contentpal/ContentPal.contentpal.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/contentpal/ContentPal.contentpal.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/contentpal/ContentPal.contentpal.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/contenttestpal/ContentPal.contenttestpal.iml" filepath="$PROJECT_DIR$/.idea/modules/contenttestpal/ContentPal.contenttestpal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/contenttestpal/ContentPal.contenttestpal.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/contenttestpal/ContentPal.contenttestpal.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/contenttestpal/ContentPal.contenttestpal.main.iml" filepath="$PROJECT_DIR$/.idea/modules/contenttestpal/ContentPal.contenttestpal.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/contenttestpal/ContentPal.contenttestpal.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/contenttestpal/ContentPal.contenttestpal.unitTest.iml" />
     </modules>
   </component>
 </project>

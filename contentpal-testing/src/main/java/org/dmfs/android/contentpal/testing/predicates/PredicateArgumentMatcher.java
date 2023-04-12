@@ -18,13 +18,13 @@ package org.dmfs.android.contentpal.testing.predicates;
 
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.TransactionContext;
-import org.dmfs.jems.optional.elementary.Present;
+import org.dmfs.jems2.optional.Present;
 import org.mockito.ArgumentMatcher;
 import org.mockito.hamcrest.MockitoHamcrest;
 
 import androidx.annotation.NonNull;
 
-import static org.dmfs.jems.optional.elementary.Absent.absent;
+import static org.dmfs.jems2.optional.Absent.absent;
 
 
 /**

@@ -23,21 +23,17 @@ import org.dmfs.android.contentpal.rowdata.Composite;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withValuesOnly;
 import static org.dmfs.android.contentpal.testing.contentvalues.Containing.containing;
 import static org.dmfs.android.contentpal.testing.rowdata.RowDataMatcher.builds;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 
 /**
  * Test {@link AttendeeData}.
- *
- * @author Marten Gajda
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(manifest = Config.NONE)
 public class AttendeeDataTest
 {
     @Test
@@ -45,12 +41,12 @@ public class AttendeeDataTest
     {
         // without any attributes this sets email and defaults
         assertThat(new AttendeeData("xyz"), builds(
-                withValuesOnly(
-                        containing(CalendarContract.Attendees.ATTENDEE_EMAIL, "xyz"),
-                        containing(CalendarContract.Attendees.ATTENDEE_TYPE, CalendarContract.Attendees.TYPE_NONE),
-                        containing(CalendarContract.Attendees.ATTENDEE_RELATIONSHIP, CalendarContract.Attendees.RELATIONSHIP_NONE),
-                        containing(CalendarContract.Attendees.ATTENDEE_STATUS, CalendarContract.Attendees.ATTENDEE_STATUS_NONE)
-                )));
+            withValuesOnly(
+                containing(CalendarContract.Attendees.ATTENDEE_EMAIL, "xyz"),
+                containing(CalendarContract.Attendees.ATTENDEE_TYPE, CalendarContract.Attendees.TYPE_NONE),
+                containing(CalendarContract.Attendees.ATTENDEE_RELATIONSHIP, CalendarContract.Attendees.RELATIONSHIP_NONE),
+                containing(CalendarContract.Attendees.ATTENDEE_STATUS, CalendarContract.Attendees.ATTENDEE_STATUS_NONE)
+            )));
     }
 
 
@@ -59,13 +55,13 @@ public class AttendeeDataTest
     {
         // attributes should be added too
         assertThat(new AttendeeData("xyz", new CharSequenceRowData<>("test", "value")), builds(
-                withValuesOnly(
-                        containing(CalendarContract.Attendees.ATTENDEE_EMAIL, "xyz"),
-                        containing(CalendarContract.Attendees.ATTENDEE_TYPE, CalendarContract.Attendees.TYPE_NONE),
-                        containing(CalendarContract.Attendees.ATTENDEE_RELATIONSHIP, CalendarContract.Attendees.RELATIONSHIP_NONE),
-                        containing(CalendarContract.Attendees.ATTENDEE_STATUS, CalendarContract.Attendees.ATTENDEE_STATUS_NONE),
-                        containing("test", "value")
-                )));
+            withValuesOnly(
+                containing(CalendarContract.Attendees.ATTENDEE_EMAIL, "xyz"),
+                containing(CalendarContract.Attendees.ATTENDEE_TYPE, CalendarContract.Attendees.TYPE_NONE),
+                containing(CalendarContract.Attendees.ATTENDEE_RELATIONSHIP, CalendarContract.Attendees.RELATIONSHIP_NONE),
+                containing(CalendarContract.Attendees.ATTENDEE_STATUS, CalendarContract.Attendees.ATTENDEE_STATUS_NONE),
+                containing("test", "value")
+            )));
     }
 
 
@@ -74,19 +70,19 @@ public class AttendeeDataTest
     {
         // overrides should be kept
         assertThat(new AttendeeData("xyz", new Composite<>(
-                        new CharSequenceRowData<>(CalendarContract.Attendees.ATTENDEE_TYPE, "type"),
-                        new CharSequenceRowData<>(CalendarContract.Attendees.ATTENDEE_RELATIONSHIP, "rel"),
-                        new CharSequenceRowData<>(CalendarContract.Attendees.ATTENDEE_STATUS, "stat"),
-                        new CharSequenceRowData<>("test", "value")
-                )),
-                builds(
-                        withValuesOnly(
-                                containing(CalendarContract.Attendees.ATTENDEE_EMAIL, "xyz"),
-                                containing(CalendarContract.Attendees.ATTENDEE_TYPE, "type"),
-                                containing(CalendarContract.Attendees.ATTENDEE_RELATIONSHIP, "rel"),
-                                containing(CalendarContract.Attendees.ATTENDEE_STATUS, "stat"),
-                                containing("test", "value")
-                        )));
+                new CharSequenceRowData<>(CalendarContract.Attendees.ATTENDEE_TYPE, "type"),
+                new CharSequenceRowData<>(CalendarContract.Attendees.ATTENDEE_RELATIONSHIP, "rel"),
+                new CharSequenceRowData<>(CalendarContract.Attendees.ATTENDEE_STATUS, "stat"),
+                new CharSequenceRowData<>("test", "value")
+            )),
+            builds(
+                withValuesOnly(
+                    containing(CalendarContract.Attendees.ATTENDEE_EMAIL, "xyz"),
+                    containing(CalendarContract.Attendees.ATTENDEE_TYPE, "type"),
+                    containing(CalendarContract.Attendees.ATTENDEE_RELATIONSHIP, "rel"),
+                    containing(CalendarContract.Attendees.ATTENDEE_STATUS, "stat"),
+                    containing("test", "value")
+                )));
     }
 
 }

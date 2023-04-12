@@ -22,7 +22,7 @@ import org.dmfs.android.contentpal.InsertOperation;
 import org.dmfs.android.contentpal.SoftRowReference;
 import org.dmfs.android.contentpal.operations.internal.RawInsert;
 import org.dmfs.android.contentpal.rowdata.CharSequenceRowData;
-import org.dmfs.jems.optional.Optional;
+import org.dmfs.jems2.Optional;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
@@ -35,10 +35,10 @@ import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithVa
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYieldAllowed.withYieldNotAllowed;
 import static org.dmfs.android.contentpal.testing.contentvalues.Containing.containing;
 import static org.dmfs.android.contentpal.testing.operations.OperationMatcher.builds;
-import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
-import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
+import static org.dmfs.jems2.mockito.doubles.TestDoubles.dummy;
+import static org.dmfs.jems2.mockito.doubles.TestDoubles.failingMock;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.sameInstance;
-import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.doReturn;
 
 
@@ -66,13 +66,13 @@ public class PopulatedTest
     {
         Uri dummyUri = dummy(Uri.class);
         assertThat(
-                new Populated<>(new CharSequenceRowData<>("a", "x"), new RawInsert<>(dummyUri)),
-                builds(
-                        targets(sameInstance(dummyUri)),
-                        insertOperation(),
-                        withYieldNotAllowed(),
-                        withoutExpectedCount(),
-                        withValuesOnly(
-                                containing("a", "x"))));
+            new Populated<>(new CharSequenceRowData<>("a", "x"), new RawInsert<>(dummyUri)),
+            builds(
+                targets(sameInstance(dummyUri)),
+                insertOperation(),
+                withYieldNotAllowed(),
+                withoutExpectedCount(),
+                withValuesOnly(
+                    containing("a", "x"))));
     }
 }

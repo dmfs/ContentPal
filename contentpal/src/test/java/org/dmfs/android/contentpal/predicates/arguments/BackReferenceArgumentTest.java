@@ -19,9 +19,9 @@ package org.dmfs.android.contentpal.predicates.arguments;
 import org.dmfs.android.contentpal.Predicate;
 import org.junit.Test;
 
-import static org.dmfs.jems.hamcrest.matchers.optional.PresentMatcher.present;
+import static org.dmfs.jems2.hamcrest.matchers.optional.PresentMatcher.present;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 
 /**

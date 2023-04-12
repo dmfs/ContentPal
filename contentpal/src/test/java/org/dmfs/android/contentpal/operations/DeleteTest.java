@@ -33,12 +33,12 @@ import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithEx
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withoutValues;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYieldAllowed.withYieldNotAllowed;
 import static org.dmfs.android.contentpal.testing.operations.OperationMatcher.builds;
-import static org.dmfs.jems.hamcrest.matchers.optional.AbsentMatcher.absent;
-import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
-import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
+import static org.dmfs.jems2.hamcrest.matchers.optional.AbsentMatcher.absent;
+import static org.dmfs.jems2.mockito.doubles.TestDoubles.dummy;
+import static org.dmfs.jems2.mockito.doubles.TestDoubles.failingMock;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsSame.sameInstance;
-import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 
@@ -69,13 +69,13 @@ public class DeleteTest
         doReturn(ContentProviderOperation.newDelete(dummyUri)).when(rowReference).deleteOperationBuilder(any(TransactionContext.class));
 
         assertThat(
-                new Delete<>(mockRowSnapshot),
-                builds(
-                        targets(sameInstance(dummyUri)),
-                        deleteOperation(),
-                        withYieldNotAllowed(),
-                        withoutExpectedCount(),
-                        withoutValues()));
+            new Delete<>(mockRowSnapshot),
+            builds(
+                targets(sameInstance(dummyUri)),
+                deleteOperation(),
+                withYieldNotAllowed(),
+                withoutExpectedCount(),
+                withoutValues()));
     }
 
 
@@ -87,12 +87,12 @@ public class DeleteTest
         doReturn(ContentProviderOperation.newDelete(dummyUri)).when(rowReference).deleteOperationBuilder(any(TransactionContext.class));
 
         assertThat(
-                new Delete<>(rowReference),
-                builds(
-                        targets(sameInstance(dummyUri)),
-                        deleteOperation(),
-                        withYieldNotAllowed(),
-                        withoutExpectedCount(),
-                        withoutValues()));
+            new Delete<>(rowReference),
+            builds(
+                targets(sameInstance(dummyUri)),
+                deleteOperation(),
+                withYieldNotAllowed(),
+                withoutExpectedCount(),
+                withoutValues()));
     }
 }

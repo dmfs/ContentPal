@@ -36,11 +36,11 @@ import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithVa
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYieldAllowed.withYieldNotAllowed;
 import static org.dmfs.android.contentpal.testing.operations.OperationMatcher.builds;
 import static org.dmfs.android.contentpal.testing.predicates.PredicateArgumentMatcher.predicateWithSelection;
-import static org.dmfs.jems.hamcrest.matchers.optional.AbsentMatcher.absent;
-import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
-import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
+import static org.dmfs.jems2.hamcrest.matchers.optional.AbsentMatcher.absent;
+import static org.dmfs.jems2.mockito.doubles.TestDoubles.dummy;
+import static org.dmfs.jems2.mockito.doubles.TestDoubles.failingMock;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsSame.sameInstance;
-import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.same;
 import static org.mockito.Mockito.doReturn;
@@ -77,12 +77,12 @@ public final class BulkDeleteTest
         doReturn(ContentProviderOperation.newDelete(dummyUri)).when(mockOperation).contentOperationBuilder(any(TransactionContext.class));
 
         assertThat(new BulkDelete<>(mockTable),
-                builds(
-                        targets(sameInstance(dummyUri)),
-                        deleteOperation(),
-                        withoutExpectedCount(),
-                        withYieldNotAllowed(),
-                        withoutValues()));
+            builds(
+                targets(sameInstance(dummyUri)),
+                deleteOperation(),
+                withoutExpectedCount(),
+                withYieldNotAllowed(),
+                withoutValues()));
     }
 
 
@@ -98,12 +98,12 @@ public final class BulkDeleteTest
         doReturn(ContentProviderOperation.newDelete(dummyUri)).when(mockOperation).contentOperationBuilder(any(TransactionContext.class));
 
         assertThat(new BulkDelete<>(mockTable, dummyPredicate),
-                builds(
-                        targets(sameInstance(dummyUri)),
-                        deleteOperation(),
-                        withoutExpectedCount(),
-                        withYieldNotAllowed(),
-                        withoutValues()));
+            builds(
+                targets(sameInstance(dummyUri)),
+                deleteOperation(),
+                withoutExpectedCount(),
+                withYieldNotAllowed(),
+                withoutValues()));
     }
 
 }

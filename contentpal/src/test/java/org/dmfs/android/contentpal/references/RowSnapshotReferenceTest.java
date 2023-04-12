@@ -28,10 +28,10 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
-import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
-import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
+import static org.dmfs.jems2.mockito.doubles.TestDoubles.dummy;
+import static org.dmfs.jems2.mockito.doubles.TestDoubles.failingMock;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.sameInstance;
-import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.doReturn;
 
 
@@ -109,7 +109,7 @@ public class RowSnapshotReferenceTest
         doReturn(dummyResultBuilder).when(mockResolvedReference).builderWithReferenceData(mockTransactionContext, dummyResultBuilder, "column");
 
         assertThat(new RowSnapshotReference<>(mockSnapshot).builderWithReferenceData(mockTransactionContext, dummyResultBuilder, "column"),
-                sameInstance(dummyResultBuilder));
+            sameInstance(dummyResultBuilder));
     }
 
 
@@ -127,6 +127,6 @@ public class RowSnapshotReferenceTest
         doReturn(dummyResultPredicate).when(mockResolvedReference).predicate(mockTransactionContext, "column");
 
         assertThat(new RowSnapshotReference<>(mockSnapshot).predicate(mockTransactionContext, "column"),
-                sameInstance(dummyResultPredicate));
+            sameInstance(dummyResultPredicate));
     }
 }

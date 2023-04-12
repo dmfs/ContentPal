@@ -25,9 +25,6 @@ import android.os.Bundle;
 import android.os.RemoteException;
 import android.provider.CalendarContract;
 import android.provider.ContactsContract;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
@@ -94,14 +91,18 @@ import org.dmfs.android.contentpal.queues.BasicOperationsQueue;
 import org.dmfs.android.contentpal.rowdata.Composite;
 import org.dmfs.android.contentpal.rowsnapshots.VirtualRowSnapshot;
 import org.dmfs.android.contentpal.tables.AccountScoped;
-import org.dmfs.iterables.SingletonIterable;
-import org.dmfs.jems.iterable.composite.Joined;
-import org.dmfs.jems.iterable.elementary.Seq;
-import org.dmfs.jems.single.combined.Backed;
+import org.dmfs.jems2.iterable.Joined;
+import org.dmfs.jems2.iterable.Seq;
+import org.dmfs.jems2.iterable.SingletonIterable;
+import org.dmfs.jems2.single.Backed;
 import org.dmfs.rfc5545.DateTime;
 import org.dmfs.rfc5545.Duration;
 
 import java.util.concurrent.TimeUnit;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 
 public class DemoActivity extends AppCompatActivity
@@ -151,11 +152,6 @@ public class DemoActivity extends AppCompatActivity
 
     /**
      * Demonstrates how a single contact can be inserted.
-     *
-     * @param view
-     *
-     * @throws RemoteException
-     * @throws OperationApplicationException
      */
     public void insertJohnDoe(View view) throws RemoteException, OperationApplicationException
     {
@@ -168,45 +164,45 @@ public class DemoActivity extends AppCompatActivity
         RowSnapshot<ContactsContract.RawContacts> rawContact = new VirtualRowSnapshot<>(mRawContacts);
 
         mContactsQueue.enqueue(
-                new InsertRawContactBatch(
-                        rawContact,
-                        // insert a couple of data rows that are based on the contactData prototype
-                        new DisplayNameData("John Doe"),
-                        new Primary(new Typed(ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE, new PhoneData("123"))),
-                        new Custom("personal", new EmailData("john@example.com"))));
+            new InsertRawContactBatch(
+                rawContact,
+                // insert a couple of data rows that are based on the contactData prototype
+                new DisplayNameData("John Doe"),
+                new Primary(new Typed(ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE, new PhoneData("123"))),
+                new Custom("personal", new EmailData("john@example.com"))));
 
         mContactsQueue.flush();
 
         // add some more data to this contact, but in a new transaction to demonstrate how row references work across transactions
         mContactsQueue.enqueue(
-                new MultiInsertBatch<>(
-                        // use a prototype which creates data rows for this rawContact, we could even use the same prototype as above
-                        new RawContactData(rawContact),
-                        new Seq<>(
-                                new NoteData("A note"),
-                                new RelationData(ContactsContract.CommonDataKinds.Relation.TYPE_SISTER, "Jane Doe"),
-                                new NicknameData("Johnny"),
-                                new Custom("someLabel", new ImData("abc", "custom")),
-                                new Typed(ContactsContract.CommonDataKinds.Event.TYPE_BIRTHDAY, new EventData("2017-04-02")),
-                                new Custom("weekend", new SipAddressData("12345")),
-                                new SuperPrimary(new Typed(ContactsContract.CommonDataKinds.Email.TYPE_HOME, new EmailData("john@home.com"))),
-                                new WorkOrganization(
-                                        new JobData("Developer"),
-                                        new CompanyData("dmfs GmbH"),
-                                        new SymbolData("dmfs"),
-                                        new DepartmentData("Android development")),
+            new MultiInsertBatch<>(
+                // use a prototype which creates data rows for this rawContact, we could even use the same prototype as above
+                new RawContactData(rawContact),
+                new Seq<>(
+                    new NoteData("A note"),
+                    new RelationData(ContactsContract.CommonDataKinds.Relation.TYPE_SISTER, "Jane Doe"),
+                    new NicknameData("Johnny"),
+                    new Custom("someLabel", new ImData("abc", "custom")),
+                    new Typed(ContactsContract.CommonDataKinds.Event.TYPE_BIRTHDAY, new EventData("2017-04-02")),
+                    new Custom("weekend", new SipAddressData("12345")),
+                    new SuperPrimary(new Typed(ContactsContract.CommonDataKinds.Email.TYPE_HOME, new EmailData("john@home.com"))),
+                    new WorkOrganization(
+                        new JobData("Developer"),
+                        new CompanyData("dmfs GmbH"),
+                        new SymbolData("dmfs"),
+                        new DepartmentData("Android development")),
 
-                                // the following two approaches result in the same data
-//                                new WorkPostal(
-//                                        new StreetData("Schandauer Straße 34",
-//                                                new PostcodeData("01309",
-//                                                        new CityData("Dresden",
-//                                                                new CountryData("Germany"))))),
-                                new WorkPostal(
-                                        new StreetData("Schandauer Straße 34"),
-                                        new PostcodeData("01309"),
-                                        new CityData("Dresden"),
-                                        new CountryData("Germany")))));
+                    // the following two approaches result in the same data
+                    //                                new WorkPostal(
+                    //                                        new StreetData("Schandauer Straße 34",
+                    //                                                new PostcodeData("01309",
+                    //                                                        new CityData("Dresden",
+                    //                                                                new CountryData("Germany"))))),
+                    new WorkPostal(
+                        new StreetData("Schandauer Straße 34"),
+                        new PostcodeData("01309"),
+                        new CityData("Dresden"),
+                        new CountryData("Germany")))));
         mContactsQueue.flush();
 
         // create another "virtual" row snapshot of a RawContact row
@@ -214,13 +210,13 @@ public class DemoActivity extends AppCompatActivity
 
         // insert the contact and link it to the first one in the same transaction
         mContactsQueue.enqueue(
-                new Joined<>(
-                        new InsertRawContactBatch(rawContact2,
-                                new DisplayNameData("Donald Duck"),
-                                new Typed(ContactsContract.CommonDataKinds.Phone.TYPE_WORK, new PhoneData("9876"))
-                        ),
-                        // Demonstrate how to link two contacts
-                        new SingletonIterable<>(new Link(rawContact, rawContact2)))
+            new Joined<>(
+                new InsertRawContactBatch(rawContact2,
+                    new DisplayNameData("Donald Duck"),
+                    new Typed(ContactsContract.CommonDataKinds.Phone.TYPE_WORK, new PhoneData("9876"))
+                ),
+                // Demonstrate how to link two contacts
+                new SingletonIterable<>(new Link(rawContact, rawContact2)))
         );
         mContactsQueue.flush();
 
@@ -273,65 +269,65 @@ public class DemoActivity extends AppCompatActivity
         RowSnapshot<CalendarContract.Events> event2 = new VirtualRowSnapshot<>(calendarEvents);
 
         mCalendarQueue.enqueue(
-                new Seq<>(
-                        // put the calendar
-                        new Put<>(calendar, new Composite<>(
-                                new Synced(),
-                                new Visible(),
-                                new Colored(0x00ff00),
-                                new Named("Cal1"))),
+            new Seq<>(
+                // put the calendar
+                new Put<>(calendar, new Composite<>(
+                    new Synced(),
+                    new Visible(),
+                    new Colored(0x00ff00),
+                    new Named("Cal1"))),
 
-                        // add event1 now
-                        new Put<>(event1,
-                                new Composite<>(
-                                        new Organized("example@example.com"),
-                                        new Described("Event Description"),
-                                        new Located("Some Location"),
-                                        new SingleEventData(
-                                                "Event #1",
-                                                DateTime.now(),
-                                                DateTime.now().addDuration(Duration.parse("PT1H"))))),
+                // add event1 now
+                new Put<>(event1,
+                    new Composite<>(
+                        new Organized("example@example.com"),
+                        new Described("Event Description"),
+                        new Located("Some Location"),
+                        new SingleEventData(
+                            "Event #1",
+                            DateTime.now(),
+                            DateTime.now().addDuration(Duration.parse("PT1H"))))),
 
-                        // add an attendee to event1
-                        new EventRelated<>(event1, new Insert<>(new Attendees(), new AttendeeData("me@example.com"))),
+                // add an attendee to event1
+                new EventRelated<>(event1, new Insert<>(new Attendees(), new AttendeeData("me@example.com"))),
 
-                        // add event2 tomorrow same time
-                        new Put<>(event2,
-                                // alternative decoration structure
-                                new Organized("example@example.com",
-                                        new Described("Event Description",
-                                                new Located("Some Location",
-                                                        new SingleEventData(
-                                                                "Event #2",
-                                                                DateTime.now().addDuration(Duration.parse("P1D")),
-                                                                DateTime.now().addDuration(Duration.parse("P1DT1H"))))))),
-                        // add an attendee to event2
-                        new EventRelated<>(event2,
-                                new Insert<>(new Attendees(),
-                                        new AttendeeData("me@example.com", new NameData("me")))),
-                        // add a reminder to event2, one day in advance
-                        new EventRelated<>(event2, new Insert<>(new Reminders(), new ReminderData((int) TimeUnit.DAYS.toMinutes(1)))),
-                        new EventRelated<>(event2, new Insert<>(new Attendees(),
-                                new AttendeeData("metoo@example.com",
-                                        new Composite<>(
-                                                new NameData("Me Too"),
-                                                new TypeData(CalendarContract.Attendees.TYPE_REQUIRED),
-                                                new org.dmfs.android.calendarpal.attendees.RelationData(CalendarContract.Attendees.RELATIONSHIP_ORGANIZER),
-                                                new StateData(CalendarContract.Attendees.STATUS_CONFIRMED)
-                                        ))))
+                // add event2 tomorrow same time
+                new Put<>(event2,
+                    // alternative decoration structure
+                    new Organized("example@example.com",
+                        new Described("Event Description",
+                            new Located("Some Location",
+                                new SingleEventData(
+                                    "Event #2",
+                                    DateTime.now().addDuration(Duration.parse("P1D")),
+                                    DateTime.now().addDuration(Duration.parse("P1DT1H"))))))),
+                // add an attendee to event2
+                new EventRelated<>(event2,
+                    new Insert<>(new Attendees(),
+                        new AttendeeData("me@example.com", new NameData("me")))),
+                // add a reminder to event2, one day in advance
+                new EventRelated<>(event2, new Insert<>(new Reminders(), new ReminderData((int) TimeUnit.DAYS.toMinutes(1)))),
+                new EventRelated<>(event2, new Insert<>(new Attendees(),
+                    new AttendeeData("metoo@example.com",
+                        new Composite<>(
+                            new NameData("Me Too"),
+                            new TypeData(CalendarContract.Attendees.TYPE_REQUIRED),
+                            new org.dmfs.android.calendarpal.attendees.RelationData(CalendarContract.Attendees.RELATIONSHIP_ORGANIZER),
+                            new StateData(CalendarContract.Attendees.STATUS_CONFIRMED)
+                        ))))
 
-                        //new Put<>(new VirtualRowSnapshot<>(calendarEvents), new )
-                ));
+                //new Put<>(new VirtualRowSnapshot<>(calendarEvents), new )
+            ));
         mCalendarQueue.flush();
 
         // demonstrate how to update an event which was inserted in the previous transaction
         mCalendarQueue.enqueue(
-                new Seq<>(
-                        // add a reminder to event1 as well
-                        new EventRelated<>(event1, new Insert<>(new Reminders(), new ReminderData((int) TimeUnit.HOURS.toMinutes(1)))),
-                        // update event2 - setting an event color and modifying description
-                        new Put<>(event2, new org.dmfs.android.calendarpal.events.Colored(0x0ff0000, new Described("updated Description")))
-                ));
+            new Seq<>(
+                // add a reminder to event1 as well
+                new EventRelated<>(event1, new Insert<>(new Reminders(), new ReminderData((int) TimeUnit.HOURS.toMinutes(1)))),
+                // update event2 - setting an event color and modifying description
+                new Put<>(event2, new org.dmfs.android.calendarpal.events.Colored(0x0ff0000, new Described("updated Description")))
+            ));
         mCalendarQueue.flush();
     }
 
@@ -344,18 +340,18 @@ public class DemoActivity extends AppCompatActivity
         }
 
         mCalendarQueue.enqueue(
-                new SingletonIterable<>(new BulkDelete<>(mCalendars, new AllOf<>())));
+            new SingletonIterable<>(new BulkDelete<>(mCalendars, new AllOf<>())));
         mCalendarQueue.flush();
     }
 
 
     private boolean ensureContactPermissions()
     {
-        if (ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.WRITE_CONTACTS) != PackageManager.PERMISSION_GRANTED)
+        if (ContextCompat.checkSelfPermission(this,
+            Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this,
+            Manifest.permission.WRITE_CONTACTS) != PackageManager.PERMISSION_GRANTED)
         {
-            ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS }, 0);
+            requestPermissions(new String[] { Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS }, 0);
             return false;
         }
         if (mContactsClient == null)
@@ -369,11 +365,11 @@ public class DemoActivity extends AppCompatActivity
 
     private boolean ensureCalendarPermissions()
     {
-        if (ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED)
+        if (ContextCompat.checkSelfPermission(this,
+            Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this,
+            Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED)
         {
-            ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR }, 0);
+            requestPermissions(new String[] { Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR }, 0);
             return false;
         }
         if (mCalendarsClient == null)

@@ -20,8 +20,8 @@ import org.dmfs.android.contentpal.ClosableIterator;
 import org.dmfs.android.contentpal.RowSet;
 import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.tools.FakeClosable;
-import org.dmfs.jems.single.Single;
-import org.dmfs.jems.single.adapters.Unchecked;
+import org.dmfs.jems2.Single;
+import org.dmfs.jems2.single.Unchecked;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -42,7 +42,7 @@ public final class Frozen<T> implements RowSet<T>
 
     public Frozen(@NonNull RowSet<T> delegate)
     {
-        mDelegate = new org.dmfs.jems.single.elementary.Frozen<>(new Unchecked<>(() -> {
+        mDelegate = new org.dmfs.jems2.single.Frozen<>(new Unchecked<>(() -> {
             try (ClosableIterator<RowSnapshot<T>> iterator = delegate.iterator())
             {
                 List<RowSnapshot<T>> result = new LinkedList<>();

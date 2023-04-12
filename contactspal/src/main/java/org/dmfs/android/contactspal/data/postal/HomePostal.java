@@ -23,7 +23,7 @@ import org.dmfs.android.contactspal.data.Typed;
 import org.dmfs.android.contentpal.RowData;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.rowdata.Composite;
-import org.dmfs.jems.iterable.elementary.Seq;
+import org.dmfs.jems2.iterable.Seq;
 
 import androidx.annotation.NonNull;
 

@@ -51,7 +51,7 @@ public final class AutoAggregate extends DelegatingOperation<ContactsContract.Ag
     public AutoAggregate(@NonNull RowReference<ContactsContract.RawContacts> rawContact1, @NonNull RowReference<ContactsContract.RawContacts> rawContact2)
     {
         super(new Populated<>(
-                new AggregationTypeData(ContactsContract.AggregationExceptions.TYPE_AUTOMATIC),
-                new AggregationException(rawContact1, rawContact2)));
+            new AggregationTypeData(ContactsContract.AggregationExceptions.TYPE_AUTOMATIC),
+            new AggregationException(rawContact1, rawContact2)));
     }
 }

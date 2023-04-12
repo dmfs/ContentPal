@@ -28,7 +28,7 @@ import org.dmfs.android.contentpal.View;
 import org.dmfs.android.contentpal.predicates.AllOf;
 import org.dmfs.android.contentpal.predicates.IsNull;
 import org.dmfs.android.contentpal.tables.AccountScoped;
-import org.dmfs.jems.optional.Optional;
+import org.dmfs.jems2.Optional;
 
 import androidx.annotation.NonNull;
 
@@ -54,12 +54,16 @@ public final class Local implements View<ContactsContract.RawContacts>
 
     @NonNull
     @Override
-    public Cursor rows(@NonNull UriParams uriParams, @NonNull Projection<? super ContactsContract.RawContacts> projection, @NonNull Predicate<? super ContactsContract.RawContacts> predicate, @NonNull Optional<String> sorting) throws RemoteException
+    public Cursor rows(
+        @NonNull UriParams uriParams,
+        @NonNull Projection<? super ContactsContract.RawContacts> projection,
+        @NonNull Predicate<? super ContactsContract.RawContacts> predicate,
+        @NonNull Optional<String> sorting) throws RemoteException
     {
         return mDelegate.rows(uriParams,
-                projection,
-                new AllOf<>(predicate, new IsNull<>(ContactsContract.RawContacts.ACCOUNT_NAME), new IsNull<>(ContactsContract.RawContacts.ACCOUNT_TYPE)),
-                sorting);
+            projection,
+            new AllOf<>(predicate, new IsNull<>(ContactsContract.RawContacts.ACCOUNT_NAME), new IsNull<>(ContactsContract.RawContacts.ACCOUNT_TYPE)),
+            sorting);
     }
 
 

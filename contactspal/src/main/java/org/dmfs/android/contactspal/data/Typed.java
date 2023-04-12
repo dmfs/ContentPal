@@ -18,8 +18,6 @@ package org.dmfs.android.contactspal.data;
 
 import android.provider.ContactsContract;
 
-import androidx.annotation.NonNull;
-
 import org.dmfs.android.contactspal.data.email.EmailData;
 import org.dmfs.android.contactspal.data.event.EventData;
 import org.dmfs.android.contactspal.data.nickname.NicknameData;
@@ -33,6 +31,8 @@ import org.dmfs.android.contentpal.RowData;
 import org.dmfs.android.contentpal.rowdata.Composite;
 import org.dmfs.android.contentpal.rowdata.DelegatingRowData;
 import org.dmfs.android.contentpal.rowdata.IntegerRowData;
+
+import androidx.annotation.NonNull;
 
 
 /**

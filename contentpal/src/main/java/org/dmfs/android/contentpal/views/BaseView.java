@@ -29,8 +29,8 @@ import org.dmfs.android.contentpal.UriParams;
 import org.dmfs.android.contentpal.View;
 import org.dmfs.android.contentpal.tables.BaseTable;
 import org.dmfs.android.contentpal.transactions.contexts.EmptyTransactionContext;
-import org.dmfs.jems.optional.Optional;
-import org.dmfs.jems.single.combined.Backed;
+import org.dmfs.jems2.Optional;
+import org.dmfs.jems2.single.Backed;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -42,7 +42,7 @@ import androidx.annotation.NonNull;
  * A basic implementation of a {@link View}.
  *
  * @param <T>
- *         The contract of this view.
+ *     The contract of this view.
  *
  * @author Marten Gajda
  */
@@ -61,7 +61,11 @@ public final class BaseView<T> implements View<T>
 
     @NonNull
     @Override
-    public Cursor rows(@NonNull UriParams uriParams, @NonNull Projection<? super T> projection, @NonNull final Predicate<? super T> predicate, @NonNull final Optional<String> sorting) throws RemoteException
+    public Cursor rows(
+        @NonNull UriParams uriParams,
+        @NonNull Projection<? super T> projection,
+        @NonNull final Predicate<? super T> predicate,
+        @NonNull final Optional<String> sorting) throws RemoteException
     {
         List<String> args = new LinkedList<>();
         for (Predicate.Argument arg : predicate.arguments(EmptyTransactionContext.INSTANCE))
@@ -70,10 +74,10 @@ public final class BaseView<T> implements View<T>
         }
         String[] projectionArray = projection.toArray();
         Cursor cursor = mClient.query(uriParams.withParam(mTableUri.buildUpon()).build(),
-                projectionArray,
-                predicate.selection(EmptyTransactionContext.INSTANCE).toString(),
-                args.toArray(new String[0]),
-                new Backed<>(sorting, (String) null).value());
+            projectionArray,
+            predicate.selection(EmptyTransactionContext.INSTANCE).toString(),
+            args.toArray(new String[0]),
+            new Backed<>(sorting, (String) null).value());
         return cursor == null ? new MatrixCursor(projectionArray) : cursor;
     }
 

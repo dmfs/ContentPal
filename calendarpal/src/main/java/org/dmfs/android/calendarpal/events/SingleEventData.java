@@ -51,15 +51,15 @@ public final class SingleEventData implements RowData<CalendarContract.Events>
     public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
         return builder.withValue(CalendarContract.Events.DTSTART, mStart.getTimestamp())
-                .withValue(CalendarContract.Events.EVENT_TIMEZONE, mStart.isAllDay() ? "UTC" : mStart.getTimeZone().getID())
-                .withValue(CalendarContract.Events.ALL_DAY, mStart.isAllDay() ? 1 : 0)
-                .withValue(CalendarContract.Events.DTEND, mEnd.getTimestamp())
-                .withValue(CalendarContract.Events.EVENT_END_TIMEZONE, mEnd.isAllDay() ? "UTC" : mEnd.getTimeZone().getID())
-                .withValue(CalendarContract.Events.TITLE, mTitle.toString())
-                // explicitly (re-)set all recurring event values to null
-                .withValue(CalendarContract.Events.RRULE, null)
-                .withValue(CalendarContract.Events.RDATE, null)
-                .withValue(CalendarContract.Events.EXDATE, null)
-                .withValue(CalendarContract.Events.DURATION, null);
+            .withValue(CalendarContract.Events.EVENT_TIMEZONE, mStart.isAllDay() ? "UTC" : mStart.getTimeZone().getID())
+            .withValue(CalendarContract.Events.ALL_DAY, mStart.isAllDay() ? 1 : 0)
+            .withValue(CalendarContract.Events.DTEND, mEnd.getTimestamp())
+            .withValue(CalendarContract.Events.EVENT_END_TIMEZONE, mEnd.isAllDay() ? "UTC" : mEnd.getTimeZone().getID())
+            .withValue(CalendarContract.Events.TITLE, mTitle.toString())
+            // explicitly (re-)set all recurring event values to null
+            .withValue(CalendarContract.Events.RRULE, null)
+            .withValue(CalendarContract.Events.RDATE, null)
+            .withValue(CalendarContract.Events.EXDATE, null)
+            .withValue(CalendarContract.Events.DURATION, null);
     }
 }

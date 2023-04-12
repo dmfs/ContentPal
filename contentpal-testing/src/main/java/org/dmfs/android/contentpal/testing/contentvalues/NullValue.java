@@ -16,7 +16,7 @@
 
 package org.dmfs.android.contentpal.testing.contentvalues;
 
-import android.content.ContentValues;
+import android.util.ArrayMap;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -26,11 +26,9 @@ import androidx.annotation.NonNull;
 
 
 /**
- * A {@link Matcher} which matches if a value in a {@link ContentValues} is {@code null}.
- *
- * @author Marten Gajda
+ * A {@link Matcher} which matches if a value in a {@link ArrayMap} is {@code null}.
  */
-public final class NullValue extends TypeSafeDiagnosingMatcher<ContentValues>
+public final class NullValue extends TypeSafeDiagnosingMatcher<ArrayMap<String, Object>>
 {
     private final String mExpectedKey;
 
@@ -49,7 +47,7 @@ public final class NullValue extends TypeSafeDiagnosingMatcher<ContentValues>
 
 
     @Override
-    protected boolean matchesSafely(@NonNull ContentValues values, @NonNull Description mismatchDescription)
+    protected boolean matchesSafely(@NonNull ArrayMap<String, Object> values, @NonNull Description mismatchDescription)
     {
         if (values.get(mExpectedKey) != null)
         {

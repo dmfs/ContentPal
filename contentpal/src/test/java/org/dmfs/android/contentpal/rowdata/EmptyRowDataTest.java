@@ -23,7 +23,7 @@ import org.robolectric.annotation.Config;
 
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withoutValues;
 import static org.dmfs.android.contentpal.testing.rowdata.RowDataMatcher.builds;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 
 /**
@@ -37,8 +37,8 @@ public class EmptyRowDataTest
     public void testUpdatedBuilder()
     {
         assertThat(new EmptyRowData<>(),
-                builds(
-                        withoutValues()));
+            builds(
+                withoutValues()));
     }
 
 }

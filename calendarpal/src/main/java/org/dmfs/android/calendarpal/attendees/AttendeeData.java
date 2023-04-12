@@ -48,12 +48,12 @@ public final class AttendeeData extends DelegatingRowData<CalendarContract.Atten
     public AttendeeData(@NonNull CharSequence attendeeEmail, @NonNull RowData<CalendarContract.Attendees> attributes)
     {
         super(new Composite<>(
-                new EmailData(attendeeEmail),
-                // set the required defaults
-                new RelationData(CalendarContract.Attendees.RELATIONSHIP_NONE),
-                new StateData(CalendarContract.Attendees.ATTENDEE_STATUS_NONE),
-                new TypeData(CalendarContract.Attendees.TYPE_NONE),
-                // append the attributes, allowing to override the defaults
-                attributes));
+            new EmailData(attendeeEmail),
+            // set the required defaults
+            new RelationData(CalendarContract.Attendees.RELATIONSHIP_NONE),
+            new StateData(CalendarContract.Attendees.ATTENDEE_STATUS_NONE),
+            new TypeData(CalendarContract.Attendees.TYPE_NONE),
+            // append the attributes, allowing to override the defaults
+            attributes));
     }
 }

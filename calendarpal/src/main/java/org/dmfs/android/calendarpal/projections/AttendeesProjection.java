@@ -33,11 +33,11 @@ public final class AttendeesProjection extends DelegatingProjection<CalendarCont
     public AttendeesProjection()
     {
         super(new MultiProjection<>(
-                CalendarContract.Attendees._ID,
-                CalendarContract.Attendees.ATTENDEE_EMAIL,
-                CalendarContract.Attendees.ATTENDEE_NAME,
-                CalendarContract.Attendees.ATTENDEE_RELATIONSHIP,
-                CalendarContract.Attendees.ATTENDEE_STATUS,
-                CalendarContract.Attendees.ATTENDEE_TYPE));
+            CalendarContract.Attendees._ID,
+            CalendarContract.Attendees.ATTENDEE_EMAIL,
+            CalendarContract.Attendees.ATTENDEE_NAME,
+            CalendarContract.Attendees.ATTENDEE_RELATIONSHIP,
+            CalendarContract.Attendees.ATTENDEE_STATUS,
+            CalendarContract.Attendees.ATTENDEE_TYPE));
     }
 }

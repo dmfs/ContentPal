@@ -17,10 +17,10 @@
 package org.dmfs.android.contentpal.projections;
 
 import org.dmfs.android.contentpal.Projection;
-import org.dmfs.jems.iterable.composite.Joined;
-import org.dmfs.jems.iterable.decorators.Mapped;
-import org.dmfs.jems.iterable.elementary.Seq;
-import org.dmfs.jems.single.elementary.Collected;
+import org.dmfs.jems2.iterable.Joined;
+import org.dmfs.jems2.iterable.Mapped;
+import org.dmfs.jems2.iterable.Seq;
+import org.dmfs.jems2.single.Collected;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -56,13 +56,13 @@ public final class Composite<T> implements Projection<T>
     public String[] toArray()
     {
         return new Collected<>(
-                ArrayList::new,
-                new Joined<>(
-                        new Mapped<>(
-                                Arrays::asList,
-                                new Mapped<>(
-                                        Projection::toArray,
-                                        mDelegates))))
-                .value().toArray(new String[0]);
+            ArrayList::new,
+            new Joined<>(
+                new Mapped<>(
+                    Arrays::asList,
+                    new Mapped<>(
+                        Projection::toArray,
+                        mDelegates))))
+            .value().toArray(new String[0]);
     }
 }

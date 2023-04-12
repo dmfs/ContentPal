@@ -42,7 +42,9 @@ public abstract class DelegatingRowData<T> implements RowData<T>
 
     @NonNull
     @Override
-    public final ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
+    public final ContentProviderOperation.Builder updatedBuilder(
+        @NonNull TransactionContext transactionContext,
+        @NonNull ContentProviderOperation.Builder builder)
     {
         return mDelegate.updatedBuilder(transactionContext, builder);
     }

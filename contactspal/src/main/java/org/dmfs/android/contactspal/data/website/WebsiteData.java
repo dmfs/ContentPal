@@ -18,14 +18,14 @@ package org.dmfs.android.contactspal.data.website;
 
 import android.provider.ContactsContract;
 
-import androidx.annotation.NonNull;
-
 import org.dmfs.android.contactspal.data.Custom;
 import org.dmfs.android.contactspal.data.MimeTypeData;
 import org.dmfs.android.contactspal.data.Typed;
 import org.dmfs.android.contentpal.rowdata.CharSequenceRowData;
 import org.dmfs.android.contentpal.rowdata.Composite;
 import org.dmfs.android.contentpal.rowdata.DelegatingRowData;
+
+import androidx.annotation.NonNull;
 
 
 /**

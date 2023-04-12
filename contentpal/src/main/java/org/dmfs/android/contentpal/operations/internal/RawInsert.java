@@ -24,11 +24,11 @@ import org.dmfs.android.contentpal.InsertOperation;
 import org.dmfs.android.contentpal.SoftRowReference;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.operations.Insert;
-import org.dmfs.jems.optional.Optional;
+import org.dmfs.jems2.Optional;
 
 import androidx.annotation.NonNull;
 
-import static org.dmfs.optional.Absent.absent;
+import static org.dmfs.jems2.optional.Absent.absent;
 
 
 /**
@@ -62,7 +62,7 @@ public class RawInsert<T> implements InsertOperation<T>
     public ContentProviderOperation.Builder contentOperationBuilder(@NonNull TransactionContext transactionContext) throws UnsupportedOperationException
     {
         return ContentProviderOperation.newInsert(mUri)
-                // initialize with empty content values to allow inserting empty rows without a crash
-                .withValues(new ContentValues());
+            // initialize with empty content values to allow inserting empty rows without a crash
+            .withValues(new ContentValues());
     }
 }

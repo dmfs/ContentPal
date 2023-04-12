@@ -34,18 +34,12 @@ public interface OperationsQueue
      * in which case the transaction is committed before adding the new {@link Operation}s to a new transaction.
      *
      * @param operationsBatch
-     *         The {@link Iterable} of {@link Operation}s to enqueue for execution.
-     *
-     * @throws RemoteException
-     * @throws OperationApplicationException
+     *     The {@link Iterable} of {@link Operation}s to enqueue for execution.
      */
     void enqueue(@NonNull Iterable<? extends Operation<?>> operationsBatch) throws RemoteException, OperationApplicationException;
 
     /**
      * Commit all {@link Operation}s that have not been committed yet.
-     *
-     * @throws RemoteException
-     * @throws OperationApplicationException
      */
     void flush() throws RemoteException, OperationApplicationException;
 }

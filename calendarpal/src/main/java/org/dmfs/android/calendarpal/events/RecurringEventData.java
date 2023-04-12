@@ -22,15 +22,16 @@ import android.text.TextUtils;
 
 import org.dmfs.android.contentpal.RowData;
 import org.dmfs.android.contentpal.TransactionContext;
-import org.dmfs.iterables.EmptyIterable;
-import org.dmfs.iterables.SingletonIterable;
-import org.dmfs.jems.function.Function;
-import org.dmfs.jems.iterable.decorators.Mapped;
+import org.dmfs.jems2.Function;
+import org.dmfs.jems2.iterable.Just;
+import org.dmfs.jems2.iterable.Mapped;
 import org.dmfs.rfc5545.DateTime;
 import org.dmfs.rfc5545.Duration;
 import org.dmfs.rfc5545.recur.RecurrenceRule;
 
 import androidx.annotation.NonNull;
+
+import static org.dmfs.jems2.iterable.EmptyIterable.emptyIterable;
 
 
 /**
@@ -52,35 +53,57 @@ public final class RecurringEventData implements RowData<CalendarContract.Events
 
     public RecurringEventData(@NonNull CharSequence title, @NonNull DateTime start, @NonNull Duration duration, @NonNull RecurrenceRule rule)
     {
-        this(title, start, duration, new SingletonIterable<>(rule), EmptyIterable.instance(), EmptyIterable.instance());
+        this(title, start, duration, new Just<>(rule), emptyIterable(), emptyIterable());
     }
 
 
-    public RecurringEventData(@NonNull CharSequence title, @NonNull DateTime start, @NonNull Duration duration, @NonNull RecurrenceRule rule, @NonNull Iterable<DateTime> exDates)
+    public RecurringEventData(
+        @NonNull CharSequence title,
+        @NonNull DateTime start,
+        @NonNull Duration duration,
+        @NonNull RecurrenceRule rule,
+        @NonNull Iterable<DateTime> exDates)
     {
-        this(title, start, duration, new SingletonIterable<>(rule), exDates, EmptyIterable.instance());
+        this(title, start, duration, new Just<>(rule), exDates, emptyIterable());
     }
 
 
-    public RecurringEventData(@NonNull CharSequence title, @NonNull DateTime start, @NonNull Duration duration, @NonNull RecurrenceRule rule, @NonNull Iterable<DateTime> exDates, @NonNull Iterable<DateTime> rdates)
+    public RecurringEventData(
+        @NonNull CharSequence title,
+        @NonNull DateTime start,
+        @NonNull Duration duration,
+        @NonNull RecurrenceRule rule,
+        @NonNull Iterable<DateTime> exDates,
+        @NonNull Iterable<DateTime> rdates)
     {
-        this(title, start, duration, new SingletonIterable<>(rule), exDates, rdates);
+        this(title, start, duration, new Just<>(rule), exDates, rdates);
     }
 
 
     public RecurringEventData(@NonNull CharSequence title, @NonNull DateTime start, @NonNull Duration duration, @NonNull Iterable<RecurrenceRule> rules)
     {
-        this(title, start, duration, rules, EmptyIterable.instance(), EmptyIterable.instance());
+        this(title, start, duration, rules, emptyIterable(), emptyIterable());
     }
 
 
-    public RecurringEventData(@NonNull CharSequence title, @NonNull DateTime start, @NonNull Duration duration, @NonNull Iterable<RecurrenceRule> rules, @NonNull Iterable<DateTime> exDates)
+    public RecurringEventData(
+        @NonNull CharSequence title,
+        @NonNull DateTime start,
+        @NonNull Duration duration,
+        @NonNull Iterable<RecurrenceRule> rules,
+        @NonNull Iterable<DateTime> exDates)
     {
-        this(title, start, duration, rules, exDates, EmptyIterable.instance());
+        this(title, start, duration, rules, exDates, emptyIterable());
     }
 
 
-    public RecurringEventData(@NonNull CharSequence title, @NonNull DateTime start, @NonNull Duration duration, @NonNull Iterable<RecurrenceRule> rules, @NonNull Iterable<DateTime> exDates, @NonNull Iterable<DateTime> rdates)
+    public RecurringEventData(
+        @NonNull CharSequence title,
+        @NonNull DateTime start,
+        @NonNull Duration duration,
+        @NonNull Iterable<RecurrenceRule> rules,
+        @NonNull Iterable<DateTime> exDates,
+        @NonNull Iterable<DateTime> rdates)
     {
         mTitle = title;
         mStart = start;
@@ -96,15 +119,15 @@ public final class RecurringEventData implements RowData<CalendarContract.Events
     public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
         return builder.withValue(CalendarContract.Events.DTSTART, mStart.getTimestamp())
-                .withValue(CalendarContract.Events.EVENT_TIMEZONE, mStart.isAllDay() ? "UTC" : mStart.getTimeZone().getID())
-                .withValue(CalendarContract.Events.ALL_DAY, mStart.isAllDay() ? 1 : 0)
-                .withValue(CalendarContract.Events.DURATION, mDuration.toString())
-                .withValue(CalendarContract.Events.TITLE, mTitle.toString())
-                .withValue(CalendarContract.Events.RRULE, TextUtils.join("\n", mRules))
-                .withValue(CalendarContract.Events.RDATE, TextUtils.join(",", new Mapped<>(mUtcDate, mRDates)))
-                .withValue(CalendarContract.Events.EXDATE, TextUtils.join(",", new Mapped<>(mUtcDate, mExDates)))
-                // explicitly (re-)set DTEND to null
-                .withValue(CalendarContract.Events.DTEND, null)
-                .withValue(CalendarContract.Events.EVENT_END_TIMEZONE, null);
+            .withValue(CalendarContract.Events.EVENT_TIMEZONE, mStart.isAllDay() ? "UTC" : mStart.getTimeZone().getID())
+            .withValue(CalendarContract.Events.ALL_DAY, mStart.isAllDay() ? 1 : 0)
+            .withValue(CalendarContract.Events.DURATION, mDuration.toString())
+            .withValue(CalendarContract.Events.TITLE, mTitle.toString())
+            .withValue(CalendarContract.Events.RRULE, TextUtils.join("\n", mRules))
+            .withValue(CalendarContract.Events.RDATE, TextUtils.join(",", new Mapped<>(mUtcDate, mRDates)))
+            .withValue(CalendarContract.Events.EXDATE, TextUtils.join(",", new Mapped<>(mUtcDate, mExDates)))
+            // explicitly (re-)set DTEND to null
+            .withValue(CalendarContract.Events.DTEND, null)
+            .withValue(CalendarContract.Events.EVENT_END_TIMEZONE, null);
     }
 }

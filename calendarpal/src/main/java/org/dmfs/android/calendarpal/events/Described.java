@@ -56,6 +56,6 @@ public final class Described implements RowData<CalendarContract.Events>
     public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
         return mDelegate.updatedBuilder(transactionContext, builder)
-                .withValue(CalendarContract.Events.DESCRIPTION, mDescription == null ? null : mDescription.toString());
+            .withValue(CalendarContract.Events.DESCRIPTION, mDescription == null ? null : mDescription.toString());
     }
 }

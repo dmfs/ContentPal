@@ -27,7 +27,7 @@ import org.dmfs.android.contentpal.UriParams;
 import org.dmfs.android.contentpal.View;
 import org.dmfs.android.contentpal.predicates.AccountEq;
 import org.dmfs.android.contentpal.predicates.AllOf;
-import org.dmfs.jems.optional.Optional;
+import org.dmfs.jems2.Optional;
 
 import androidx.annotation.NonNull;
 
@@ -36,7 +36,7 @@ import androidx.annotation.NonNull;
  * A {@link View} filtered by account. This only works for views that support have {@code account_name} and {@code account_type} columns.
  *
  * @param <T>
- *         The contract of this view.
+ *     The contract of this view.
  *
  * @author Marten Gajda
  */
@@ -55,7 +55,11 @@ public final class AccountScoped<T> implements View<T>
 
     @NonNull
     @Override
-    public Cursor rows(@NonNull UriParams uriParams, @NonNull Projection<? super T> projection, @NonNull Predicate<? super T> predicate, @NonNull Optional<String> sorting) throws RemoteException
+    public Cursor rows(
+        @NonNull UriParams uriParams,
+        @NonNull Projection<? super T> projection,
+        @NonNull Predicate<? super T> predicate,
+        @NonNull Optional<String> sorting) throws RemoteException
     {
         return mDelegate.rows(uriParams, projection, new AllOf<>(predicate, new AccountEq<>(mAccount)), sorting);
     }

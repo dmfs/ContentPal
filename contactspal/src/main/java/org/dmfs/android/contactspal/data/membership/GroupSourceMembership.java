@@ -19,10 +19,10 @@ package org.dmfs.android.contactspal.data.membership;
 import android.content.ContentProviderOperation;
 import android.provider.ContactsContract;
 
-import androidx.annotation.NonNull;
-
 import org.dmfs.android.contentpal.RowData;
 import org.dmfs.android.contentpal.TransactionContext;
+
+import androidx.annotation.NonNull;
 
 
 /**

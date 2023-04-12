@@ -28,11 +28,11 @@ import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.ar
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.backReferences;
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.predicateWith;
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.selection;
-import static org.dmfs.jems.hamcrest.matchers.optional.PresentMatcher.present;
-import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
-import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
+import static org.dmfs.jems2.hamcrest.matchers.optional.PresentMatcher.present;
+import static org.dmfs.jems2.mockito.doubles.TestDoubles.dummy;
+import static org.dmfs.jems2.mockito.doubles.TestDoubles.failingMock;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.doReturn;
 
 
@@ -55,11 +55,11 @@ public class ReferringToTest
         doReturn(new BackReference<>(dummy(Uri.class), 10)).when(mockTc).resolved(dummyRowReference);
 
         assertThat(new ReferringTo<>("x", mockRowSnapshot),
-                predicateWith(
-                        selection(mockTc, "x = ?"),
-                        argumentValues(mockTc, "-1"),
-                        backReferences(mockTc, is(present(10)))
-                ));
+            predicateWith(
+                selection(mockTc, "x = ?"),
+                argumentValues(mockTc, "-1"),
+                backReferences(mockTc, is(present(10)))
+            ));
     }
 
 }

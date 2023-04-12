@@ -19,9 +19,9 @@ package org.dmfs.android.contentpal.rowdata;
 import org.dmfs.android.contentpal.RowDataSnapshot;
 import org.dmfs.android.contentpal.projections.EmptyProjection;
 import org.dmfs.android.contentpal.projections.MultiProjection;
-import org.dmfs.jems.function.Function;
-import org.dmfs.jems.optional.elementary.Absent;
-import org.dmfs.jems.optional.elementary.Present;
+import org.dmfs.jems2.Function;
+import org.dmfs.jems2.optional.Absent;
+import org.dmfs.jems2.optional.Present;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
@@ -32,7 +32,7 @@ import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithVa
 import static org.dmfs.android.contentpal.testing.contentvalues.Containing.containing;
 import static org.dmfs.android.contentpal.testing.contentvalues.NullValue.withNullValue;
 import static org.dmfs.android.contentpal.testing.rowdata.RowDataMatcher.builds;
-import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
+import static org.dmfs.jems2.mockito.doubles.TestDoubles.failingMock;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -63,9 +63,9 @@ public class SnapshotRowDataTest
         doReturn(new Absent<>()).when(snapshot).byteData("z");
 
         assertThat(new SnapshotRowData<>(new MultiProjection<>("y"), snapshot),
-                builds(
-                        withValuesOnly(
-                                containing("y", new byte[123]))));
+            builds(
+                withValuesOnly(
+                    containing("y", new byte[123]))));
     }
 
 
@@ -84,11 +84,11 @@ public class SnapshotRowDataTest
         doReturn(new Absent<>()).when(snapshot).byteData("z");
 
         assertThat(new SnapshotRowData<>(new MultiProjection<>("x", "y", "z"), snapshot),
-                builds(
-                        withValuesOnly(
-                                containing("x", "1"),
-                                containing("y", new byte[123]),
-                                withNullValue("z"))));
+            builds(
+                withValuesOnly(
+                    containing("x", "1"),
+                    containing("y", new byte[123]),
+                    withNullValue("z"))));
     }
 
 
@@ -107,8 +107,8 @@ public class SnapshotRowDataTest
         doReturn(new Absent<>()).when(snapshot).byteData("z");
 
         assertThat(new SnapshotRowData<>(new EmptyProjection<>(), snapshot),
-                builds(
-                        withoutValues()));
+            builds(
+                withoutValues()));
     }
 
 
@@ -127,10 +127,10 @@ public class SnapshotRowDataTest
         doReturn(new Absent<>()).when(snapshot).byteData("z");
 
         assertThat(new SnapshotRowData<>(new MultiProjection<>("x", "y", "z"), snapshot),
-                builds(
-                        withValuesOnly(
-                                withNullValue("x"),
-                                withNullValue("y"),
-                                withNullValue("z"))));
+            builds(
+                withValuesOnly(
+                    withNullValue("x"),
+                    withNullValue("y"),
+                    withNullValue("z"))));
     }
 }
