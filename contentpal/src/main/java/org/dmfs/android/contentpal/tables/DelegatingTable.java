@@ -32,7 +32,7 @@ import androidx.annotation.NonNull;
  * An abstract {@link Table} which delegates all calls to another {@link Table}.
  *
  * @param <T>
- *         The contract of this table.
+ *     The contract of this table.
  *
  * @author Marten Gajda
  */

@@ -21,17 +21,17 @@ import org.dmfs.android.contentpal.RowSet;
 import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.testing.rowset.TestRowSet;
 import org.dmfs.android.contentpal.testing.table.Contract;
-import org.dmfs.iterables.decorators.DelegatingIterable;
-import org.dmfs.jems.iterable.decorators.Mapped;
-import org.dmfs.jems.iterable.elementary.Seq;
-import org.dmfs.jems.mocks.MockFunction;
+import org.dmfs.jems2.iterable.DelegatingIterable;
+import org.dmfs.jems2.iterable.Mapped;
+import org.dmfs.jems2.iterable.Seq;
+import org.dmfs.jems2.mocks.MockFunction;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matcher;
 import org.junit.Test;
 
-import static org.dmfs.jems.hamcrest.matchers.IterableMatcher.iteratesTo;
-import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
-import static org.junit.Assert.assertThat;
+import static org.dmfs.jems2.hamcrest.matchers.iterable.IterableMatcher.iteratesTo;
+import static org.dmfs.jems2.mockito.doubles.TestDoubles.dummy;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 
 /**
@@ -49,8 +49,8 @@ public final class MappedRowSetBatchTest
         Iterable<Operation<?>> dummyOperations = new Seq<Operation<?>>(dummy(Operation.class), dummy(Operation.class), dummy(Operation.class));
 
         // TODO: method reference when we have a MockFunction implementing the new Function interface
-        assertThat(new MappedRowSetBatch<>(rowSet, new MockFunction<>(new InstanceMatching<>(rowSet), dummyOperations)::apply),
-                iteratesTo(new InstanceMatching<>(dummyOperations)));
+        assertThat(new MappedRowSetBatch<>(rowSet, new MockFunction<>(new InstanceMatching<>(rowSet), dummyOperations)::value),
+            iteratesTo(new InstanceMatching<>(dummyOperations)));
     }
 
 

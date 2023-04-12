@@ -36,7 +36,7 @@ import androidx.annotation.NonNull;
  * {@code caller_is_syncadapter} query parameters.
  *
  * @param <T>
- *         The contract of this table.
+ *     The contract of this table.
  *
  * @author Marten Gajda
  */

@@ -27,10 +27,11 @@ import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.predicates.AnyOf;
 import org.dmfs.android.contentpal.rowdata.EmptyRowData;
 import org.dmfs.android.contentpal.tools.uriparams.EmptyUriParams;
-import org.dmfs.jems.optional.Optional;
-import org.dmfs.jems.optional.elementary.Absent;
+import org.dmfs.jems2.Optional;
 
 import androidx.annotation.NonNull;
+
+import static org.dmfs.jems2.optional.Absent.absent;
 
 
 /**
@@ -76,7 +77,7 @@ public final class BulkAssert<T> implements Operation<T>
     @Override
     public Optional<SoftRowReference<T>> reference()
     {
-        return Absent.absent();
+        return absent();
     }
 
 
@@ -85,6 +86,6 @@ public final class BulkAssert<T> implements Operation<T>
     public ContentProviderOperation.Builder contentOperationBuilder(@NonNull TransactionContext transactionContext) throws UnsupportedOperationException
     {
         return mRowData.updatedBuilder(transactionContext,
-                mTable.assertOperation(EmptyUriParams.INSTANCE, mPredicate).contentOperationBuilder(transactionContext));
+            mTable.assertOperation(EmptyUriParams.INSTANCE, mPredicate).contentOperationBuilder(transactionContext));
     }
 }

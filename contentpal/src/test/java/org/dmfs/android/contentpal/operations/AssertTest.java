@@ -36,11 +36,11 @@ import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithVa
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYieldAllowed.withYieldNotAllowed;
 import static org.dmfs.android.contentpal.testing.contentvalues.Containing.containing;
 import static org.dmfs.android.contentpal.testing.operations.OperationMatcher.builds;
-import static org.dmfs.jems.hamcrest.matchers.optional.AbsentMatcher.absent;
-import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
-import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
+import static org.dmfs.jems2.hamcrest.matchers.optional.AbsentMatcher.absent;
+import static org.dmfs.jems2.mockito.doubles.TestDoubles.dummy;
+import static org.dmfs.jems2.mockito.doubles.TestDoubles.failingMock;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsSame.sameInstance;
-import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 
@@ -72,13 +72,13 @@ public final class AssertTest
         doReturn(ContentProviderOperation.newAssertQuery(dummyUri)).when(dummyRowReference).assertOperationBuilder(any(TransactionContext.class));
 
         assertThat(new Assert<>(mockRowSnapshot, new CharSequenceRowData<>("key", "value")),
-                builds(
-                        targets(sameInstance(dummyUri)),
-                        assertOperation(),
-                        withoutExpectedCount(),
-                        withYieldNotAllowed(),
-                        withValuesOnly(
-                                containing("key", "value"))));
+            builds(
+                targets(sameInstance(dummyUri)),
+                assertOperation(),
+                withoutExpectedCount(),
+                withYieldNotAllowed(),
+                withValuesOnly(
+                    containing("key", "value"))));
     }
 
 }

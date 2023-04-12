@@ -72,7 +72,10 @@ public final class VirtualRowReference<T> implements SoftRowReference<T>
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder builderWithReferenceData(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder operationBuilder, @NonNull String foreignKeyColumn)
+    public ContentProviderOperation.Builder builderWithReferenceData(
+        @NonNull TransactionContext transactionContext,
+        @NonNull ContentProviderOperation.Builder operationBuilder,
+        @NonNull String foreignKeyColumn)
     {
         throw new UnsupportedOperationException("Can't reference a virtual row.");
     }

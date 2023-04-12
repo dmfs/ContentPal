@@ -27,7 +27,7 @@ import androidx.annotation.NonNull;
  * Note, depending on the state of the row, some methods may not be supported for a particular {@link RowReference}.
  *
  * @param <T>
- *         The contract of the {@link Table} of the {@link RowSnapshot} this reference refers to.
+ *     The contract of the {@link Table} of the {@link RowSnapshot} this reference refers to.
  *
  * @author Marten Gajda
  */
@@ -37,7 +37,7 @@ public interface RowReference<T>
      * Creates an {@link ContentProviderOperation.Builder} that will insert or update the referred row.
      *
      * @param transactionContext
-     *         A {@link TransactionContext} of the {@link Transaction} this is being executed in.
+     *     A {@link TransactionContext} of the {@link Transaction} this is being executed in.
      *
      * @return A {@link ContentProviderOperation.Builder}.
      */
@@ -48,12 +48,12 @@ public interface RowReference<T>
      * Creates an {@link ContentProviderOperation.Builder} that will delete the referred row.
      *
      * @param transactionContext
-     *         A {@link TransactionContext} of the {@link Transaction} this is being executed in.
+     *     A {@link TransactionContext} of the {@link Transaction} this is being executed in.
      *
      * @return A {@link ContentProviderOperation.Builder}.
      *
      * @throws IllegalStateException
-     *         if the {@link RowReference} doesn't refer to an existing row.
+     *     if the {@link RowReference} doesn't refer to an existing row.
      */
     @NonNull
     ContentProviderOperation.Builder deleteOperationBuilder(@NonNull TransactionContext transactionContext);
@@ -62,12 +62,12 @@ public interface RowReference<T>
      * Creates an {@link ContentProviderOperation.Builder} that will assert on the referred row.
      *
      * @param transactionContext
-     *         A {@link TransactionContext} of the {@link Transaction} this is being executed in.
+     *     A {@link TransactionContext} of the {@link Transaction} this is being executed in.
      *
      * @return A {@link ContentProviderOperation.Builder}.
      *
      * @throws IllegalStateException
-     *         if the {@link RowReference} doesn't refer to an existing row.
+     *     if the {@link RowReference} doesn't refer to an existing row.
      */
     @NonNull
     ContentProviderOperation.Builder assertOperationBuilder(@NonNull TransactionContext transactionContext);
@@ -76,19 +76,18 @@ public interface RowReference<T>
      * Select the referred item in the given {@link ContentProviderOperation.Builder}.
      *
      * @param transactionContext
-     *         A {@link TransactionContext} of the {@link Transaction} this is being executed in.
+     *     A {@link TransactionContext} of the {@link Transaction} this is being executed in.
      * @param operationBuilder
-     *         The  {@link ContentProviderOperation.Builder}.
-     * @param foreignKeyColumn
+     *     The  {@link ContentProviderOperation.Builder}.
      */
     @NonNull
-    ContentProviderOperation.Builder builderWithReferenceData(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder operationBuilder, @NonNull String foreignKeyColumn);
+    ContentProviderOperation.Builder builderWithReferenceData(
+        @NonNull TransactionContext transactionContext,
+        @NonNull ContentProviderOperation.Builder operationBuilder,
+        @NonNull String foreignKeyColumn);
 
     /**
      * Returns a {@link Predicate} which matches the row on the given key column.
-     *
-     * @param transactionContext
-     * @param keyColumn
      *
      * @return A {@link Predicate}
      */

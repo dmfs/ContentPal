@@ -25,11 +25,11 @@ import org.dmfs.android.contentpal.View;
 import org.dmfs.android.contentpal.predicates.AnyOf;
 import org.dmfs.android.contentpal.projections.SingleColProjection;
 import org.dmfs.android.contentpal.tools.uriparams.EmptyUriParams;
-import org.dmfs.jems.single.Single;
+import org.dmfs.jems2.Single;
 
 import androidx.annotation.NonNull;
 
-import static org.dmfs.jems.optional.elementary.Absent.absent;
+import static org.dmfs.jems2.optional.Absent.absent;
 
 
 /**

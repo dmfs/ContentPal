@@ -1,5 +1,5 @@
-<manifest package="org.dmfs.android.contentpal">
+<manifest>
 
-    <application/>
+    <application />
 
 </manifest>

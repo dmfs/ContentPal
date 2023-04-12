@@ -21,11 +21,11 @@ import org.dmfs.android.contentpal.SoftRowReference;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.junit.Test;
 
-import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
-import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
+import static org.dmfs.jems2.mockito.doubles.TestDoubles.dummy;
+import static org.dmfs.jems2.mockito.doubles.TestDoubles.failingMock;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsSame.sameInstance;
-import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.doReturn;
 
 

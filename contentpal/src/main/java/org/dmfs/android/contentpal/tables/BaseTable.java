@@ -33,7 +33,7 @@ import org.dmfs.android.contentpal.operations.internal.RawDelete;
 import org.dmfs.android.contentpal.operations.internal.RawInsert;
 import org.dmfs.android.contentpal.operations.internal.RawUpdate;
 import org.dmfs.android.contentpal.views.BaseView;
-import org.dmfs.jems.optional.Optional;
+import org.dmfs.jems2.Optional;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -45,7 +45,7 @@ import androidx.annotation.NonNull;
  * A basic implementation of a {@link Table}.
  *
  * @param <T>
- *         The contract of this table.
+ *     The contract of this table.
  *
  * @author Marten Gajda
  */
@@ -105,8 +105,6 @@ public final class BaseTable<T> implements Table<T>
      * <p>
      * Note, this class is not public, because it is considered to be harmful in most cases other than in this class. The reason is that it's not possible to
      * append a selection to a ContentProviderOperation.Builder, instead the previous selection is replaced.
-     *
-     * @param <T>
      */
     private final static class Constrained<T> implements Operation<T>
     {

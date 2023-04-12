@@ -29,11 +29,11 @@ import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithEx
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withoutValues;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYieldAllowed.withYieldNotAllowed;
 import static org.dmfs.android.contentpal.testing.operations.OperationMatcher.builds;
-import static org.dmfs.jems.hamcrest.matchers.optional.AbsentMatcher.absent;
-import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
+import static org.dmfs.jems2.hamcrest.matchers.optional.AbsentMatcher.absent;
+import static org.dmfs.jems2.mockito.doubles.TestDoubles.dummy;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsSame.sameInstance;
-import static org.junit.Assert.assertThat;
 
 
 /**
@@ -55,11 +55,11 @@ public class RawAssertTest
     {
         Uri dummyUri = dummy(Uri.class);
         assertThat(new RawAssert<>(dummyUri),
-                builds(
-                        targets(sameInstance(dummyUri)),
-                        assertOperation(),
-                        withYieldNotAllowed(),
-                        withoutExpectedCount(),
-                        withoutValues()));
+            builds(
+                targets(sameInstance(dummyUri)),
+                assertOperation(),
+                withYieldNotAllowed(),
+                withoutExpectedCount(),
+                withoutValues()));
     }
 }

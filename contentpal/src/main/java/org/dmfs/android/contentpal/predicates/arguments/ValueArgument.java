@@ -17,11 +17,11 @@
 package org.dmfs.android.contentpal.predicates.arguments;
 
 import org.dmfs.android.contentpal.Predicate;
-import org.dmfs.jems.optional.Optional;
+import org.dmfs.jems2.Optional;
 
 import androidx.annotation.NonNull;
 
-import static org.dmfs.jems.optional.elementary.Absent.absent;
+import static org.dmfs.jems2.optional.Absent.absent;
 
 
 /**

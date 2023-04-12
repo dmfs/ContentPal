@@ -18,8 +18,8 @@ package org.dmfs.android.contentpal.predicates.arguments;
 
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.Transaction;
-import org.dmfs.jems.optional.Optional;
-import org.dmfs.jems.optional.elementary.Present;
+import org.dmfs.jems2.Optional;
+import org.dmfs.jems2.optional.Present;
 
 import androidx.annotation.NonNull;
 

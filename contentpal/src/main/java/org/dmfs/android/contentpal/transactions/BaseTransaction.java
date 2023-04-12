@@ -34,7 +34,7 @@ import org.dmfs.android.contentpal.references.RowUriReference;
 import org.dmfs.android.contentpal.tools.OperationSize;
 import org.dmfs.android.contentpal.transactions.contexts.EmptyTransactionContext;
 import org.dmfs.android.contentpal.transactions.contexts.Quick;
-import org.dmfs.jems.optional.Optional;
+import org.dmfs.jems2.Optional;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -66,7 +66,12 @@ public final class BaseTransaction implements Transaction
     }
 
 
-    private BaseTransaction(@NonNull ArrayList<ContentProviderOperation> operations, @NonNull TransactionContext context, @NonNull TransactionContext transactionContext, @NonNull SparseArray<RowReference<?>> transactionReferences, int size)
+    private BaseTransaction(
+        @NonNull ArrayList<ContentProviderOperation> operations,
+        @NonNull TransactionContext context,
+        @NonNull TransactionContext transactionContext,
+        @NonNull SparseArray<RowReference<?>> transactionReferences,
+        int size)
     {
         mOperations = operations;
         mContext = context;
@@ -83,8 +88,8 @@ public final class BaseTransaction implements Transaction
         final ContentProviderResult[] resultsArray = client.applyBatch(mOperations);
 
         return mTransactionReferences.size() == 0
-                ? mContext
-                : new ResultTransactionContext(mTransactionReferences, resultsArray, mContext);
+            ? mContext
+            : new ResultTransactionContext(mTransactionReferences, resultsArray, mContext);
     }
 
 
@@ -153,8 +158,8 @@ public final class BaseTransaction implements Transaction
         public <T> RowReference<T> resolved(@NonNull SoftRowReference<T> reference)
         {
             return reference == mOriginalReference.get()
-                    ? new BackReference<>(mUri, mBackReference)
-                    : mTransactionContext.resolved(reference);
+                ? new BackReference<>(mUri, mBackReference)
+                : mTransactionContext.resolved(reference);
         }
 
     }
@@ -167,7 +172,10 @@ public final class BaseTransaction implements Transaction
         private final TransactionContext mTransactionContext;
 
 
-        private ResultTransactionContext(SparseArray<RowReference<?>> batchreferences, ContentProviderResult[] resultsArray, TransactionContext transactionContext)
+        private ResultTransactionContext(
+            SparseArray<RowReference<?>> batchreferences,
+            ContentProviderResult[] resultsArray,
+            TransactionContext transactionContext)
         {
             mBatchReferences = batchreferences;
             mResultsArray = resultsArray;
@@ -181,8 +189,8 @@ public final class BaseTransaction implements Transaction
         {
             int idx = mBatchReferences.indexOfValue(reference);
             return idx >= 0 ?
-                    new RowUriReference<>(mResultsArray[mBatchReferences.keyAt(idx)].uri) :
-                    mTransactionContext.resolved(reference);
+                new RowUriReference<>(mResultsArray[mBatchReferences.keyAt(idx)].uri) :
+                mTransactionContext.resolved(reference);
         }
     }
 }

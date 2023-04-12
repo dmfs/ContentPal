@@ -26,7 +26,7 @@ import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.Transaction;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.predicates.arguments.BackReferenceArgument;
-import org.dmfs.iterables.SingletonIterable;
+import org.dmfs.jems2.iterable.Just;
 
 import androidx.annotation.NonNull;
 
@@ -80,7 +80,10 @@ public final class BackReference<T> implements RowReference<T>
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder builderWithReferenceData(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder operationBuilder, @NonNull String foreignKeyColumn)
+    public ContentProviderOperation.Builder builderWithReferenceData(
+        @NonNull TransactionContext transactionContext,
+        @NonNull ContentProviderOperation.Builder operationBuilder,
+        @NonNull String foreignKeyColumn)
     {
         return operationBuilder.withValueBackReference(foreignKeyColumn, mBackReference);
     }
@@ -98,7 +101,7 @@ public final class BackReference<T> implements RowReference<T>
     private ContentProviderOperation.Builder withSelection(@NonNull ContentProviderOperation.Builder builder)
     {
         builder.withSelection(String.format(DEFAULT_SELECTION, BaseColumns._ID), DEFAULT_SELECTION_ARGS)
-                .withSelectionBackReference(0, mBackReference);
+            .withSelectionBackReference(0, mBackReference);
         return builder;
     }
 
@@ -128,7 +131,7 @@ public final class BackReference<T> implements RowReference<T>
         @Override
         public Iterable<Argument> arguments(@NonNull TransactionContext transactionContext)
         {
-            return new SingletonIterable<>(new BackReferenceArgument(mBackReference));
+            return new Just<>(new BackReferenceArgument(mBackReference));
         }
     }
 }

@@ -25,7 +25,7 @@ import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithVa
 import static org.dmfs.android.contentpal.testing.contentvalues.Containing.containing;
 import static org.dmfs.android.contentpal.testing.contentvalues.NullValue.withNullValue;
 import static org.dmfs.android.contentpal.testing.rowdata.RowDataMatcher.builds;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 
 /**
@@ -39,14 +39,14 @@ public class CharSequenceRowDataTest
     public void testUpdatedBuilder()
     {
         assertThat(new CharSequenceRowData<>("key", null),
-                builds(
-                        withValuesOnly(
-                                withNullValue("key"))));
+            builds(
+                withValuesOnly(
+                    withNullValue("key"))));
 
         assertThat(new CharSequenceRowData<>("key", "someValue"),
-                builds(
-                        withValuesOnly(
-                                containing("key", "someValue"))));
+            builds(
+                withValuesOnly(
+                    containing("key", "someValue"))));
     }
 
 }

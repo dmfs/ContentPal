@@ -24,8 +24,8 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import static org.dmfs.android.contentpal.testing.table.TableMatcher.table;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
 
 
 @RunWith(RobolectricTestRunner.class)

@@ -16,7 +16,7 @@
 
 package org.dmfs.android.contentpal.testing.tools;
 
-import org.dmfs.jems.single.Single;
+import org.dmfs.jems2.Single;
 
 import androidx.annotation.NonNull;
 

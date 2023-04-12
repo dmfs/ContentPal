@@ -17,11 +17,11 @@
 package org.dmfs.android.contentpal.rowdatasnapshots;
 
 import org.dmfs.android.contentpal.RowDataSnapshot;
-import org.dmfs.iterators.decorators.Serialized;
-import org.dmfs.jems.function.Function;
-import org.dmfs.jems.optional.Optional;
-import org.dmfs.jems.optional.decorators.Mapped;
-import org.dmfs.jems.optional.elementary.NullSafe;
+import org.dmfs.jems2.Function;
+import org.dmfs.jems2.Optional;
+import org.dmfs.jems2.iterable.Joined;
+import org.dmfs.jems2.optional.Mapped;
+import org.dmfs.jems2.optional.NullSafe;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -68,6 +68,6 @@ public final class MapRowDataSnapshot<Contract> implements RowDataSnapshot<Contr
     @Override
     public Iterator<String> iterator()
     {
-        return new Serialized<>(mCharData.keySet().iterator(), mByteData.keySet().iterator());
+        return new Joined<>(mCharData.keySet(), mByteData.keySet()).iterator();
     }
 }

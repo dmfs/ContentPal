@@ -21,8 +21,8 @@ import android.net.Uri;
 import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.Table;
 import org.dmfs.android.contentpal.testing.predicates.Mocked;
-import org.dmfs.jems.iterable.composite.Joined;
-import org.dmfs.jems.iterable.elementary.Seq;
+import org.dmfs.jems2.iterable.Joined;
+import org.dmfs.jems2.iterable.Seq;
 import org.hamcrest.Matcher;
 
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.OperationType.assertOperation;
@@ -31,7 +31,7 @@ import static org.dmfs.android.contentpal.testing.contentoperationbuilder.Operat
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.OperationType.updateOperation;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.TargetMatcher.targets;
 import static org.dmfs.android.contentpal.testing.operations.OperationMatcher.builds;
-import static org.dmfs.jems.hamcrest.matchers.LambdaMatcher.having;
+import static org.dmfs.jems2.hamcrest.matchers.LambdaMatcher.having;
 import static org.hamcrest.Matchers.allOf;
 
 
@@ -41,7 +41,7 @@ public final class TableMatcher
     public static <Contract> Matcher<Table<Contract>> table(Uri contentUri, Matcher<? super Table<Contract>>... tableMatcher)
     {
         return allOf(
-            new Joined<>(
+            new Joined<Matcher<? super Table<Contract>>>(
                 new Seq<>(
                     having("insert", table -> table.insertOperation(uriBuilder -> uriBuilder), builds(insertOperation(), targets(contentUri))),
                     having("update",

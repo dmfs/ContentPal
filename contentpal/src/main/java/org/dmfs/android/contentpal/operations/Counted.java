@@ -22,7 +22,7 @@ import org.dmfs.android.contentpal.InsertOperation;
 import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.SoftRowReference;
 import org.dmfs.android.contentpal.TransactionContext;
-import org.dmfs.jems.optional.Optional;
+import org.dmfs.jems2.Optional;
 
 import androidx.annotation.NonNull;
 
@@ -44,9 +44,9 @@ public final class Counted<T> implements Operation<T>
      * Predicts the number of affected rows of the given operation and fails if the actual number of affected rows is different.
      *
      * @param count
-     *         The expected number of affected rows.
+     *     The expected number of affected rows.
      * @param operation
-     *         The decorated {@link Operation}.
+     *     The decorated {@link Operation}.
      */
     public Counted(int count, @NonNull Operation<T> operation)
     {

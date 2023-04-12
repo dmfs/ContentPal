@@ -32,10 +32,10 @@ import org.mockito.ArgumentMatcher;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
-import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
-import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
+import static org.dmfs.jems2.mockito.doubles.TestDoubles.dummy;
+import static org.dmfs.jems2.mockito.doubles.TestDoubles.failingMock;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.sameInstance;
-import static org.junit.Assert.assertThat;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.same;
 import static org.mockito.Mockito.doReturn;
@@ -70,7 +70,7 @@ public class SyncedTest
         doReturn(dummyResultOperation).when(mockTable).updateOperation(argThat(new UriParamsArgumentMatcher(account)), same(dummyPredicate));
 
         assertThat(new Synced<>(account, mockTable).updateOperation(new EmptyUriParams(), dummyPredicate),
-                sameInstance(dummyResultOperation));
+            sameInstance(dummyResultOperation));
     }
 
 
@@ -84,7 +84,7 @@ public class SyncedTest
         doReturn(dummyResultOperation).when(mockTable).deleteOperation(argThat(new UriParamsArgumentMatcher(account)), same(dummyPredicate));
 
         assertThat(new Synced<>(account, mockTable).deleteOperation(new EmptyUriParams(), dummyPredicate),
-                sameInstance(dummyResultOperation));
+            sameInstance(dummyResultOperation));
     }
 
 
@@ -98,7 +98,7 @@ public class SyncedTest
         doReturn(dummyResultOperation).when(mockTable).assertOperation(argThat(new UriParamsArgumentMatcher(account)), same(dummyPredicate));
 
         assertThat(new Synced<>(account, mockTable).assertOperation(new EmptyUriParams(), dummyPredicate),
-                sameInstance(dummyResultOperation));
+            sameInstance(dummyResultOperation));
     }
 
 
@@ -118,7 +118,7 @@ public class SyncedTest
         {
             Uri uri = argument.withParam(new Uri.Builder()).build();
             return uri.getBooleanQueryParameter(ContactsContract.CALLER_IS_SYNCADAPTER, false) &&
-                    mAccount.equals(new Account(uri.getQueryParameter("account_name"), uri.getQueryParameter("account_type")));
+                mAccount.equals(new Account(uri.getQueryParameter("account_name"), uri.getQueryParameter("account_type")));
         }
     }
 

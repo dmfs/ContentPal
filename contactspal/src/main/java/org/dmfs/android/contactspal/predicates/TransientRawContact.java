@@ -35,7 +35,7 @@ public final class TransientRawContact extends DelegatingPredicate<ContactsContr
     public TransientRawContact()
     {
         super(new AllOf<>(
-                new IsNull<>(ContactsContract.RawContacts.SOURCE_ID),
-                new EqArg<>(ContactsContract.RawContacts.DELETED, 1)));
+            new IsNull<>(ContactsContract.RawContacts.SOURCE_ID),
+            new EqArg<>(ContactsContract.RawContacts.DELETED, 1)));
     }
 }

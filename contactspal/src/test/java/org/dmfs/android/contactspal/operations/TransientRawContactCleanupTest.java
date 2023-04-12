@@ -46,13 +46,13 @@ public class TransientRawContactCleanupTest
     public void test()
     {
         assertThat(
-                new TransientRawContactCleanup(new RawContacts()),
-                builds(
-                        // TODO: test selection
-                        targets(ContactsContract.RawContacts.CONTENT_URI),
-                        deleteOperation(),
-                        withoutExpectedCount(),
-                        withYieldNotAllowed(),
-                        withoutValues()));
+            new TransientRawContactCleanup(new RawContacts()),
+            builds(
+                // TODO: test selection
+                targets(ContactsContract.RawContacts.CONTENT_URI),
+                deleteOperation(),
+                withoutExpectedCount(),
+                withYieldNotAllowed(),
+                withoutValues()));
     }
 }

@@ -27,7 +27,7 @@ import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.ab
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.argumentValues;
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.predicateWith;
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.selection;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 
 /**
@@ -44,11 +44,11 @@ public final class AccountEqTest
     public void test()
     {
         assertThat(new AccountEq<>(new Account("name", "type")),
-                predicateWith(
-                        selection("( account_name = ? ) and ( account_type = ? )"),
-                        argumentValues("name", "type"),
-                        absentBackReferences(2)
-                ));
+            predicateWith(
+                selection("( account_name = ? ) and ( account_type = ? )"),
+                argumentValues("name", "type"),
+                absentBackReferences(2)
+            ));
     }
 
 }

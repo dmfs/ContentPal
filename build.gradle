@@ -1,21 +1,18 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-apply plugin: 'com.github.ben-manes.versions'
-
 buildscript {
     repositories {
-        jcenter()
         google()
+        mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.2'
-        classpath 'com.dicedmelon.gradle:jacoco-android:0.1.4'
-        classpath 'org.jacoco:org.jacoco.core:0.8.3'
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.17.0'
+        classpath 'com.android.tools.build:gradle:7.3.1'
+        classpath 'org.jacoco:org.jacoco.core:0.8.8'
         classpath 'digital.wup:android-maven-publish:3.6.2'
     }
 }
-
-
+plugins {
+    id 'io.github.gradle-nexus.publish-plugin' version '1.1.0' apply false
+}
 
 def gitVersion = { ->
     def stdout = new ByteArrayOutputStream()
@@ -31,9 +28,24 @@ allprojects {
     group 'org.dmfs'
     version gitVersion()
     repositories {
-        jcenter()
         mavenCentral()
         google()
+    }
+}
+
+
+if (project.hasProperty('SONATYPE_USERNAME') && project.hasProperty('SONATYPE_PASSWORD')) {
+    apply plugin: 'io.github.gradle-nexus.publish-plugin'
+
+    nexusPublishing {
+        repositories {
+            sonatype {
+                username = SONATYPE_USERNAME
+                password = SONATYPE_PASSWORD
+                nexusUrl.set(uri("https://oss.sonatype.org/service/local/"))
+                snapshotRepositoryUrl.set(uri("https://oss.sonatype.org/content/repositories/snapshots/"))
+            }
+        }
     }
 }
 

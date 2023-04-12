@@ -26,10 +26,11 @@ import org.dmfs.android.contentpal.SoftRowReference;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.predicates.AnyOf;
 import org.dmfs.android.contentpal.tools.uriparams.EmptyUriParams;
-import org.dmfs.jems.optional.Optional;
-import org.dmfs.jems.optional.elementary.Absent;
+import org.dmfs.jems2.Optional;
 
 import androidx.annotation.NonNull;
+
+import static org.dmfs.jems2.optional.Absent.absent;
 
 
 /**
@@ -55,7 +56,7 @@ final class AggregationException implements Operation<ContactsContract.Aggregati
     public Optional<SoftRowReference<ContactsContract.AggregationExceptions>> reference()
     {
         // you can't refer to a specific row in the aggregation table
-        return Absent.absent();
+        return absent();
     }
 
 
@@ -65,14 +66,14 @@ final class AggregationException implements Operation<ContactsContract.Aggregati
     {
         // updating Aggregation exceptions works a bit strange. Instead of selecting a specific entry, we have to refer to them in the values.
         return mRawContact2.builderWithReferenceData(
+            transactionContext,
+            mRawContact1.builderWithReferenceData(
                 transactionContext,
-                mRawContact1.builderWithReferenceData(
-                        transactionContext,
-                        AggregationExceptions.INSTANCE.updateOperation(
-                                EmptyUriParams.INSTANCE,
-                                new AnyOf<>()
-                        ).contentOperationBuilder(transactionContext),
-                        ContactsContract.AggregationExceptions.RAW_CONTACT_ID1), ContactsContract.AggregationExceptions.RAW_CONTACT_ID2);
+                AggregationExceptions.INSTANCE.updateOperation(
+                    EmptyUriParams.INSTANCE,
+                    new AnyOf<>()
+                ).contentOperationBuilder(transactionContext),
+                ContactsContract.AggregationExceptions.RAW_CONTACT_ID1), ContactsContract.AggregationExceptions.RAW_CONTACT_ID2);
 
     }
 }

@@ -20,9 +20,9 @@ import android.content.ContentProviderOperation;
 
 import org.dmfs.android.contentpal.RowData;
 import org.dmfs.android.contentpal.TransactionContext;
-import org.dmfs.jems.iterable.adapters.PresentValues;
-import org.dmfs.jems.iterable.elementary.Seq;
-import org.dmfs.jems.optional.Optional;
+import org.dmfs.jems2.Optional;
+import org.dmfs.jems2.iterable.PresentValues;
+import org.dmfs.jems2.iterable.Seq;
 
 import androidx.annotation.NonNull;
 

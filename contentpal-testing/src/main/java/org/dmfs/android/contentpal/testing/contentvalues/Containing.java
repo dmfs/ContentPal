@@ -16,7 +16,7 @@
 
 package org.dmfs.android.contentpal.testing.contentvalues;
 
-import android.content.ContentValues;
+import android.util.ArrayMap;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -30,11 +30,9 @@ import static org.hamcrest.Matchers.is;
 
 
 /**
- * A {@link Matcher} which matches expected values in {@link ContentValues}.
- *
- * @author Marten Gajda
+ * A {@link Matcher} which matches expected values in {@link ArrayMap}.
  */
-public final class Containing<T> extends TypeSafeDiagnosingMatcher<ContentValues>
+public final class Containing<T> extends TypeSafeDiagnosingMatcher<ArrayMap<String, Object>>
 {
     private final String mExpectedKey;
     private final Matcher<T> mExpectedValueMatcher;
@@ -62,7 +60,7 @@ public final class Containing<T> extends TypeSafeDiagnosingMatcher<ContentValues
 
 
     @Override
-    protected boolean matchesSafely(@NonNull ContentValues values, @NonNull Description mismatchDescription)
+    protected boolean matchesSafely(@NonNull ArrayMap<String, Object> values, @NonNull Description mismatchDescription)
     {
         if (!mExpectedValueMatcher.matches(values.get(mExpectedKey)))
         {

@@ -19,9 +19,9 @@ package org.dmfs.android.contentpal.batches;
 import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.RowSet;
 import org.dmfs.android.contentpal.RowSnapshot;
-import org.dmfs.iterables.decorators.DelegatingIterable;
-import org.dmfs.jems.function.Function;
-import org.dmfs.jems.iterable.decorators.Mapped;
+import org.dmfs.jems2.Function;
+import org.dmfs.jems2.iterable.DelegatingIterable;
+import org.dmfs.jems2.iterable.Mapped;
 
 import androidx.annotation.NonNull;
 
@@ -56,7 +56,7 @@ import androidx.annotation.NonNull;
  * </code></pre>
  *
  * @param <T>
- *         the contract of the table of the {@link RowSet}.
+ *     the contract of the table of the {@link RowSet}.
  *
  * @author Marten Gajda
  */
@@ -66,9 +66,9 @@ public final class MappedRowSetBatch<T> extends DelegatingIterable<Operation<?>>
      * Creates an {@link Iterable} of {@link Operation}s based on the {@link RowSnapshot}s of the given {@link RowSet}.
      *
      * @param rowSet
-     *         The {@link RowSet} which contains the {@link RowSnapshot}s to operate on.
+     *     The {@link RowSet} which contains the {@link RowSnapshot}s to operate on.
      * @param function
-     *         A {@link Function} to apply to all {@link RowSnapshot}s in the given {@link RowSet}.
+     *     A {@link Function} to apply to all {@link RowSnapshot}s in the given {@link RowSet}.
      */
     public MappedRowSetBatch(@NonNull RowSet<T> rowSet, @NonNull Function<RowSnapshot<T>, Operation<?>> function)
     {

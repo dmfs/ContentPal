@@ -24,7 +24,7 @@ import org.dmfs.android.contentpal.Projection;
 import org.dmfs.android.contentpal.Table;
 import org.dmfs.android.contentpal.UriParams;
 import org.dmfs.android.contentpal.View;
-import org.dmfs.jems.optional.Optional;
+import org.dmfs.jems2.Optional;
 
 import androidx.annotation.NonNull;
 
@@ -33,7 +33,7 @@ import androidx.annotation.NonNull;
  * An abstract {@link View} which delegates to another {@link View}.
  *
  * @param <T>
- *         The contract of this view.
+ *     The contract of this view.
  *
  * @author Marten Gajda
  */
@@ -50,7 +50,11 @@ public abstract class DelegatingView<T> implements View<T>
 
     @NonNull
     @Override
-    public final Cursor rows(@NonNull UriParams uriParams, @NonNull Projection<? super T> projection, @NonNull Predicate<? super T> predicate, @NonNull Optional<String> sorting) throws RemoteException
+    public final Cursor rows(
+        @NonNull UriParams uriParams,
+        @NonNull Projection<? super T> projection,
+        @NonNull Predicate<? super T> predicate,
+        @NonNull Optional<String> sorting) throws RemoteException
     {
         return mDelegate.rows(uriParams, projection, predicate, sorting);
     }

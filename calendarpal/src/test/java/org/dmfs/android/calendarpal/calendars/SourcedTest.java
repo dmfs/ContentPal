@@ -26,7 +26,7 @@ import org.robolectric.annotation.Config;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withValuesOnly;
 import static org.dmfs.android.contentpal.testing.contentvalues.Containing.containing;
 import static org.dmfs.android.contentpal.testing.rowdata.RowDataMatcher.builds;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 
 /**
@@ -40,8 +40,8 @@ public class SourcedTest
     public void testUpdatedBuilder()
     {
         assertThat(new Sourced("xyz"), builds(
-                withValuesOnly(
-                        containing(CalendarContract.Calendars._SYNC_ID, "xyz"))));
+            withValuesOnly(
+                containing(CalendarContract.Calendars._SYNC_ID, "xyz"))));
     }
 
 }

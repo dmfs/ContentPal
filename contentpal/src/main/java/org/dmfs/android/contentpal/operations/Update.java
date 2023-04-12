@@ -23,11 +23,11 @@ import org.dmfs.android.contentpal.RowData;
 import org.dmfs.android.contentpal.RowReference;
 import org.dmfs.android.contentpal.SoftRowReference;
 import org.dmfs.android.contentpal.TransactionContext;
-import org.dmfs.jems.optional.Optional;
+import org.dmfs.jems2.Optional;
 
 import androidx.annotation.NonNull;
 
-import static org.dmfs.jems.optional.elementary.Absent.absent;
+import static org.dmfs.jems2.optional.Absent.absent;
 
 
 /**

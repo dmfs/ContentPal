@@ -20,20 +20,20 @@ import android.content.ContentProviderOperation;
 
 import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.TransactionContext;
-import org.dmfs.iterables.EmptyIterable;
-import org.dmfs.jems.iterable.elementary.Seq;
-import org.dmfs.jems.procedure.Procedure;
+import org.dmfs.jems2.Procedure;
+import org.dmfs.jems2.iterable.EmptyIterable;
+import org.dmfs.jems2.iterable.Seq;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
-import static org.dmfs.jems.hamcrest.matchers.IterableMatcher.iteratesTo;
-import static org.dmfs.jems.hamcrest.matchers.LambdaMatcher.having;
-import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
+import static org.dmfs.jems2.hamcrest.matchers.LambdaMatcher.having;
+import static org.dmfs.jems2.hamcrest.matchers.iterable.IterableMatcher.iteratesTo;
+import static org.dmfs.jems2.mockito.doubles.TestDoubles.failingMock;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.emptyIterable;
 import static org.hamcrest.Matchers.sameInstance;
-import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -51,7 +51,7 @@ public class LoggingTest
     @Test
     public void testEmpty()
     {
-        assertThat(new Logging<>(failingMock(Procedure.class), new EmptyIterable<>()), emptyIterable());
+        assertThat(new Logging<String>(failingMock(Procedure.class), new EmptyIterable<>()), emptyIterable());
     }
 
 
@@ -70,7 +70,7 @@ public class LoggingTest
         doReturn("result").when(cpo).toString();
 
         assertThat(new Logging<>(logProcedure, new Seq<>(mockOperation)),
-                iteratesTo(having("contentprovideroperationbuilder", i -> i.contentOperationBuilder(tc), sameInstance(cpob))));
+            iteratesTo(having("contentprovideroperationbuilder", i -> i.contentOperationBuilder(tc), sameInstance(cpob))));
         verify(logProcedure).process("result");
     }
 
@@ -98,9 +98,9 @@ public class LoggingTest
         Procedure<String> logProcedure = mock(Procedure.class);
 
         assertThat(new Logging<>(logProcedure, new Seq<>(mockOperation1, mockOperation2)),
-                iteratesTo(
-                        having("contentprovideroperationbuilder", i -> i.contentOperationBuilder(tc), sameInstance(cpob1)),
-                        having("contentprovideroperationbuilder", i -> i.contentOperationBuilder(tc), sameInstance(cpob2))));
+            iteratesTo(
+                having("contentprovideroperationbuilder", i -> i.contentOperationBuilder(tc), sameInstance(cpob1)),
+                having("contentprovideroperationbuilder", i -> i.contentOperationBuilder(tc), sameInstance(cpob2))));
         verify(logProcedure).process("result1");
         verify(logProcedure).process("result2");
     }

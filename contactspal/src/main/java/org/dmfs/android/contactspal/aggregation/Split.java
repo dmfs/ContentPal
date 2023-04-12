@@ -51,7 +51,7 @@ public final class Split extends DelegatingOperation<ContactsContract.Aggregatio
     public Split(@NonNull RowReference<ContactsContract.RawContacts> rawContact1, @NonNull RowReference<ContactsContract.RawContacts> rawContact2)
     {
         super(new Populated<>(
-                new AggregationTypeData(ContactsContract.AggregationExceptions.TYPE_KEEP_SEPARATE),
-                new AggregationException(rawContact1, rawContact2)));
+            new AggregationTypeData(ContactsContract.AggregationExceptions.TYPE_KEEP_SEPARATE),
+            new AggregationException(rawContact1, rawContact2)));
     }
 }

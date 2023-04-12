@@ -26,7 +26,7 @@ import org.robolectric.annotation.Config;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withValuesOnly;
 import static org.dmfs.android.contentpal.testing.contentvalues.Containing.containing;
 import static org.dmfs.android.contentpal.testing.rowdata.RowDataMatcher.builds;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 
 /**
@@ -42,9 +42,9 @@ public class TypeDataTest
     public void test()
     {
         assertThat(new TypeData(1234), builds(
-                withValuesOnly(
-                        containing(CalendarContract.Attendees.ATTENDEE_TYPE, 1234)
-                )));
+            withValuesOnly(
+                containing(CalendarContract.Attendees.ATTENDEE_TYPE, 1234)
+            )));
     }
 
 }

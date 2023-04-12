@@ -16,7 +16,7 @@
 
 package org.dmfs.android.contentpal.testing.contentvalues;
 
-import android.content.ContentValues;
+import android.util.ArrayMap;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -28,11 +28,9 @@ import androidx.annotation.NonNull;
 
 
 /**
- * A {@link Matcher} which matches the expected size of {@link ContentValues}.
- *
- * @author Marten Gajda
+ * A {@link Matcher} which matches the expected size of {@link ArrayMap}.
  */
-public final class Size extends TypeSafeDiagnosingMatcher<ContentValues>
+public final class Size extends TypeSafeDiagnosingMatcher<ArrayMap<String, Object>>
 {
     private final int mExpectedValueCount;
 
@@ -51,7 +49,7 @@ public final class Size extends TypeSafeDiagnosingMatcher<ContentValues>
 
 
     @Override
-    protected boolean matchesSafely(@NonNull ContentValues values, @NonNull Description mismatchDescription)
+    protected boolean matchesSafely(@NonNull ArrayMap<String, Object> values, @NonNull Description mismatchDescription)
     {
         if (values.size() != mExpectedValueCount)
         {

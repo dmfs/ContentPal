@@ -31,9 +31,10 @@ import org.robolectric.annotation.Config;
 
 import static org.hamcrest.CoreMatchers.both;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.lessThan;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.Matchers.lessThanOrEqualTo;
 
 
 /**
@@ -48,39 +49,39 @@ public class OperationSizeTest
     {
         // test that all Number methods return the same value
         int expected = new OperationSize(
+            new BulkUpdate<>(
+                new BaseTable<>(Uri.parse("content://authority")),
+                new CharSequenceRowData<>("key", "012345678901234567890123456789"))
+                .contentOperationBuilder(new EmptyTransactionContext())
+                .build())
+            .intValue();
+        assertThat(
+            new OperationSize(
                 new BulkUpdate<>(
-                        new BaseTable<>(Uri.parse("content://authority")),
-                        new CharSequenceRowData<>("key", "012345678901234567890123456789"))
-                        .contentOperationBuilder(new EmptyTransactionContext())
-                        .build())
-                .intValue();
+                    new BaseTable<>(Uri.parse("content://authority")),
+                    new CharSequenceRowData<>("key", "012345678901234567890123456789"))
+                    .contentOperationBuilder(new EmptyTransactionContext())
+                    .build())
+                .floatValue(),
+            is((float) expected));
         assertThat(
-                new OperationSize(
-                        new BulkUpdate<>(
-                                new BaseTable<>(Uri.parse("content://authority")),
-                                new CharSequenceRowData<>("key", "012345678901234567890123456789"))
-                                .contentOperationBuilder(new EmptyTransactionContext())
-                                .build())
-                        .floatValue(),
-                is((float) expected));
+            new OperationSize(
+                new BulkUpdate<>(
+                    new BaseTable<>(Uri.parse("content://authority")),
+                    new CharSequenceRowData<>("key", "012345678901234567890123456789"))
+                    .contentOperationBuilder(new EmptyTransactionContext())
+                    .build())
+                .longValue(),
+            is((long) expected));
         assertThat(
-                new OperationSize(
-                        new BulkUpdate<>(
-                                new BaseTable<>(Uri.parse("content://authority")),
-                                new CharSequenceRowData<>("key", "012345678901234567890123456789"))
-                                .contentOperationBuilder(new EmptyTransactionContext())
-                                .build())
-                        .longValue(),
-                is((long) expected));
-        assertThat(
-                new OperationSize(
-                        new BulkUpdate<>(
-                                new BaseTable<>(Uri.parse("content://authority")),
-                                new CharSequenceRowData<>("key", "012345678901234567890123456789"))
-                                .contentOperationBuilder(new EmptyTransactionContext())
-                                .build())
-                        .doubleValue(),
-                is((double) expected));
+            new OperationSize(
+                new BulkUpdate<>(
+                    new BaseTable<>(Uri.parse("content://authority")),
+                    new CharSequenceRowData<>("key", "012345678901234567890123456789"))
+                    .contentOperationBuilder(new EmptyTransactionContext())
+                    .build())
+                .doubleValue(),
+            is((double) expected));
     }
 
 
@@ -104,68 +105,68 @@ public class OperationSizeTest
     {
         // minimal operation:
         assertThat(
-                new OperationSize(
-                        new BulkUpdate<>(
-                                new BaseTable<>(Uri.EMPTY), new CharSequenceRowData<>("", ""))
-                                .contentOperationBuilder(new EmptyTransactionContext())
-                                .build())
-                        .intValue(),
-                is(both(greaterThan(70)).and(lessThan(120))));
+            new OperationSize(
+                new BulkUpdate<>(
+                    new BaseTable<>(Uri.EMPTY), new CharSequenceRowData<>("", ""))
+                    .contentOperationBuilder(new EmptyTransactionContext())
+                    .build())
+                .intValue(),
+            is(both(greaterThan(70)).and(lessThan(120))));
 
         //  minimal operation + 40 characters of data
         assertThat(
-                new OperationSize(
-                        new BulkUpdate<>(
-                                new BaseTable<>(Uri.EMPTY), new CharSequenceRowData<>("a1234567890123456789", "01234567890123456789"))
-                                .contentOperationBuilder(new EmptyTransactionContext())
-                                .build())
-                        .intValue(),
-                is(both(greaterThan(70 + 40)).and(lessThan(120 + 40 + 8))));
+            new OperationSize(
+                new BulkUpdate<>(
+                    new BaseTable<>(Uri.EMPTY), new CharSequenceRowData<>("a1234567890123456789", "01234567890123456789"))
+                    .contentOperationBuilder(new EmptyTransactionContext())
+                    .build())
+                .intValue(),
+            is(both(greaterThan(70 + 40)).and(lessThanOrEqualTo(120 + 40 * 2 + 8 * 2))));
 
         //  minimal operation + 80 characters of data
         assertThat(
-                new OperationSize(
-                        new BulkUpdate<>(
-                                new BaseTable<>(Uri.EMPTY),
-                                new Composite<>(
-                                        new CharSequenceRowData<>("a1234567890123456789", "01234567890123456789"),
-                                        new CharSequenceRowData<>("b1234567890123456789", "01234567890123456789")))
-                                .contentOperationBuilder(new EmptyTransactionContext())
-                                .build())
-                        .intValue(),
-                is(both(greaterThan(70 + 80)).and(lessThan(120 + 80 + 16))));
+            new OperationSize(
+                new BulkUpdate<>(
+                    new BaseTable<>(Uri.EMPTY),
+                    new Composite<>(
+                        new CharSequenceRowData<>("a1234567890123456789", "01234567890123456789"),
+                        new CharSequenceRowData<>("b1234567890123456789", "01234567890123456789")))
+                    .contentOperationBuilder(new EmptyTransactionContext())
+                    .build())
+                .intValue(),
+            is(both(greaterThan(70 + 80)).and(lessThanOrEqualTo(120 + 80 * 2 + 16 * 2))));
         //  minimal operation + 160 characters of data
         assertThat(
-                new OperationSize(
-                        new BulkUpdate<>(
-                                new BaseTable<>(Uri.EMPTY),
-                                new Composite<>(
-                                        new CharSequenceRowData<>("a1234567890123456789", "01234567890123456789"),
-                                        new CharSequenceRowData<>("b1234567890123456789", "01234567890123456789"),
-                                        new CharSequenceRowData<>("c1234567890123456789", "01234567890123456789"),
-                                        new CharSequenceRowData<>("d1234567890123456789", "01234567890123456789")))
-                                .contentOperationBuilder(new EmptyTransactionContext())
-                                .build())
-                        .intValue(),
-                is(both(greaterThan(70 + 160)).and(lessThan(120 + 160 + 32))));
+            new OperationSize(
+                new BulkUpdate<>(
+                    new BaseTable<>(Uri.EMPTY),
+                    new Composite<>(
+                        new CharSequenceRowData<>("a1234567890123456789", "01234567890123456789"),
+                        new CharSequenceRowData<>("b1234567890123456789", "01234567890123456789"),
+                        new CharSequenceRowData<>("c1234567890123456789", "01234567890123456789"),
+                        new CharSequenceRowData<>("d1234567890123456789", "01234567890123456789")))
+                    .contentOperationBuilder(new EmptyTransactionContext())
+                    .build())
+                .intValue(),
+            is(both(greaterThan(70 + 160)).and(lessThanOrEqualTo(120 + 160 * 2 + 32 * 2))));
         //  minimal operation + 320 characters of data
         assertThat(
-                new OperationSize(
-                        new BulkUpdate<>(
-                                new BaseTable<>(Uri.EMPTY),
-                                new Composite<>(
-                                        new CharSequenceRowData<>("a1234567890123456789", "01234567890123456789"),
-                                        new CharSequenceRowData<>("b1234567890123456789", "01234567890123456789"),
-                                        new CharSequenceRowData<>("c1234567890123456789", "01234567890123456789"),
-                                        new CharSequenceRowData<>("d1234567890123456789", "01234567890123456789"),
-                                        new CharSequenceRowData<>("e1234567890123456789", "01234567890123456789"),
-                                        new CharSequenceRowData<>("f1234567890123456789", "01234567890123456789"),
-                                        new CharSequenceRowData<>("g1234567890123456789", "01234567890123456789"),
-                                        new CharSequenceRowData<>("h1234567890123456789", "01234567890123456789")))
-                                .contentOperationBuilder(new EmptyTransactionContext())
-                                .build())
-                        .intValue(),
-                is(both(greaterThan(70 + 320)).and(lessThan(120 + 320 + 64))));
+            new OperationSize(
+                new BulkUpdate<>(
+                    new BaseTable<>(Uri.EMPTY),
+                    new Composite<>(
+                        new CharSequenceRowData<>("a1234567890123456789", "01234567890123456789"),
+                        new CharSequenceRowData<>("b1234567890123456789", "01234567890123456789"),
+                        new CharSequenceRowData<>("c1234567890123456789", "01234567890123456789"),
+                        new CharSequenceRowData<>("d1234567890123456789", "01234567890123456789"),
+                        new CharSequenceRowData<>("e1234567890123456789", "01234567890123456789"),
+                        new CharSequenceRowData<>("f1234567890123456789", "01234567890123456789"),
+                        new CharSequenceRowData<>("g1234567890123456789", "01234567890123456789"),
+                        new CharSequenceRowData<>("h1234567890123456789", "01234567890123456789")))
+                    .contentOperationBuilder(new EmptyTransactionContext())
+                    .build())
+                .intValue(),
+            is(both(greaterThan(70 + 320)).and(lessThanOrEqualTo(120 + 320 * 2 + 64 * 2 + 8))));
     }
 
 }

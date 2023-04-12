@@ -20,7 +20,7 @@ import org.dmfs.android.contentpal.testing.table.Contract;
 import org.junit.Test;
 
 import static org.dmfs.android.contentpal.testing.projection.ProjectionMatcher.projectsEmpty;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 
 /**

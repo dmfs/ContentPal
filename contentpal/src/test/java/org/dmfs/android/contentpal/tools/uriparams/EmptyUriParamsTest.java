@@ -26,9 +26,9 @@ import org.robolectric.annotation.Config;
 
 import static org.dmfs.android.contentpal.testing.android.uri.UriBuilderMatcher.builds;
 import static org.dmfs.android.contentpal.testing.android.uri.UriMatcher.hasParamSet;
-import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
+import static org.dmfs.jems2.mockito.doubles.TestDoubles.failingMock;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.emptyIterable;
-import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.doReturn;
 
 
@@ -46,8 +46,8 @@ public class EmptyUriParamsTest
         UriParams params = failingMock(UriParams.class);
         doReturn(builder).when(params).withParam(builder);
         assertThat(
-                new EmptyUriParams().withParam(builder),
-                builds(hasParamSet(emptyIterable())));
+            new EmptyUriParams().withParam(builder),
+            builds(hasParamSet(emptyIterable())));
     }
 
 }

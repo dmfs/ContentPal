@@ -26,11 +26,11 @@ import org.dmfs.android.contentpal.Table;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.predicates.AnyOf;
 import org.dmfs.android.contentpal.tools.uriparams.EmptyUriParams;
-import org.dmfs.jems.optional.Optional;
+import org.dmfs.jems2.Optional;
 
 import androidx.annotation.NonNull;
 
-import static org.dmfs.jems.optional.elementary.Absent.absent;
+import static org.dmfs.jems2.optional.Absent.absent;
 
 
 /**
@@ -72,6 +72,6 @@ public final class BulkUpdate<T> implements Operation<T>
     public ContentProviderOperation.Builder contentOperationBuilder(@NonNull TransactionContext transactionContext) throws UnsupportedOperationException
     {
         return mData.updatedBuilder(transactionContext,
-                mTable.updateOperation(EmptyUriParams.INSTANCE, mPredicate).contentOperationBuilder(transactionContext));
+            mTable.updateOperation(EmptyUriParams.INSTANCE, mPredicate).contentOperationBuilder(transactionContext));
     }
 }

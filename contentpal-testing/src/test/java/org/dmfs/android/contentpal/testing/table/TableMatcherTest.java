@@ -28,8 +28,8 @@ import org.dmfs.android.contentpal.Table;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.UriParams;
 import org.dmfs.android.contentpal.View;
-import org.dmfs.jems.generator.Generator;
-import org.dmfs.jems.optional.Optional;
+import org.dmfs.jems2.Generator;
+import org.dmfs.jems2.Optional;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
@@ -38,11 +38,11 @@ import org.robolectric.annotation.Config;
 import androidx.annotation.NonNull;
 
 import static org.dmfs.android.contentpal.testing.table.TableMatcher.table;
-import static org.dmfs.jems.hamcrest.matchers.matcher.MatcherMatcher.matches;
-import static org.dmfs.jems.hamcrest.matchers.matcher.MatcherMatcher.mismatches;
-import static org.dmfs.jems.optional.elementary.Absent.absent;
+import static org.dmfs.jems2.hamcrest.matchers.matcher.MatcherMatcher.matches;
+import static org.dmfs.jems2.hamcrest.matchers.matcher.MatcherMatcher.mismatches;
+import static org.dmfs.jems2.optional.Absent.absent;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.allOf;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
 

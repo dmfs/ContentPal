@@ -20,6 +20,7 @@ import android.content.ContentProviderOperation;
 import android.net.Uri;
 
 import org.dmfs.android.contentpal.TransactionContext;
+import org.dmfs.android.contentpal.testing.tools.Field;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
@@ -31,19 +32,26 @@ import static org.dmfs.android.contentpal.testing.contentoperationbuilder.Operat
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.OperationType.updateOperation;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.TargetMatcher.targets;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithExpectedCount.withoutExpectedCount;
+import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withValuesOnly;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withoutValues;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYieldAllowed.withYieldNotAllowed;
+import static org.dmfs.android.contentpal.testing.contentvalues.Containing.containing;
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.argumentValues;
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.backReferences;
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.predicateWith;
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.selection;
-import static org.dmfs.jems.hamcrest.matchers.optional.PresentMatcher.present;
-import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
-import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
+import static org.dmfs.jems2.hamcrest.matchers.LambdaMatcher.having;
+import static org.dmfs.jems2.hamcrest.matchers.optional.PresentMatcher.present;
+import static org.dmfs.jems2.hamcrest.matchers.single.SingleMatcher.hasValue;
+import static org.dmfs.jems2.mockito.Mock.mock;
+import static org.dmfs.jems2.mockito.doubles.TestDoubles.dummy;
+import static org.dmfs.jems2.mockito.doubles.TestDoubles.failingMock;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.sameInstance;
-import static org.junit.Assert.assertThat;
 
 
 /**
@@ -60,12 +68,12 @@ public class BackReferenceTest
     {
         assertThat(new BackReference<>(Uri.parse("content://authority/path/"), 123).putOperationBuilder(
                 dummy(TransactionContext.class)),
-                allOf(
-                        targets("content://authority/path/"),
-                        updateOperation(),
-                        withoutExpectedCount(),
-                        withYieldNotAllowed(),
-                        withoutValues()));
+            allOf(
+                targets("content://authority/path/"),
+                updateOperation(),
+                withoutExpectedCount(),
+                withYieldNotAllowed(),
+                withoutValues()));
     }
 
 
@@ -74,12 +82,12 @@ public class BackReferenceTest
     {
         assertThat(new BackReference<>(Uri.parse("content://authority/path/"), 123).deleteOperationBuilder(
                 dummy(TransactionContext.class)),
-                allOf(
-                        targets("content://authority/path/"),
-                        deleteOperation(),
-                        withoutExpectedCount(),
-                        withYieldNotAllowed(),
-                        withoutValues()));
+            allOf(
+                targets("content://authority/path/"),
+                deleteOperation(),
+                withoutExpectedCount(),
+                withYieldNotAllowed(),
+                withoutValues()));
     }
 
 
@@ -88,27 +96,32 @@ public class BackReferenceTest
     {
         assertThat(new BackReference<>(Uri.parse("content://authority/path/"), 123).assertOperationBuilder(
                 dummy(TransactionContext.class)),
-                allOf(
-                        targets("content://authority/path/"),
-                        assertOperation(),
-                        withoutExpectedCount(),
-                        withYieldNotAllowed(),
-                        withoutValues()));
+            allOf(
+                targets("content://authority/path/"),
+                assertOperation(),
+                withoutExpectedCount(),
+                withYieldNotAllowed(),
+                withoutValues()));
     }
 
 
     @Test
     public void testBuilderWithReferenceData()
     {
-        Uri dummyUri = dummy(Uri.class);
+        Uri dummyUri = mock("uri", Uri.class);
         assertThat(new BackReference<>(Uri.parse("content://authority/path/"), 123).builderWithReferenceData(
                 dummy(TransactionContext.class), ContentProviderOperation.newInsert(dummyUri), "column"),
-                allOf(
-                        targets(sameInstance(dummyUri)),
-                        insertOperation(),
-                        withoutExpectedCount(),
-                        withYieldNotAllowed(),
-                        withoutValues()));
+            allOf(
+                targets(sameInstance(dummyUri)),
+                insertOperation(),
+                withoutExpectedCount(),
+                withYieldNotAllowed(),
+                withValuesOnly(
+                    containing("column",
+                        allOf(
+                            having("fromIndex", backRef -> new Field<>(backRef, "fromIndex"), hasValue(equalTo(123))),
+                            having("fromKey", backRef -> new Field<>(backRef, "fromKey"), hasValue(nullValue()))
+                        ))))); // back references are stored as values
     }
 
 
@@ -118,11 +131,11 @@ public class BackReferenceTest
         TransactionContext mockTc = failingMock(TransactionContext.class);
 
         assertThat(new BackReference<>(Uri.parse("content://authority/path/"), 123).predicate(mockTc, "testcol"),
-                predicateWith(
-                        selection(mockTc, "testcol = ?"),
-                        argumentValues(mockTc, "-1"),
-                        backReferences(mockTc, is(present(123)))
-                ));
+            predicateWith(
+                selection(mockTc, "testcol = ?"),
+                argumentValues(mockTc, "-1"),
+                backReferences(mockTc, is(present(123)))
+            ));
     }
 
 }

@@ -30,10 +30,6 @@ public interface UriParams
 {
     /**
      * Appends these uri params to the given {@link Uri.Builder}.
-     *
-     * @param uriBuilder
-     *
-     * @return
      */
     @NonNull
     Uri.Builder withParam(@NonNull Uri.Builder uriBuilder);

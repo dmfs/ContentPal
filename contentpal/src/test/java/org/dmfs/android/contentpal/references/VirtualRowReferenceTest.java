@@ -31,10 +31,10 @@ import static org.dmfs.android.contentpal.testing.contentoperationbuilder.Operat
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithExpectedCount.withoutExpectedCount;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withoutValues;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYieldAllowed.withYieldNotAllowed;
-import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
+import static org.dmfs.jems2.mockito.doubles.TestDoubles.dummy;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 
 
@@ -50,11 +50,11 @@ public class VirtualRowReferenceTest
     {
         assertThat(new VirtualRowReference<>(new RawInsert<>(dummy(Uri.class))).putOperationBuilder(
                 dummy(TransactionContext.class)),
-                allOf(
-                        insertOperation(),
-                        withoutExpectedCount(),
-                        withYieldNotAllowed(),
-                        withoutValues()));
+            allOf(
+                insertOperation(),
+                withoutExpectedCount(),
+                withYieldNotAllowed(),
+                withoutValues()));
     }
 
 
@@ -76,7 +76,7 @@ public class VirtualRowReferenceTest
     public void testBuilderWithReferenceData()
     {
         new VirtualRowReference<>(dummy(InsertOperation.class)).builderWithReferenceData(dummy(TransactionContext.class),
-                mock(ContentProviderOperation.Builder.class), "_id");
+            mock(ContentProviderOperation.Builder.class), "_id");
     }
 
 

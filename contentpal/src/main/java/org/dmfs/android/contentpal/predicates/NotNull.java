@@ -18,9 +18,10 @@ package org.dmfs.android.contentpal.predicates;
 
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.TransactionContext;
-import org.dmfs.iterables.EmptyIterable;
 
 import androidx.annotation.NonNull;
+
+import static org.dmfs.jems2.iterable.EmptyIterable.emptyIterable;
 
 
 /**
@@ -49,6 +50,6 @@ public final class NotNull<Contract> implements Predicate<Contract>
     @Override
     public Iterable<Argument> arguments(@NonNull TransactionContext transactionContext)
     {
-        return EmptyIterable.instance();
+        return emptyIterable();
     }
 }

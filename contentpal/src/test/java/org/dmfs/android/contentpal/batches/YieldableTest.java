@@ -21,9 +21,9 @@ import android.net.Uri;
 
 import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.TransactionContext;
-import org.dmfs.iterables.EmptyIterable;
-import org.dmfs.iterables.SingletonIterable;
-import org.dmfs.jems.iterable.elementary.Seq;
+import org.dmfs.jems2.iterable.EmptyIterable;
+import org.dmfs.jems2.iterable.Just;
+import org.dmfs.jems2.iterable.Seq;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,11 +37,11 @@ import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithEx
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withoutValues;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithYieldAllowed.withYieldAllowed;
 import static org.dmfs.android.contentpal.testing.operations.OperationMatcher.builds;
-import static org.dmfs.jems.hamcrest.matchers.IterableMatcher.iteratesTo;
-import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
+import static org.dmfs.jems2.hamcrest.matchers.iterable.IterableMatcher.iteratesTo;
+import static org.dmfs.jems2.mockito.doubles.TestDoubles.dummy;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.emptyIterable;
 import static org.hamcrest.Matchers.sameInstance;
-import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
@@ -57,8 +57,8 @@ public class YieldableTest
     @Test
     public void testEmpty()
     {
-        assertThat(new Yieldable<>(EmptyIterable.instance()),
-                emptyIterable());
+        assertThat(new Yieldable<>(EmptyIterable.emptyIterable()),
+            emptyIterable());
     }
 
 
@@ -74,35 +74,35 @@ public class YieldableTest
 
         // every last operation of each batch should allow yielding
 
-        assertThat(new Yieldable<>(new SingletonIterable<>(mockOp1)),
-                iteratesTo(
-                        builds(
-                                targets(sameInstance(dummyUri)),
-                                updateOperation(),
-                                withoutValues(),
-                                withoutExpectedCount(),
-                                withYieldAllowed())));
+        assertThat(new Yieldable<>(new Just<>(mockOp1)),
+            iteratesTo(
+                builds(
+                    targets(sameInstance(dummyUri)),
+                    updateOperation(),
+                    withoutValues(),
+                    withoutExpectedCount(),
+                    withYieldAllowed())));
 
         assertThat(new Yieldable<>(new Seq<>(mockOp1, mockOp2)),
-                iteratesTo(
-                        builds(
-                                targets(sameInstance(dummyUri)),
-                                updateOperation(),
-                                withoutValues(),
-                                withoutExpectedCount(),
-                                withYieldAllowed()),
-                        Matchers.is(mockOp2)));
+            iteratesTo(
+                builds(
+                    targets(sameInstance(dummyUri)),
+                    updateOperation(),
+                    withoutValues(),
+                    withoutExpectedCount(),
+                    withYieldAllowed()),
+                Matchers.is(mockOp2)));
 
         assertThat(new Yieldable<>(new Seq<>(mockOp1, mockOp2, mockOp3)),
-                iteratesTo(
-                        builds(
-                                targets(sameInstance(dummyUri)),
-                                updateOperation(),
-                                withoutValues(),
-                                withoutExpectedCount(),
-                                withYieldAllowed()),
-                        Matchers.is(mockOp2),
-                        Matchers.is(mockOp3)));
+            iteratesTo(
+                builds(
+                    targets(sameInstance(dummyUri)),
+                    updateOperation(),
+                    withoutValues(),
+                    withoutExpectedCount(),
+                    withYieldAllowed()),
+                Matchers.is(mockOp2),
+                Matchers.is(mockOp3)));
     }
 
 }

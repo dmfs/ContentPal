@@ -21,7 +21,7 @@ import org.junit.Test;
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.emptyArguments;
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.predicateWith;
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.selection;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 
 /**
@@ -34,9 +34,9 @@ public class IsNullTest
     public void test()
     {
         assertThat(new IsNull<>("x"),
-                predicateWith(
-                        selection("x is null"),
-                        emptyArguments()
-                ));
+            predicateWith(
+                selection("x is null"),
+                emptyArguments()
+            ));
     }
 }

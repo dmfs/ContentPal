@@ -21,30 +21,26 @@ import android.provider.CalendarContract;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
 
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withValuesOnly;
 import static org.dmfs.android.contentpal.testing.contentvalues.Containing.containing;
 import static org.dmfs.android.contentpal.testing.rowdata.RowDataMatcher.builds;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 
 /**
  * Test for {@link StateData}.
- *
- * @author Marten Gajda
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(manifest = Config.NONE)
 public class StateDataTest
 {
     @Test
     public void test()
     {
         assertThat(new StateData(1234), builds(
-                withValuesOnly(
-                        containing(CalendarContract.Attendees.ATTENDEE_STATUS, 1234)
-                )));
+            withValuesOnly(
+                containing(CalendarContract.Attendees.ATTENDEE_STATUS, 1234)
+            )));
     }
 
 }

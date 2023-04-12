@@ -18,13 +18,12 @@ package org.dmfs.android.contentpal.testing.predicates;
 
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.TransactionContext;
-import org.dmfs.jems.hamcrest.matchers.optional.AbsentMatcher;
-import org.dmfs.jems.iterable.decorators.Mapped;
-import org.dmfs.jems.optional.Optional;
-import org.dmfs.jems.optional.elementary.Present;
-import org.dmfs.jems.single.combined.Backed;
+import org.dmfs.jems2.Optional;
+import org.dmfs.jems2.iterable.Mapped;
+import org.dmfs.jems2.optional.Absent;
+import org.dmfs.jems2.optional.Present;
+import org.dmfs.jems2.single.Backed;
 import org.hamcrest.CoreMatchers;
-import org.hamcrest.Factory;
 import org.hamcrest.FeatureMatcher;
 import org.hamcrest.Matcher;
 
@@ -32,9 +31,9 @@ import java.util.Arrays;
 
 import androidx.annotation.NonNull;
 
-import static org.dmfs.jems.hamcrest.matchers.IterableMatcher.iteratesTo;
-import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
-import static org.dmfs.jems.optional.elementary.Absent.absent;
+import static org.dmfs.jems2.hamcrest.matchers.iterable.IterableMatcher.iteratesTo;
+import static org.dmfs.jems2.hamcrest.matchers.optional.AbsentMatcher.absent;
+import static org.dmfs.jems2.mockito.doubles.TestDoubles.dummy;
 import static org.hamcrest.collection.IsEmptyIterable.emptyIterable;
 import static org.hamcrest.object.HasToString.hasToString;
 
@@ -48,7 +47,6 @@ public final class PredicateMatcher
 {
     @NonNull
     @SafeVarargs
-    @Factory
     public static <T> Matcher<Predicate<? super T>> predicateWith(@NonNull Matcher<Predicate<? super T>>... matchers)
     {
         return CoreMatchers.allOf(matchers);
@@ -56,15 +54,13 @@ public final class PredicateMatcher
 
 
     @NonNull
-    @Factory
     public static <T> Matcher<Predicate<? super T>> selection(@NonNull CharSequence selection)
     {
-        return new Selection<>(absent(), selection);
+        return new Selection<>(Absent.absent(), selection);
     }
 
 
     @NonNull
-    @Factory
     public static <T> Matcher<Predicate<? super T>> selection(@NonNull TransactionContext tc, @NonNull CharSequence selection)
     {
         return new Selection<>(new Present<>(tc), selection);
@@ -72,15 +68,13 @@ public final class PredicateMatcher
 
 
     @NonNull
-    @Factory
     public static <T> Matcher<Predicate<? super T>> emptyArguments()
     {
-        return new EmptyArgument<>(absent());
+        return new EmptyArgument<>(Absent.absent());
     }
 
 
     @NonNull
-    @Factory
     public static <T> Matcher<Predicate<? super T>> emptyArguments(@NonNull TransactionContext tc)
     {
         return new EmptyArgument<>(new Present<>(tc));
@@ -88,15 +82,13 @@ public final class PredicateMatcher
 
 
     @NonNull
-    @Factory
     public static <T> Matcher<Predicate<? super T>> argumentValues(@NonNull String... values)
     {
-        return new ArgumentValues<>(absent(), values);
+        return new ArgumentValues<>(Absent.absent(), values);
     }
 
 
     @NonNull
-    @Factory
     public static <T> Matcher<Predicate<? super T>> argumentValues(@NonNull TransactionContext tc, @NonNull String... values)
     {
         return new ArgumentValues<>(new Present<>(tc), values);
@@ -104,16 +96,14 @@ public final class PredicateMatcher
 
 
     @NonNull
-    @Factory
     @SafeVarargs
     public static <T> Matcher<Predicate<? super T>> backReferences(@NonNull Matcher<? super Optional<Integer>>... backReferences)
     {
-        return new ArgumentBackReferences<>(absent(), backReferences);
+        return new ArgumentBackReferences<>(Absent.absent(), backReferences);
     }
 
 
     @NonNull
-    @Factory
     @SafeVarargs
     public static <T> Matcher<Predicate<? super T>> backReferences(TransactionContext tc, Matcher<? super Optional<Integer>>... backReferences)
     {
@@ -122,21 +112,19 @@ public final class PredicateMatcher
 
 
     @NonNull
-    @Factory
     public static <T> Matcher<Predicate<? super T>> absentBackReferences(int noOfPredicateArguments)
     {
         Matcher[] matchers = new Matcher[noOfPredicateArguments];
-        Arrays.fill(matchers, AbsentMatcher.absent());
-        return new ArgumentBackReferences<>(absent(), matchers);
+        Arrays.fill(matchers, absent());
+        return new ArgumentBackReferences<>(Absent.absent(), matchers);
     }
 
 
     @NonNull
-    @Factory
     public static <T> Matcher<Predicate<? super T>> absentBackReferences(@NonNull TransactionContext tc, int noOfPredicateArguments)
     {
         Matcher[] matchers = new Matcher[noOfPredicateArguments];
-        Arrays.fill(matchers, AbsentMatcher.absent());
+        Arrays.fill(matchers, absent());
         return new ArgumentBackReferences<>(new Present<>(tc), matchers);
     }
 

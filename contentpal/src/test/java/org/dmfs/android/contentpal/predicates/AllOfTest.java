@@ -17,8 +17,8 @@
 package org.dmfs.android.contentpal.predicates;
 
 import org.dmfs.android.contentpal.testing.predicates.Mocked;
-import org.dmfs.iterables.EmptyIterable;
-import org.dmfs.jems.iterable.elementary.Seq;
+import org.dmfs.jems2.iterable.EmptyIterable;
+import org.dmfs.jems2.iterable.Seq;
 import org.junit.Test;
 
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.absentBackReferences;
@@ -26,7 +26,7 @@ import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.ar
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.emptyArguments;
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.predicateWith;
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.selection;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 
 /**
@@ -39,46 +39,46 @@ public class AllOfTest
     public void test()
     {
         assertThat(new AllOf<>(), predicateWith(
-                selection("1"),
-                emptyArguments()));
+            selection("1"),
+            emptyArguments()));
 
         assertThat(new AllOf<>(new Mocked<>("x", "a")), predicateWith(
-                selection("( x )"),
-                argumentValues("a"),
-                absentBackReferences(1)));
+            selection("( x )"),
+            argumentValues("a"),
+            absentBackReferences(1)));
 
         assertThat(new AllOf<>(new Mocked<>("x", "a"), new Mocked<>("y", "1")), predicateWith(
-                selection("( x ) and ( y )"),
-                argumentValues("a", "1"),
-                absentBackReferences(2)));
+            selection("( x ) and ( y )"),
+            argumentValues("a", "1"),
+            absentBackReferences(2)));
 
         assertThat(new AllOf<>(new Mocked<>("x", "a"), new Mocked<>("z", "w", "z"), new Mocked<>("y", "1")), predicateWith(
-                selection("( x ) and ( z ) and ( y )"),
-                argumentValues("a", "w", "z", "1"),
-                absentBackReferences(4)));
+            selection("( x ) and ( z ) and ( y )"),
+            argumentValues("a", "w", "z", "1"),
+            absentBackReferences(4)));
     }
 
 
     @Test
     public void testIterable()
     {
-        assertThat(new AllOf<>(EmptyIterable.instance()), predicateWith(
-                selection("1"),
-                emptyArguments()));
+        assertThat(new AllOf<>(EmptyIterable.emptyIterable()), predicateWith(
+            selection("1"),
+            emptyArguments()));
 
         assertThat(new AllOf<>(new Seq<>(new Mocked<>("x", "a"))), predicateWith(
-                selection("( x )"),
-                argumentValues("a"),
-                absentBackReferences(1)));
+            selection("( x )"),
+            argumentValues("a"),
+            absentBackReferences(1)));
 
         assertThat(new AllOf<>(new Seq<>(new Mocked<>("x", "a"), new Mocked<>("y", "1"))), predicateWith(
-                selection("( x ) and ( y )"),
-                argumentValues("a", "1"),
-                absentBackReferences(2)));
+            selection("( x ) and ( y )"),
+            argumentValues("a", "1"),
+            absentBackReferences(2)));
 
         assertThat(new AllOf<>(new Seq<>(new Mocked<>("x", "a"), new Mocked<>("z", "w", "z"), new Mocked<>("y", "1"))), predicateWith(
-                selection("( x ) and ( z ) and ( y )"),
-                argumentValues("a", "w", "z", "1"),
-                absentBackReferences(4)));
+            selection("( x ) and ( z ) and ( y )"),
+            argumentValues("a", "w", "z", "1"),
+            absentBackReferences(4)));
     }
 }

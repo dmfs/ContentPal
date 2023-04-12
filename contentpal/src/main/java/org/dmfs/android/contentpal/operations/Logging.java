@@ -21,8 +21,8 @@ import android.content.ContentProviderOperation;
 import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.SoftRowReference;
 import org.dmfs.android.contentpal.TransactionContext;
-import org.dmfs.jems.optional.Optional;
-import org.dmfs.jems.procedure.Procedure;
+import org.dmfs.jems2.Optional;
+import org.dmfs.jems2.Procedure;
 
 import androidx.annotation.NonNull;
 

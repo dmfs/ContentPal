@@ -20,7 +20,7 @@ import android.content.ContentProviderOperation;
 
 import org.dmfs.android.contentpal.RowData;
 import org.dmfs.android.contentpal.TransactionContext;
-import org.dmfs.jems.single.Single;
+import org.dmfs.jems2.Single;
 
 import androidx.annotation.NonNull;
 

@@ -24,11 +24,11 @@ import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.SoftRowReference;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.references.RowSnapshotReference;
-import org.dmfs.jems.optional.Optional;
+import org.dmfs.jems2.Optional;
 
 import androidx.annotation.NonNull;
 
-import static org.dmfs.jems.optional.elementary.Absent.absent;
+import static org.dmfs.jems2.optional.Absent.absent;
 
 
 /**
@@ -45,7 +45,7 @@ public final class Delete<T> implements Operation<T>
      * Creates a {@link Delete} {@link Operation} for the row of the given {@link RowSnapshot}.
      *
      * @param rowSnapshot
-     *         A {@link RowSnapshot} of the row to delete.
+     *     A {@link RowSnapshot} of the row to delete.
      */
     public Delete(@NonNull RowSnapshot<T> rowSnapshot)
     {
@@ -57,7 +57,7 @@ public final class Delete<T> implements Operation<T>
      * Creates a {@link Delete} {@link Operation} for the row of the given {@link RowReference}.
      *
      * @param rowReference
-     *         A {@link RowReference} to the row to delete.
+     *     A {@link RowReference} to the row to delete.
      */
     public Delete(@NonNull RowReference<T> rowReference)
     {

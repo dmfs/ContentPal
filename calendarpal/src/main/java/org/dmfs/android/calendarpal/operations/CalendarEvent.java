@@ -29,7 +29,7 @@ import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.operations.Insert;
 import org.dmfs.android.contentpal.operations.Referring;
 import org.dmfs.android.contentpal.tables.Synced;
-import org.dmfs.jems.optional.Optional;
+import org.dmfs.jems2.Optional;
 
 import androidx.annotation.NonNull;
 
@@ -49,7 +49,7 @@ public final class CalendarEvent implements InsertOperation<CalendarContract.Eve
      * #CalendarEvent(RowSnapshot, InsertOperation)} and pass an {@link InsertOperation} created by a {@link Synced} {@link Table}.
      *
      * @param calendar
-     *         The calendar to add the event to.
+     *     The calendar to add the event to.
      */
     public CalendarEvent(@NonNull RowSnapshot<CalendarContract.Calendars> calendar)
     {

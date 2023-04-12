@@ -46,13 +46,13 @@ public class TransientEventsCleanupTest
     public void test()
     {
         assertThat(
-                new TransientEventsCleanup(new Events()),
-                builds(
-                        // TODO: test selection
-                        targets(CalendarContract.Events.CONTENT_URI),
-                        deleteOperation(),
-                        withoutExpectedCount(),
-                        withYieldNotAllowed(),
-                        withoutValues()));
+            new TransientEventsCleanup(new Events()),
+            builds(
+                // TODO: test selection
+                targets(CalendarContract.Events.CONTENT_URI),
+                deleteOperation(),
+                withoutExpectedCount(),
+                withYieldNotAllowed(),
+                withoutValues()));
     }
 }

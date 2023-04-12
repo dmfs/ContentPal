@@ -19,7 +19,7 @@ package org.dmfs.android.contentpal.predicates;
 import org.dmfs.android.contentpal.Predicate;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.predicates.arguments.ValueArgument;
-import org.dmfs.iterables.SingletonIterable;
+import org.dmfs.jems2.iterable.Just;
 
 import androidx.annotation.NonNull;
 
@@ -54,6 +54,6 @@ public final class LikeArg<Contract> implements Predicate<Contract>
     @Override
     public Iterable<Argument> arguments(@NonNull TransactionContext transactionContext)
     {
-        return new SingletonIterable<>(new ValueArgument(mArgument));
+        return new Just<>(new ValueArgument(mArgument));
     }
 }

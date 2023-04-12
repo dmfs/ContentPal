@@ -27,10 +27,10 @@ import org.robolectric.annotation.Config;
 
 import static org.dmfs.android.contentpal.testing.android.uri.UriBuilderMatcher.builds;
 import static org.dmfs.android.contentpal.testing.android.uri.UriMatcher.hasParamSet;
-import static org.dmfs.jems.hamcrest.matchers.PairMatcher.pair;
-import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
+import static org.dmfs.jems2.hamcrest.matchers.pair.PairMatcher.pair;
+import static org.dmfs.jems2.mockito.doubles.TestDoubles.failingMock;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.doReturn;
 
 
@@ -48,8 +48,8 @@ public class AccountScopedParamsTest
         UriParams params = failingMock(UriParams.class);
         doReturn(builder).when(params).withParam(builder);
         assertThat(
-                new AccountScopedParams(new Account("name", "type"), params).withParam(builder),
-                builds(hasParamSet(containsInAnyOrder(pair("account_type", "type"), pair("account_name", "name")))));
+            new AccountScopedParams(new Account("name", "type"), params).withParam(builder),
+            builds(hasParamSet(containsInAnyOrder(pair("account_type", "type"), pair("account_name", "name")))));
     }
 
 }

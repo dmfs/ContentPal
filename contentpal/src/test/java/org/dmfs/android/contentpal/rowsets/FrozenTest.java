@@ -20,15 +20,15 @@ import org.dmfs.android.contentpal.ClosableIterator;
 import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.testing.table.Contract;
 import org.dmfs.android.contentpal.tools.FakeClosable;
-import org.dmfs.iterators.EmptyIterator;
-import org.dmfs.jems.iterator.elementary.Seq;
+import org.dmfs.jems2.iterator.EmptyIterator;
+import org.dmfs.jems2.iterator.Seq;
 import org.junit.Test;
 
-import static org.dmfs.jems.hamcrest.matchers.IterableMatcher.iteratesTo;
-import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
+import static org.dmfs.jems2.hamcrest.matchers.iterable.IterableMatcher.iteratesTo;
+import static org.dmfs.jems2.mockito.doubles.TestDoubles.dummy;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.emptyIterable;
-import static org.junit.Assert.assertThat;
 
 
 /**

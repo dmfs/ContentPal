@@ -18,10 +18,10 @@ package org.dmfs.android.contentpal.rowdatasnapshots;
 
 import org.junit.Test;
 
-import static org.dmfs.jems.hamcrest.matchers.optional.AbsentMatcher.absent;
+import static org.dmfs.jems2.hamcrest.matchers.optional.AbsentMatcher.absent;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.emptyIterable;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
 
 
 /**

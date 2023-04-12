@@ -16,8 +16,8 @@
 
 package org.dmfs.android.contentpal.predicates;
 
-import org.dmfs.iterables.EmptyIterable;
-import org.dmfs.jems.iterable.elementary.Seq;
+import org.dmfs.jems2.iterable.EmptyIterable;
+import org.dmfs.jems2.iterable.Seq;
 import org.junit.Test;
 
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.absentBackReferences;
@@ -25,7 +25,7 @@ import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.ar
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.emptyArguments;
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.predicateWith;
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.selection;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 
 /**
@@ -40,9 +40,9 @@ public class IdInTest
     public void testLong()
     {
         assertThat(new IdIn<>(123), predicateWith(
-                selection("_id = ?"),
-                argumentValues("123"),
-                absentBackReferences(1)
+            selection("_id = ?"),
+            argumentValues("123"),
+            absentBackReferences(1)
         ));
     }
 
@@ -51,9 +51,9 @@ public class IdInTest
     public void testLongVarArg()
     {
         assertThat(new IdIn<>(1L, 2L, 3L), predicateWith(
-                selection("_id in ( ?, ?, ? ) "),
-                argumentValues("1", "2", "3"),
-                absentBackReferences(3)
+            selection("_id in ( ?, ?, ? ) "),
+            argumentValues("1", "2", "3"),
+            absentBackReferences(3)
         ));
     }
 
@@ -62,8 +62,8 @@ public class IdInTest
     public void testEmptyLongVarArg()
     {
         assertThat(new IdIn<>(new Long[0]), predicateWith(
-                selection("_id in (  ) "),
-                emptyArguments()
+            selection("_id in (  ) "),
+            emptyArguments()
         ));
     }
 
@@ -72,9 +72,9 @@ public class IdInTest
     public void testString()
     {
         assertThat(new IdIn<>("123"), predicateWith(
-                selection("_id = ?"),
-                argumentValues("123"),
-                absentBackReferences(1)
+            selection("_id = ?"),
+            argumentValues("123"),
+            absentBackReferences(1)
         ));
     }
 
@@ -83,9 +83,9 @@ public class IdInTest
     public void testStringVarArg()
     {
         assertThat(new IdIn<>("1", "2", "3"), predicateWith(
-                selection("_id in ( ?, ?, ? ) "),
-                argumentValues("1", "2", "3"),
-                absentBackReferences(3)
+            selection("_id in ( ?, ?, ? ) "),
+            argumentValues("1", "2", "3"),
+            absentBackReferences(3)
         ));
     }
 
@@ -94,8 +94,8 @@ public class IdInTest
     public void testEmptyStringVarArg()
     {
         assertThat(new IdIn<>(new String[0]), predicateWith(
-                selection("_id in (  ) "),
-                emptyArguments()
+            selection("_id in (  ) "),
+            emptyArguments()
         ));
     }
 
@@ -104,9 +104,9 @@ public class IdInTest
     public void testLongIterable()
     {
         assertThat(new IdIn<>(new Seq<>(1L, 2L, 3L)), predicateWith(
-                selection("_id in ( ?, ?, ? ) "),
-                argumentValues("1", "2", "3"),
-                absentBackReferences(3)
+            selection("_id in ( ?, ?, ? ) "),
+            argumentValues("1", "2", "3"),
+            absentBackReferences(3)
         ));
     }
 
@@ -114,9 +114,9 @@ public class IdInTest
     @Test
     public void testEmptyLongIterable()
     {
-        assertThat(new IdIn<>(EmptyIterable.instance()), predicateWith(
-                selection("_id in (  ) "),
-                emptyArguments()
+        assertThat(new IdIn<>(EmptyIterable.emptyIterable()), predicateWith(
+            selection("_id in (  ) "),
+            emptyArguments()
         ));
     }
 

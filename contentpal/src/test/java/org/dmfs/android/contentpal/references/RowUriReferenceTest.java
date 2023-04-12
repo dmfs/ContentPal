@@ -39,11 +39,11 @@ import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.ab
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.argumentValues;
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.predicateWith;
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.selection;
-import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
+import static org.dmfs.jems2.mockito.doubles.TestDoubles.dummy;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.sameInstance;
-import static org.junit.Assert.assertThat;
 
 
 /**
@@ -58,12 +58,12 @@ public class RowUriReferenceTest
     {
         assertThat(new RowUriReference<>(Uri.parse("content://authority/path/123")).putOperationBuilder(
                 dummy(TransactionContext.class)),
-                allOf(
-                        targets("content://authority/path/123"),
-                        updateOperation(),
-                        withoutExpectedCount(),
-                        withYieldNotAllowed(),
-                        withoutValues()));
+            allOf(
+                targets("content://authority/path/123"),
+                updateOperation(),
+                withoutExpectedCount(),
+                withYieldNotAllowed(),
+                withoutValues()));
     }
 
 
@@ -72,12 +72,12 @@ public class RowUriReferenceTest
     {
         assertThat(new RowUriReference<>(Uri.parse("content://authority/path/123")).deleteOperationBuilder(
                 dummy(TransactionContext.class)),
-                allOf(
-                        targets("content://authority/path/123"),
-                        deleteOperation(),
-                        withoutExpectedCount(),
-                        withYieldNotAllowed(),
-                        withoutValues()));
+            allOf(
+                targets("content://authority/path/123"),
+                deleteOperation(),
+                withoutExpectedCount(),
+                withYieldNotAllowed(),
+                withoutValues()));
     }
 
 
@@ -86,12 +86,12 @@ public class RowUriReferenceTest
     {
         assertThat(new RowUriReference<>(Uri.parse("content://authority/path/123")).assertOperationBuilder(
                 dummy(TransactionContext.class)),
-                allOf(
-                        targets("content://authority/path/123"),
-                        assertOperation(),
-                        withoutExpectedCount(),
-                        withYieldNotAllowed(),
-                        withoutValues()));
+            allOf(
+                targets("content://authority/path/123"),
+                assertOperation(),
+                withoutExpectedCount(),
+                withYieldNotAllowed(),
+                withoutValues()));
     }
 
 
@@ -101,13 +101,13 @@ public class RowUriReferenceTest
         Uri dummyUri = dummy(Uri.class);
         assertThat(new RowUriReference<>(Uri.parse("content://authority/path/123")).builderWithReferenceData(
                 dummy(TransactionContext.class), ContentProviderOperation.newInsert(dummyUri), "column"),
-                allOf(
-                        targets(sameInstance(dummyUri)),
-                        insertOperation(),
-                        withoutExpectedCount(),
-                        withYieldNotAllowed(),
-                        withValuesOnly(
-                                containing("column", 123L))));
+            allOf(
+                targets(sameInstance(dummyUri)),
+                insertOperation(),
+                withoutExpectedCount(),
+                withYieldNotAllowed(),
+                withValuesOnly(
+                    containing("column", 123L))));
     }
 
 
@@ -117,11 +117,11 @@ public class RowUriReferenceTest
         TransactionContext dummyTc = dummy(TransactionContext.class);
 
         assertThat(new RowUriReference<>(Uri.parse("content://authority/path/123")).predicate(dummyTc, "column"),
-                predicateWith(
-                        selection(dummyTc, "column = ?"),
-                        argumentValues(dummyTc, "123"),
-                        absentBackReferences(dummyTc, 1)
-                ));
+            predicateWith(
+                selection(dummyTc, "column = ?"),
+                argumentValues(dummyTc, "123"),
+                absentBackReferences(dummyTc, 1)
+            ));
     }
 
 
@@ -129,7 +129,7 @@ public class RowUriReferenceTest
     public void testIsVirtual()
     {
         assertThat(new RowUriReference<>(Uri.parse("content://authority/path/123")).isVirtual(),
-                is(false));
+            is(false));
     }
 
 }

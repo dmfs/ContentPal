@@ -55,6 +55,6 @@ public final class Organized implements RowData<CalendarContract.Events>
     public ContentProviderOperation.Builder updatedBuilder(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder builder)
     {
         return mDelegate.updatedBuilder(transactionContext, builder)
-                .withValue(CalendarContract.Events.ORGANIZER, mOrganizer == null ? null : mOrganizer.toString());
+            .withValue(CalendarContract.Events.ORGANIZER, mOrganizer == null ? null : mOrganizer.toString());
     }
 }

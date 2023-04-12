@@ -19,10 +19,10 @@ package org.dmfs.android.contactspal.data.name;
 import android.content.ContentProviderOperation;
 import android.provider.ContactsContract;
 
+import org.dmfs.android.contentpal.TransactionContext;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
-import org.dmfs.android.contentpal.TransactionContext;
 
 
 /**

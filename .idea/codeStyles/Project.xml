@@ -50,7 +50,6 @@
     <XML>
       <option name="XML_ATTRIBUTE_WRAP" value="2" />
       <option name="XML_KEEP_WHITE_SPACES_INSIDE_CDATA" value="true" />
-      <option name="XML_LEGACY_SETTINGS_IMPORTED" value="true" />
     </XML>
     <codeStyleSettings language="JAVA">
       <option name="KEEP_FIRST_COLUMN_COMMENT" value="false" />

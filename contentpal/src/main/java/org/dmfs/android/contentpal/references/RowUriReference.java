@@ -70,7 +70,10 @@ public final class RowUriReference<T> implements SoftRowReference<T>
 
     @NonNull
     @Override
-    public ContentProviderOperation.Builder builderWithReferenceData(@NonNull TransactionContext transactionContext, @NonNull ContentProviderOperation.Builder operationBuilder, @NonNull String foreignKeyColumn)
+    public ContentProviderOperation.Builder builderWithReferenceData(
+        @NonNull TransactionContext transactionContext,
+        @NonNull ContentProviderOperation.Builder operationBuilder,
+        @NonNull String foreignKeyColumn)
     {
         return operationBuilder.withValue(foreignKeyColumn, rowId());
     }

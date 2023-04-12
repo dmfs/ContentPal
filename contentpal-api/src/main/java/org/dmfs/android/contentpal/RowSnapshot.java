@@ -24,7 +24,7 @@ import androidx.annotation.NonNull;
  * underlying row is updated.
  *
  * @param <T>
- *         The contract of the view this {@link RowSnapshot} belongs to.
+ *     The contract of the view this {@link RowSnapshot} belongs to.
  *
  * @author Marten Gajda
  */
@@ -33,8 +33,6 @@ public interface RowSnapshot<T>
 
     /**
      * Returns a {@link SoftRowReference} to this row.
-     *
-     * @return
      */
     @NonNull
     SoftRowReference<T> reference();

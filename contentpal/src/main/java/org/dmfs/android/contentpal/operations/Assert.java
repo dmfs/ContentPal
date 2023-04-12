@@ -23,10 +23,11 @@ import org.dmfs.android.contentpal.RowData;
 import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.SoftRowReference;
 import org.dmfs.android.contentpal.TransactionContext;
-import org.dmfs.jems.optional.Optional;
-import org.dmfs.jems.optional.elementary.Absent;
+import org.dmfs.jems2.Optional;
 
 import androidx.annotation.NonNull;
+
+import static org.dmfs.jems2.optional.Absent.absent;
 
 
 /**
@@ -51,7 +52,7 @@ public final class Assert<T> implements Operation<T>
     @Override
     public Optional<SoftRowReference<T>> reference()
     {
-        return Absent.absent();
+        return absent();
     }
 
 
@@ -60,6 +61,6 @@ public final class Assert<T> implements Operation<T>
     public ContentProviderOperation.Builder contentOperationBuilder(@NonNull TransactionContext transactionContext) throws UnsupportedOperationException
     {
         return mRowData.updatedBuilder(transactionContext,
-                transactionContext.resolved(mRowSnapshot.reference()).assertOperationBuilder(transactionContext));
+            transactionContext.resolved(mRowSnapshot.reference()).assertOperationBuilder(transactionContext));
     }
 }

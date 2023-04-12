@@ -27,7 +27,7 @@ import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithVa
 import static org.dmfs.android.contentpal.testing.contentvalues.Containing.containing;
 import static org.dmfs.android.contentpal.testing.contentvalues.NullValue.withNullValue;
 import static org.dmfs.android.contentpal.testing.rowdata.RowDataMatcher.builds;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 
 /**
@@ -43,14 +43,14 @@ public class NameDataTest
     public void test()
     {
         assertThat(new NameData("xyz"), builds(
-                withValuesOnly(
-                        containing(CalendarContract.Attendees.ATTENDEE_NAME, "xyz")
-                )));
+            withValuesOnly(
+                containing(CalendarContract.Attendees.ATTENDEE_NAME, "xyz")
+            )));
 
         assertThat(new NameData(null), builds(
-                withValuesOnly(
-                        withNullValue(CalendarContract.Attendees.ATTENDEE_NAME)
-                )));
+            withValuesOnly(
+                withNullValue(CalendarContract.Attendees.ATTENDEE_NAME)
+            )));
     }
 
 }

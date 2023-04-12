@@ -20,7 +20,7 @@ import android.provider.ContactsContract;
 
 import org.dmfs.android.contentpal.rowdata.Composite;
 import org.dmfs.android.contentpal.rowdata.DelegatingRowData;
-import org.dmfs.jems.iterable.elementary.Seq;
+import org.dmfs.jems2.iterable.Seq;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

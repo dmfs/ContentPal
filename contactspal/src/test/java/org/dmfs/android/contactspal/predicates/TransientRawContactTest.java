@@ -39,9 +39,9 @@ public class TransientRawContactTest
     public void test()
     {
         assertThat(new TransientRawContact(),
-                is(predicateWith(
-                        selection(String.format("( %s is null ) and ( %s = ? )", ContactsContract.RawContacts.SOURCE_ID, ContactsContract.RawContacts.DELETED)),
-                        argumentValues("1"),
-                        absentBackReferences(1))));
+            is(predicateWith(
+                selection(String.format("( %s is null ) and ( %s = ? )", ContactsContract.RawContacts.SOURCE_ID, ContactsContract.RawContacts.DELETED)),
+                argumentValues("1"),
+                absentBackReferences(1))));
     }
 }

@@ -23,7 +23,7 @@ import android.content.OperationApplicationException;
 import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.OperationsQueue;
 import org.dmfs.android.contentpal.queues.BasicOperationsQueue;
-import org.dmfs.jems.iterable.elementary.Seq;
+import org.dmfs.jems2.iterable.Seq;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
@@ -97,14 +97,14 @@ public final class ContentMatcher extends TypeSafeMatcher<Iterable<? extends Ope
 
 
     @NonNull
-    public static Matcher<Iterable<? extends Operation<?>>> resultsIn(@NonNull OperationsQueue queue, @NonNull Operation... assertOperations)
+    public static Matcher<Iterable<? extends Operation<?>>> resultsIn(@NonNull OperationsQueue queue, @NonNull Operation<?>... assertOperations)
     {
         return new ContentMatcher(queue, new Seq<Operation<?>>(assertOperations));
     }
 
 
     @NonNull
-    public static Matcher<Iterable<? extends Operation<?>>> resultsIn(@NonNull ContentProviderClient client, @NonNull Operation... assertOperations)
+    public static Matcher<Iterable<? extends Operation<?>>> resultsIn(@NonNull ContentProviderClient client, @NonNull Operation<?>... assertOperations)
     {
         return new ContentMatcher(new BasicOperationsQueue(client), new Seq<Operation<?>>(assertOperations));
     }

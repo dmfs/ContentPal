@@ -21,8 +21,8 @@ import android.provider.ContactsContract;
 import org.dmfs.android.contactspal.aggregation.Split;
 import org.dmfs.android.contentpal.Operation;
 import org.dmfs.android.contentpal.RowReference;
-import org.dmfs.iterables.decorators.DelegatingIterable;
-import org.dmfs.jems.iterable.decorators.Mapped;
+import org.dmfs.jems2.iterable.DelegatingIterable;
+import org.dmfs.jems2.iterable.Mapped;
 
 import androidx.annotation.NonNull;
 
@@ -35,7 +35,9 @@ import androidx.annotation.NonNull;
 public final class BulkSplitBatch extends DelegatingIterable<Operation<?>>
 {
 
-    public BulkSplitBatch(@NonNull final RowReference<ContactsContract.RawContacts> rawContact, @NonNull Iterable<RowReference<ContactsContract.RawContacts>> linked)
+    public BulkSplitBatch(
+        @NonNull final RowReference<ContactsContract.RawContacts> rawContact,
+        @NonNull Iterable<RowReference<ContactsContract.RawContacts>> linked)
     {
         super(new Mapped<>(rawContactsRowReference -> new Split(rawContact, rawContactsRowReference), linked));
     }

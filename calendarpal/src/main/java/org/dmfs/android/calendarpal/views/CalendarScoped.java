@@ -28,7 +28,7 @@ import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.Table;
 import org.dmfs.android.contentpal.UriParams;
 import org.dmfs.android.contentpal.View;
-import org.dmfs.jems.optional.Optional;
+import org.dmfs.jems2.Optional;
 
 import androidx.annotation.NonNull;
 
@@ -50,9 +50,9 @@ public final class CalendarScoped implements View<CalendarContract.Events>
      * Creates an app view (without syncadapter "privileges") onto the events of a specific calendar.
      *
      * @param client
-     *         A {@link ContentProviderClient}
+     *     A {@link ContentProviderClient}
      * @param calendarRow
-     *         The {@link RowSnapshot} of the calendar.
+     *     The {@link RowSnapshot} of the calendar.
      */
     public CalendarScoped(@NonNull ContentProviderClient client, @NonNull RowSnapshot<CalendarContract.Calendars> calendarRow)
     {
@@ -69,12 +69,16 @@ public final class CalendarScoped implements View<CalendarContract.Events>
 
     @NonNull
     @Override
-    public Cursor rows(@NonNull UriParams uriParams, @NonNull Projection<? super CalendarContract.Events> projection, @NonNull Predicate<? super CalendarContract.Events> predicate, @NonNull Optional<String> sorting) throws RemoteException
+    public Cursor rows(
+        @NonNull UriParams uriParams,
+        @NonNull Projection<? super CalendarContract.Events> projection,
+        @NonNull Predicate<? super CalendarContract.Events> predicate,
+        @NonNull Optional<String> sorting) throws RemoteException
     {
         return mDelegate.rows(
-                uriParams,
-                projection,
-                new org.dmfs.android.calendarpal.predicates.CalendarScoped(mCalendarRow, predicate), sorting);
+            uriParams,
+            projection,
+            new org.dmfs.android.calendarpal.predicates.CalendarScoped(mCalendarRow, predicate), sorting);
     }
 
 

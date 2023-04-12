@@ -30,10 +30,10 @@ import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.ar
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.backReferences;
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.predicateWith;
 import static org.dmfs.android.contentpal.testing.predicates.PredicateMatcher.selection;
-import static org.dmfs.jems.hamcrest.matchers.optional.AbsentMatcher.absent;
-import static org.dmfs.jems.hamcrest.matchers.optional.PresentMatcher.present;
-import static org.dmfs.jems.mockito.doubles.TestDoubles.dummy;
-import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
+import static org.dmfs.jems2.hamcrest.matchers.optional.AbsentMatcher.absent;
+import static org.dmfs.jems2.hamcrest.matchers.optional.PresentMatcher.present;
+import static org.dmfs.jems2.mockito.doubles.TestDoubles.dummy;
+import static org.dmfs.jems2.mockito.doubles.TestDoubles.failingMock;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.doReturn;
@@ -58,11 +58,11 @@ public final class CalendarScopedPredicateTest
         doReturn(new BackReference<>(dummy(Uri.class), 12)).when(mockTc).resolved(dummyReference);
 
         assertThat(new CalendarScoped(mockCalendarRow, new EqArg<>("x", "y")),
-                predicateWith(
-                        selection(mockTc, "( x = ? ) and ( calendar_id = ? )"),
-                        argumentValues(mockTc, "y", "-1"),
-                        backReferences(mockTc, is(absent()), is(present(12)))
-                ));
+            predicateWith(
+                selection(mockTc, "( x = ? ) and ( calendar_id = ? )"),
+                argumentValues(mockTc, "y", "-1"),
+                backReferences(mockTc, is(absent()), is(present(12)))
+            ));
     }
 
 }

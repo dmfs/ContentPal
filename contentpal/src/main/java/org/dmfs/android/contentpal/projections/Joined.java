@@ -39,9 +39,9 @@ import org.dmfs.android.contentpal.Projection;
  * </code></pre>
  *
  * @param <Original>
- *         The table which the {@link Projection} originally belongs to
+ *     The table which the {@link Projection} originally belongs to
  * @param <JoinedView>
- *         The view which joins the original table and contains all its columns.
+ *     The view which joins the original table and contains all its columns.
  *
  * @author Marten Gajda
  */

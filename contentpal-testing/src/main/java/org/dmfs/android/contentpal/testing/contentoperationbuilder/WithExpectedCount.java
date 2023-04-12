@@ -19,9 +19,9 @@ package org.dmfs.android.contentpal.testing.contentoperationbuilder;
 import android.content.ContentProviderOperation;
 
 import org.dmfs.android.contentpal.testing.tools.Field;
-import org.dmfs.jems.optional.Optional;
-import org.dmfs.jems.optional.elementary.NullSafe;
-import org.dmfs.jems.optional.elementary.Present;
+import org.dmfs.jems2.Optional;
+import org.dmfs.jems2.optional.NullSafe;
+import org.dmfs.jems2.optional.Present;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
@@ -30,7 +30,7 @@ import java.util.Locale;
 
 import androidx.annotation.NonNull;
 
-import static org.dmfs.jems.optional.elementary.Absent.absent;
+import static org.dmfs.jems2.optional.Absent.absent;
 
 
 /**
@@ -82,7 +82,7 @@ public final class WithExpectedCount extends TypeSafeDiagnosingMatcher<ContentPr
         Optional<Integer> expectedCount = new NullSafe<>(new Field<Integer>(builder, "mExpectedCount").value());
 
         if (!mExpectedCount.isPresent() && expectedCount.isPresent()
-                || mExpectedCount.isPresent() && expectedCount.isPresent() && !mExpectedCount.value().equals(expectedCount.value()))
+            || mExpectedCount.isPresent() && expectedCount.isPresent() && !mExpectedCount.value().equals(expectedCount.value()))
         {
             mismatchDescription.appendText(String.format(Locale.ENGLISH, "expected %d results", expectedCount.value()));
             return false;
@@ -100,7 +100,7 @@ public final class WithExpectedCount extends TypeSafeDiagnosingMatcher<ContentPr
     public void describeTo(@NonNull Description description)
     {
         description.appendText(mExpectedCount.isPresent()
-                ? String.format(Locale.ENGLISH, "expects %d results", mExpectedCount.value())
-                : "expects no specific number of results");
+            ? String.format(Locale.ENGLISH, "expects %d results", mExpectedCount.value())
+            : "expects no specific number of results");
     }
 }

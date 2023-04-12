@@ -24,8 +24,8 @@ import org.dmfs.android.contentpal.RowSnapshot;
 import org.dmfs.android.contentpal.SoftRowReference;
 import org.dmfs.android.contentpal.TransactionContext;
 import org.dmfs.android.contentpal.rowdata.EmptyRowData;
-import org.dmfs.jems.optional.Optional;
-import org.dmfs.jems.optional.elementary.Present;
+import org.dmfs.jems2.Optional;
+import org.dmfs.jems2.optional.Present;
 
 import androidx.annotation.NonNull;
 

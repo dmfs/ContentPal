@@ -29,10 +29,10 @@ import org.dmfs.android.contentpal.batches.MultiInsertBatch;
 import org.dmfs.android.contentpal.operations.Put;
 import org.dmfs.android.contentpal.rowsnapshots.VirtualRowSnapshot;
 import org.dmfs.android.contentpal.tables.AccountScoped;
-import org.dmfs.iterables.SingletonIterable;
-import org.dmfs.iterables.decorators.DelegatingIterable;
-import org.dmfs.jems.iterable.composite.Joined;
-import org.dmfs.jems.iterable.elementary.Seq;
+import org.dmfs.jems2.iterable.DelegatingIterable;
+import org.dmfs.jems2.iterable.Joined;
+import org.dmfs.jems2.iterable.Seq;
+import org.dmfs.jems2.iterable.SingletonIterable;
 
 
 /**
@@ -45,9 +45,6 @@ public final class InsertRawContactBatch extends DelegatingIterable<Operation<?>
 
     /**
      * Inserts a new contact with the given data into the given {@link Account}.
-     *
-     * @param account
-     * @param contactData
      */
     @SafeVarargs
     public InsertRawContactBatch(Account account, RowData<ContactsContract.Data>... contactData)
@@ -58,9 +55,6 @@ public final class InsertRawContactBatch extends DelegatingIterable<Operation<?>
 
     /**
      * Inserts a new contact with the given data into the given {@link Account}.
-     *
-     * @param account
-     * @param contactData
      */
     public InsertRawContactBatch(Account account, Iterable<RowData<ContactsContract.Data>> contactData)
     {
@@ -70,9 +64,6 @@ public final class InsertRawContactBatch extends DelegatingIterable<Operation<?>
 
     /**
      * Inserts a new contact with the given data into the given {@link Table}.
-     *
-     * @param rawContacts
-     * @param contactData
      */
     @SafeVarargs
     public InsertRawContactBatch(Table<ContactsContract.RawContacts> rawContacts, RowData<ContactsContract.Data>... contactData)
@@ -83,9 +74,6 @@ public final class InsertRawContactBatch extends DelegatingIterable<Operation<?>
 
     /**
      * Inserts a new contact with the given data into the given {@link Table}.
-     *
-     * @param rawContacts
-     * @param contactData
      */
     public InsertRawContactBatch(Table<ContactsContract.RawContacts> rawContacts, Iterable<RowData<ContactsContract.Data>> contactData)
     {
@@ -95,9 +83,6 @@ public final class InsertRawContactBatch extends DelegatingIterable<Operation<?>
 
     /**
      * Inserts the given rawContact with the given data.
-     *
-     * @param rawContact
-     * @param contactData
      */
     @SafeVarargs
     public InsertRawContactBatch(RowSnapshot<ContactsContract.RawContacts> rawContact, RowData<ContactsContract.Data>... contactData)
@@ -108,18 +93,15 @@ public final class InsertRawContactBatch extends DelegatingIterable<Operation<?>
 
     /**
      * Inserts the given rawContact with the given data.
-     *
-     * @param rawContact
-     * @param contactData
      */
     public InsertRawContactBatch(RowSnapshot<ContactsContract.RawContacts> rawContact, Iterable<RowData<ContactsContract.Data>> contactData)
     {
         super(new Joined<>(
-                new SingletonIterable<>(
-                        new Put<>(rawContact)),
-                new MultiInsertBatch<>(
-                        new RawContactData(rawContact),
-                        contactData)));
+            new SingletonIterable<>(
+                new Put<>(rawContact)),
+            new MultiInsertBatch<>(
+                new RawContactData(rawContact),
+                contactData)));
     }
 
 }

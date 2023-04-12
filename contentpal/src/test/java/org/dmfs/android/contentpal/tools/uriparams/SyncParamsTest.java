@@ -26,10 +26,10 @@ import org.robolectric.annotation.Config;
 
 import static org.dmfs.android.contentpal.testing.android.uri.UriBuilderMatcher.builds;
 import static org.dmfs.android.contentpal.testing.android.uri.UriMatcher.hasParamSet;
-import static org.dmfs.jems.hamcrest.matchers.PairMatcher.pair;
-import static org.dmfs.jems.mockito.doubles.TestDoubles.failingMock;
+import static org.dmfs.jems2.hamcrest.matchers.pair.PairMatcher.pair;
+import static org.dmfs.jems2.mockito.doubles.TestDoubles.failingMock;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
-import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.doReturn;
 
 
@@ -47,8 +47,8 @@ public class SyncParamsTest
         UriParams params = failingMock(UriParams.class);
         doReturn(builder).when(params).withParam(builder);
         assertThat(
-                new SyncParams(params).withParam(builder),
-                builds(hasParamSet(contains(pair("caller_is_syncadapter", "true")))));
+            new SyncParams(params).withParam(builder),
+            builds(hasParamSet(contains(pair("caller_is_syncadapter", "true")))));
     }
 
 }

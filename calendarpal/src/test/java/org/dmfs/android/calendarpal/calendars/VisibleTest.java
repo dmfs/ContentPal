@@ -26,7 +26,7 @@ import org.robolectric.annotation.Config;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withValuesOnly;
 import static org.dmfs.android.contentpal.testing.contentvalues.Containing.containing;
 import static org.dmfs.android.contentpal.testing.rowdata.RowDataMatcher.builds;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 
 /**
@@ -40,16 +40,16 @@ public class VisibleTest
     public void testUpdatedBuilder()
     {
         assertThat(new Visible(), builds(
-                withValuesOnly(
-                        containing(CalendarContract.Calendars.VISIBLE, 1))));
+            withValuesOnly(
+                containing(CalendarContract.Calendars.VISIBLE, 1))));
 
         assertThat(new Visible(true), builds(
-                withValuesOnly(
-                        containing(CalendarContract.Calendars.VISIBLE, 1))));
+            withValuesOnly(
+                containing(CalendarContract.Calendars.VISIBLE, 1))));
 
         assertThat(new Visible(false), builds(
-                withValuesOnly(
-                        containing(CalendarContract.Calendars.VISIBLE, 0))));
+            withValuesOnly(
+                containing(CalendarContract.Calendars.VISIBLE, 0))));
     }
 
 }

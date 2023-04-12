@@ -17,11 +17,11 @@
 package org.dmfs.android.contentpal.rowdata;
 
 import org.dmfs.android.contentpal.RowData;
-import org.dmfs.iterables.EmptyIterable;
-import org.dmfs.jems.iterable.elementary.Seq;
-import org.dmfs.jems.optional.Optional;
-import org.dmfs.jems.optional.elementary.Absent;
-import org.dmfs.jems.optional.elementary.Present;
+import org.dmfs.jems2.Optional;
+import org.dmfs.jems2.iterable.EmptyIterable;
+import org.dmfs.jems2.iterable.Seq;
+import org.dmfs.jems2.optional.Absent;
+import org.dmfs.jems2.optional.Present;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
@@ -31,7 +31,7 @@ import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithVa
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withoutValues;
 import static org.dmfs.android.contentpal.testing.contentvalues.Containing.containing;
 import static org.dmfs.android.contentpal.testing.rowdata.RowDataMatcher.builds;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 
 /**
@@ -51,7 +51,7 @@ public class CompositeTest
         assertThat(new Composite<>(Absent.absent()), builds(withoutValues()));
         assertThat(new Composite<>(Absent.absent(), Absent.absent()), builds(withoutValues()));
         assertThat(new Composite<>(Absent.absent(), Absent.absent(), Absent.absent()),
-                builds(withoutValues()));
+            builds(withoutValues()));
     }
 
 
@@ -59,44 +59,44 @@ public class CompositeTest
     public void testOptional()
     {
         assertThat(new Composite<>(
-                        new Present<>(
-                                new CharSequenceRowData<>("key", "value"))),
-                builds(
-                        withValuesOnly(
-                                containing("key", "value"))));
+                new Present<>(
+                    new CharSequenceRowData<>("key", "value"))),
+            builds(
+                withValuesOnly(
+                    containing("key", "value"))));
         assertThat(new Composite<>(
-                        new Present<>(
-                                new CharSequenceRowData<>("key", "value")),
-                        new Present<>(
-                                new CharSequenceRowData<>("key2", "value2"))),
-                builds(
-                        withValuesOnly(
-                                containing("key", "value"),
-                                containing("key2", "value2"))));
+                new Present<>(
+                    new CharSequenceRowData<>("key", "value")),
+                new Present<>(
+                    new CharSequenceRowData<>("key2", "value2"))),
+            builds(
+                withValuesOnly(
+                    containing("key", "value"),
+                    containing("key2", "value2"))));
 
         // add a few absent values
         assertThat(new Composite<>(
-                        Absent.absent(),
-                        new Present<>(
-                                new CharSequenceRowData<>("key", "value")),
-                        Absent.absent()
-                ),
-                builds(
-                        withValuesOnly(
-                                containing("key", "value"))));
+                Absent.absent(),
+                new Present<>(
+                    new CharSequenceRowData<>("key", "value")),
+                Absent.absent()
+            ),
+            builds(
+                withValuesOnly(
+                    containing("key", "value"))));
 
         assertThat(new Composite<>(
-                        Absent.absent(),
-                        new Present<>(
-                                new CharSequenceRowData<>("key", "value")),
-                        Absent.absent(),
-                        new Present<>(
-                                new CharSequenceRowData<>("key2", "value2")),
-                        Absent.absent()),
-                builds(
-                        withValuesOnly(
-                                containing("key", "value"),
-                                containing("key2", "value2"))));
+                Absent.absent(),
+                new Present<>(
+                    new CharSequenceRowData<>("key", "value")),
+                Absent.absent(),
+                new Present<>(
+                    new CharSequenceRowData<>("key2", "value2")),
+                Absent.absent()),
+            builds(
+                withValuesOnly(
+                    containing("key", "value"),
+                    containing("key2", "value2"))));
     }
 
 
@@ -104,17 +104,17 @@ public class CompositeTest
     public void testRowData()
     {
         assertThat(new Composite<>(
-                        new CharSequenceRowData<>("key", "value")),
-                builds(
-                        withValuesOnly(
-                                containing("key", "value"))));
+                new CharSequenceRowData<>("key", "value")),
+            builds(
+                withValuesOnly(
+                    containing("key", "value"))));
         assertThat(new Composite<>(
-                        new CharSequenceRowData<>("key", "value"),
-                        new CharSequenceRowData<>("key2", "value2")),
-                builds(
-                        withValuesOnly(
-                                containing("key", "value"),
-                                containing("key2", "value2"))));
+                new CharSequenceRowData<>("key", "value"),
+                new CharSequenceRowData<>("key2", "value2")),
+            builds(
+                withValuesOnly(
+                    containing("key", "value"),
+                    containing("key2", "value2"))));
     }
 
 
@@ -122,19 +122,19 @@ public class CompositeTest
     public void testIterable()
     {
         assertThat(new Composite<>(
-                        new Seq<RowData<Object>>(
-                                new CharSequenceRowData<>("key", "value"))),
-                builds(
-                        withValuesOnly(
-                                containing("key", "value"))));
+                new Seq<RowData<Object>>(
+                    new CharSequenceRowData<>("key", "value"))),
+            builds(
+                withValuesOnly(
+                    containing("key", "value"))));
         assertThat(new Composite<>(
-                        new Seq<RowData<Object>>(
-                                new CharSequenceRowData<>("key", "value"),
-                                new CharSequenceRowData<>("key2", "value2"))),
-                builds(
-                        withValuesOnly(
-                                containing("key", "value"),
-                                containing("key2", "value2"))));
+                new Seq<RowData<Object>>(
+                    new CharSequenceRowData<>("key", "value"),
+                    new CharSequenceRowData<>("key2", "value2"))),
+            builds(
+                withValuesOnly(
+                    containing("key", "value"),
+                    containing("key2", "value2"))));
     }
 
 }

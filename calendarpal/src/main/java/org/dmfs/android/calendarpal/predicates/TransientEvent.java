@@ -35,8 +35,8 @@ public final class TransientEvent extends DelegatingPredicate<CalendarContract.E
     public TransientEvent()
     {
         super(new AllOf<>(
-                new IsNull<>(CalendarContract.Events.ORIGINAL_SYNC_ID),
-                new IsNull<>(CalendarContract.Events._SYNC_ID),
-                new EqArg<>(CalendarContract.Events.DELETED, 1)));
+            new IsNull<>(CalendarContract.Events.ORIGINAL_SYNC_ID),
+            new IsNull<>(CalendarContract.Events._SYNC_ID),
+            new EqArg<>(CalendarContract.Events.DELETED, 1)));
     }
 }

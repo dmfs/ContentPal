@@ -24,7 +24,7 @@ import org.robolectric.annotation.Config;
 import static org.dmfs.android.contentpal.testing.contentoperationbuilder.WithValues.withValuesOnly;
 import static org.dmfs.android.contentpal.testing.contentvalues.Containing.containing;
 import static org.dmfs.android.contentpal.testing.rowdata.RowDataMatcher.builds;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 
 /**
@@ -38,28 +38,28 @@ public class RawRowDataTest
     public void testUpdatedBuilder()
     {
         assertThat(new RawRowData<>("key", "someValue"),
-                builds(
-                        withValuesOnly(
-                                containing("key", "someValue"))));
+            builds(
+                withValuesOnly(
+                    containing("key", "someValue"))));
 
         assertThat(new RawRowData<>("key", 1),
-                builds(
-                        withValuesOnly(
-                                containing("key", 1))));
+            builds(
+                withValuesOnly(
+                    containing("key", 1))));
 
         assertThat(new RawRowData<>("key", Long.MAX_VALUE),
-                builds(
-                        withValuesOnly(
-                                containing("key", Long.MAX_VALUE))));
+            builds(
+                withValuesOnly(
+                    containing("key", Long.MAX_VALUE))));
 
         assertThat(new RawRowData<>("key", 1.111),
-                builds(
-                        withValuesOnly(
-                                containing("key", 1.111))));
+            builds(
+                withValuesOnly(
+                    containing("key", 1.111))));
 
         assertThat(new RawRowData<>("key", new byte[] { 1, 2, 3 }),
-                builds(
-                        withValuesOnly(
-                                containing("key", new byte[] { 1, 2, 3 }))));
+            builds(
+                withValuesOnly(
+                    containing("key", new byte[] { 1, 2, 3 }))));
     }
 }

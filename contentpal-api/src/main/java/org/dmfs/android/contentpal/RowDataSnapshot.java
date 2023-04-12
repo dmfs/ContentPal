@@ -16,8 +16,8 @@
 
 package org.dmfs.android.contentpal;
 
-import org.dmfs.jems.function.Function;
-import org.dmfs.jems.optional.Optional;
+import org.dmfs.jems2.Function;
+import org.dmfs.jems2.Optional;
 
 import androidx.annotation.NonNull;
 
@@ -29,7 +29,7 @@ import androidx.annotation.NonNull;
  * contain a value, both methods will return an absent {@link Optional}.
  *
  * @param <Contract>
- *         The contract of the view the data of this snapshot belongs to.
+ *     The contract of the view the data of this snapshot belongs to.
  *
  * @author Marten Gajda
  */

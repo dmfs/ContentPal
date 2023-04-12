@@ -26,7 +26,7 @@ import androidx.annotation.NonNull;
  * Represents a table of a content provider.
  *
  * @param <T>
- *         The contract of this table.
+ *     The contract of this table.
  *
  * @author Marten Gajda
  */
@@ -36,7 +36,7 @@ public interface Table<T>
      * Returns an {@link InsertOperation} to create new rows in this table.
      *
      * @param uriParams
-     *         Additional parameters to add to the insert {@link Uri}.
+     *     Additional parameters to add to the insert {@link Uri}.
      *
      * @return An {@link InsertOperation} for this table.
      */
@@ -47,8 +47,7 @@ public interface Table<T>
      * Returns an {@link Operation} to update rows of this table.
      *
      * @param uriParams
-     *         Additional parameters to add to the update {@link Uri}.
-     * @param predicate
+     *     Additional parameters to add to the update {@link Uri}.
      *
      * @return An {@link Operation} for this table.
      */
@@ -59,7 +58,7 @@ public interface Table<T>
      * Returns an {@link Operation} to delete rows of this table.
      *
      * @param uriParams
-     *         Additional parameters to add to the delete {@link Uri}.
+     *     Additional parameters to add to the delete {@link Uri}.
      *
      * @return An {@link Operation} for this table.
      */
@@ -70,8 +69,7 @@ public interface Table<T>
      * Returns an {@link Operation} to assert rows of this table.
      *
      * @param uriParams
-     *         Additional parameters to add to the delete {@link Uri}.
-     * @param predicate
+     *     Additional parameters to add to the delete {@link Uri}.
      *
      * @return An {@link Operation} for this table.
      */
@@ -82,7 +80,7 @@ public interface Table<T>
      * Returns a {@link View} on this table.
      *
      * @param client
-     *         A {@link ContentProviderClient}.
+     *     A {@link ContentProviderClient}.
      *
      * @return A {@link View} on this table.
      */
